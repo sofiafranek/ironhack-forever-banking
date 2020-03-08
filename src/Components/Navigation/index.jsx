@@ -89,14 +89,14 @@ const Navigation = () => {
         }}
       >
         <div className={classes.toolbar} />
-        <List>
+        <List className="pt-4">
           {['Dashboard'].map((text, index) => (
             <ListItem button key={text}>
               <ListItemText primary={text} />
             </ListItem>
           ))}
         </List>
-        <Divider />
+        <Divider className="mr-3 ml-3" />
         <List>
           {['Accounts', 'Analytics', 'Payments', 'Cards'].map((text, index) => (
             <ListItem button key={text}>

@@ -8,13 +8,13 @@ const Account = () => {
     <div>
       <h1>Accounts</h1>
       <section>
-        <Card className="hvr-grow">
+        <Card className="hvr-grow account">
           <Card.Header>
             <h4>Account Name</h4>
             <h5>Account Amount</h5>
           </Card.Header>
         </Card>
-        <Card className="hvr-grow">
+        <Card className="hvr-grow account">
           <Card.Header>
             <h4>Account Name</h4>
             <h5>Account Amount</h5>

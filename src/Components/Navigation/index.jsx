@@ -1,6 +1,8 @@
 import React from 'react';
 import './style.scss';
 
+import { Link } from 'react-router-dom';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -59,14 +61,18 @@ const Navigation = () => {
             Title of Project
           </Typography>
           <div>
+            <Link to="/messages">
+              <Button aria-controls="simple-menu" aria-haspopup="true">
+                <i className="far fa-envelope"></i>
+              </Button>
+            </Link>
+            <Link to="/notifications">
+              <Button aria-controls="simple-menu" aria-haspopup="true">
+                <i className="far fa-bell"></i>
+              </Button>
+            </Link>
             <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-              <i class="far fa-envelope"></i>
-            </Button>
-            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-              <i class="far fa-bell"></i>
-            </Button>
-            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-              <i class="far fa-user"></i>
+              <i className="far fa-user"></i>
             </Button>
           </div>
           <Menu
@@ -76,7 +82,9 @@ const Navigation = () => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>My Account</MenuItem>
+            <Link to="/profile">
+              <MenuItem onClick={handleClose}>My Account</MenuItem>
+            </Link>
             <MenuItem onClick={handleClose}>Logout</MenuItem>
           </Menu>
         </Toolbar>
@@ -91,17 +99,21 @@ const Navigation = () => {
         <div className={classes.toolbar} />
         <List className="pt-4">
           {['Dashboard'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemText primary={text} />
-            </ListItem>
+            <Link to="/">
+              <ListItem button key={text}>
+                <ListItemText primary={text} />
+              </ListItem>
+            </Link>
           ))}
         </List>
         <Divider className="mr-3 ml-3" />
         <List>
-          {['Accounts', 'Analytics', 'Payments', 'Cards'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemText primary={text} />
-            </ListItem>
+          {['Accounts', 'Transactions', 'Analytics', 'Payments', 'Cards'].map((text, index) => (
+            <Link to={`/${text.toLowerCase()}`}>
+              <ListItem button key={text}>
+                <ListItemText primary={text} />
+              </ListItem>
+            </Link>
           ))}
         </List>
       </Drawer>

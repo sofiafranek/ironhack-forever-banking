@@ -22,6 +22,7 @@ h4 {
 
 h5 {
   font-size: 1.2em;
+  margin-bottom: 0;
 }
 
 section {
@@ -29,14 +30,14 @@ section {
   justify-content: space-between;
 }
 
-.card {
+.account {
   cursor: pointer;
   width: 48%;
   margin: 20px 0;
 }
 
 @media (max-width: 980px) {
-  .card {
+  .account {
     width: 100%;
   }
   section {

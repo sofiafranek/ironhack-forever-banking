@@ -43,4 +43,11 @@ section {
   section {
     display: block;
   }
+  .card-transaction {
+    display: block;
+    text-align: left;
+  }
+  small {
+    padding-left: 0;
+  }
 }

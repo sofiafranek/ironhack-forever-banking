@@ -7,7 +7,9 @@ const Messages = () => {
   return (
     <div>
       <Navigation />
-      <Layout></Layout>
+      <Layout>
+        <h1>Messages</h1>
+      </Layout>
     </div>
   );
 };

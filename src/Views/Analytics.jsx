@@ -7,7 +7,9 @@ const Analytics = () => {
   return (
     <div>
       <Navigation />
-      <Layout></Layout>
+      <Layout>
+        <h1>Analytics</h1>
+      </Layout>
     </div>
   );
 };

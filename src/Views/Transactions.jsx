@@ -7,7 +7,9 @@ const Transactions = () => {
   return (
     <div>
       <Navigation />
-      <Layout></Layout>
+      <Layout>
+        <h1>Transactions</h1>
+      </Layout>
     </div>
   );
 };

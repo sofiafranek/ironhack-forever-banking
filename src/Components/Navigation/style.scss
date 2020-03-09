@@ -22,3 +22,10 @@ a {
 a:hover {
   text-decoration: none;
 }
+
+.active {
+  color: #8db7d9;
+  span {
+    font-weight: bold;
+  }
+}

@@ -1,55 +1,72 @@
 import React from 'react';
-import { useTheme } from '@material-ui/core/styles';
-import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
+import './style.scss';
+
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 // http://recharts.org/en-US/guide/installation
 
-// Generate Sales Data
-const createData = (time, amount) => {
-  return { time, amount };
-};
-
 const data = [
-  createData('00:00', 0),
-  createData('03:00', 300),
-  createData('06:00', 600),
-  createData('09:00', 800),
-  createData('12:00', 1500),
-  createData('15:00', 2000),
-  createData('18:00', 2400),
-  createData('21:00', 2400),
-  createData('24:00', undefined)
+  {
+    dat: 'Jan',
+    total: 4000
+  },
+  {
+    date: 'Feb',
+    total: 3000
+  },
+  {
+    date: 'March',
+    total: 2000
+  },
+  {
+    date: 'April',
+    total: 2780
+  },
+  {
+    date: 'May',
+    total: 1890
+  },
+  {
+    date: 'June',
+    total: 2390
+  },
+  {
+    date: 'July',
+    total: 3490
+  },
+  {
+    date: 'Aug',
+    total: 2000
+  },
+  {
+    date: 'Sep',
+    total: 2780
+  },
+  {
+    date: 'Oct',
+    total: 1890
+  },
+  {
+    date: 'Nov',
+    total: 2390
+  },
+  {
+    date: 'Dec',
+    total: 3490
+  }
 ];
 
 const Chart = () => {
-  const theme = useTheme();
-
   return (
     <React.Fragment>
-      <h1>Today</h1>
-      <ResponsiveContainer>
-        <LineChart
-          data={data}
-          margin={{
-            top: 16,
-            right: 16,
-            bottom: 0,
-            left: 24
-          }}
-        >
-          <XAxis dataKey="time" stroke={theme.palette.text.secondary} />
-          <YAxis stroke={theme.palette.text.secondary}>
-            <Label
-              angle={270}
-              position="left"
-              style={{ textAnchor: 'middle', fill: theme.palette.text.primary }}
-            >
-              Sales ($)
-            </Label>
-          </YAxis>
-          <Line type="monotone" dataKey="amount" stroke={theme.palette.primary.main} dot={false} />
-        </LineChart>
-      </ResponsiveContainer>
+      <LineChart width={900} height={300} data={data}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="date" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Line type="monotone" dataKey="total" stroke="#8884d8" />
+      </LineChart>
     </React.Fragment>
   );
 };

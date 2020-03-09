@@ -7,7 +7,9 @@ const Cards = () => {
   return (
     <div>
       <Navigation />
-      <Layout></Layout>
+      <Layout>
+        <h1>Cards</h1>
+      </Layout>
     </div>
   );
 };

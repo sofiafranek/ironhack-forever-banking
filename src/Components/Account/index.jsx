@@ -6,7 +6,6 @@ import Card from 'react-bootstrap/Card';
 const Account = () => {
   return (
     <div>
-      <h1>Accounts</h1>
       <section>
         <Card className="hvr-grow account">
           <Card.Header>

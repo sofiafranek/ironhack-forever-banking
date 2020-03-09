@@ -7,7 +7,9 @@ const Payments = () => {
   return (
     <div>
       <Navigation />
-      <Layout></Layout>
+      <Layout>
+        <h1>Payments</h1>
+      </Layout>
     </div>
   );
 };

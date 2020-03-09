@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
 
 const Layout = props => {
   const classes = useStyles();
-  return <main className={classes.content}>{props.children}</main>;
+  return <main className={`${classes.content} relative`}>{props.children}</main>;
 };
 
 export default Layout;

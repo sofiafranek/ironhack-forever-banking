@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.scss';
 
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -99,21 +99,21 @@ const Navigation = () => {
         <div className={classes.toolbar} />
         <List className="pt-4">
           {['Dashboard'].map((text, index) => (
-            <Link to="/">
-              <ListItem button key={text}>
-                <ListItemText primary={text} />
+            <NavLink to="/" key={text} exact>
+              <ListItem button>
+                <ListItemText primary={text} activeClassName="active" />
               </ListItem>
-            </Link>
+            </NavLink>
           ))}
         </List>
         <Divider className="mr-3 ml-3" />
         <List>
           {['Accounts', 'Transactions', 'Analytics', 'Payments', 'Cards'].map((text, index) => (
-            <Link to={`/${text.toLowerCase()}`}>
-              <ListItem button key={text}>
-                <ListItemText primary={text} />
+            <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
+              <ListItem button>
+                <ListItemText primary={text} activeClassName="active" />
               </ListItem>
-            </Link>
+            </NavLink>
           ))}
         </List>
       </Drawer>

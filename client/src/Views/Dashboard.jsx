@@ -15,15 +15,19 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
+    console.log('componentDidMount');
     window.addEventListener('resize', this.handleResize);
+    this.handleResize();
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
+    console.log('componentWillUnmount');
+    window.addEventListener('resize', this.handleResize);
   }
 
   componentDidUpdate() {
-    window.removeEventListener('resize', this.handleResize);
+    console.log('componentDidUpdate');
+    window.addEventListener('resize', this.handleResize);
   }
 
   handleResize = () => {
@@ -33,8 +37,12 @@ class Dashboard extends Component {
   renderView() {
     console.log('hello');
     const windowWidth = window.innerWidth;
-    if (windowWidth <= 980) {
-      console.log('below 980px');
+    if (windowWidth >= 980) {
+      console.log('above 980px');
+      this.setState({
+        mobile: false
+      });
+    } else {
       this.setState({
         mobile: true
       });
@@ -45,8 +53,6 @@ class Dashboard extends Component {
     return (
       <div>
         {this.state.mobile === true ? <Mobilenavigation /> : <Navigation />}
-        {/* <Navigation /> */}
-        {/* <Mobilenavigation /> */}
         <Layout>
           <h1 className="pb-5">Dashboard</h1>
           <Chart />

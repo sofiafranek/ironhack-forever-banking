@@ -1,6 +1,8 @@
 import React from 'react';
 import './style.scss';
 
+import { Link } from 'react-router-dom';
+
 import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -24,10 +26,18 @@ const Mobilenavigation = () => {
       showLabels
       className={`${classes.root} bottomNavigation`}
     >
-      <BottomNavigationAction label="Dashboard" />
-      <BottomNavigationAction label="Accounts" />
-      <BottomNavigationAction label="Transactions" />
-      <BottomNavigationAction label="Cards" />
+      <Link to="/dashboard">
+        <BottomNavigationAction label="Dashboard" icon={<i className="fas fa-stream"></i>} />
+      </Link>
+      <Link to="/accounts">
+        <BottomNavigationAction label="Accounts" icon={<i className="fas fa-wallet p-1"></i>} />
+      </Link>
+      <Link to="/payments">
+        <BottomNavigationAction label="Payments" icon={<i className="fas fa-arrows-alt-h"></i>} />
+      </Link>
+      <Link to="/cards">
+        <BottomNavigationAction label="Cards" icon={<i className="fas fa-wallet p-1"></i>} />
+      </Link>
     </BottomNavigation>
   );
 };

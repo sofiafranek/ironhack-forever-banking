@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Navigation from '../Components/Navigation';
 import Layout from '../Components/Layout';
 import Account from './../Components/Account';
 
@@ -9,7 +8,6 @@ import Button from '@material-ui/core/Button';
 const Accounts = () => {
   return (
     <div>
-      <Navigation />
       <Layout>
         <h1>Accounts</h1>
         <div className="action-container">

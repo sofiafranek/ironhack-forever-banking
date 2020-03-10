@@ -1,15 +1,17 @@
 import React from 'react';
 
-import Navigation from '../Components/Navigation';
 import Layout from '../Components/Layout';
 import Transaction from '../Components/Transaction';
 
 const Transactions = () => {
   return (
     <div>
-      <Navigation />
       <Layout>
         <h1 className="pb-3">Transactions</h1>
+        <small>
+          Have a filter so you can see transactions from different accounts but the default
+          transactions showing will be the primary account
+        </small>
         <Transaction />
         <Transaction />
         <Transaction />

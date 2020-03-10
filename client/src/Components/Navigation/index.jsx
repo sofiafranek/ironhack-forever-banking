@@ -57,9 +57,11 @@ const Navigation = () => {
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6" noWrap>
-            Title of Project
-          </Typography>
+          <Link to="/">
+            <Typography variant="h6" noWrap>
+              Title of Project
+            </Typography>
+          </Link>
           <div>
             <Link to="/messages">
               <Button aria-controls="simple-menu" aria-haspopup="true">

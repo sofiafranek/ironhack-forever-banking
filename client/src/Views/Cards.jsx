@@ -1,14 +1,13 @@
 import React from 'react';
 
-import Navigation from '../Components/Navigation';
 import Layout from '../Components/Layout';
 
 const Cards = () => {
   return (
     <div>
-      <Navigation />
       <Layout>
         <h1>Cards</h1>
+        <small>Shows all the cards that are registed to your account</small>
       </Layout>
     </div>
   );

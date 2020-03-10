@@ -29,10 +29,9 @@ small {
 }
 
 .card-transaction {
-  display: flex;
+  display: block;
+  text-align: left;
   width: 100%;
-  flex-direction: row;
-  justify-content: space-between;
   color: black;
   text-decoration: none;
   padding: 5px 0 0;
@@ -46,4 +45,11 @@ small {
 .card-transaction:focus {
   text-decoration: none;
   color: inherit;
+}
+
+@media (min-width: 980px) {
+  .card-transaction {
+    display: flex;
+    justify-content: space-between;
+  }
 }

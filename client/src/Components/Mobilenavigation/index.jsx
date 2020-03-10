@@ -5,12 +5,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 
-// add icon to the bottom nativation action bar to include a logo
-// icon={<FavoriteIcon />}
-
 const useStyles = makeStyles({
   root: {
-    width: 500
+    width: `100%`
   }
 });
 
@@ -25,11 +22,12 @@ const Mobilenavigation = () => {
         setValue(newValue);
       }}
       showLabels
-      className={classes.root}
+      className={`${classes.root} bottomNavigation`}
     >
       <BottomNavigationAction label="Dashboard" />
-      <BottomNavigationAction label="Analytics" />
       <BottomNavigationAction label="Accounts" />
+      <BottomNavigationAction label="Transactions" />
+      <BottomNavigationAction label="Cards" />
     </BottomNavigation>
   );
 };

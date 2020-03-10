@@ -8,7 +8,7 @@ import Chip from '@material-ui/core/Chip';
 
 const Transaction = () => {
   return (
-    <Accordion className="hvr-grow transaction">
+    <Accordion className="hvr-grow transaction pb-3">
       <Card>
         <Card.Header>
           <Accordion.Toggle className="card-transaction" as={Button} variant="link" eventKey="0">

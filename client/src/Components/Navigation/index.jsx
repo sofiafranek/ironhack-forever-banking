@@ -99,9 +99,9 @@ const Navigation = () => {
         <div className={classes.toolbar} />
         <List className="pt-4">
           {['Dashboard'].map((text, index) => (
-            <NavLink to="/" key={text} exact>
+            <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
               <ListItem button>
-                <ListItemText primary={text} activeClassName="active" />
+                <ListItemText primary={text} activeclassname="active" />
               </ListItem>
             </NavLink>
           ))}
@@ -111,7 +111,7 @@ const Navigation = () => {
           {['Accounts', 'Transactions', 'Analytics', 'Payments', 'Cards'].map((text, index) => (
             <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
               <ListItem button>
-                <ListItemText primary={text} activeClassName="active" />
+                <ListItemText primary={text} activeclassname="active" />
               </ListItem>
             </NavLink>
           ))}

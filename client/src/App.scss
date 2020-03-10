@@ -1,0 +1,29 @@
+.action-container {
+  position: absolute;
+  right: 30px;
+  top: 30px;
+}
+
+.relative {
+  position: relative;
+}
+
+.primary {
+  background-color: #3264a8 !important;
+  color: white !important;
+  border-radius: 50% !important;
+  min-width: auto !important;
+  font-size: 1.6em !important;
+  width: auto !important;
+  line-height: inherit !important;
+}
+
+// .secondary {
+//   background-color: #5c90d6;
+//   color: white;
+//   border-radius: 50%;
+//   min-width: auto;
+//   font-size: 1.6em;
+//   width: auto;
+//   line-height: inherit;
+// }

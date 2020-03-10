@@ -25,29 +25,27 @@ h5 {
   margin-bottom: 0;
 }
 
-section {
-  display: flex;
-  justify-content: space-between;
-}
-
 .account {
-  cursor: pointer;
-  width: 48%;
-  margin: 20px 0;
+  width: 100%;
 }
 
-@media (max-width: 980px) {
-  .account {
-    width: 100%;
-  }
+section {
+  display: block;
+}
+
+small {
+  padding-left: 0;
+}
+
+@media (min-width: 980px) {
   section {
-    display: block;
+    display: flex;
+    justify-content: space-between;
   }
-  .card-transaction {
-    display: block;
-    text-align: left;
-  }
-  small {
-    padding-left: 0;
+
+  .account {
+    cursor: pointer;
+    width: 48%;
+    margin: 20px 0;
   }
 }

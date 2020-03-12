@@ -19,8 +19,8 @@ import Messages from './Views/Messages';
 import Notifications from './Views/Notifications';
 import Profile from './Views/Profile';
 
-import Navigation from './Components/Navigation';
-import Mobilenavigation from './Components/Mobilenavigation';
+/* import Navigation from './Components/Navigation';
+import Mobilenavigation from './Components/Mobilenavigation'; */
 
 class App extends Component {
   constructor() {
@@ -31,18 +31,15 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
     window.addEventListener('resize', this.handleResize);
     this.handleResize();
   }
 
   componentWillUnmount() {
-    console.log('componentWillUnmount');
     window.addEventListener('resize', this.handleResize);
   }
 
   componentDidUpdate() {
-    console.log('componentDidUpdate');
     window.addEventListener('resize', this.handleResize);
   }
 
@@ -51,10 +48,8 @@ class App extends Component {
   };
 
   renderView() {
-    console.log('hello');
     const windowWidth = window.innerWidth;
     if (windowWidth >= 980) {
-      console.log('above 980px');
       this.setState({
         mobile: false
       });
@@ -68,7 +63,7 @@ class App extends Component {
     return (
       <div>
         {/* need to add in the ternary operator if the route is home, sign in or sign up then don't know any navigation */}
-        {this.state.mobile === true ? <Mobilenavigation /> : <Navigation />}
+        {/* {this.state.mobile === true ? <Mobilenavigation /> : <Navigation />} */}
         <Switch>
           <Route path="/" component={Home} exact />
 

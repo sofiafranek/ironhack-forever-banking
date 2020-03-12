@@ -13,7 +13,7 @@ const schema = new mongoose.Schema({
   },
   number: {
     type: String,
-    required: true,
+    //required: true,
     trim: true
   },
   email: {
@@ -23,24 +23,24 @@ const schema = new mongoose.Schema({
     trim: true
   },
   DOB: {
-    type: Date,
-    required: true
+    type: Date
+    //required: true
   },
   nactionality: {
-    type: String,
-    required: true
+    type: String
+    //required: true
   },
   ID: {
-    type: String,
-    required: true
+    type: String
+    //required: true
   },
   address: {
-    type: String,
-    required: true
+    type: String
+    //required: true
   },
   occupation: {
-    type: String,
-    required: true
+    type: String
+    //required: true
   },
   passwordHash: {
     type: String

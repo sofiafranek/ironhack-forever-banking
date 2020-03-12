@@ -10,6 +10,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { signUp } from './../../Services/authentication';
 
 const Copyright = () => {
   return (
@@ -42,6 +43,20 @@ const useStyles = makeStyles(theme => ({
 
 const SignUp = () => {
   const classes = useStyles();
+
+  const user = {
+    name: 'fjfjfj',
+    email: 'fjfjfjf',
+    password: 'djdjdj'
+  }
+
+  signUp(user)
+  .then(user => (
+    console.log(user)
+  ))
+  .catch(error =>(
+    console.log(error))
+  )
 
   return (
     // component="main"

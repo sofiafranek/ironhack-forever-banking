@@ -44,7 +44,8 @@ const SignUp = () => {
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="xs">
+    // component="main"
+    <Container maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Layout from '../Components/Layout';
-import Transaction from '../Components/Transaction';
+import Layout from '../../Components/Layout';
+import Transaction from '../../Components/Transaction';
 
 const Transactions = () => {
   return (

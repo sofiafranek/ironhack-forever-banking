@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Layout from '../Components/Layout';
-import Account from './../Components/Account';
+import Layout from '../../Components/Layout';
+import Account from '../../Components/Account';
 
 import Button from '@material-ui/core/Button';
 

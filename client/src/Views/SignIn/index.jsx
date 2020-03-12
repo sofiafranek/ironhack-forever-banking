@@ -12,7 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Copyright from '../Components/Copyright/Copyright';
+import Copyright from '../../Components/Copyright/Copyright';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -45,7 +45,8 @@ const SignInSide = () => {
   const classes = useStyles();
 
   return (
-    <Grid container component="main" className={classes.root}>
+    // component="main"
+    <Grid container className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>

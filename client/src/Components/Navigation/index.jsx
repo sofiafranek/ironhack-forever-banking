@@ -59,7 +59,7 @@ const Navigation = () => {
         <Toolbar>
           <Link to="/">
             <Typography variant="h6" noWrap>
-              Title of Project
+              Scrooge McDuck
             </Typography>
           </Link>
           <div>

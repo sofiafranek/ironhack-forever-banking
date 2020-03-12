@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Layout from '../Components/Layout';
-import Chart from '../Components/Chart';
+import Layout from '../../Components/Layout';
+import Chart from '../../Components/Chart';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 

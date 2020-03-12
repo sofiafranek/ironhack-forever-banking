@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Layout from '../Components/Layout';
+import Layout from '../../Components/Layout';
 // import Transaction from '../Components/Transaction';
 
 class Dashboard extends Component {

@@ -1,0 +1,23 @@
+.action-container {
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  i {
+    font-size: 0.7em;
+  }
+  button {
+    margin: 0 5px;
+  }
+  .account {
+    margin-bottom: 25px;
+  }
+  .account-section {
+    margin-top: 50px;
+  }
+}
+
+@media (min-width: 980px) {
+  .account-section {
+    margin-top: 10px;
+  }
+}

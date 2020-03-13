@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SignInSide = () => {
+const SignInSide = props => {
   const classes = useStyles();
 
   return (

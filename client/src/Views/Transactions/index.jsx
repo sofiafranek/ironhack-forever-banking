@@ -3,15 +3,18 @@ import React from 'react';
 import Layout from '../../Components/Layout';
 import Transaction from '../../Components/Transaction';
 
+import Button from '@material-ui/core/Button';
+
 const Transactions = () => {
   return (
     <div>
       <Layout>
         <h1 className="pb-3">Transactions</h1>
-        <small>
-          Have a filter so you can see transactions from different accounts but the default
-          transactions showing will be the primary account
-        </small>
+        <div className="action-container">
+          <Button variant="contained" className="secondary">
+            <i class="fas fa-sync-alt"></i>
+          </Button>
+        </div>
         <Transaction />
         <Transaction />
         <Transaction />

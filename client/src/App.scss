@@ -1,9 +1,3 @@
-.action-container {
-  position: absolute;
-  right: 30px;
-  top: 30px;
-}
-
 .relative {
   position: relative;
 }
@@ -12,8 +6,28 @@
   background-color: #3264a8 !important;
   color: white !important;
   border-radius: 50% !important;
-  min-width: auto !important;
   font-size: 1.6em !important;
-  width: auto !important;
+  line-height: inherit !important;
+  min-height: 50px;
+  min-width: 50px !important;
+}
+
+.secondary {
+  background-color: #85ace2 !important;
+  color: white !important;
+  border-radius: 50% !important;
+  font-size: 1.6em !important;
+  line-height: inherit !important;
+  min-height: 50px;
+  min-width: 50px !important;
+}
+
+.third {
+  background-color: #353d47 !important;
+  color: white !important;
+  border-radius: 50% !important;
+  font-size: 1.6em !important;
+  min-height: 50px;
+  min-width: 50px !important;
   line-height: inherit !important;
 }

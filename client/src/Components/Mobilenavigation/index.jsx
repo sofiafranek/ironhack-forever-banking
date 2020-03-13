@@ -26,17 +26,19 @@ const Mobilenavigation = () => {
       showLabels
       className={`${classes.root} bottomNavigation`}
     >
-      <Link to="/dashboard">
-        <BottomNavigationAction label="Dashboard" icon={<i className="fas fa-stream"></i>} />
-      </Link>
+      <div>
+        <Link to="/dashboard">
+          <BottomNavigationAction label="Dashboard" icon={<i className="fas fa-stream"></i>} />
+        </Link>
+      </div>
       <Link to="/accounts">
-        <BottomNavigationAction label="Accounts" icon={<i className="fas fa-wallet p-1"></i>} />
+        <BottomNavigationAction label="Accounts" icon={<i className="fas fa-wallet"></i>} />
       </Link>
       <Link to="/payments">
         <BottomNavigationAction label="Payments" icon={<i className="fas fa-arrows-alt-h"></i>} />
       </Link>
       <Link to="/cards">
-        <BottomNavigationAction label="Cards" icon={<i className="fas fa-wallet p-1"></i>} />
+        <BottomNavigationAction label="Cards" icon={<i className="fas fa-wallet"></i>} />
       </Link>
     </BottomNavigation>
   );

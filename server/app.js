@@ -15,7 +15,7 @@ const passportConfigure = require('./passport-configuration.js');
 
 const indexRouter = require('./routes/index');
 const authenticationRouter = require('./routes/authentication');
-const accountRouter = require('./routes/account');
+const accountRouter = require('./routes/accounts');
 const analyticsRouter = require('./routes/analytics');
 const cardRouter = require('./routes/card');
 const paymentRouter = require('./routes/payment');
@@ -50,7 +50,7 @@ app.use(bindUserToViewLocals);
 
 app.use('/api', indexRouter);
 app.use('/api/authentication', authenticationRouter);
-app.use('/api/account', accountRouter);
+app.use('/api/accounts', accountRouter);
 app.use('/api/analytics', analyticsRouter);
 app.use('/api/card', cardRouter);
 app.use('/api/payment', paymentRouter);

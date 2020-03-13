@@ -2,16 +2,21 @@ import React from 'react';
 
 import Layout from '../../Components/Layout';
 
+import Button from '@material-ui/core/Button';
+
 const Payments = () => {
   return (
     <div>
       <Layout>
         <h1>Payments</h1>
-        <small>
-          This is where you can send money to people so you can see contact list or recent people
-          you have paid something too
-        </small>
-        <small>Can have payment link, split bill, reoccuring & scheduled or bank transfer</small>
+        <div className="action-container">
+          <Button variant="contained" className="primary">
+            <i class="fas fa-plus"></i>
+          </Button>
+          <Button variant="contained" className="secondary">
+            <i class="fas fa-sync-alt"></i>
+          </Button>
+        </div>
       </Layout>
     </div>
   );

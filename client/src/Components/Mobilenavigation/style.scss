@@ -13,10 +13,17 @@
 .bottomNavigation button {
   height: 100%;
   padding: 0 !important;
+  height: 100%;
+  min-height: 74px;
 }
 
-.MuiBottomNavigationAction-label.MuiBottomNavigationAction-iconOnly {
-  padding-top: 5px;
+.bottomNavigation i {
+  padding-bottom: 10px;
+}
+
+.bottomNavigation a {
+  min-height: 74px;
+  display: inherit;
 }
 
 .MuiBottomNavigationAction-label {

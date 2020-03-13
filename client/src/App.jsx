@@ -19,8 +19,8 @@ import Messages from './Views/Messages';
 import Notifications from './Views/Notifications';
 import Profile from './Views/Profile';
 
-/* import Navigation from './Components/Navigation';
-import Mobilenavigation from './Components/Mobilenavigation'; */
+// import Navigation from './Components/Navigation';
+// import Mobilenavigation from './Components/Mobilenavigation';
 
 class App extends Component {
   constructor(props) {
@@ -62,28 +62,6 @@ class App extends Component {
 
   render() {
     return (
-      // constructor(props) {
-      //   super(props);
-      //   this.state = {
-      //     mobile: this.props.mobile
-      //   };
-      // }
-
-      // componentDidMount() {
-      //   console.log('hello');
-      //   console.log(this.state.mobile);
-      //   if (this.state.mobile === true) {
-      //     this.setState({
-      //       mobile: ''
-      //     });
-      //     console.log(this.state.mobile);
-      //   } else if (this.state.mobile === false) {
-      //     this.setState({
-      //       mobile: ''
-      //     });
-      //     console.log(this.state.mobile);
-      //   }
-      // }
       <div>
         {/* {this.state.mobile === true ? <Mobilenavigation /> : <Navigation />} */}
         <Switch>

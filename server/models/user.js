@@ -11,7 +11,7 @@ const schema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  number: {
+  phoneNumber: {
     type: String,
     //required: true,
     trim: true

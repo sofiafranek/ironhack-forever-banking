@@ -19,8 +19,8 @@ import Messages from './Views/Messages';
 import Notifications from './Views/Notifications';
 import Profile from './Views/Profile';
 
-import Navigation from './Components/Navigation';
-import Mobilenavigation from './Components/Mobilenavigation';
+/* import Navigation from './Components/Navigation';
+import Mobilenavigation from './Components/Mobilenavigation'; */
 
 class App extends Component {
   constructor(props) {
@@ -85,7 +85,7 @@ class App extends Component {
       //   }
       // }
       <div>
-        {this.state.mobile === true ? <Mobilenavigation /> : <Navigation />}
+        {/* {this.state.mobile === true ? <Mobilenavigation /> : <Navigation />} */}
         <Switch>
           <Route path="/" component={Home} exact />
 

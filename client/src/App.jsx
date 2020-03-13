@@ -7,6 +7,7 @@ import Home from './Views/Home';
 
 import Dashboard from './Views/Dashboard';
 import Accounts from './Views/Accounts';
+import CreateAccount from './Views/createAccount';
 import SingleAccount from './Views/SingleAccount';
 import Transactions from './Views/Transactions';
 import Analytics from './Views/Analytics';
@@ -19,15 +20,18 @@ import Messages from './Views/Messages';
 import Notifications from './Views/Notifications';
 import Profile from './Views/Profile';
 
-// import Navigation from './Components/Navigation';
-// import Mobilenavigation from './Components/Mobilenavigation';
+import Navigation from './Components/Navigation';
+import Mobilenavigation from './Components/Mobilenavigation';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mobile: false
+      mobile: false,
+      activeNav: true
     };
+    this.activeNav = this.activeNav.bind(this);
+    this.disableNav = this.disableNav.bind(this);
   }
 
   componentDidMount() {
@@ -47,6 +51,18 @@ class App extends Component {
     this.renderView();
   };
 
+  disableNav(){
+    this.setState({
+      activeNav: false
+    })
+  }
+
+  activeNav(){
+    this.setState({
+      activeNav: true
+    })
+  }
+
   renderView() {
     const windowWidth = window.innerWidth;
     if (windowWidth >= 980) {
@@ -63,12 +79,13 @@ class App extends Component {
   render() {
     return (
       <div>
-        {/* {this.state.mobile === true ? <Mobilenavigation /> : <Navigation />} */}
+        {this.state.activeNav ? (this.state.mobile === true ? <Mobilenavigation /> : <Navigation/>) : true}
         <Switch>
-          <Route path="/" component={Home} exact />
+          <Route path="/" render={props => <Home {...props} changeActiveNav={this.activeNav}/>} exact />
 
-          <Route path="/dashboard" component={Dashboard} exact />
+          <Route path="/dashboard" render={props => <Dashboard {...props} changeActiveNav={this.activeNav}/>} exact />
 
+          <Route path="/create-account" render={props => <CreateAccount {...props} changeActiveNav={this.disableNav}/>} exact />
           <Route path="/accounts" component={Accounts} exact />
           <Route path="/accounts/:id" component={SingleAccount} exact />
 
@@ -77,8 +94,8 @@ class App extends Component {
           <Route path="/payments" component={Payments} exact />
           <Route path="/cards" component={Cards} exact />
 
-          <Route path="/signin" render={props => <SignIn {...props} />} exact />
-          <Route path="/signup" component={SignUp} exact />
+          <Route path="/signin" render={props => <SignIn {...props} changeActiveNav={this.disableNav}/>} exact />
+          <Route path="/signup" render={props => <SignUp {...props} changeActiveNav={this.disableNav}/>} exact />
 
           <Route path="/messages" component={Messages} exact />
           <Route path="/notifications" component={Notifications} exact />

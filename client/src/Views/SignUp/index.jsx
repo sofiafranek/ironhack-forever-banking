@@ -51,7 +51,7 @@ class SignUp extends Component {
         phoneNumber:'',
         lastName:'',
         email:'',
-        nacionality:'',
+        nationality:'',
         occupation:'',
         password:'',
         date:'',
@@ -62,8 +62,11 @@ class SignUp extends Component {
     this.getData = this.getData.bind(this);
   }
 
+  componentDidMount() {
+    this.props.changeActiveNav();
+  }
+
   handleInputChange (event){
-    console.log(event)
     const inputName = event.target.name; 
     const value = event.target.value; 
     this.setState ({
@@ -73,13 +76,18 @@ class SignUp extends Component {
 
   getData(event){
     event.preventDefault();
-      const user = null;
-      Object.assign(this.state, user);
+      
+      const user = Object.assign({}, this.state);
 
       signUp(user)
-      .then(user => (
-        console.log(user)
-      ))
+      .then(user => {
+        const idUser = user._id;
+        console.log(idUser);
+        this.props.history.push({
+          pathname: '/create-account',
+          state: { idUser: idUser }
+        });
+      })
       .catch(error =>(
         console.log(error))
       )
@@ -171,13 +179,13 @@ class SignUp extends Component {
                   variant="outlined"
                   required
                   fullWidth
-                  name="nacionality"
-                  value={this.state.nacionality}
+                  name="nationality"
+                  value={this.state.nationality}
                   onChange={(event) => this.handleInputChange(event)
                   }
-                  label="Nacionality"
+                  label="Nationality"
                   type="string"
-                  id="nacionality"
+                  id="nationality"
                 />
               </Grid>
               <Grid item xs={12}>

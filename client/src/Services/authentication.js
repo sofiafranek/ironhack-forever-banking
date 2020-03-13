@@ -21,7 +21,6 @@ const signIn = data =>
     instance
       .post('/signin', data)
       .then(result => {
-        console.log(result);
         const user = result.data.user;
         resolve(user);
       })
@@ -33,10 +32,22 @@ const signOut = () =>
     instance
       .post('/signout')
       .then(result => {
-        console.log(result);
         resolve();
       })
       .catch(reject);
   });
 
-export { signIn, signUp, signOut };
+const loadUserInformation = () =>
+  new Promise((resolve, reject) => {
+    instance
+      .get('/userinformation')
+      .then(result => {
+        console.log("RESULT", result);
+        const user = result.data.user;
+        resolve(user);
+      })
+      .catch(reject);
+  });
+
+
+export { signIn, signUp, signOut, loadUserInformation };

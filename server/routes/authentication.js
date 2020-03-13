@@ -8,9 +8,13 @@ const User = require('./../models/user');
 const router = new Router();
 
 
+router.get('/userinformation', (req, res, next) => {
+  console.log("USERERR", req.user);
+  res.json({ user: req.user || null });
+});
+
 router.post('/signup', (req, res, next) => {
   const { firstName, lastName, email, password, phoneNumber, nationality, occupation, ID, address } = req.body;
-  console.log("BODY", req.body);
 
   bcryptjs
     .hash(password, 10)
@@ -40,8 +44,11 @@ router.post('/signup', (req, res, next) => {
 
 router.post('/signin', (req, res, next) => {
   let user;
-  const { email, password } = req.body;
-  User.findOne({ email })
+  const { phoneNumber, password } = req.body;
+  console.log( phoneNumber );
+
+  
+  User.findOne({ phoneNumber })
     .then(document => {
       if (!document) {
         return Promise.reject(new Error("There's no user with that email."));
@@ -67,6 +74,5 @@ router.post('/signout', (req, res, next) => {
   req.session.destroy();
   res.json({});
 });
-
 
 module.exports = router;

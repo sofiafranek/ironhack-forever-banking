@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const Home = () => {
-  return <div>home page here</div>;
+class Home extends Component {
+  constructor(props) {
+    super(props)
+  }
+
+  componentDidMount() {
+    this.props.changeActiveNav();
+  }
+  render() {
+    return (
+      <div>home page is here</div>
+    )
+  }
 };
 
 export default Home;

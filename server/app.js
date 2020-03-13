@@ -10,6 +10,7 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const serveFavicon = require('serve-favicon');
+const basicAuthenticationSerializer = require('./middleware/basic-authentication-serializer.js');
 const bindUserToViewLocals = require('./middleware/bind-user-to-view-locals.js');
 const passportConfigure = require('./passport-configuration.js');
 
@@ -46,6 +47,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(basicAuthenticationSerializer);
 app.use(bindUserToViewLocals);
 
 app.use('/api', indexRouter);

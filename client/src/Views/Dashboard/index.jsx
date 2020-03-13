@@ -1,9 +1,25 @@
 import React, { Component } from 'react';
-
+import { loadUserInformation } from './../../Services/authentication';
 import Layout from '../../Components/Layout';
 // import Transaction from '../Components/Transaction';
 
 class Dashboard extends Component {
+
+  componentDidMount() {
+    this.props.changeActiveNav();
+    this.getData();
+  }
+
+  getData(){
+    loadUserInformation()
+    .then(user =>{
+      console.log("USER", user);
+    })
+    .catch(error => {
+      console.log("ERROR", error);
+    })
+  }
+
   render() {
     return (
       <div>

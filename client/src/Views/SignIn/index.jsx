@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,12 +14,12 @@ import { signIn } from './../../Services/authentication';
 import Copyright from '../../Components/Copyright/Copyright';
 
 class SignInSide extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       phoneNumber: '',
       password: ''
-    }
+    };
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
@@ -27,40 +27,37 @@ class SignInSide extends Component {
     this.props.changeActiveNav();
   }
 
-  handleInputChange(event){
-    const inputName = event.target.name; 
-    const value = event.target.value; 
-    this.setState ({
-      [inputName] : value
-    })
+  handleInputChange(event) {
+    const inputName = event.target.name;
+    const value = event.target.value;
+    this.setState({
+      [inputName]: value
+    });
   }
 
-  getData(event){
+  getData(event) {
     event.preventDefault();
     const user = Object.assign({}, this.state);
 
     signIn(user)
-    .then(user => {
-      this.props.updateUserInformation(user);
-      this.props.history.push('/dashboard');
-    })
-    .catch(error =>(
-      console.log(error))
-    )
+      .then(user => {
+        this.props.updateUserInformation(user);
+        this.props.history.push('/dashboard');
+      })
+      .catch(error => console.log(error));
   }
 
-  render(){
+  render() {
     return (
-      // component="main"
       <Grid container>
         <CssBaseline />
-        <Grid item xs={false} sm={4} md={7}/>
+        <Grid item xs={false} sm={4} md={7} />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <div>
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <form onSubmit={(event) => this.getData(event)}>
+            <form onSubmit={event => this.getData(event)}>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -70,7 +67,7 @@ class SignInSide extends Component {
                 label="Phone Number"
                 name="phoneNumber"
                 value={this.state.phoneNumber}
-                onChange={(event) => this.handleInputChange(event)}
+                onChange={event => this.handleInputChange(event)}
                 autoComplete="phoneNumber"
                 autoFocus
               />
@@ -81,7 +78,7 @@ class SignInSide extends Component {
                 fullWidth
                 name="password"
                 value={this.state.password}
-                onChange={(event) => this.handleInputChange(event)}
+                onChange={event => this.handleInputChange(event)}
                 label="Password"
                 type="password"
                 id="password"
@@ -91,12 +88,7 @@ class SignInSide extends Component {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-              >
+              <Button type="submit" fullWidth variant="contained" color="primary">
                 Sign In
               </Button>
               <Grid container>
@@ -120,6 +112,6 @@ class SignInSide extends Component {
       </Grid>
     );
   }
-};
+}
 
 export default SignInSide;

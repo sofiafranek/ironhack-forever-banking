@@ -135,7 +135,17 @@ class App extends Component {
               render={props => <Accounts {...props} user={this.state.user} />}
               exact
             />
-            <Route path="/accounts/add-account" component={AddAccount} exact />
+            <Route
+              path="/accounts/add-account"
+              render={props => (
+                <AddAccount
+                  {...props}
+                  changeActiveNav={this.activeNav}
+                  userID={this.state.user._id}
+                />
+              )}
+              exact
+            />
             <Route path="/accounts/:id" component={SingleAccount} exact />
 
             <Route path="/transactions"

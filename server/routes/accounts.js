@@ -31,11 +31,9 @@ router.get('/:id', RouteGuard, (req, res, next) => {
     });
 });
 
-router.get('/add-account', RouteGuard, (req, res, next) => {
+router.post('/create-account', (req, res, next) => {
   const { balance, type, accountNumber, userID } = req.body;
   const balanceNumber = Number(balance);
-
-  console.log('adding account');
 
   Account.create({
     accountNumber,
@@ -62,22 +60,11 @@ router.get('/add-account', RouteGuard, (req, res, next) => {
     });
 });
 
-router.get('/delete-account', RouteGuard, (req, res, next) => {
-  const id = req.params.id;
-
-  Account.findById(id)
-    .then(() => {
-      console.log('deleteing account');
-      res.json({});
-    })
-    .catch(error => {
-      next(error);
-    });
-});
-
-router.post('/create-account', (req, res, next) => {
+router.post('/add-account', RouteGuard, (req, res, next) => {
   const { balance, type, accountNumber, userID } = req.body;
   const balanceNumber = Number(balance);
+
+  console.log(req.body);
 
   Account.create({
     accountNumber,
@@ -119,6 +106,18 @@ router.get('/:userID/user-accounts', RouteGuard, (req, res, next) => {
   .catch(error => {
     next(error);
   });
+  
+router.post('/delete-account', RouteGuard, (req, res, next) => {
+  const id = req.params.id;
+
+  Account.findById(id)
+    .then(() => {
+      console.log('deleteing account');
+      res.json({});
+    })
+    .catch(error => {
+      next(error);
+    });
 });
 
 module.exports = router;

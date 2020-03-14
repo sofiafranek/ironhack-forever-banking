@@ -5,6 +5,7 @@ import Layout from '../../Components/Layout';
 import Account from '../../Components/Account';
 
 import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 
 import { account } from './../../Services/account';
 
@@ -15,11 +16,21 @@ class Accounts extends Component {
       account: []
     };
   }
+
+  addingAccount() {
+    console.log('add account');
+  }
+
+  refreshAccount() {
+    window.location.reload();
+    console.log('refresh');
+  }
+
   getData() {
     account()
       .then(account => {
         this.setState({
-          account: account
+          account
         });
       })
       .catch(error => console.log(error));
@@ -35,18 +46,17 @@ class Accounts extends Component {
       <Layout>
         <h1>Accounts</h1>
         <div className="action-container">
-          <Button variant="contained" className="primary">
-            <i className="fas fa-plus"></i>
-          </Button>
-          <Button variant="contained" className="secondary">
+          <Link to={`/accounts/add-account`} onClick={this.addingAccount}>
+            <Button variant="contained" className="primary">
+              <i className="fas fa-plus"></i>
+            </Button>
+          </Link>
+          <Button variant="contained" className="secondary" onClick={this.refreshAccount}>
             <i className="fas fa-sync-alt"></i>
-          </Button>
-          <Button variant="contained" className="third">
-            <i className="fas fa-times"></i>
           </Button>
         </div>
         {this.state.account.map(single => {
-          console.log(single);
+          console.log('ACCOUNTS', single);
           return <Account key={single._id} {...single} />;
         })}
       </Layout>

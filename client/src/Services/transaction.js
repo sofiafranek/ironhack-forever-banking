@@ -15,10 +15,10 @@ const createTransaction = data =>
       .catch(reject);
   });
 
-const receivedTransactions = id =>
+const receivedTransactions = data =>
   new Promise((resolve, reject) => {
     instance
-      .get(`/${id}/received`)
+      .get('/received', data)
       .then(result => {
         const transactions = result.data.transactions;
         resolve(transactions);
@@ -26,10 +26,10 @@ const receivedTransactions = id =>
       .catch(reject);
   });
 
-const sentTransactions = id =>
+const sentTransactions = data =>
   new Promise((resolve, reject) => {
     instance
-        .get(`/${id}/sent`)
+        .get('/sent', data)
         .then(result => {
             const transactions = result.data.transactions;
             resolve(transactions);

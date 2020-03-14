@@ -3,30 +3,74 @@
 const { Router } = require('express');
 
 const Transaction = require('../models/transaction');
+const Account = require('../models/account');
 
 const router = new Router();
 
 
 router.post('/add-transaction', (req, res, next) => {
   const { accountIDFrom, accountIDTo, totalAmount} = req.body;
+  let balanceFrom = 0, balanceTo = 0;
 
-  Transaction.create({
-    accountIDFrom,
-    accountIDTo,
-    totalAmount
+  Account.findById(accountIDFrom)
+  .then((account) => {
+    balanceFrom = account.balance;
   })
-  .then((transaction) => {
-    res.json({ transaction });
-  })
-  .catch((error) => {
-    next(error);
+  .catch(error => {
+    console.log(error);
   });
+
+  Account.findById(accountIDTo)
+  .then((account) => {
+    balanceTo = account.balance;
+  })
+  .catch(error => {
+    console.log(error);
+  });
+
+
+  const minusBalance = balanceFrom - totalAmount;
+  const addBalance = balanceTo + totalAmount;
+  
+  if (minusBalance > 0) {
+    Transaction.create({
+      accountIDFrom,
+      accountIDTo,
+      totalAmount
+    })
+    .then((transaction) => {
+      Account.findByIdAndUpdate({accountIDFrom}, {'balance': minusBalance} )
+      .then((account) => console.log(account.balance))
+      .catch(error => {
+        console.log(error);
+      });
+
+      Account.findByIdAndUpdate({accountIDTo}, {'balance':  addBalance} )
+      .then((account) => console.log(account.balance))
+      .catch(error => {
+        console.log(error);
+      });
+
+      res.json({ transaction });
+    })
+    .catch((error) => {
+      next(error);
+    });
+    }
+  else {
+    res.json('notEnoughBalance');
+  }
 });
 
-router.get('/:idTo/received', (req, res, next) => {
-  const { idTo } = req.params;
+router.get('/received', (req, res, next) => {
+  const { accounts } = req.body;
 
-  Transaction.find({ 'accountIDTo' : idTo })
+  console.log(accounts);
+
+  console.log(accounts.split(""));
+
+
+  Transaction.find({ 'accountIDTo' : 0 })
   .then((transactions) => {
     res.json({ transactions });
   })
@@ -36,10 +80,14 @@ router.get('/:idTo/received', (req, res, next) => {
 
 });
 
-router.get('/:idFrom/sent', (req, res, next) => {
-  const { idFrom } = req.params;
+router.get('/sent', (req, res, next) => {
+  const { accounts } = req.body;
 
-  Transaction.find({ 'accountIDFrom' : idFrom })
+  console.log(accounts);
+
+  console.log(accounts.join(""));
+
+  Transaction.find({ 'accountIDFrom' : 0 })
   .then((transactions) => {
     res.json({ transactions });
   })

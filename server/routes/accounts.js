@@ -3,7 +3,7 @@
 const { Router } = require('express');
 
 const Account = require('../models/account');
-const userAccount = require('../models/userAccount');
+const UserAccount = require('../models/userAccount');
 
 const router = new Router();
 
@@ -45,7 +45,7 @@ router.get('/add-account', RouteGuard, (req, res, next) => {
     .then(account => {
       const accountID = account._id;
 
-      userAccount
+      UserAccount
         .create({
           userID,
           accountID
@@ -87,7 +87,7 @@ router.post('/create-account', (req, res, next) => {
     .then(account => {
       const accountID = account._id;
 
-      userAccount
+      UserAccount
         .create({
           userID,
           accountID
@@ -102,6 +102,23 @@ router.post('/create-account', (req, res, next) => {
     .catch(error => {
       next(error);
     });
+});
+
+
+router.get('/:userID/user-accounts', RouteGuard, (req, res, next) => {
+  const userID = req.params.userID;
+
+  UserAccount.find({
+    userID: userID
+  })
+  .select({ "accountID": 1, "_id" : 0 })
+  .then((accounts) => {
+    console.log(accounts);
+    res.json({ accounts });
+  })
+  .catch(error => {
+    next(error);
+  });
 });
 
 module.exports = router;

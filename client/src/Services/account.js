@@ -58,4 +58,17 @@ const deleteAccount = id =>
       .catch(reject);
   });
 
-export { account, addAccount, creatingAccount, deleteAccount, singleAccount };
+const userAccounts = userID => 
+  new Promise((resolve, reject) => {
+    console.log("USERID", userID)
+    instance
+      .get(`/${userID}/user-accounts`)
+      .then(result => {
+        const accounts = result.data.accounts;
+        console.log("ACCOUNTS IN INSTANCE THEN", accounts);
+        resolve(accounts);
+      })
+      .catch(reject);
+  });
+
+export { account, addAccount, creatingAccount, deleteAccount, singleAccount, userAccounts };

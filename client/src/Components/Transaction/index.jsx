@@ -5,51 +5,10 @@ import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Chip from '@material-ui/core/Chip';
-import * as transactionService from './../../Services/transaction';
 
 class Transaction extends Component{
-  constructor(){
-    super();
-    this.state = {
-      accounts: [],
-      transactionsReceived: [],
-      transactionsSent: [],
-      IDuser: ''
-    }
-  }
-
-  componentDidMount(){
-    const { IDuser } = this.props.IDuser;
-
-    this.setState({
-      IDuser
-    })
-
-    transactionService.receivedTransactions(IDuser)
-    .then((transactions) => {
-      this.setState({
-        transactionsReceived: transactions
-      })
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-
-    transactionService.sentTransactions(IDuser)
-    .then((transactions) => {
-      this.setState({
-        transactionsSent: transactions
-      })
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-
-    console.log(this.state);
-  }
-
-
   render(){
+
     return (
       <Accordion className="hvr-grow transaction pb-3">
         <Card>

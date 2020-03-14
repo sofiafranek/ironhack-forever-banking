@@ -44,7 +44,6 @@ class App extends Component {
 
     loadUserInformation()
       .then(user => {
-        console.log('APP USER', user);
         this.updateUserInformation(user);
         this.setState({
           loaded: true
@@ -139,7 +138,9 @@ class App extends Component {
             <Route path="/accounts/add-account" component={AddAccount} exact />
             <Route path="/accounts/:id" component={SingleAccount} exact />
 
-            <Route path="/transactions" component={Transactions} exact />
+            <Route path="/transactions"
+            render={props => <Transactions {...props} userID={this.state.user._id} />}
+            exact />
             <Route path="/analytics" component={Analytics} exact />
             <Route path="/payments" component={Payments} exact />
             <Route path="/cards" component={Cards} exact />

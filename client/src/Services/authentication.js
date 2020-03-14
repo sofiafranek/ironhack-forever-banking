@@ -6,6 +6,8 @@ const instance = axios.create({
 
 const signUp = data =>
   new Promise((resolve, reject) => {
+    console.log('hello');
+    console.log(data);
     instance
       .post('/signup', data)
       .then(result => {

@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const schema = new mongoose.Schema({
   name: {
     type: String,
+    required: true,
     trim: true
   },
   createdAt: {
@@ -13,7 +14,7 @@ const schema = new mongoose.Schema({
   },
   phoneNumber: {
     type: String,
-    //required: true,
+    required: true,
     trim: true
   },
   email: {
@@ -24,23 +25,23 @@ const schema = new mongoose.Schema({
   },
   DOB: {
     type: Date
-    //required: true
+    // required: true
   },
-  nactionality: {
-    type: String
-    //required: true
+  nationality: {
+    type: String,
+    required: true
   },
   ID: {
-    type: String
-    //required: true
+    type: String,
+    required: true
   },
   address: {
-    type: String
-    //required: true
+    type: String,
+    required: true
   },
   occupation: {
-    type: String
-    //required: true
+    type: String,
+    required: true
   },
   passwordHash: {
     type: String

@@ -9,12 +9,12 @@ const router = new Router();
 
 router.post('/signup', (req, res, next) => {
   const { firstName, lastName, email, password } = req.body;
+  console.log(req.body);
   bcryptjs
     .hash(password, 10)
     .then(hash => {
       return User.create({
-        firstName,
-        lastName,
+        name: firstName + lastName,
         email,
         passwordHash: hash
       });
@@ -57,6 +57,5 @@ router.post('/signout', (req, res, next) => {
   req.session.destroy();
   res.json({});
 });
-
 
 module.exports = router;

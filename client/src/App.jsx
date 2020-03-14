@@ -15,7 +15,7 @@ import Payments from './Views/Payments';
 import Cards from './Views/Cards';
 import SignIn from './Views/SignIn';
 import SignUp from './Views/SignUp';
-
+import { loadUserInformation } from './Services/authentication';
 import Messages from './Views/Messages';
 import Notifications from './Views/Notifications';
 import Profile from './Views/Profile';
@@ -28,15 +28,30 @@ class App extends Component {
     super(props);
     this.state = {
       mobile: false,
-      activeNav: true
+      activeNav: true,
+      user: null,
+      loaded: false
     };
     this.activeNav = this.activeNav.bind(this);
     this.disableNav = this.disableNav.bind(this);
+    this.updateUserInformation = this.updateUserInformation.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener('resize', this.handleResize);
     this.handleResize();
+
+    loadUserInformation()
+    .then(user =>{
+      console.log("APP USER", user);
+      this.updateUserInformation(user);
+      this.setState({
+        loaded: true
+      });
+    })
+    .catch(error => {
+      console.log("ERROR", error);
+    })
   }
 
   componentWillUnmount() {
@@ -63,6 +78,12 @@ class App extends Component {
     })
   }
 
+  updateUserInformation(user) {
+    this.setState({
+      user
+    });
+  }
+
   renderView() {
     const windowWidth = window.innerWidth;
     if (windowWidth >= 980) {
@@ -79,11 +100,15 @@ class App extends Component {
   render() {
     return (
       <div>
-        {this.state.activeNav ? (this.state.mobile === true ? <Mobilenavigation /> : <Navigation/>) : true}
-        <Switch>
-          <Route path="/" render={props => <Home {...props} changeActiveNav={this.activeNav}/>} exact />
+        {
+        this.state.activeNav ? (this.state.mobile === true ? <Mobilenavigation /> : <Navigation updateUserInformation={this.updateUserInformation}/>) : true
+        }
+        {
+        this.state.loaded &&
+        (<Switch>
+          <Route path="/" render={props => <Home {...props} changeActiveNav={this.disableNav}/>} exact />
 
-          <Route path="/dashboard" render={props => <Dashboard {...props} changeActiveNav={this.activeNav}/>} exact />
+          <Route path="/dashboard" render={props => <Dashboard {...props} changeActiveNav={this.activeNav} user={this.state.user}/>} exact />
 
           <Route path="/create-account" render={props => <CreateAccount {...props} changeActiveNav={this.disableNav}/>} exact />
           <Route path="/accounts" component={Accounts} exact />
@@ -94,13 +119,14 @@ class App extends Component {
           <Route path="/payments" component={Payments} exact />
           <Route path="/cards" component={Cards} exact />
 
-          <Route path="/signin" render={props => <SignIn {...props} changeActiveNav={this.disableNav}/>} exact />
-          <Route path="/signup" render={props => <SignUp {...props} changeActiveNav={this.disableNav}/>} exact />
+          <Route path="/signin" render={props => <SignIn {...props} changeActiveNav={this.disableNav} updateUserInformation={this.updateUserInformation}/>} exact />
+          <Route path="/signup" render={props => <SignUp {...props} changeActiveNav={this.disableNav} updateUserInformation={this.updateUserInformation}/>} exact />
 
           <Route path="/messages" component={Messages} exact />
           <Route path="/notifications" component={Notifications} exact />
           <Route path="/profile" component={Profile} exact />
         </Switch>
+        )}
       </div>
     );
   }

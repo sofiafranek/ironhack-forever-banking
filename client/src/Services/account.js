@@ -27,10 +27,12 @@ const creatingAccount = data =>
       .catch(reject);
   });
 
-const singleAccount = data =>
+
+
+const singleAccount = id =>
   new Promise((resolve, reject) => {
     instance
-      .get('/:id', data)
+      .get(`/${id}`)
       .then(result => {
         console.log(result);
         const account = result.data.account;

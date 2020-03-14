@@ -8,7 +8,6 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { signUp } from './../../Services/authentication';
 
@@ -77,20 +76,20 @@ class SignUp extends Component {
   getData(event){
     event.preventDefault();
       
-      const user = Object.assign({}, this.state);
+    const user = Object.assign({}, this.state);
 
-      signUp(user)
-      .then(user => {
-        const idUser = user._id;
-        console.log(idUser);
-        this.props.history.push({
-          pathname: '/create-account',
-          state: { idUser: idUser }
-        });
-      })
-      .catch(error =>(
-        console.log(error))
-      )
+    signUp(user)
+    .then(user => {
+      const idUser = user._id;
+      this.props.updateUserInformation(user);
+      this.props.history.push({
+        pathname: '/create-account',
+        state: { idUser: idUser }
+      });
+    })
+    .catch(error =>(
+      console.log(error))
+    )
   }
 
 

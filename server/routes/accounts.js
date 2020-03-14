@@ -7,17 +7,7 @@ const userAccount = require('../models/userAccount');
 
 const router = new Router();
 
-router.post('/', (req, res, next) => {
-  console.log(req.body);
-  Account.findOne()
-    .then(document => {
-      console.log(document);
-      res.json({ document });
-    })
-    .catch(error => {
-      next(error);
-    });
-});
+const RouteGuard = require("./../middleware/route-guard");
 
 router.post('/create-account', (req, res, next) => {
   const { balance, type, accountNumber, userID } = req.body;
@@ -47,12 +37,22 @@ router.post('/create-account', (req, res, next) => {
   });
 });
 
-router.post('/:id', (req, res, next) => {
-  console.log(req.body);
-  // let account;
+router.post('/', RouteGuard, (req, res, next) => {
   Account.findOne()
     .then(document => {
-      console.log(document);
+      res.json({ document });
+    })
+    .catch(error => {
+      next(error);
+    });
+});
+
+router.get('/:id', RouteGuard, (req, res, next) => {
+  const id = req.params.id;
+  
+  Account.findById(id)
+    .then(account => {
+      res.json({ account });
     })
     .catch(error => {
       next(error);

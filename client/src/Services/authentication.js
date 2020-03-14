@@ -31,7 +31,7 @@ const signOut = () =>
   new Promise((resolve, reject) => {
     instance
       .post('/signout')
-      .then(result => {
+      .then( () => {
         resolve();
       })
       .catch(reject);
@@ -42,7 +42,6 @@ const loadUserInformation = () =>
     instance
       .get('/userinformation')
       .then(result => {
-        console.log("RESULT", result);
         const user = result.data.user;
         resolve(user);
       })

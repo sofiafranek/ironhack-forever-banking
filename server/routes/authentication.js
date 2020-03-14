@@ -7,6 +7,7 @@ const User = require('./../models/user');
 
 const router = new Router();
 
+/* const RouteGuard = require("./../middleware/route-guard"); */
 
 router.get('/userinformation', (req, res, next) => {
   console.log("USERERR", req.user);
@@ -71,6 +72,7 @@ router.post('/signin', (req, res, next) => {
 });
 
 router.post('/signout', (req, res, next) => {
+  console.log("BACK SIGNOUT");
   req.session.destroy();
   res.json({});
 });

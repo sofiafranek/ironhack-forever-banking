@@ -17,6 +17,8 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
+import { signOut } from './../../Services/authentication';
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -40,7 +42,19 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar
 }));
 
-const Navigation = () => {
+const Navigation = (props) => {
+
+  const handleSignOut = () => {
+    signOut()
+      .then(() => {
+        console.log(props);
+        props.updateUserInformation(null);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -87,7 +101,10 @@ const Navigation = () => {
             <Link to="/profile">
               <MenuItem onClick={handleClose}>My Account</MenuItem>
             </Link>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+
+            <Link to="/">
+              <MenuItem onClick={handleSignOut}>Logout</MenuItem>
+            </Link>
           </Menu>
         </Toolbar>
       </AppBar>

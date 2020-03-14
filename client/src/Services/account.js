@@ -7,7 +7,7 @@ const instance = axios.create({
 const account = data =>
   new Promise((resolve, reject) => {
     instance
-      .post('/', data)
+      .get('/', data)
       .then(result => {
         console.log(result);
         const account = result.data.account;
@@ -16,10 +16,23 @@ const account = data =>
       .catch(reject);
   });
 
-const singleAccount = data =>
+const creatingAccount = data =>
   new Promise((resolve, reject) => {
     instance
-      .post('/:id', data)
+      .post('/create-account', data)
+      .then(result => {
+        const account = result.data.account;
+        resolve(account);
+      })
+      .catch(reject);
+  });
+
+
+
+const singleAccount = id =>
+  new Promise((resolve, reject) => {
+    instance
+      .get(`/${id}`)
       .then(result => {
         console.log(result);
         const account = result.data.account;
@@ -28,4 +41,4 @@ const singleAccount = data =>
       .catch(reject);
   });
 
-export { account, singleAccount };
+export { account, creatingAccount, singleAccount };

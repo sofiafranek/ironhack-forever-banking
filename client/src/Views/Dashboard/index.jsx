@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-
 import Layout from '../../Components/Layout';
-// import Transaction from '../Components/Transaction';
 
 class Dashboard extends Component {
+
+  componentDidMount() {
+    this.props.changeActiveNav();
+  }
+
   render() {
+    const user = this.props.user;
     return (
       <div>
         <Layout>
-          <h1 className="pb-3">User Name</h1>
+          <h1 className="pb-3">{user.name}</h1>
           <hr></hr>
           <h5>Accounts listed here</h5>
           <hr></hr>

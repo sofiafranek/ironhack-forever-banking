@@ -27,6 +27,10 @@ class SignUp extends Component {
     this.getData = this.getData.bind(this);
   }
 
+  componentDidMount() {
+    this.props.changeActiveNav();
+  }
+
   handleInputChange(event) {
     const inputName = event.target.name;
     const value = event.target.value;
@@ -37,17 +41,23 @@ class SignUp extends Component {
 
   getData(event) {
     event.preventDefault();
+
     const user = Object.assign({}, this.state);
-    console.log(user);
 
     signUp(user)
-      .then(user => console.log(user))
+      .then(user => {
+        const idUser = user._id;
+        this.props.updateUserInformation(user);
+        this.props.history.push({
+          pathname: '/create-account',
+          state: { idUser: idUser }
+        });
+      })
       .catch(error => console.log(error));
   }
 
   render() {
     return (
-      // component="main"
       <Container maxWidth="xs">
         <CssBaseline />
         <div>

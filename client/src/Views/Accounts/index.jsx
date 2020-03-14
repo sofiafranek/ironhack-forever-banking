@@ -6,25 +6,24 @@ import Account from '../../Components/Account';
 
 import Button from '@material-ui/core/Button';
 
-const Accounts = () => {
+const Accounts = (props) => {
+  console.log(props)
   return (
-    <div>
       <Layout>
         <h1>Accounts</h1>
         <div className="action-container">
           <Button variant="contained" className="primary">
-            <i class="fas fa-plus"></i>
+            <i className="fas fa-plus"></i>
           </Button>
           <Button variant="contained" className="secondary">
-            <i class="fas fa-sync-alt"></i>
+            <i className="fas fa-sync-alt"></i>
           </Button>
           <Button variant="contained" className="third">
-            <i class="fas fa-times"></i>
+            <i className="fas fa-times"></i>
           </Button>
         </div>
         <Account />
       </Layout>
-    </div>
   );
 };
 

@@ -31,6 +31,7 @@ const addAccount = data =>
     instance
       .post('/add-account', data)
       .then(result => {
+        console.log('adding account');
         const account = result.data.account;
         resolve(account);
       })
@@ -48,10 +49,10 @@ const singleAccount = id =>
       .catch(reject);
   });
 
-const deleteAccount = id =>
+const deleteAccount = data =>
   new Promise((resolve, reject) => {
     instance
-      .get('/delete-account')
+      .get('/delete-account', data)
       .then(result => {
         console.log(result);
       })

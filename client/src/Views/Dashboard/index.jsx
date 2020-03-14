@@ -8,7 +8,6 @@ class Dashboard extends Component {
 
   render() {
     const user = this.props.user;
-    console.log('user', user);
     return (
       <div>
         <Layout>

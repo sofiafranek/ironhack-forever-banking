@@ -9,7 +9,7 @@ import Dashboard from './Views/Dashboard';
 import Accounts from './Views/Accounts';
 import CreateAccount from './Views/createAccount';
 import SingleAccount from './Views/SingleAccount';
-import Transactions from './Views/Transactions';
+import Transaction from './Views/Transactions';
 import Analytics from './Views/Analytics';
 import Payments from './Views/Payments';
 import Cards from './Views/Cards';
@@ -114,7 +114,7 @@ class App extends Component {
           <Route path="/accounts" component={Accounts} exact />
           <Route path="/accounts/:id" component={SingleAccount} exact />
 
-          <Route path="/transactions" component={Transactions} exact />
+          <Route path="/transactions" render={props => <Transaction {...props} IDuser={this.state.user._id}/>}  exact />
           <Route path="/analytics" component={Analytics} exact />
           <Route path="/payments" component={Payments} exact />
           <Route path="/cards" component={Cards} exact />

@@ -9,6 +9,7 @@ import Dashboard from './Views/Dashboard';
 import Accounts from './Views/Accounts';
 import CreateAccount from './Views/createAccount';
 import SingleAccount from './Views/SingleAccount';
+import AddAccount from './Views/addAccount';
 import Transactions from './Views/Transactions';
 import Analytics from './Views/Analytics';
 import Payments from './Views/Payments';
@@ -130,7 +131,12 @@ class App extends Component {
               render={props => <CreateAccount {...props} changeActiveNav={this.disableNav} />}
               exact
             />
-            <Route path="/accounts" component={Accounts} exact />
+            <Route
+              path="/accounts"
+              render={props => <Accounts {...props} user={this.state.user} />}
+              exact
+            />
+            <Route path="/accounts/add-account" component={AddAccount} exact />
             <Route path="/accounts/:id" component={SingleAccount} exact />
 
             <Route path="/transactions" component={Transactions} exact />

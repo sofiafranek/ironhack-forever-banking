@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import Layout from '../../Components/Layout';
 
 class Dashboard extends Component {
-
   componentDidMount() {
     this.props.changeActiveNav();
   }
 
   render() {
     const user = this.props.user;
+    console.log('user', user);
     return (
       <div>
         <Layout>

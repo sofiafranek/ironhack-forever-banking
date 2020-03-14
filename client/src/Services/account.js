@@ -4,14 +4,13 @@ const instance = axios.create({
   baseURL: '/api/accounts'
 });
 
-const account = data =>
+const account = () =>
   new Promise((resolve, reject) => {
     instance
-      .get('/', data)
+      .get('/')
       .then(result => {
-        console.log(result);
-        const account = result.data.account;
-        resolve(account);
+        const accounts = result.data.accounts;
+        resolve(accounts);
       })
       .catch(reject);
   });
@@ -27,18 +26,36 @@ const creatingAccount = data =>
       .catch(reject);
   });
 
-
-
-const singleAccount = id =>
+const addAccount = data =>
   new Promise((resolve, reject) => {
     instance
-      .get(`/${id}`)
+      .post('/add-account', data)
       .then(result => {
-        console.log(result);
         const account = result.data.account;
         resolve(account);
       })
       .catch(reject);
   });
 
-export { account, creatingAccount, singleAccount };
+const singleAccount = id =>
+  new Promise((resolve, reject) => {
+    instance
+      .get(`/${id}`)
+      .then(result => {
+        const account = result.data.account;
+        resolve(account);
+      })
+      .catch(reject);
+  });
+
+const deleteAccount = id =>
+  new Promise((resolve, reject) => {
+    instance
+      .get('/delete-account')
+      .then(result => {
+        console.log(result);
+      })
+      .catch(reject);
+  });
+
+export { account, addAccount, creatingAccount, deleteAccount, singleAccount };

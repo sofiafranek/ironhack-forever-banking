@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './style.scss';
 
 import Layout from '../../Components/Layout';
@@ -6,9 +6,32 @@ import Account from '../../Components/Account';
 
 import Button from '@material-ui/core/Button';
 
-const Accounts = (props) => {
-  console.log(props)
-  return (
+import { account } from './../../Services/account';
+
+class Accounts extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      account: []
+    };
+  }
+  getData() {
+    account()
+      .then(account => {
+        this.setState({
+          account: account
+        });
+      })
+      .catch(error => console.log(error));
+  }
+
+  componentDidMount() {
+    this.getData();
+  }
+
+  render() {
+    const account = this.state.account;
+    return (
       <Layout>
         <h1>Accounts</h1>
         <div className="action-container">
@@ -22,9 +45,13 @@ const Accounts = (props) => {
             <i className="fas fa-times"></i>
           </Button>
         </div>
-        <Account />
+        {this.state.account.map(single => {
+          console.log(single);
+          return <Account key={single._id} {...single} />;
+        })}
       </Layout>
-  );
-};
+    );
+  }
+}
 
 export default Accounts;

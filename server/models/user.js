@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const schema = new mongoose.Schema({
   name: {
     type: String,
+    required: true,
     trim: true
   },
   createdAt: {
@@ -24,7 +25,7 @@ const schema = new mongoose.Schema({
   },
   DOB: {
     type: Date
-    //required: true
+    // required: true
   },
   nationality: {
     type: String,

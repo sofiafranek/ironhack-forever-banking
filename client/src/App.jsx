@@ -9,7 +9,8 @@ import Dashboard from './Views/Dashboard';
 import Accounts from './Views/Accounts';
 import CreateAccount from './Views/createAccount';
 import SingleAccount from './Views/SingleAccount';
-import Transaction from './Views/Transactions';
+import AddAccount from './Views/addAccount';
+import Transactions from './Views/Transactions';
 import Analytics from './Views/Analytics';
 import Payments from './Views/Payments';
 import Cards from './Views/Cards';
@@ -42,16 +43,16 @@ class App extends Component {
     this.handleResize();
 
     loadUserInformation()
-    .then(user =>{
-      console.log("APP USER", user);
-      this.updateUserInformation(user);
-      this.setState({
-        loaded: true
+      .then(user => {
+        console.log('APP USER', user);
+        this.updateUserInformation(user);
+        this.setState({
+          loaded: true
+        });
+      })
+      .catch(error => {
+        console.log('ERROR', error);
       });
-    })
-    .catch(error => {
-      console.log("ERROR", error);
-    })
   }
 
   componentWillUnmount() {
@@ -66,16 +67,16 @@ class App extends Component {
     this.renderView();
   };
 
-  disableNav(){
+  disableNav() {
     this.setState({
       activeNav: false
-    })
+    });
   }
 
-  activeNav(){
+  activeNav() {
     this.setState({
       activeNav: true
-    })
+    });
   }
 
   updateUserInformation(user) {
@@ -100,32 +101,76 @@ class App extends Component {
   render() {
     return (
       <div>
-        {
-        this.state.activeNav ? (this.state.mobile === true ? <Mobilenavigation /> : <Navigation updateUserInformation={this.updateUserInformation}/>) : true
-        }
-        {
-        this.state.loaded &&
-        (<Switch>
-          <Route path="/" render={props => <Home {...props} changeActiveNav={this.disableNav}/>} exact />
+        {this.state.activeNav ? (
+          this.state.mobile === true ? (
+            <Mobilenavigation />
+          ) : (
+            <Navigation updateUserInformation={this.updateUserInformation} />
+          )
+        ) : (
+          true
+        )}
+        {this.state.loaded && (
+          <Switch>
+            <Route
+              path="/"
+              render={props => <Home {...props} changeActiveNav={this.disableNav} />}
+              exact
+            />
 
-          <Route path="/dashboard" render={props => <Dashboard {...props} changeActiveNav={this.activeNav} user={this.state.user}/>} exact />
+            <Route
+              path="/dashboard"
+              render={props => (
+                <Dashboard {...props} changeActiveNav={this.activeNav} user={this.state.user} />
+              )}
+              exact
+            />
 
-          <Route path="/create-account" render={props => <CreateAccount {...props} changeActiveNav={this.disableNav}/>} exact />
-          <Route path="/accounts" component={Accounts} exact />
-          <Route path="/accounts/:id" component={SingleAccount} exact />
+            <Route
+              path="/create-account"
+              render={props => <CreateAccount {...props} changeActiveNav={this.disableNav} />}
+              exact
+            />
+            <Route
+              path="/accounts"
+              render={props => <Accounts {...props} user={this.state.user} />}
+              exact
+            />
+            <Route path="/accounts/add-account" component={AddAccount} exact />
+            <Route path="/accounts/:id" component={SingleAccount} exact />
 
-          <Route path="/transactions" render={props => <Transaction {...props} IDuser={this.state.user._id}/>}  exact />
-          <Route path="/analytics" component={Analytics} exact />
-          <Route path="/payments" component={Payments} exact />
-          <Route path="/cards" component={Cards} exact />
+            <Route path="/transactions" component={Transactions} exact />
+            <Route path="/analytics" component={Analytics} exact />
+            <Route path="/payments" component={Payments} exact />
+            <Route path="/cards" component={Cards} exact />
 
-          <Route path="/signin" render={props => <SignIn {...props} changeActiveNav={this.disableNav} updateUserInformation={this.updateUserInformation}/>} exact />
-          <Route path="/signup" render={props => <SignUp {...props} changeActiveNav={this.disableNav} updateUserInformation={this.updateUserInformation}/>} exact />
+            <Route
+              path="/signin"
+              render={props => (
+                <SignIn
+                  {...props}
+                  changeActiveNav={this.disableNav}
+                  updateUserInformation={this.updateUserInformation}
+                />
+              )}
+              exact
+            />
+            <Route
+              path="/signup"
+              render={props => (
+                <SignUp
+                  {...props}
+                  changeActiveNav={this.disableNav}
+                  updateUserInformation={this.updateUserInformation}
+                />
+              )}
+              exact
+            />
 
-          <Route path="/messages" component={Messages} exact />
-          <Route path="/notifications" component={Notifications} exact />
-          <Route path="/profile" component={Profile} exact />
-        </Switch>
+            <Route path="/messages" component={Messages} exact />
+            <Route path="/notifications" component={Notifications} exact />
+            <Route path="/profile" component={Profile} exact />
+          </Switch>
         )}
       </div>
     );

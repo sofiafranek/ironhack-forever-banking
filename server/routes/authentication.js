@@ -10,12 +10,22 @@ const router = new Router();
 /* const RouteGuard = require("./../middleware/route-guard"); */
 
 router.get('/userinformation', (req, res, next) => {
-  console.log("USERERR", req.user);
+  console.log('USERERR', req.user);
   res.json({ user: req.user || null });
 });
 
 router.post('/signup', (req, res, next) => {
-  const { firstName, lastName, email, password, phoneNumber, nationality, occupation, ID, address } = req.body;
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    phoneNumber,
+    nationality,
+    occupation,
+    ID,
+    address
+  } = req.body;
 
   bcryptjs
     .hash(password, 10)
@@ -33,7 +43,7 @@ router.post('/signup', (req, res, next) => {
       });
     })
     .then(user => {
-      console.log("USER", user);
+      console.log('USER', user);
       req.session.user = user._id;
       res.json({ user });
     })
@@ -46,9 +56,8 @@ router.post('/signup', (req, res, next) => {
 router.post('/signin', (req, res, next) => {
   let user;
   const { phoneNumber, password } = req.body;
-  console.log( phoneNumber );
+  console.log(phoneNumber);
 
-  
   User.findOne({ phoneNumber })
     .then(document => {
       if (!document) {
@@ -72,7 +81,7 @@ router.post('/signin', (req, res, next) => {
 });
 
 router.post('/signout', (req, res, next) => {
-  console.log("BACK SIGNOUT");
+  console.log('BACK SIGNOUT');
   req.session.destroy();
   res.json({});
 });

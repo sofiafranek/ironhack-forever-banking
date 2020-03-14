@@ -43,11 +43,10 @@ router.post('/create-account', (req, res, next) => {
     .then(account => {
       const accountID = account._id;
 
-      UserAccount
-        .create({
-          userID,
-          accountID
-        })
+      UserAccount.create({
+        userID,
+        accountID
+      })
         .then(newUserAccount => {
           console.log(newUserAccount);
         })
@@ -74,11 +73,10 @@ router.post('/add-account', RouteGuard, (req, res, next) => {
     .then(account => {
       const accountID = account._id;
 
-      UserAccount
-        .create({
-          userID,
-          accountID
-        })
+      UserAccount.create({
+        userID,
+        accountID
+      })
         .then(newUserAccount => {
           console.log(newUserAccount);
         })
@@ -91,22 +89,22 @@ router.post('/add-account', RouteGuard, (req, res, next) => {
     });
 });
 
-
 router.get('/:userID/user-accounts', RouteGuard, (req, res, next) => {
   const userID = req.params.userID;
 
   UserAccount.find({
     userID: userID
   })
-  .select({ "accountID": 1, "_id" : 0 })
-  .then((accounts) => {
-    console.log(accounts);
-    res.json({ accounts });
-  })
-  .catch(error => {
-    next(error);
-  });
-  
+    .select({ accountID: 1, _id: 0 })
+    .then(accounts => {
+      console.log(accounts);
+      res.json({ accounts });
+    })
+    .catch(error => {
+      next(error);
+    });
+});
+
 router.post('/delete-account', RouteGuard, (req, res, next) => {
   const id = req.params.id;
 

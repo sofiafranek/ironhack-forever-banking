@@ -12,7 +12,6 @@ import SingleAccount from './Views/SingleAccount';
 import AddAccount from './Views/addAccount';
 import Transactions from './Views/Transactions';
 import Analytics from './Views/Analytics';
-import Payments from './Views/Payments';
 import Cards from './Views/Cards';
 import SignIn from './Views/SignIn';
 import SignUp from './Views/SignUp';
@@ -148,11 +147,12 @@ class App extends Component {
             />
             <Route path="/accounts/:id" component={SingleAccount} exact />
 
-            <Route path="/transactions"
-            render={props => <Transactions {...props} userID={this.state.user._id} />}
-            exact />
+            <Route
+              path="/transactions"
+              render={props => <Transactions {...props} userID={this.state.user._id} />}
+              exact
+            />
             <Route path="/analytics" component={Analytics} exact />
-            <Route path="/payments" component={Payments} exact />
             <Route path="/cards" component={Cards} exact />
 
             <Route

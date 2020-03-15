@@ -4,24 +4,26 @@ import './style.scss';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import Chip from '@material-ui/core/Chip';
 
-class Transaction extends Component {
-  render() {
-    const { totalAmount } = this.props;
-    console.log(totalAmount);
+class Transaction extends Component{
+  
+  render(){
+    const { totalAmount, createdAt, reference, endPoint } = this.props;
     return (
       <Accordion className="hvr-grow transaction pb-3">
         <Card>
           <Card.Header>
             <Accordion.Toggle className="card-transaction" as={Button} variant="link" eventKey="0">
-              <h6>
-                {totalAmount}
-                <Chip label="Category" />
-              </h6>
+              {
+                reference && <h6>{reference}</h6>
+              }
               <div>
-                <small className="pl-0">Date of transaction</small>
-                <small>Amount of transaction</small>
+              {
+                createdAt && <small>{createdAt.split("T")[0]}</small>
+              }
+              {
+                totalAmount > 0 && <small>{totalAmount + ' €'}</small>
+              }
               </div>
             </Accordion.Toggle>
           </Card.Header>
@@ -30,6 +32,7 @@ class Transaction extends Component {
           </Accordion.Collapse>
         </Card>
       </Accordion>
+      
     );
   }
 }

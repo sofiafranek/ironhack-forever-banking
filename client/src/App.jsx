@@ -10,6 +10,7 @@ import Accounts from './Views/Accounts';
 import CreateAccount from './Views/createAccount';
 import SingleAccount from './Views/SingleAccount';
 import AddAccount from './Views/addAccount';
+import AddTransaction from './Views/addTransaction';
 import Transactions from './Views/Transactions';
 import Analytics from './Views/Analytics';
 import Cards from './Views/Cards';
@@ -150,6 +151,17 @@ class App extends Component {
             <Route
               path="/transactions"
               render={props => <Transactions {...props} userID={this.state.user._id} />}
+              exact
+            />
+            <Route
+              path="/transactions/addTransaction"
+              render={props => (
+                <AddTransaction
+                  {...props}
+                  changeActiveNav={this.activeNav}
+                  userID={this.state.user._id}
+                />
+              )}
               exact
             />
             <Route path="/analytics" component={Analytics} exact />

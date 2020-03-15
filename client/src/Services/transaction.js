@@ -9,18 +9,20 @@ const createTransaction = data =>
     instance
       .post('/add-transaction', data)
       .then(result => {
-        const account = result.data.account;
-        resolve(account);
+        const transaction = result.data.transaction;
+        console.log(transaction);
+        resolve(transaction);
       })
       .catch(reject);
   });
 
 const receivedTransactions = data =>
   new Promise((resolve, reject) => {
+    console.log("RECEIVE", data);
     instance
-      .get('/received', data)
+      .post('/received', data)
       .then(result => {
-        const transactions = result.data.transactions;
+        const transactions = result.data.transactionsTo;
         resolve(transactions);
       })
       .catch(reject);
@@ -28,10 +30,11 @@ const receivedTransactions = data =>
 
 const sentTransactions = data =>
   new Promise((resolve, reject) => {
+    console.log("SENT", data);
     instance
-        .get('/sent', data)
+        .post('/sent', data)
         .then(result => {
-            const transactions = result.data.transactions;
+            const transactions = result.data.transactionsFrom;
             resolve(transactions);
         })
          .catch(reject);

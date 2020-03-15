@@ -7,15 +7,17 @@ import Button from 'react-bootstrap/Button';
 import Chip from '@material-ui/core/Chip';
 
 class Transaction extends Component{
+  
   render(){
-
+    const { totalAmount } = this.props;
+    console.log(totalAmount);
     return (
       <Accordion className="hvr-grow transaction pb-3">
         <Card>
           <Card.Header>
             <Accordion.Toggle className="card-transaction" as={Button} variant="link" eventKey="0">
               <h6>
-                Transaction name here - <Chip label="Category" />
+                {totalAmount}<Chip label="Category" />
               </h6>
               <div>
                 <small>Date of transaction</small>

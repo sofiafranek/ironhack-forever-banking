@@ -52,11 +52,6 @@ class Accounts extends Component {
     this.getData();
   }
 
-  componentDidUpdate() {
-    //Works but its not good
-    //this.getData();
-  }
-
   render() {
     return (
       <Layout>

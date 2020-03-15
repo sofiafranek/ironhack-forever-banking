@@ -10,7 +10,7 @@ const router = new Router();
 
 router.post('/add-transaction', (req, res, next) => {
 
-  const { accountIDFrom, accountNumber, totalAmount} = req.body;
+  const { accountIDFrom, accountNumber, totalAmount, reference, endPoint } = req.body;
   let balanceFrom = 0, balanceTo = 0, accountIDTo = '';
 
   Account.findById(accountIDFrom)
@@ -31,7 +31,9 @@ router.post('/add-transaction', (req, res, next) => {
           Transaction.create({
             accountIDFrom,
             accountIDTo,
-            totalAmount
+            totalAmount,
+            reference,
+            endPoint
           })
           .then((transaction) => {
             Account.findByIdAndUpdate({'_id' : accountIDFrom}, {'balance': minusBalance} )

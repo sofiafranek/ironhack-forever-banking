@@ -1,16 +1,45 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Card from './../../Components/Card';
 
 import Layout from '../../Components/Layout';
+import { cards } from './../../Services/card';
 
-const Cards = () => {
-  return (
-    <div>
-      <Layout>
-        <h1>Cards</h1>
-        <small>Shows all the cards that are registed to your account</small>
-      </Layout>
-    </div>
-  );
-};
+class Cards extends Component {
+  constructor() {
+    super();
+    this.state = {
+      cards: []
+    };
+  }
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData() {
+    cards()
+      .then(cards => {
+        console.log(' Cards', cards);
+        this.setState({
+          cards
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  render() {
+    return (
+      <div>
+        <div className="">
+          {this.state.cards.map(card => (
+            <Card key={card._id} {...card} />
+          ))}
+        </div>
+      </div>
+    );
+  }
+}
 
 export default Cards;

@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { creatingCard } from './../../Services/card';
 
-class CreateAccount extends Component {
+class CreateCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,6 +27,27 @@ class CreateAccount extends Component {
     this.getData = this.getData.bind(this);
   }
 
+  GenerateCardNumber = () => {
+    const randomNumberCard = Math.floor(Math.random() * 9000000000) + 1000000000;
+    this.setState({
+      cardNumber: randomNumberCard
+    });
+  };
+
+  GeneratePin = () => {
+    const randomNumberPin = Math.floor(Math.random() * 9000000000) + 1000000000;
+    this.setState({
+      pin: randomNumberPin
+    });
+  };
+
+  GenerateCVV = () => {
+    const randomNumberCVV = Math.floor(Math.random() * 900) + 100;
+    this.setState({
+      CVV: randomNumberCVV
+    });
+  };
+
   handleInputChange(event) {}
 
   componentDidMount() {}
@@ -35,84 +56,14 @@ class CreateAccount extends Component {
 
   render() {
     return (
-      <Container maxWidth="xs">
-        <CssBaseline />
-        <div>
-          <Typography component="h1" variant="h5">
-            Create Card
-          </Typography>
-          <form onSubmit={event => this.getData(event)}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <FormControl>
-                  <InputLabel htmlFor="age-native-simple">Type of Account</InputLabel>
-                  <Select
-                    name="type"
-                    native
-                    onChange={event => this.handleInputChange(event)}
-                    inputProps={{
-                      type: ''
-                    }}
-                  >
-                    {this.state.types.map(type => (
-                      <option value={type}>{type}</option>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <h4>add money to your new account</h4>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="externalAccountNo"
-                  label="externalAccountNo"
-                  name="externalAccountNo"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="externalSortCode"
-                  label="externalSortCode"
-                  name="externalSortCode"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="reference"
-                  label="reference"
-                  name="reference"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="balance"
-                  label="Balance"
-                  name="balance"
-                  type="number"
-                  value={this.state.balance}
-                  onChange={event => this.handleInputChange(event)}
-                />
-              </Grid>
-            </Grid>
-            <Button type="submit" fullWidth variant="contained" color="primary">
-              Create Card
-            </Button>
-          </form>
-        </div>
-      </Container>
+      <div>
+        <h1>New Card</h1>
+        <button onClick={this.GenerateCardNumber}>Random Card Number</button>
+        <button onClick={this.GeneratePin}>Random Pin Number</button>
+        <button onClick={this.GenerateCVV}>Random CVV Number</button>
+      </div>
     );
   }
 }
 
-export default CreateAccount;
+export default CreateCard;

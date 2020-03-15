@@ -7,7 +7,6 @@ import Account from '../../Components/Account';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
-<<<<<<< HEAD
 const Accounts = props => {
   console.log(props);
   return (
@@ -28,63 +27,5 @@ const Accounts = props => {
     </Layout>
   );
 };
-=======
-import { userIDAccounts } from './../../Services/account';
-
-class Accounts extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      account: []
-    };
-  }
-
-  addingAccount() {
-    console.log('add account');
-  }
-
-  refresh() {
-    window.location.reload();
-    console.log('refresh');
-  }
-
-  getData() {
-    // const userID = this.props.user._id;
-    userIDAccounts()
-      .then(account => {
-        this.setState({
-          account
-        });
-      })
-      .catch(error => console.log(error));
-  }
-
-  componentDidMount() {
-    this.getData();
-  }
-
-  render() {
-    return (
-      <Layout>
-        <h1 className="pb-3">Accounts</h1>
-        <div className="action-container">
-          <Link to={`/accounts/add-account`} onClick={this.addingAccount}>
-            <Button variant="contained" className="primary">
-              <i className="fas fa-plus"></i>
-            </Button>
-          </Link>
-          <Button variant="contained" className="secondary" onClick={this.refresh}>
-            <i className="fas fa-sync-alt"></i>
-          </Button>
-        </div>
-        {this.state.account.map(single => {
-          console.log('ACCOUNTS', single);
-          return <Account key={single._id} {...single} />;
-        })}
-      </Layout>
-    );
-  }
-}
->>>>>>> 3c14671a40adab3b9fe8dc314769d5201f53790f
 
 export default Accounts;

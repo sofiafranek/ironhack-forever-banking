@@ -9,70 +9,69 @@ const router = new Router();
 
 
 router.post('/add-transaction', (req, res, next) => {
-  const { accountIDFrom, accountIDTo, totalAmount} = req.body;
-  let balanceFrom = 0, balanceTo = 0;
+
+  const { accountIDFrom, accountNumber, totalAmount} = req.body;
+  let balanceFrom = 0, balanceTo = 0, accountIDTo = '';
 
   Account.findById(accountIDFrom)
-  .then((account) => {
-    balanceFrom = account.balance;
+  .then((accountFrom) => {
+    balanceFrom = accountFrom.balance;
+
+      Account.findOne({ 'accountNumber': accountNumber })
+      .then((accountTo) => {
+        console.log("TO ACOUNT", accountTo);
+        balanceTo = accountTo.balance;
+        accountIDTo = accountTo._id;
+
+        const minusBalance = balanceFrom - Number(totalAmount);      
+        const addBalance = Number(balanceTo) + Number(totalAmount);
+      
+        if (minusBalance > 0) {
+      
+          Transaction.create({
+            accountIDFrom,
+            accountIDTo,
+            totalAmount
+          })
+          .then((transaction) => {
+            Account.findByIdAndUpdate({'_id' : accountIDFrom}, {'balance': minusBalance} )
+            .then((account) => console.log(account.balance))
+            .catch(error => {
+              console.log(error);
+            });
+      
+            Account.findByIdAndUpdate({'_id' : accountIDTo}, {'balance':  addBalance} )
+            .then((account) => console.log(account.balance))
+            .catch(error => {
+              console.log(error);
+            });
+      
+            res.json({ transaction });
+          })
+          .catch((error) => {
+            next(error);
+          });
+          }
+        else {
+          res.json('notEnoughBalance');
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   })
   .catch(error => {
     console.log(error);
   });
-
-  Account.findById(accountIDTo)
-  .then((account) => {
-    balanceTo = account.balance;
-  })
-  .catch(error => {
-    console.log(error);
-  });
-
-
-  const minusBalance = balanceFrom - totalAmount;
-  const addBalance = balanceTo + totalAmount;
-  
-  if (minusBalance > 0) {
-    Transaction.create({
-      accountIDFrom,
-      accountIDTo,
-      totalAmount
-    })
-    .then((transaction) => {
-      Account.findByIdAndUpdate({accountIDFrom}, {'balance': minusBalance} )
-      .then((account) => console.log(account.balance))
-      .catch(error => {
-        console.log(error);
-      });
-
-      Account.findByIdAndUpdate({accountIDTo}, {'balance':  addBalance} )
-      .then((account) => console.log(account.balance))
-      .catch(error => {
-        console.log(error);
-      });
-
-      res.json({ transaction });
-    })
-    .catch((error) => {
-      next(error);
-    });
-    }
-  else {
-    res.json('notEnoughBalance');
-  }
 });
 
-router.get('/received', (req, res, next) => {
-  const { accounts } = req.body;
-
-  console.log(accounts);
-
-  console.log(accounts.split(""));
-
-
-  Transaction.find({ 'accountIDTo' : 0 })
-  .then((transactions) => {
-    res.json({ transactions });
+router.post('/received', (req, res, next) => {
+  const transactions = req.body.map((value) => value.accountID);
+  console.log(transactions);
+  Transaction.find({ 'accountIDTo' : { $in: transactions } })
+  .then((transactionsTo) => {
+    console.log("to", transactionsTo);
+    res.json({ transactionsTo });
   })
   .catch((error) => {
     next(error);
@@ -80,16 +79,15 @@ router.get('/received', (req, res, next) => {
 
 });
 
-router.get('/sent', (req, res, next) => {
-  const { accounts } = req.body;
+router.post('/sent', (req, res, next) => {
 
-  console.log(accounts);
+  const transactions = req.body.map((value) => value.accountID);
+  console.log(transactions);
 
-  console.log(accounts.join(""));
-
-  Transaction.find({ 'accountIDFrom' : 0 })
-  .then((transactions) => {
-    res.json({ transactions });
+  Transaction.find({ 'accountIDFrom' : { $in: transactions } })
+  .then((transactionsFrom) => {
+    console.log("from", transactionsFrom);
+    res.json({ transactionsFrom });
   })
   .catch((error) => {
     next(error);

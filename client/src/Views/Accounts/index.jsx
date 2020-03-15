@@ -27,8 +27,8 @@ class Accounts extends Component {
   }
 
   getData() {
-    const userID = this.props.user._id;
-    userIDAccounts(userID)
+    // const userID = this.props.user._id;
+    userIDAccounts()
       .then(account => {
         this.setState({
           account

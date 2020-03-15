@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: '/api/card'
+  baseURL: '/api/cards'
 });
 
 const cards = () =>
@@ -16,6 +16,7 @@ const cards = () =>
       .catch(reject);
   });
 
+// creating a card to add to user account
 const creatingCard = data =>
   new Promise((resolve, reject) => {
     instance

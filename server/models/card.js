@@ -23,7 +23,6 @@ const schema = new mongoose.Schema({
     type: String,
     required: true
   },
-
   type: {
     type: String,
     required: true

@@ -15,13 +15,8 @@ class Cards extends Component {
     };
   }
 
-  addingCard() {
-    console.log('add card');
-  }
-
   refresh() {
     window.location.reload();
-    console.log('refresh');
   }
 
   componentDidMount() {
@@ -46,7 +41,7 @@ class Cards extends Component {
       <Layout>
         <h1 className="pb-3">Cards</h1>
         <div className="action-container">
-          <Link to={`/cards/add-card`} onClick={this.addingCard}>
+          <Link to={`/cards/add-card`}>
             <Button variant="contained" className="primary">
               <i className="fas fa-plus"></i>
             </Button>

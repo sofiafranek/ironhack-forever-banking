@@ -2,66 +2,131 @@ import React, { Component } from 'react';
 import './style.scss';
 
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
+
+import Layout from '../../Components/Layout';
+
 import { creatingCard } from './../../Services/card';
+import { userIDAccounts } from './../../Services/account';
 
 class CreateCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      accounts: [],
+      accountInfo: '',
       accountID: '',
-      cardNumber: '',
-      pin: '',
-      CVV: '',
-      type: ['Savings', 'Current', 'Credit'],
-      expiryDate: ''
+      type: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.getData = this.getData.bind(this);
   }
 
-  GenerateCardNumber = () => {
-    const randomNumberCard = Math.floor(Math.random() * 9000000000) + 1000000000;
+  generateCardNumber() {
+    return Math.floor(Math.random() * 9000000000) + 1000000000;
+  }
+
+  generatePin() {
+    return Math.floor(Math.random() * 9000) + 1000;
+  }
+
+  generateCVV() {
+    return Math.floor(Math.random() * 900) + 100;
+  }
+
+  generateExpiryDate() {
+    return Math.floor(Math.random() * 900) + 100;
+  }
+
+  handleInputChange(event) {
+    const inputName = event.target.name;
+    const value = event.target.value;
+
+    const accountSplitted = value.split(' ');
+    const accountID = accountSplitted[0];
+    const type = accountSplitted[1];
+
     this.setState({
-      cardNumber: randomNumberCard
+      accountID,
+      type
     });
-  };
+    console.log(inputName, 'inputname', value, 'value');
+  }
 
-  GeneratePin = () => {
-    const randomNumberPin = Math.floor(Math.random() * 9000000000) + 1000000000;
-    this.setState({
-      pin: randomNumberPin
-    });
-  };
+  componentDidMount() {
+    this.getData();
+  }
 
-  GenerateCVV = () => {
-    const randomNumberCVV = Math.floor(Math.random() * 900) + 100;
-    this.setState({
-      CVV: randomNumberCVV
-    });
-  };
+  getData() {
+    const userID = this.props.userID;
+    console.log(userID, 'IDDDDD');
+    userIDAccounts(userID)
+      .then(account => {
+        console.log('view cardsssss', account);
+        this.setState({
+          accounts: account
+        });
+      })
+      .catch(error => console.log(error));
+  }
 
-  handleInputChange(event) {}
+  setData(event) {
+    event.preventDefault();
+    const cardNumber = this.generateCardNumber();
+    const pin = this.generatePin();
+    const CVV = this.generateCVV();
+    const expiryDate = this.generateExpiryDate();
 
-  componentDidMount() {}
+    const card = {
+      cardNumber,
+      pin,
+      CVV,
+      accountID: this.state.accountID,
+      type: this.state.type,
+      expiryDate
+    };
 
-  getData(event) {}
+    creatingCard(card)
+      .then(card => {
+        console.log(card);
+        this.props.history.push('/cards');
+      })
+      .catch(error => console.log(error));
+  }
 
   render() {
     return (
-      <div>
+      <Layout>
         <h1>New Card</h1>
-        <button onClick={this.GenerateCardNumber}>Random Card Number</button>
-        <button onClick={this.GeneratePin}>Random Pin Number</button>
-        <button onClick={this.GenerateCVV}>Random CVV Number</button>
-      </div>
+        {this.state.accounts.length > 0 && (
+          <form onSubmit={event => this.setData(event)}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <FormControl>
+                  <InputLabel htmlFor="age-native-simple">Type of Card</InputLabel>
+                  <Select
+                    name="accountInfo"
+                    native
+                    onChange={event => this.handleInputChange(event)}
+                  >
+                    {this.state.accounts.map(acc => (
+                      <option value={acc._id + ' ' + acc.type} key={acc.accountNumber}>
+                        {acc.accountNumber + ' ' + acc.type}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+            </Grid>
+            <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">
+              Create Card
+            </Button>
+          </form>
+        )}
+      </Layout>
     );
   }
 }

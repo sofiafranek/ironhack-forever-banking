@@ -123,7 +123,7 @@ class App extends Component {
 
               <ProtectedRoute
                 authorized={this.state.user}
-                redirect={'/sign-in'}
+                redirect={'/signin'}
                 path="/dashboard"
                 render={props => (
                   <Dashboard {...props} changeActiveNav={this.activeNav} user={this.state.user} />
@@ -133,21 +133,21 @@ class App extends Component {
 
               <ProtectedRoute
                 authorized={this.state.user}
-                redirect={'/sign-in'}
+                redirect={'/signin'}
                 path="/create-account"
                 render={props => <CreateAccount {...props} changeActiveNav={this.disableNav} />}
                 exact
               />
               <ProtectedRoute
                 authorized={this.state.user}
-                redirect={'/sign-in'}
+                redirect={'/signin'}
                 path="/accounts"
                 render={props => <Accounts {...props} user={this.state.user} />}
                 exact
               />
               <ProtectedRoute
                 authorized={this.state.user}
-                redirect={'/sign-in'}
+                redirect={'/signin'}
                 path="/accounts/add-account"
                 render={props => (
                   <AddAccount
@@ -160,7 +160,7 @@ class App extends Component {
               />
               <ProtectedRoute
                 authorized={this.state.user}
-                redirect={'/sign-in'}
+                redirect={'/signin'}
                 path="/accounts/:id"
                 render={props => <SingleAccount {...props} changeActiveNav={this.activeNav} />}
                 exact
@@ -168,14 +168,14 @@ class App extends Component {
 
               <ProtectedRoute
                 authorized={this.state.user}
-                redirect={'/sign-in'}
+                redirect={'/signin'}
                 path="/transactions"
                 render={props => <Transactions {...props} userID={this.state.user._id} />}
                 exact
               />
               <ProtectedRoute
                 authorized={this.state.user}
-                redirect={'/sign-in'}
+                redirect={'/signin'}
                 path="/transactions/addTransaction"
                 render={props => (
                   <AddTransaction
@@ -188,21 +188,21 @@ class App extends Component {
               />
               <ProtectedRoute
                 authorized={this.state.user}
-                redirect={'/sign-in'}
+                redirect={'/signin'}
                 path="/analytics"
                 component={Analytics}
                 exact
               />
               <ProtectedRoute
                 authorized={this.state.user}
-                redirect={'/sign-in'}
+                redirect={'/signin'}
                 path="/cards"
                 component={Cards}
                 exact
               />
               <ProtectedRoute
                 authorized={this.state.user}
-                redirect={'/sign-in'}
+                redirect={'/signin'}
                 path="/cards/add-card"
                 render={props => <CreateCard {...props} userID={this.state.user._id} />}
                 exact
@@ -233,21 +233,21 @@ class App extends Component {
 
               <ProtectedRoute
                 authorized={this.state.user}
-                redirect={'/sign-in'}
+                redirect={'/signin'}
                 path="/messages"
                 component={Messages}
                 exact
               />
               <ProtectedRoute
                 authorized={this.state.user}
-                redirect={'/sign-in'}
+                redirect={'/signin'}
                 path="/notifications"
                 component={Notifications}
                 exact
               />
               <ProtectedRoute
                 authorized={this.state.user}
-                redirect={'/sign-in'}
+                redirect={'/signin'}
                 path="/profile"
                 render={() => <Profile user={this.state.user} />}
                 exact

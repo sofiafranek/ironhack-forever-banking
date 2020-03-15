@@ -9,9 +9,10 @@ import Dashboard from './Views/Dashboard';
 import Accounts from './Views/Accounts';
 import CreateAccount from './Views/createAccount';
 import SingleAccount from './Views/SingleAccount';
+import AddAccount from './Views/addAccount';
+import AddTransaction from './Views/addTransaction';
 import Transactions from './Views/Transactions';
 import Analytics from './Views/Analytics';
-import Payments from './Views/Payments';
 import Cards from './Views/Cards';
 import SignIn from './Views/SignIn';
 import SignUp from './Views/SignUp';
@@ -43,7 +44,6 @@ class App extends Component {
 
     loadUserInformation()
       .then(user => {
-        console.log('APP USER', user);
         this.updateUserInformation(user);
         this.setState({
           loaded: true
@@ -130,12 +130,45 @@ class App extends Component {
               render={props => <CreateAccount {...props} changeActiveNav={this.disableNav} />}
               exact
             />
-            <Route path="/accounts" component={Accounts} exact />
-            <Route path="/accounts/:id" component={SingleAccount} exact />
+            <Route
+              path="/accounts"
+              render={props => <Accounts {...props} user={this.state.user} />}
+              exact
+            />
+            <Route
+              path="/accounts/add-account"
+              render={props => (
+                <AddAccount
+                  {...props}
+                  changeActiveNav={this.activeNav}
+                  userID={this.state.user._id}
+                />
+              )}
+              exact
+            />
+            <Route
+              path="/accounts/:id"
+              render={props => <SingleAccount {...props} changeActiveNav={this.activeNav} />}
+              exact
+            />
 
-            <Route path="/transactions" component={Transactions} exact />
+            <Route
+              path="/transactions"
+              render={props => <Transactions {...props} userID={this.state.user._id} />}
+              exact
+            />
+            <Route
+              path="/transactions/addTransaction"
+              render={props => (
+                <AddTransaction
+                  {...props}
+                  changeActiveNav={this.activeNav}
+                  userID={this.state.user._id}
+                />
+              )}
+              exact
+            />
             <Route path="/analytics" component={Analytics} exact />
-            <Route path="/payments" component={Payments} exact />
             <Route path="/cards" component={Cards} exact />
 
             <Route
@@ -163,7 +196,7 @@ class App extends Component {
 
             <Route path="/messages" component={Messages} exact />
             <Route path="/notifications" component={Notifications} exact />
-            <Route path="/profile" component={Profile} exact />
+            <Route path="/profile" render={() => <Profile user={this.state.user} />} exact />
           </Switch>
         )}
       </div>

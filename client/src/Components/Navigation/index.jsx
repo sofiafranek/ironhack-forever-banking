@@ -127,7 +127,7 @@ const Navigation = (props) => {
         </List>
         <Divider className="mr-3 ml-3" />
         <List>
-          {['Accounts', 'Transactions', 'Analytics', 'Payments', 'Cards'].map((text, index) => (
+          {['Accounts', 'Transactions', 'Analytics', 'Cards'].map((text, index) => (
             <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
               <ListItem button>
                 <ListItemText primary={text} activeclassname="active" />

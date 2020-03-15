@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import './style.scss';
 
+import Layout from '../../Components/Layout';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-import { creatingAccount } from './../../Services/account';
+import { addAccount } from '../../Services/account';
 
-class CreateAccount extends Component {
+class AddAccount extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,27 +45,31 @@ class CreateAccount extends Component {
 
   getData(event) {
     event.preventDefault();
-    const userID = this.props.location.state.idUser;
+    const userID = this.props.userID;
     const accountNumber = this.randomKey(15);
 
     const account = Object.assign({}, this.state);
     account.accountNumber = accountNumber;
     account.userID = userID;
 
-    creatingAccount(account)
+    console.log(account, 'NEW');
+
+    addAccount(account)
       .then(account => {
-        this.props.history.push('/dashboard');
+        this.props.history.push({
+          pathname: '/accounts'
+        });
       })
       .catch(error => console.log(error));
   }
 
   render() {
     return (
-      <Container className="layout-width centered-page">
-        <h1 className="mb-4">Create an Account</h1>
-        <form onSubmit={event => this.getData(event)}>
+      <Layout>
+        <h1 className="mb-4">Creating a new account</h1>
+        <form onSubmit={event => this.getData(event)} className="add-account-form">
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <FormControl>
                 <InputLabel htmlFor="age-native-simple">Type of Account</InputLabel>
                 <Select
@@ -84,6 +88,31 @@ class CreateAccount extends Component {
                 </Select>
               </FormControl>
             </Grid>
+            {/* need to add logic here if you want to top up with internal account or external account */}
+            <Grid item xs={12} sm={12}>
+              <h4 className="pt-3 pb-2">Add money to your account</h4>
+              <FormControl>
+                <InputLabel htmlFor="age-native-simple">Choose to top up using:</InputLabel>
+                <Select name="whichaccount" native>
+                  <option value="existing">Exisiting Account Here</option>
+                  <option value="external">External Account</option>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <h4 className="pt-3 pb-2">Amount of money you would like to add</h4>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="balance"
+                label="Balance"
+                name="balance"
+                type="number"
+                value={this.state.balance}
+                onChange={event => this.handleInputChange(event)}
+              />
+            </Grid>
             <h4 className="pl-2 pt-3 pb-2">Add money to your new account</h4>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -91,8 +120,9 @@ class CreateAccount extends Component {
                 required
                 fullWidth
                 id="externalAccountNo"
-                label="Account No."
+                label="externalAccountNo"
                 name="externalAccountNo"
+                type="number"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -101,8 +131,9 @@ class CreateAccount extends Component {
                 required
                 fullWidth
                 id="externalSortCode"
-                label="Sort Code"
+                label="externalSortCode"
                 name="externalSortCode"
+                type="number"
               />
             </Grid>
             <Grid item xs={12} sm={12}>
@@ -111,7 +142,7 @@ class CreateAccount extends Component {
                 required
                 fullWidth
                 id="reference"
-                label="Reference"
+                label="reference"
                 name="reference"
               />
             </Grid>
@@ -123,6 +154,7 @@ class CreateAccount extends Component {
                 id="balance"
                 label="Balance"
                 name="balance"
+                type="number"
                 value={this.state.balance}
                 onChange={event => this.handleInputChange(event)}
               />
@@ -132,9 +164,9 @@ class CreateAccount extends Component {
             Create Account
           </Button>
         </form>
-      </Container>
+      </Layout>
     );
   }
 }
 
-export default CreateAccount;
+export default AddAccount;

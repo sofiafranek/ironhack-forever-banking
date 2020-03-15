@@ -3,11 +3,33 @@
 const { Router } = require('express');
 
 const Account = require('../models/account');
-const userAccount = require('../models/userAccount');
+const UserAccount = require('../models/userAccount');
 
 const router = new Router();
 
-const RouteGuard = require("./../middleware/route-guard");
+const RouteGuard = require('./../middleware/route-guard');
+
+router.get('/', RouteGuard, (req, res, next) => {
+  Account.find()
+    .then(accounts => {
+      res.json({ accounts });
+    })
+    .catch(error => {
+      next(error);
+    });
+});
+
+router.get('/:id', RouteGuard, (req, res, next) => {
+  const id = req.params.id;
+
+  Account.findById(id)
+    .then(account => {
+      res.json({ account });
+    })
+    .catch(error => {
+      next(error);
+    });
+});
 
 router.post('/create-account', (req, res, next) => {
   const { balance, type, accountNumber, userID } = req.body;
@@ -18,41 +40,95 @@ router.post('/create-account', (req, res, next) => {
     type,
     balance: balanceNumber
   })
-  .then(account => {
-    const accountID = account._id;
+    .then(account => {
+      const accountID = account._id;
 
-    userAccount.create({
-      userID,
-      accountID
-    })
-    .then(newUserAccount => {
-      console.log(newUserAccount);
-    })
-    .catch(error => next(error));
+      UserAccount.create({
+        userID,
+        accountID
+      })
+        .then(newUserAccount => {
+          console.log(newUserAccount);
+        })
+        .catch(error => next(error));
 
-    res.json({account});
-  })
-  .catch(error => {
-    next(error);
-  });
-});
-
-router.post('/', RouteGuard, (req, res, next) => {
-  Account.findOne()
-    .then(document => {
-      res.json({ document });
+      res.json({ account });
     })
     .catch(error => {
       next(error);
     });
 });
 
-router.get('/:id', RouteGuard, (req, res, next) => {
-  const id = req.params.id;
-  
-  Account.findById(id)
+router.post('/add-account', RouteGuard, (req, res, next) => {
+  const { balance, type, accountNumber, userID } = req.body;
+  const balanceNumber = Number(balance);
+
+  console.log(req.body);
+
+  Account.create({
+    accountNumber,
+    type,
+    balance: balanceNumber
+  })
     .then(account => {
+      const accountID = account._id;
+
+      UserAccount.create({
+        userID,
+        accountID
+      })
+        .then(newUserAccount => {
+          console.log(newUserAccount);
+        })
+        .catch(error => next(error));
+
       res.json({ account });
+    })
+    .catch(error => {
+      next(error);
+    });
+});
+
+router.get('/:userID/user-accounts', RouteGuard, (req, res, next) => {
+  const userID = req.params.userID;
+
+  UserAccount.find({
+    userID: userID
+  })
+    .select({ accountID: 1, _id: 0 })
+    .then(accounts => {
+      console.log(accounts);
+      res.json({ accounts });
+    })
+    .catch(error => {
+      next(error);
+    });
+});
+
+// to get all the accounts from the user logged in
+router.get('/:userID/accounts', RouteGuard, (req, res, next) => {
+  const userID = req.params.userID;
+
+  UserAccount.find({
+    userID: userID
+  })
+    .populate('accountID')
+    .then(accounts => {
+      const accountsUser = accounts.map(account => account.accountID);
+      res.json({ accountsUser });
+    })
+    .catch(error => {
+      next(error);
+    });
+});
+
+router.post('/delete-account', RouteGuard, (req, res, next) => {
+  const id = req.params.id;
+
+  Account.findById(id)
+    .then(() => {
+      console.log('deleteing account');
+      res.json({});
     })
     .catch(error => {
       next(error);

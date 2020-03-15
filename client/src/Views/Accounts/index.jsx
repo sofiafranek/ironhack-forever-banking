@@ -7,6 +7,7 @@ import Account from '../../Components/Account';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
+// import { account } from './../../Services/account';
 import { userIDAccounts } from './../../Services/account';
 
 class Accounts extends Component {
@@ -15,6 +16,7 @@ class Accounts extends Component {
     this.state = {
       account: []
     };
+    this.removeAccount = this.removeAccount.bind(this);
   }
 
   addingAccount() {
@@ -27,9 +29,10 @@ class Accounts extends Component {
   }
 
   getData() {
-    // const userID = this.props.user._id;
-    userIDAccounts()
+    const userID = this.props.user._id;
+    userIDAccounts(userID)
       .then(account => {
+        console.log('LENGTH', account.length);
         this.setState({
           account
         });
@@ -37,8 +40,21 @@ class Accounts extends Component {
       .catch(error => console.log(error));
   }
 
+  removeAccount(id) {
+    this.setState(previousState => {
+      return {
+        account: previousState.account.filter(acc => acc._id !== id)
+      };
+    });
+  }
+
   componentDidMount() {
     this.getData();
+  }
+
+  componentDidUpdate() {
+    //Works but its not good
+    //this.getData();
   }
 
   render() {
@@ -56,7 +72,7 @@ class Accounts extends Component {
           </Button>
         </div>
         {this.state.account.map(single => {
-          console.log('ACCOUNTS', single);
+          console.log(single);
           return <Account key={single._id} {...single} />;
         })}
       </Layout>

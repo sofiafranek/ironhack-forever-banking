@@ -122,13 +122,21 @@ router.get('/:userID/accounts', RouteGuard, (req, res, next) => {
     });
 });
 
-router.post('/delete-account', RouteGuard, (req, res, next) => {
+router.post('/:id/delete-account', RouteGuard, (req, res, next) => {
   const id = req.params.id;
 
-  Account.findById(id)
+  console.log(id);
+
+  Account.findByIdAndRemove(id)
     .then(() => {
       console.log('deleteing account');
-      res.json({});
+      UserAccount.findOneAndRemove({
+        accountID: id
+      })
+        .then(() => res.json({}))
+        .catch(error => {
+          next(error);
+        });
     })
     .catch(error => {
       next(error);

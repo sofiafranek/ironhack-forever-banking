@@ -16,7 +16,8 @@ class SingleAccount extends Component {
     this.state = {
       account: null
     };
-    console.log(this.props.match.params.id, 'HELLO');
+    this.deleteAnAccount = this.deleteAnAccount.bind(this);
+    console.log(this.props.match.params.id);
   }
 
   refreshAccount() {
@@ -26,15 +27,12 @@ class SingleAccount extends Component {
 
   deleteAnAccount() {
     const accountID = this.props.match.params.id;
-    // console.log(this.props, 'DELETE');
     deleteAccount(accountID)
-      .then(account => {
-        console.log(account);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+      .then(() => {})
+      .catch(error => console.log(error));
     console.log('delete account');
+    console.log(this.props.location);
+    //this.props.location.removeAccount(accountID);
   }
 
   componentDidMount() {

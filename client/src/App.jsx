@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './App.scss';
 
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
+
+import ProtectedRoute from './Components/ProtectedRoute';
 
 import Home from './Views/Home';
 
@@ -23,6 +25,7 @@ import Profile from './Views/Profile';
 
 import Navigation from './Components/Navigation';
 import Mobilenavigation from './Components/Mobilenavigation';
+import CreateCard from './Views/createCard';
 
 class App extends Component {
   constructor(props) {
@@ -100,100 +103,157 @@ class App extends Component {
   render() {
     return (
       <div>
-        {this.state.activeNav ? (
-          this.state.mobile === true ? (
-            <Mobilenavigation />
-          ) : (
-            <Navigation updateUserInformation={this.updateUserInformation} />
-          )
-        ) : (
-          true
-        )}
         {this.state.loaded && (
-          <Switch>
-            <Route
-              path="/"
-              render={props => <Home {...props} changeActiveNav={this.disableNav} />}
-              exact
-            />
+          <BrowserRouter>
+            {this.state.activeNav ? (
+              this.state.mobile === true ? (
+                <Mobilenavigation />
+              ) : (
+                <Navigation updateUserInformation={this.updateUserInformation} />
+              )
+            ) : (
+              true
+            )}
+            <Switch>
+              <Route
+                path="/"
+                render={props => <Home {...props} changeActiveNav={this.disableNav} />}
+                exact
+              />
 
-            <Route
-              path="/dashboard"
-              render={props => (
-                <Dashboard {...props} changeActiveNav={this.activeNav} user={this.state.user} />
-              )}
-              exact
-            />
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
+                path="/dashboard"
+                render={props => (
+                  <Dashboard {...props} changeActiveNav={this.activeNav} user={this.state.user} />
+                )}
+                exact
+              />
 
-            <Route
-              path="/create-account"
-              render={props => <CreateAccount {...props} changeActiveNav={this.disableNav} />}
-              exact
-            />
-            <Route
-              path="/accounts"
-              render={props => <Accounts {...props} user={this.state.user} />}
-              exact
-            />
-            <Route
-              path="/accounts/add-account"
-              render={props => (
-                <AddAccount
-                  {...props}
-                  changeActiveNav={this.activeNav}
-                  userID={this.state.user._id}
-                />
-              )}
-              exact
-            />
-            <Route path="/accounts/:id" component={SingleAccount} exact />
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
+                path="/create-account"
+                render={props => <CreateAccount {...props} changeActiveNav={this.disableNav} />}
+                exact
+              />
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
+                path="/accounts"
+                render={props => <Accounts {...props} user={this.state.user} />}
+                exact
+              />
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
+                path="/accounts/add-account"
+                render={props => (
+                  <AddAccount
+                    {...props}
+                    changeActiveNav={this.activeNav}
+                    userID={this.state.user._id}
+                  />
+                )}
+                exact
+              />
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
+                path="/accounts/:id"
+                render={props => <SingleAccount {...props} changeActiveNav={this.activeNav} />}
+                exact
+              />
 
-            <Route
-              path="/transactions"
-              render={props => <Transactions {...props} userID={this.state.user._id} />}
-              exact
-            />
-            <Route
-              path="/transactions/addTransaction"
-              render={props => (
-                <AddTransaction
-                  {...props}
-                  changeActiveNav={this.activeNav}
-                  userID={this.state.user._id}
-                />
-              )}
-              exact
-            />
-            <Route path="/analytics" component={Analytics} exact />
-            <Route path="/cards" component={Cards} exact />
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
+                path="/transactions"
+                render={props => <Transactions {...props} userID={this.state.user._id} />}
+                exact
+              />
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
+                path="/transactions/addTransaction"
+                render={props => (
+                  <AddTransaction
+                    {...props}
+                    changeActiveNav={this.activeNav}
+                    userID={this.state.user._id}
+                  />
+                )}
+                exact
+              />
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
+                path="/analytics"
+                component={Analytics}
+                exact
+              />
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
+                path="/cards"
+                component={Cards}
+                exact
+              />
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
+                path="/cards/add-card"
+                render={props => <CreateCard {...props} userID={this.state.user._id} />}
+                exact
+              />
 
-            <Route
-              path="/signin"
-              render={props => (
-                <SignIn
-                  {...props}
-                  changeActiveNav={this.disableNav}
-                  updateUserInformation={this.updateUserInformation}
-                />
-              )}
-              exact
-            />
-            <Route
-              path="/signup"
-              render={props => (
-                <SignUp
-                  {...props}
-                  changeActiveNav={this.disableNav}
-                  updateUserInformation={this.updateUserInformation}
-                />
-              )}
-              exact
-            />
+              <Route
+                path="/signin"
+                render={props => (
+                  <SignIn
+                    {...props}
+                    changeActiveNav={this.disableNav}
+                    updateUserInformation={this.updateUserInformation}
+                  />
+                )}
+                exact
+              />
+              <Route
+                path="/signup"
+                render={props => (
+                  <SignUp
+                    {...props}
+                    changeActiveNav={this.disableNav}
+                    updateUserInformation={this.updateUserInformation}
+                  />
+                )}
+                exact
+              />
 
-            <Route path="/messages" component={Messages} exact />
-            <Route path="/notifications" component={Notifications} exact />
-            <Route path="/profile" component={Profile} exact />
-          </Switch>
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
+                path="/messages"
+                component={Messages}
+                exact
+              />
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
+                path="/notifications"
+                component={Notifications}
+                exact
+              />
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
+                path="/profile"
+                render={() => <Profile user={this.state.user} />}
+                exact
+              />
+            </Switch>
+          </BrowserRouter>
         )}
       </div>
     );

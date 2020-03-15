@@ -42,8 +42,7 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar
 }));
 
-const Navigation = (props) => {
-
+const Navigation = props => {
   const handleSignOut = () => {
     signOut()
       .then(() => {
@@ -53,7 +52,7 @@ const Navigation = (props) => {
       .catch(error => {
         console.log(error);
       });
-  }
+  };
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);

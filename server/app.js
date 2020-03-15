@@ -40,7 +40,7 @@ app.use(
     },
     store: new (connectMongo(expressSession))({
       mongooseConnection: mongoose.connection,
-      ttl: 60 * 60 * 24
+      ttl: 60 * 60 * 100000
     })
   })
 );
@@ -53,7 +53,7 @@ app.use('/api', indexRouter);
 app.use('/api/authentication', authenticationRouter);
 app.use('/api/accounts', accountRouter);
 app.use('/api/analytics', analyticsRouter);
-app.use('/api/card', cardRouter);
+app.use('/api/cards', cardRouter);
 app.use('/api/transaction', transactionRouter);
 
 // Catch missing routes and forward to error handler

@@ -7,7 +7,7 @@ import Account from '../../Components/Account';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
-import { account } from './../../Services/account';
+import { userIDAccounts } from './../../Services/account';
 
 class Accounts extends Component {
   constructor(props) {
@@ -15,20 +15,23 @@ class Accounts extends Component {
     this.state = {
       account: []
     };
+    this.removeAccount = this.removeAccount.bind(this);
   }
 
   addingAccount() {
     console.log('add account');
   }
 
-  refreshAccount() {
+  refresh() {
     window.location.reload();
     console.log('refresh');
   }
 
   getData() {
-    account()
+    const userID = this.props.user._id;
+    userIDAccounts(userID)
       .then(account => {
+        console.log('LENGTH', account.length);
         this.setState({
           account
         });
@@ -36,27 +39,35 @@ class Accounts extends Component {
       .catch(error => console.log(error));
   }
 
+  removeAccount(id) {
+    this.setState(previousState => {
+      return {
+        account: previousState.account.filter(acc => acc._id !== id)
+      };
+    });
+  }
+
   componentDidMount() {
+    console.log('componentDidMount');
     this.getData();
   }
 
   render() {
-    const account = this.state.account;
     return (
       <Layout>
-        <h1>Accounts</h1>
+        <h1 className="pb-3">Accounts</h1>
         <div className="action-container">
           <Link to={`/accounts/add-account`} onClick={this.addingAccount}>
             <Button variant="contained" className="primary">
               <i className="fas fa-plus"></i>
             </Button>
           </Link>
-          <Button variant="contained" className="secondary" onClick={this.refreshAccount}>
+          <Button variant="contained" className="secondary" onClick={this.refresh}>
             <i className="fas fa-sync-alt"></i>
           </Button>
         </div>
         {this.state.account.map(single => {
-          console.log('ACCOUNTS', single);
+          console.log(single);
           return <Account key={single._id} {...single} />;
         })}
       </Layout>

@@ -105,13 +105,38 @@ router.get('/:userID/user-accounts', RouteGuard, (req, res, next) => {
     });
 });
 
-router.post('/delete-account', RouteGuard, (req, res, next) => {
+// to get all the accounts from the user logged in
+router.get('/:userID/accounts', RouteGuard, (req, res, next) => {
+  const userID = req.params.userID;
+
+  UserAccount.find({
+    userID: userID
+  })
+    .populate('accountID')
+    .then(accounts => {
+      const accountsUser = accounts.map(account => account.accountID);
+      res.json({ accountsUser });
+    })
+    .catch(error => {
+      next(error);
+    });
+});
+
+router.post('/:id/delete-account', RouteGuard, (req, res, next) => {
   const id = req.params.id;
 
-  Account.findById(id)
+  console.log(id);
+
+  Account.findByIdAndRemove(id)
     .then(() => {
       console.log('deleteing account');
-      res.json({});
+      UserAccount.findOneAndRemove({
+        accountID: id
+      })
+        .then(() => res.json({}))
+        .catch(error => {
+          next(error);
+        });
     })
     .catch(error => {
       next(error);

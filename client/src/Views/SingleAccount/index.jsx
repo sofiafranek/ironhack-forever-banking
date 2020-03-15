@@ -16,6 +16,7 @@ class SingleAccount extends Component {
     this.state = {
       account: null
     };
+    console.log(this.props.match.params.id, 'HELLO');
   }
 
   refreshAccount() {
@@ -24,7 +25,9 @@ class SingleAccount extends Component {
   }
 
   deleteAnAccount() {
-    deleteAccount()
+    const accountID = this.props.match.params.id;
+    // console.log(this.props, 'DELETE');
+    deleteAccount(accountID)
       .then(account => {
         console.log(account);
       })
@@ -58,11 +61,11 @@ class SingleAccount extends Component {
             <Tabs defaultActiveKey="summary" className="pt-3">
               <Tab eventKey="summary" title="Summary">
                 <h1>{this.state.account.balance}€</h1>
-                <small>
+                <h6 className="pb-3">
                   {this.state.account.type === 'current' || 'savings'
-                    ? 'Total credit limit'
-                    : 'Available balance'}
-                </small>
+                    ? 'Total Credit Limit'
+                    : 'Available Balance'}
+                </h6>
                 <h5>Account Number : {this.state.account.accountNumber}</h5>
                 <h5>Account Type : {this.state.account.type}</h5>
                 <h5>Card Number : 1234 1234 1234 1234</h5>

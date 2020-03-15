@@ -31,7 +31,7 @@ router.post('/signup', (req, res, next) => {
     .hash(password, 10)
     .then(hash => {
       return User.create({
-        name: firstName + lastName,
+        name: firstName + ' ' + lastName,
         email,
         passwordHash: hash,
         phoneNumber,

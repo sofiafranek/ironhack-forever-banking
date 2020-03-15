@@ -49,27 +49,45 @@ const singleAccount = id =>
       .catch(reject);
   });
 
-const deleteAccount = data =>
+const deleteAccount = id =>
   new Promise((resolve, reject) => {
     instance
-      .get('/delete-account', data)
+      .get('/delete-account', id)
       .then(result => {
         console.log(result);
       })
       .catch(reject);
   });
 
-const userAccounts = userID => 
+const userIDAccounts = userID =>
   new Promise((resolve, reject) => {
-    console.log("USERID", userID)
+    console.log('ACCOUNTID', userID);
+    instance
+      .get(`/${userID}/accounts`)
+      .then(result => {
+        const account = result.data.accountsUser;
+        resolve(account);
+      })
+      .catch(reject);
+  });
+
+const userAccounts = userID =>
+  new Promise((resolve, reject) => {
     instance
       .get(`/${userID}/user-accounts`)
       .then(result => {
         const accounts = result.data.accounts;
-        console.log("ACCOUNTS IN INSTANCE THEN", accounts);
         resolve(accounts);
       })
       .catch(reject);
   });
 
-export { account, addAccount, creatingAccount, deleteAccount, singleAccount, userAccounts };
+export {
+  account,
+  addAccount,
+  creatingAccount,
+  deleteAccount,
+  singleAccount,
+  userIDAccounts,
+  userAccounts
+};

@@ -145,7 +145,11 @@ class App extends Component {
               )}
               exact
             />
-            <Route path="/accounts/:id" component={SingleAccount} exact />
+            <Route
+              path="/accounts/:id"
+              render={props => <SingleAccount {...props} changeActiveNav={this.activeNav} />}
+              exact
+            />
 
             <Route
               path="/transactions"
@@ -180,7 +184,7 @@ class App extends Component {
 
             <Route path="/messages" component={Messages} exact />
             <Route path="/notifications" component={Notifications} exact />
-            <Route path="/profile" component={Profile} exact />
+            <Route path="/profile" render={() => <Profile user={this.state.user} />} exact />
           </Switch>
         )}
       </div>

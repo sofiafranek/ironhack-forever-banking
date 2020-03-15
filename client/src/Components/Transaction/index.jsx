@@ -6,19 +6,18 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Chip from '@material-ui/core/Chip';
 
-class Transaction extends Component{
-  render(){
-
+class Transaction extends Component {
+  render() {
     return (
       <Accordion className="hvr-grow transaction pb-3">
         <Card>
           <Card.Header>
             <Accordion.Toggle className="card-transaction" as={Button} variant="link" eventKey="0">
-              <h6>
+              <h6 className="pb-2">
                 Transaction name here - <Chip label="Category" />
               </h6>
               <div>
-                <small>Date of transaction</small>
+                <small className="pl-0">Date of transaction</small>
                 <small>Amount of transaction</small>
               </div>
             </Accordion.Toggle>
@@ -29,7 +28,7 @@ class Transaction extends Component{
         </Card>
       </Accordion>
     );
-  }  
-};
+  }
+}
 
 export default Transaction;

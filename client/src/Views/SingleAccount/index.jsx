@@ -28,7 +28,11 @@ class SingleAccount extends Component {
   deleteAnAccount() {
     const accountID = this.props.match.params.id;
     deleteAccount(accountID)
-      .then(() => {})
+      .then(() => {
+        this.props.history.push({
+          pathname: '/accounts'
+        });
+      })
       .catch(error => console.log(error));
     console.log('delete account');
     console.log(this.props.location);

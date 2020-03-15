@@ -7,14 +7,12 @@ class Card extends Component {
     const style = { backgroundColor: bgColor, color };
 
     return (
-      <div className="card" style={style}>
+      <div className="component-card" style={style}>
         <p>{accountID}</p>
         <p>{type}</p>
         <p>{cardNumber}</p>
         <p>Expires {expiryDate}</p>
         <p>{CVV}</p>
-        {/*         <p>{name}</p>
-         */}{' '}
       </div>
     );
   }

@@ -3,6 +3,7 @@ import './style.scss';
 
 import Layout from '../../Components/Layout';
 import Account from '../../Components/Account';
+import Search from '../../Components/Search';
 
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
@@ -13,9 +14,18 @@ class Accounts extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      account: []
+      account: [],
+      search: ''
     };
     this.removeAccount = this.removeAccount.bind(this);
+    this.searchData = this.searchData.bind(this);
+  }
+
+  searchData(word) {
+    console.log(word, 'WORD');
+    this.setState({
+      search: word
+    });
   }
 
   addingAccount() {
@@ -31,7 +41,6 @@ class Accounts extends Component {
     const userID = this.props.user._id;
     userIDAccounts(userID)
       .then(account => {
-        console.log('LENGTH', account.length);
         this.setState({
           account
         });
@@ -48,7 +57,6 @@ class Accounts extends Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
     this.getData();
   }
 
@@ -66,10 +74,16 @@ class Accounts extends Component {
             <i className="fas fa-sync-alt"></i>
           </Button>
         </div>
-        {this.state.account.map(single => {
-          console.log(single);
-          return <Account key={single._id} {...single} />;
-        })}
+        <Search search={this.searchData} />
+        {this.state.account.length > 0 ? (
+          this.state.account.map(single => {
+            if (single.type.toLowerCase().includes(this.state.search)) {
+              return <Account key={single._id} {...single} />;
+            }
+          })
+        ) : (
+          <p className="pt-3">There are no accounts</p>
+        )}
       </Layout>
     );
   }

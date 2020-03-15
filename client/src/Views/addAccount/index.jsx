@@ -33,20 +33,30 @@ class AddAccount extends Component {
     this.props.changeActiveNav();
   }
 
-  randomKey(length) {
-    let result = '';
-    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  randomKey() {
+    let Numberresult = '';
+    let Numbercharacters = '0123456789';
+    let NumbercharactersLength = Numbercharacters.length;
+    for (let i = 0; i < 2; i++) {
+      Numberresult += Numbercharacters.charAt(Math.floor(Math.random() * NumbercharactersLength));
     }
+
+    let Letterresult = '';
+    let Lettercharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let LettercharactersLength = Lettercharacters.length;
+    for (let i = 0; i < 20; i++) {
+      Letterresult += Lettercharacters.charAt(Math.floor(Math.random() * LettercharactersLength));
+    }
+
+    let result = Numberresult + Letterresult;
+    console.log(result);
     return result;
   }
 
   getData(event) {
     event.preventDefault();
     const userID = this.props.userID;
-    const accountNumber = this.randomKey(15);
+    const accountNumber = this.randomKey();
 
     const account = Object.assign({}, this.state);
     account.accountNumber = accountNumber;

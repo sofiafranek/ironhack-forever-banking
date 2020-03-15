@@ -37,32 +37,29 @@ class AddTransaction extends Component {
     const userID = this.props.userID;
 
     userAccounts(userID)
-     .then((accounts) => {
-       this.setState({
-         accounts
-       })
-     })  
-     .catch(error => {
-       console.log(error);
-     })
-    
+      .then(accounts => {
+        this.setState({
+          accounts
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
-
 
   getData(event) {
     event.preventDefault();
     const transaction = Object.assign({}, this.state);
 
-    console.log("TRANSACTION VIEW", transaction);
+    console.log('TRANSACTION VIEW', transaction);
 
     createTransaction(transaction)
-    .then(transaction => {
-      this.props.history.push({
-        pathname: '/transactions'
-      });
-    })
-    .catch(error => console.log(error));
-
+      .then(transaction => {
+        this.props.history.push({
+          pathname: '/transactions'
+        });
+      })
+      .catch(error => console.log(error));
   }
 
   render() {
@@ -72,7 +69,7 @@ class AddTransaction extends Component {
         <form onSubmit={event => this.getData(event)} className="add-account-form">
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
-            <FormControl>
+              <FormControl>
                 <InputLabel htmlFor="age-native-simple">Account From</InputLabel>
                 <Select
                   native
@@ -80,18 +77,14 @@ class AddTransaction extends Component {
                   name="accountIDFrom"
                   value={this.state.accountIDFrom}
                 >
-                {
-                this.state.accounts.map(account => (
-                  <option key={account.accountID}>
-                    {account.accountID}
-                  </option>
-                ))
-                }
+                  {this.state.accounts.map(account => (
+                    <option key={account.accountID}>{account.accountID}</option>
+                  ))}
                 </Select>
-            </FormControl>
+              </FormControl>
             </Grid>
             <Grid item xs={12} sm={12}>
-              <h4 className="pt-3 pb-2">Account Number that you want to transfer</h4>
+              <h4 className="pt-3 pb-2">IBAN Number that you want to transfer</h4>
               <TextField
                 variant="outlined"
                 required

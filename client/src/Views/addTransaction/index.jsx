@@ -273,7 +273,11 @@ class AddTransaction extends Component {
   createListTransactions() {
     const allT = this.calculateTransactions();
     createListTransactions(allT)
-      .then(() => {})
+      .then(() => {
+        this.props.history.push({
+          pathname: '/transactions'
+        });
+      })
       .catch(error => {
         console.log(error);
       });

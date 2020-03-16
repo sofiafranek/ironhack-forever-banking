@@ -13,7 +13,7 @@ const serveFavicon = require('serve-favicon');
 const basicAuthenticationSerializer = require('./middleware/basic-authentication-serializer.js');
 const bindUserToViewLocals = require('./middleware/bind-user-to-view-locals.js');
 const passportConfigure = require('./passport-configuration.js');
-
+const scheduler = require('./scheduler.js');
 const indexRouter = require('./routes/index');
 const authenticationRouter = require('./routes/authentication');
 const accountRouter = require('./routes/accounts');
@@ -22,13 +22,6 @@ const cardRouter = require('./routes/card');
 const transactionRouter = require('./routes/transaction');
 
 const app = express();
-
-/** TRYING NODE SCHEDULE **/
-const schedule = require('node-schedule');
- 
-const j = schedule.scheduleJob('20 * * * *', function(){
-  console.log('The answer to life, the universe, and everything!');
-});
 
 app.use(serveFavicon(join(__dirname, 'public/images', 'favicon.ico')));
 app.use(logger('dev'));

@@ -15,21 +15,51 @@ class Accounts extends Component {
     super(props);
     this.state = {
       account: [],
-      search: ''
+      search: '',
+      filter: ''
     };
     this.removeAccount = this.removeAccount.bind(this);
     this.searchData = this.searchData.bind(this);
+    this.filter = this.filter.bind(this);
   }
 
   searchData(word) {
-    console.log(word, 'WORD');
     this.setState({
       search: word
     });
   }
 
-  addingAccount() {
-    console.log('add account');
+  filterMethod(filtered) {
+    this.setState(previousState => {
+      return {
+        account: previousState.account.filter(acc => acc.type === filtered)
+      };
+    });
+  }
+
+  filter(event) {
+    event.preventDefault();
+    const filter = event.target.value;
+
+    this.setState({
+      filter
+    });
+
+    const userID = this.props.user._id;
+    userIDAccounts(userID)
+      .then(account => {
+        this.setState({
+          account
+        });
+        if (filter === 'Current') {
+          this.filterMethod('Current');
+        } else if (filter === 'Savings') {
+          this.filterMethod('Savings');
+        } else if (filter === 'Credit') {
+          this.filterMethod('Credit');
+        }
+      })
+      .catch(error => console.log(error));
   }
 
   refresh() {
@@ -44,6 +74,7 @@ class Accounts extends Component {
         this.setState({
           account
         });
+        console.log('after asyncs code');
       })
       .catch(error => console.log(error));
   }
@@ -65,7 +96,7 @@ class Accounts extends Component {
       <Layout>
         <h1 className="pb-3">Accounts</h1>
         <div className="action-container">
-          <Link to={`/accounts/add-account`} onClick={this.addingAccount}>
+          <Link to={`/accounts/add-account`}>
             <Button variant="contained" className="primary">
               <i className="fas fa-plus"></i>
             </Button>
@@ -74,7 +105,15 @@ class Accounts extends Component {
             <i className="fas fa-sync-alt"></i>
           </Button>
         </div>
-        <Search search={this.searchData} />
+        <div className="search-filter">
+          <Search search={this.searchData} />
+          <select name="filter" className="filter" onChange={this.filter}>
+            <option value="">--Filter by--</option>
+            <option value="Current">Current</option>
+            <option value="Savings">Savings</option>
+            <option value="Credit">Credit</option>
+          </select>
+        </div>
         {this.state.account.length > 0 ? (
           this.state.account.map(single => {
             if (single.type.toLowerCase().includes(this.state.search)) {

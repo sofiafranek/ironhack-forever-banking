@@ -72,7 +72,7 @@ class CreateAccount extends Component {
 
   render() {
     return (
-      <Container className="layout-width centered-page">
+      <Container className="layout-width centered-page create-account">
         <h1 className="mb-4">Create an Account</h1>
         <form onSubmit={event => this.getData(event)}>
           <Grid container spacing={2}>

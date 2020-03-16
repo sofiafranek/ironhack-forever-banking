@@ -23,6 +23,10 @@ const schema = new mongoose.Schema({
   },
   endPoint: {
     type: String
+  },
+  category: {
+    type: String,
+    enum: ['Housing', 'Transport', 'Food & Dining', 'Utility bills', 'Cell phone', 'Childcare and school costs', 'Pet food', 'Pet insurance', 'Clothing', 'Health insurance', 'Fitness', 'Auto insurance', 'Life insurance', 'Fun stuff', 'Travel', 'Student loans', 'Credit-card debt', 'Retirement', 'Emergency fund', 'Large purchases']
   }
 });
 

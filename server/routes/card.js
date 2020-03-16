@@ -1,33 +1,11 @@
 'use strict';
 
 const { Router } = require('express');
-
 const Card = require('../models/card');
-
 const router = new Router();
-
 const RouteGuard = require('./../middleware/route-guard');
 
-router.post('/create-card', (req, res, next) => {
-  const { accountID, cardNumber, pin, CVV, expiryDate, type } = req.body;
-
-  Card.create({
-    accountID,
-    cardNumber,
-    pin,
-    CVV,
-    type,
-    expiryDate
-  })
-    .then(card => {
-      res.json({ card });
-    })
-    .catch(error => {
-      next(error);
-    });
-});
-
-router.get('/', (req, res, next) => {
+router.get('/', RouteGuard, (req, res, next) => {
   Card.find()
     .then(card => {
       res.json({ card });
@@ -37,7 +15,7 @@ router.get('/', (req, res, next) => {
     });
 });
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id', RouteGuard, (req, res, next) => {
   const id = req.params.id;
 
   Card.findById(id)
@@ -45,6 +23,41 @@ router.get('/:id', (req, res, next) => {
       res.json({ card });
     })
     .catch(error => {
+      next(error);
+    });
+});
+
+router.get('/:id/user-cards', RouteGuard, (req, res, next) => {
+  const id = req.params.id;
+
+  Card.find({ userID: id })
+    .populate('accountID')
+    .then(card => {
+      res.json({ card });
+    })
+    .catch(error => {
+      next(error);
+    });
+});
+
+router.post('/create-card', RouteGuard, (req, res, next) => {
+  const { accountID, cardNumber, pin, CVV, expiryDate, type, userID } = req.body;
+
+  Card.create({
+    accountID,
+    cardNumber,
+    pin,
+    CVV,
+    type,
+    expiryDate,
+    userID
+  })
+    .then(card => {
+      console.log(card);
+      res.json({ card });
+    })
+    .catch(error => {
+      console.log(error);
       next(error);
     });
 });

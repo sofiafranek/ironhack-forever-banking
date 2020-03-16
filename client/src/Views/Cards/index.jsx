@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import Card from './../../Components/Card';
 
 import Layout from '../../Components/Layout';
-import { cards } from './../../Services/card';
+import { Usercards } from './../../Services/card';
+
+import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 
 class Cards extends Component {
   constructor() {
@@ -12,14 +15,19 @@ class Cards extends Component {
     };
   }
 
+  refresh() {
+    window.location.reload();
+  }
+
   componentDidMount() {
     this.fetchData();
   }
 
   fetchData() {
-    cards()
+    const userID = this.props.userID;
+
+    Usercards(userID)
       .then(cards => {
-        console.log(' Cards', cards);
         this.setState({
           cards
         });
@@ -31,14 +39,25 @@ class Cards extends Component {
 
   render() {
     return (
-      <div>
+      <Layout>
+        <h1 className="pb-3">Cards</h1>
+        <div className="action-container">
+          <Link to={`/cards/add-card`}>
+            <Button variant="contained" className="primary">
+              <i className="fas fa-plus"></i>
+            </Button>
+          </Link>
+          <Button variant="contained" className="secondary" onClick={this.refresh}>
+            <i className="fas fa-sync-alt"></i>
+          </Button>
+        </div>
         <div className="">
           <h1>Cards</h1>
           {this.state.cards.map(card => (
             <Card key={card._id} {...card} />
           ))}
         </div>
-      </div>
+      </Layout>
     );
   }
 }

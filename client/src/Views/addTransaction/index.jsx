@@ -5,10 +5,12 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
+import FormLabel from '@material-ui/core/FormLabel';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
+import Alert from '@material-ui/lab/Alert';
 import { createTransaction } from '../../Services/transaction';
-import { userAccounts } from './../../Services/account';
+import { userIDAccounts } from './../../Services/account';
 
 class AddTransaction extends Component {
   constructor(props) {
@@ -18,15 +20,33 @@ class AddTransaction extends Component {
       totalAmount: 0,
       reference: '',
       accountIDFrom: '',
-      accounts: []
+      accountInfo: '',
+      accounts: [],
+      categories: ['Housing', 'Transport', 'Food & Dining', 'Utility bills', 'Cell phone', 'Childcare and school costs', 'Pet food', 'Pet insurance', 'Clothing', 'Health insurance', 'Fitness', 'Auto insurance', 'Life insurance', 'Fun stuff', 'Travel', 'Student loans', 'Credit-card debt', 'Retirement', 'Emergency fund', 'Large purchases', 'Other'],
+      category: 'Housing'
     };
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleAccountFromChange = this.handleAccountFromChange.bind(this);
     this.getData = this.getData.bind(this);
+  }
+
+  handleAccountFromChange(event) {
+    const inputName = event.target.name;
+    const value = event.target.value;
+
+    const accountSplitted = value.split(' ');
+    const accountIDFrom = accountSplitted[0];
+
+    this.setState({
+      accountIDFrom
+    });
+    console.log(inputName, 'inputname', value, 'value');
   }
 
   handleInputChange(event) {
     const inputName = event.target.name;
     const value = event.target.value;
+
     this.setState({
       [inputName]: value
     });
@@ -34,64 +54,68 @@ class AddTransaction extends Component {
 
   componentDidMount() {
     this.props.changeActiveNav();
-    const userID = this.props.userID;
-
-    userAccounts(userID)
-     .then((accounts) => {
-       this.setState({
-         accounts
-       })
-     })  
-     .catch(error => {
-       console.log(error);
-     })
-    
+    this.getData();
   }
 
+  getData() {
+    const userID = this.props.userID;
 
-  getData(event) {
+    userIDAccounts(userID)
+      .then(account => {
+        this.setState({
+          accounts: account,
+          type: account[0].type,
+          accountIDFrom: account[0]._id
+        });
+      })
+      .catch(error => console.log(error));
+  }
+
+  setData(event) {
     event.preventDefault();
     const transaction = Object.assign({}, this.state);
 
-    console.log("TRANSACTION VIEW", transaction);
-
     createTransaction(transaction)
-    .then(transaction => {
-      this.props.history.push({
-        pathname: '/transactions'
-      });
-    })
-    .catch(error => console.log(error));
-
+      .then(transaction => {
+        if (transaction.res) {
+          console.log('NOT ENOUGH MONEY');
+        }
+        this.props.history.push({
+          pathname: '/transactions'
+        });
+      })
+      .catch(error => console.log(error));
   }
 
   render() {
     return (
       <Layout>
         <h1 className="mb-4">Creating a new transaction</h1>
-        <form onSubmit={event => this.getData(event)} className="add-account-form">
+        <form onSubmit={event => this.setData(event)} className="add-account-form">
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
+<<<<<<< HEAD
             <FormControl>
+                <h4 className="pt-3 pb-2">Account From</h4>
+=======
+              <FormControl>
                 <InputLabel htmlFor="age-native-simple">Account From</InputLabel>
+>>>>>>> 8348d9bb313e8a6b0eb30674ea6480b0827d45c9
                 <Select
+                  name="accountInfo"
                   native
-                  onChange={event => this.handleInputChange(event)}
-                  name="accountIDFrom"
-                  value={this.state.accountIDFrom}
+                  onChange={event => this.handleAccountFromChange(event)}
                 >
-                {
-                this.state.accounts.map(account => (
-                  <option key={account.accountID}>
-                    {account.accountID}
-                  </option>
-                ))
-                }
+                  {this.state.accounts.map(acc => (
+                    <option value={acc._id + ' ' + acc.type} key={acc.accountNumber}>
+                      {acc.accountNumber + ' ' + acc.type}
+                    </option>
+                  ))}
                 </Select>
-            </FormControl>
+              </FormControl>
             </Grid>
             <Grid item xs={12} sm={12}>
-              <h4 className="pt-3 pb-2">Account Number that you want to transfer</h4>
+              <h4 className="pt-3 pb-2">IBAN Number that you want to transfer</h4>
               <TextField
                 variant="outlined"
                 required
@@ -115,6 +139,20 @@ class AddTransaction extends Component {
                 onChange={event => this.handleInputChange(event)}
               />
             </Grid>
+            <FormControl>
+                <h4 className="pt-3 pb-2">Category</h4>
+                <Select
+                    name="category"
+                    native
+                    onChange={event => this.handleInputChange(event)}
+                  >
+                    {this.state.categories.map(category => (
+                      <option value={category} key={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </Select>
+            </FormControl>
             <h4 className="pl-2 pt-3 pb-2">Reference</h4>
             <Grid item xs={12} sm={12}>
               <TextField

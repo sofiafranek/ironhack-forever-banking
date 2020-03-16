@@ -28,7 +28,11 @@ class SingleAccount extends Component {
   deleteAnAccount() {
     const accountID = this.props.match.params.id;
     deleteAccount(accountID)
-      .then(() => {})
+      .then(() => {
+        this.props.history.push({
+          pathname: '/accounts'
+        });
+      })
       .catch(error => console.log(error));
     console.log('delete account');
     console.log(this.props.location);
@@ -64,7 +68,7 @@ class SingleAccount extends Component {
                     ? 'Total Credit Limit'
                     : 'Available Balance'}
                 </h6>
-                <h5>Account Number : {this.state.account.accountNumber}</h5>
+                <h5>IBAN Number : {this.state.account.accountNumber}</h5>
                 <h5>Account Type : {this.state.account.type}</h5>
                 <h5>Card Number : 1234 1234 1234 1234</h5>
                 <h5>Card Expirty : 12 / 04</h5>

@@ -69,7 +69,6 @@ const deleteAccount = accountID =>
 // only showing the accounts that belong to that user
 const userIDAccounts = userID =>
   new Promise((resolve, reject) => {
-    console.log('here');
     instance
       .get(`/${userID}/accounts`)
       .then(result => {

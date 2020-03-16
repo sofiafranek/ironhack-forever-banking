@@ -1,25 +1,19 @@
 'use strict';
 
 const { Router } = require('express');
-
 const Transaction = require('../models/transaction');
 const Account = require('../models/account');
-
 const router = new Router();
 
-
 router.post('/add-transaction', (req, res, next) => {
-
-  const { accountIDFrom, accountNumber, totalAmount} = req.body;
+  const { accountIDFrom, accountNumber, totalAmount, reference, endPoint, category } = req.body;
   let balanceFrom = 0, balanceTo = 0, accountIDTo = '';
 
   Account.findById(accountIDFrom)
   .then((accountFrom) => {
     balanceFrom = accountFrom.balance;
-
       Account.findOne({ 'accountNumber': accountNumber })
       .then((accountTo) => {
-        console.log("TO ACOUNT", accountTo);
         balanceTo = accountTo.balance;
         accountIDTo = accountTo._id;
 
@@ -31,7 +25,10 @@ router.post('/add-transaction', (req, res, next) => {
           Transaction.create({
             accountIDFrom,
             accountIDTo,
-            totalAmount
+            totalAmount,
+            reference,
+            endPoint,
+            category
           })
           .then((transaction) => {
             Account.findByIdAndUpdate({'_id' : accountIDFrom}, {'balance': minusBalance} )
@@ -52,58 +49,64 @@ router.post('/add-transaction', (req, res, next) => {
             next(error);
           });
           }
-        else {
-          res.json('notEnoughBalance');
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  })
-  .catch(error => {
-    console.log(error);
-  });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    })
+    .catch(error => {
+      console.log(error);
+    });
 });
 
 router.post('/received', (req, res, next) => {
-  const transactions = req.body.map((value) => value.accountID);
-  console.log(transactions);
-  Transaction.find({ 'accountIDTo' : { $in: transactions } })
-  .then((transactionsTo) => {
-    console.log("to", transactionsTo);
-    res.json({ transactionsTo });
-  })
-  .catch((error) => {
-    next(error);
-  });
+  const transactions = req.body.map(value => value.accountID);
 
+  Transaction.find({ accountIDTo: { $in: transactions } })
+    .then(transactionsTo => {
+      res.json({ transactionsTo });
+    })
+    .catch(error => {
+      next(error);
+    });
 });
 
 router.post('/sent', (req, res, next) => {
+  const transactions = req.body.map(value => value.accountID);
 
-  const transactions = req.body.map((value) => value.accountID);
-  console.log(transactions);
+  Transaction.find({ accountIDFrom: { $in: transactions } })
+    .then(transactionsFrom => {
+      res.json({ transactionsFrom });
+    })
+    .catch(error => {
+      next(error);
+    });
+});
 
-  Transaction.find({ 'accountIDFrom' : { $in: transactions } })
-  .then((transactionsFrom) => {
-    console.log("from", transactionsFrom);
-    res.json({ transactionsFrom });
+router.post('/all', (req, res, next) => {
+  const transactions = req.body.map(value => value.accountID);
+
+  Transaction.find({
+    $or: [{ accountIDFrom: { $in: transactions } }, { accountIDTo: { $in: transactions } }]
   })
-  .catch((error) => {
-    next(error);
-  });
+    .then(allTransactions => {
+      res.json({ allTransactions });
+    })
+    .catch(error => {
+      next(error);
+    });
 });
 
 router.get('/:id', (req, res, next) => {
   const _id = req.params.id;
 
   Transaction.findById({ _id })
-  .then((transaction) => {
-    res.json({ transaction });
-  })
-  .catch((error) => {
-    next(error);
-  });
+    .then(transaction => {
+      res.json({ transaction });
+    })
+    .catch(error => {
+      next(error);
+    });
 });
 
 module.exports = router;

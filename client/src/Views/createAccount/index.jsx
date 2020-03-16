@@ -14,6 +14,7 @@ class CreateAccount extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      type: 'Savings',
       types: ['Savings', 'Current', 'Credit'],
       balance: ''
     };
@@ -33,20 +34,30 @@ class CreateAccount extends Component {
     this.props.changeActiveNav();
   }
 
-  randomKey(length) {
-    let result = '';
-    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  randomKey() {
+    let Numberresult = '';
+    let Numbercharacters = '0123456789';
+    let NumbercharactersLength = Numbercharacters.length;
+    for (let i = 0; i < 2; i++) {
+      Numberresult += Numbercharacters.charAt(Math.floor(Math.random() * NumbercharactersLength));
     }
+
+    let Letterresult = '';
+    let Lettercharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let LettercharactersLength = Lettercharacters.length;
+    for (let i = 0; i < 20; i++) {
+      Letterresult += Lettercharacters.charAt(Math.floor(Math.random() * LettercharactersLength));
+    }
+
+    let result = Numberresult + Letterresult;
+    console.log(result);
     return result;
   }
 
   getData(event) {
     event.preventDefault();
     const userID = this.props.location.state.idUser;
-    const accountNumber = this.randomKey(15);
+    const accountNumber = this.randomKey();
 
     const account = Object.assign({}, this.state);
     account.accountNumber = accountNumber;
@@ -68,14 +79,7 @@ class CreateAccount extends Component {
             <Grid item xs={12} sm={6}>
               <FormControl>
                 <InputLabel htmlFor="age-native-simple">Type of Account</InputLabel>
-                <Select
-                  name="type"
-                  native
-                  onChange={event => this.handleInputChange(event)}
-                  inputProps={{
-                    type: ''
-                  }}
-                >
+                <Select name="type" native onChange={event => this.handleInputChange(event)}>
                   {this.state.types.map(type => (
                     <option value={type} key={type}>
                       {type}
@@ -85,7 +89,7 @@ class CreateAccount extends Component {
               </FormControl>
             </Grid>
             <h4 className="pl-2 pt-3 pb-2">Add money to your new account</h4>
-            <Grid item xs={12} sm={6}>
+            {/* <Grid item xs={12} sm={6}>
               <TextField
                 variant="outlined"
                 required
@@ -104,6 +108,9 @@ class CreateAccount extends Component {
                 label="Sort Code"
                 name="externalSortCode"
               />
+            </Grid> */}
+            <Grid item xs={12} sm={12}>
+              <TextField variant="outlined" required fullWidth id="iban" label="IBAN" name="iabn" />
             </Grid>
             <Grid item xs={12} sm={12}>
               <TextField

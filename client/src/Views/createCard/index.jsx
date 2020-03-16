@@ -80,6 +80,7 @@ class CreateCard extends Component {
     const pin = this.generatePin();
     const CVV = this.generateCVV();
     const expiryDate = this.generateExpiryDate();
+    const userID = this.props.userID;
 
     const card = {
       cardNumber,
@@ -87,11 +88,9 @@ class CreateCard extends Component {
       CVV,
       accountID: this.state.accountID,
       type: this.state.type,
-      expiryDate
+      expiryDate,
+      userID
     };
-
-    console.log('hereeeeeee', card);
-    console.log('stateeeeeee', this.state);
 
     creatingCard(card)
       .then(card => {

@@ -89,7 +89,7 @@ class CreateAccount extends Component {
               </FormControl>
             </Grid>
             <h4 className="pl-2 pt-3 pb-2">Add money to your new account</h4>
-            <Grid item xs={12} sm={6}>
+            {/* <Grid item xs={12} sm={6}>
               <TextField
                 variant="outlined"
                 required
@@ -108,6 +108,9 @@ class CreateAccount extends Component {
                 label="Sort Code"
                 name="externalSortCode"
               />
+            </Grid> */}
+            <Grid item xs={12} sm={12}>
+              <TextField variant="outlined" required fullWidth id="iban" label="IBAN" name="iabn" />
             </Grid>
             <Grid item xs={12} sm={12}>
               <TextField

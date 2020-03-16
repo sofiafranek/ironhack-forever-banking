@@ -6,7 +6,8 @@ const Account = require('../models/account');
 const router = new Router();
 
 router.post('/add-transaction', (req, res, next) => {
-  const { accountIDFrom, accountNumber, totalAmount, reference, endPoint, category } = req.body;
+  const { accountIDFrom, accountNumber, totalAmount, reference, endPoint, category, schedule, status } = req.body;
+
   let balanceFrom = 0, balanceTo = 0, accountIDTo = '';
 
   Account.findById(accountIDFrom)
@@ -28,7 +29,9 @@ router.post('/add-transaction', (req, res, next) => {
             totalAmount,
             reference,
             endPoint,
-            category
+            category,
+            schedule,
+            status
           })
           .then((transaction) => {
             Account.findByIdAndUpdate({'_id' : accountIDFrom}, {'balance': minusBalance} )
@@ -62,7 +65,7 @@ router.post('/add-transaction', (req, res, next) => {
 router.post('/received', (req, res, next) => {
   const transactions = req.body.map(value => value.accountID);
 
-  Transaction.find({ accountIDTo: { $in: transactions } })
+  Transaction.find({ accountIDTo: { $in: transactions }, status: 'Executed'})
     .then(transactionsTo => {
       res.json({ transactionsTo });
     })
@@ -74,7 +77,7 @@ router.post('/received', (req, res, next) => {
 router.post('/sent', (req, res, next) => {
   const transactions = req.body.map(value => value.accountID);
 
-  Transaction.find({ accountIDFrom: { $in: transactions } })
+  Transaction.find({ accountIDFrom: { $in: transactions }, status: 'Executed'})
     .then(transactionsFrom => {
       res.json({ transactionsFrom });
     })
@@ -87,7 +90,8 @@ router.post('/all', (req, res, next) => {
   const transactions = req.body.map(value => value.accountID);
 
   Transaction.find({
-    $or: [{ accountIDFrom: { $in: transactions } }, { accountIDTo: { $in: transactions } }]
+    $or: [{ accountIDFrom: { $in: transactions } }, { accountIDTo: { $in: transactions } }],
+    status: 'Executed'
   })
     .then(allTransactions => {
       res.json({ allTransactions });
@@ -95,6 +99,41 @@ router.post('/all', (req, res, next) => {
     .catch(error => {
       next(error);
     });
+});
+
+router.post('/add-list-transactions', (req, res, next) => {
+
+  const all = req.body;
+
+  all.map(transaction => {
+    const { accountIDFrom, accountNumber, totalAmount, reference, endPoint, category, schedule, status, dateTransaction } = transaction;
+
+    Account.findOne({ 'accountNumber': accountNumber })
+      .then((accountTo) => {
+        const accountIDTo = accountTo._id;
+
+        Transaction.create({
+          accountIDFrom,
+          accountIDTo,
+          totalAmount,
+          reference,
+          endPoint,
+          category,
+          schedule,
+          status,
+          dateTransaction
+        })
+        .then(() => {
+        })
+        .catch((error) => {
+          next(error);
+        });
+      })
+      .catch(error => {
+        next(error);
+      });
+  });
+
 });
 
 router.get('/:id', (req, res, next) => {
@@ -108,5 +147,6 @@ router.get('/:id', (req, res, next) => {
       next(error);
     });
 });
+
 
 module.exports = router;

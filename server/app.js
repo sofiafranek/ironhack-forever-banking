@@ -23,6 +23,13 @@ const transactionRouter = require('./routes/transaction');
 
 const app = express();
 
+
+const schedule = require('node-schedule');
+ 
+const j = schedule.scheduleJob('20 * * * *', function(){
+  console.log('The answer to life, the universe, and everything!');
+});
+
 app.use(serveFavicon(join(__dirname, 'public/images', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(express.json());

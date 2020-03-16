@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import './style.scss';
+
 import Card from './../../Components/Card';
 
 import Layout from '../../Components/Layout';

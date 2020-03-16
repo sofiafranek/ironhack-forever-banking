@@ -14,10 +14,6 @@ const schema = new mongoose.Schema({
   totalAmount: {
     type: Number
   },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
   reference:{
     type: String
   },
@@ -26,7 +22,23 @@ const schema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ['Housing', 'Transport', 'Food & Dining', 'Utility bills', 'Cell phone', 'Childcare and school costs', 'Pet food', 'Pet insurance', 'Clothing', 'Health insurance', 'Fitness', 'Auto insurance', 'Life insurance', 'Fun stuff', 'Travel', 'Student loans', 'Credit-card debt', 'Retirement', 'Emergency fund', 'Large purchases']
+    enum: ['Housing', 'Transport', 'Food & Dining', 'Utility bills', 'Cell phone', 'Childcare and school costs', 'Pet food', 'Pet insurance', 'Clothing', 'Health insurance', 'Fitness', 'Auto insurance', 'Life insurance', 'Fun stuff', 'Travel', 'Student loans', 'Credit-card debt', 'Retirement', 'Emergency fund', 'Large purchases', 'Other']
+  },
+  schedule: {
+    type: Boolean,
+    required: true
+  },
+  schedulePeriod: {
+    type: String,
+    enum: ['Hour', 'Week', 'Month', 'Year']
+  },
+  status: {
+    type: String,
+    enum: ['Executed', 'Pending'],
+    required: true
+  },
+  dateTransaction: {
+    type: Date
   }
 });
 

@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 import './style.scss';
 
-import Accordion from 'react-bootstrap/Accordion';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+import { Badge, Button, Accordion, Card } from 'react-bootstrap';
 
 class Transaction extends Component {
   render() {
-    const { totalAmount, createdAt, reference, endPoint } = this.props;
+    const { totalAmount, dateTransaction, reference, endPoint, category } = this.props;
     return (
       <Accordion className="hvr-grow transaction pb-3">
         <Card>
           <Card.Header>
             <Accordion.Toggle className="card-transaction" as={Button} variant="link" eventKey="0">
               {reference && <h6>{reference}</h6>}
+              <Badge pill variant="info">{category}</Badge>
               <div>
-                {createdAt && <small>{createdAt.split('T')[0]}</small>}
+                {dateTransaction && <small>{dateTransaction.split('T')[0]}</small>}
                 {totalAmount > 0 && <small>{totalAmount + ' €'}</small>}
               </div>
             </Accordion.Toggle>

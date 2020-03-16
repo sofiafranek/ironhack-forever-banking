@@ -10,7 +10,6 @@ const createTransaction = data =>
       .post('/add-transaction', data)
       .then(result => {
         const transaction = result.data;
-        console.log("FRONT END", transaction)
         resolve(transaction);
       })
       .catch(reject);
@@ -18,7 +17,6 @@ const createTransaction = data =>
 
 const createListTransactions = data =>
   new Promise((resolve, reject) => {
-    console.log("TRYINGGGGGG")
     instance
       .post('/add-list-transactions', data)
       .then(result => {

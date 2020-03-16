@@ -54,7 +54,6 @@ class CreateCard extends Component {
       accountID,
       type
     });
-    console.log(inputName, 'inputname', value, 'value');
   }
 
   componentDidMount() {
@@ -63,10 +62,8 @@ class CreateCard extends Component {
 
   getData() {
     const userID = this.props.userID;
-    console.log(userID, 'IDDDDD');
     userIDAccounts(userID)
       .then(account => {
-        console.log('view cardsssss', account);
         this.setState({
           accounts: account,
           type: account[0].type,

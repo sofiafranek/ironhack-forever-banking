@@ -6,12 +6,9 @@ const instance = axios.create({
 
 const signUp = data =>
   new Promise((resolve, reject) => {
-    console.log('hello');
-    console.log(data);
     instance
       .post('/signup', data)
       .then(result => {
-        console.log(result);
         const user = result.data.user;
         resolve(user);
       })
@@ -33,7 +30,7 @@ const signOut = () =>
   new Promise((resolve, reject) => {
     instance
       .post('/signout')
-      .then( () => {
+      .then(() => {
         resolve();
       })
       .catch(reject);
@@ -49,6 +46,5 @@ const loadUserInformation = () =>
       })
       .catch(reject);
   });
-
 
 export { signIn, signUp, signOut, loadUserInformation };

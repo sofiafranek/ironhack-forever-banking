@@ -6,19 +6,20 @@ const UserAccount = require('./../models/userAccount');
 
 const RouteGuard = require('./../middleware/route-guard');
 
+// Populating the activity page with accounts
 router.get('/:userID/activity', RouteGuard, (req, res, next) => {
   const { userID } = req.params;
   UserAccount.find({
     userID: userID
   })
-  .populate('accountID')
-  .then(accounts => {
-    const accountsUser = accounts.map(account => account.accountID);
-    res.json({ accountsUser });
-  })
-  .catch(error => {
-    next(error);
-  });
+    .populate('accountID')
+    .then(accounts => {
+      const accountsUser = accounts.map(account => account.accountID);
+      res.json({ accountsUser });
+    })
+    .catch(error => {
+      next(error);
+    });
 });
 
 module.exports = router;

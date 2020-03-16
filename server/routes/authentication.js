@@ -7,8 +7,8 @@ const User = require('./../models/user');
 
 const router = new Router();
 
+// Returning all the users information
 router.get('/userinformation', (req, res, next) => {
-  console.log('USERERR', req.user);
   res.json({ user: req.user || null });
 });
 
@@ -41,12 +41,10 @@ router.post('/signup', (req, res, next) => {
       });
     })
     .then(user => {
-      console.log('USER', user);
       req.session.user = user._id;
       res.json({ user });
     })
     .catch(error => {
-      console.log(error);
       next(error);
     });
 });
@@ -54,7 +52,6 @@ router.post('/signup', (req, res, next) => {
 router.post('/signin', (req, res, next) => {
   let user;
   const { phoneNumber, password } = req.body;
-  console.log(phoneNumber);
 
   User.findOne({ phoneNumber })
     .then(document => {
@@ -79,7 +76,6 @@ router.post('/signin', (req, res, next) => {
 });
 
 router.post('/signout', (req, res, next) => {
-  console.log('BACK SIGNOUT');
   req.session.destroy();
   res.json({});
 });

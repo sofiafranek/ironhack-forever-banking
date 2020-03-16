@@ -36,7 +36,6 @@ class AddAccount extends Component {
     this.setState({
       [inputName]: value
     });
-    console.log('value', value);
     if (value === 'Credit') {
       this.setState({
         balance: '5000'
@@ -59,7 +58,6 @@ class AddAccount extends Component {
     this.setState({
       accountIDFrom
     });
-    console.log(inputName, 'inputname', value, 'value');
   }
 
   getInfo() {
@@ -95,7 +93,6 @@ class AddAccount extends Component {
     }
 
     let result = Numberresult + Letterresult;
-    console.log(result);
     return result;
   }
 
@@ -107,8 +104,6 @@ class AddAccount extends Component {
     const account = Object.assign({}, this.state);
     account.accountNumber = accountNumber;
     account.userID = userID;
-
-    console.log(account, 'NEW');
 
     addAccount(account)
       .then(account => {
@@ -171,7 +166,6 @@ class AddAccount extends Component {
                         className="mb-4"
                         onChange={event => this.handleAccountFromChange(event)}
                       >
-                        {console.log(this.state.accounts)}
                         {this.state.accounts.map(acc => (
                           <option value={acc._id + ' ' + acc.type} key={acc.accountNumber}>
                             {acc.accountNumber + ' ' + acc.type}

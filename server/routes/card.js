@@ -5,6 +5,7 @@ const Card = require('../models/card');
 const router = new Router();
 const RouteGuard = require('./../middleware/route-guard');
 
+// Returning all of the cards
 router.get('/', RouteGuard, (req, res, next) => {
   Card.find()
     .then(card => {
@@ -15,6 +16,7 @@ router.get('/', RouteGuard, (req, res, next) => {
     });
 });
 
+// Returning a card from the ID
 router.get('/:id', RouteGuard, (req, res, next) => {
   const id = req.params.id;
 
@@ -27,6 +29,7 @@ router.get('/:id', RouteGuard, (req, res, next) => {
     });
 });
 
+// Returning only the cards that belong to the user logged in
 router.get('/:id/user-cards', RouteGuard, (req, res, next) => {
   const id = req.params.id;
 
@@ -40,6 +43,7 @@ router.get('/:id/user-cards', RouteGuard, (req, res, next) => {
     });
 });
 
+// When user is logged in they create a card
 router.post('/create-card', RouteGuard, (req, res, next) => {
   const { accountID, cardNumber, pin, CVV, expiryDate, type, userID } = req.body;
 
@@ -53,11 +57,9 @@ router.post('/create-card', RouteGuard, (req, res, next) => {
     userID
   })
     .then(card => {
-      console.log(card);
       res.json({ card });
     })
     .catch(error => {
-      console.log(error);
       next(error);
     });
 });

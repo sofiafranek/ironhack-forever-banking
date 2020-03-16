@@ -25,15 +25,18 @@ class Transactions extends Component {
     window.location.reload();
   }
 
-  handleInputChange(event){
+  handleInputChange(event) {
     const value = event.target.value;
     let trans = [];
 
-    (value === 'Income') ? trans = [...this.state.transactionsReceived] : (value === 'Outcome') ?
-    trans = [...this.state.transactionsSent] : trans = [...this.state.allTransactions];
+    value === 'Income'
+      ? (trans = [...this.state.transactionsReceived])
+      : value === 'Outcome'
+      ? (trans = [...this.state.transactionsSent])
+      : (trans = [...this.state.allTransactions]);
 
     console.log(trans);
-    
+
     this.setState({
       renderTransactions: trans
     });
@@ -85,8 +88,6 @@ class Transactions extends Component {
       .catch(error => {
         console.log(error);
       });
-
-    console.log(this.state);
   }
 
   render() {
@@ -105,17 +106,19 @@ class Transactions extends Component {
             </Button>
           </div>
           <div className="search-filter">
-            <select name="filter" className="filter" onChange={(event) => this.handleInputChange(event)}>
+            <select
+              name="filter"
+              className="filter"
+              onChange={event => this.handleInputChange(event)}
+            >
               <option value="All">All</option>
               <option value="Income">Income</option>
               <option value="Outcome">Outcome</option>
             </select>
           </div>
-          {
-            this.state.renderTransactions.map(transaction => (
-              <Transaction {...transaction}></Transaction>
-            ))
-          }
+          {this.state.renderTransactions.map(transaction => (
+            <Transaction {...transaction}></Transaction>
+          ))}
         </div>
       </Layout>
     );

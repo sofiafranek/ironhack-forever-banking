@@ -9,7 +9,7 @@ const schema = new mongoose.Schema({
   },
   type: {
     type: String,
-    trim: true
+    enum: ['Savings', 'Current', 'Credit']
   },
   balance: {
     type: Number

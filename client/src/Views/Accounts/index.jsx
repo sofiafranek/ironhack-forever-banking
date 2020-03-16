@@ -18,10 +18,6 @@ class Accounts extends Component {
     this.removeAccount = this.removeAccount.bind(this);
   }
 
-  addingAccount() {
-    console.log('add account');
-  }
-
   refresh() {
     window.location.reload();
     console.log('refresh');
@@ -31,7 +27,6 @@ class Accounts extends Component {
     const userID = this.props.user._id;
     userIDAccounts(userID)
       .then(account => {
-        console.log('LENGTH', account.length);
         this.setState({
           account
         });
@@ -57,7 +52,7 @@ class Accounts extends Component {
       <Layout>
         <h1 className="pb-3">Accounts</h1>
         <div className="action-container">
-          <Link to={`/accounts/add-account`} onClick={this.addingAccount}>
+          <Link to={`/accounts/add-account`}>
             <Button variant="contained" className="primary">
               <i className="fas fa-plus"></i>
             </Button>

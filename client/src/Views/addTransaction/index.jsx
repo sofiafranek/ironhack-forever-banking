@@ -60,7 +60,9 @@ class AddTransaction extends Component {
     userIDAccounts(userID)
       .then(account => {
         this.setState({
-          accounts: account
+          accounts: account,
+          type: account[0].type,
+          accountIDFrom: account[0]._id
         });
       })
       .catch(error => console.log(error));

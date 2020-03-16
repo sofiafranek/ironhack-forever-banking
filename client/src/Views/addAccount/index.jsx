@@ -15,7 +15,8 @@ class AddAccount extends Component {
     super(props);
     this.state = {
       types: ['Savings', 'Current', 'Credit'],
-      balance: ''
+      balance: '',
+      type: 'Savings'
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.getData = this.getData.bind(this);
@@ -82,14 +83,7 @@ class AddAccount extends Component {
             <Grid item xs={12} sm={12}>
               <FormControl>
                 <InputLabel htmlFor="age-native-simple">Type of Account</InputLabel>
-                <Select
-                  name="type"
-                  native
-                  onChange={event => this.handleInputChange(event)}
-                  inputProps={{
-                    type: ''
-                  }}
-                >
+                <Select name="type" native onChange={event => this.handleInputChange(event)}>
                   {this.state.types.map(type => (
                     <option value={type} key={type}>
                       {type}

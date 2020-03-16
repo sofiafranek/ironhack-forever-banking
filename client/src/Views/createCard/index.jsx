@@ -17,7 +17,6 @@ class CreateCard extends Component {
     super(props);
     this.state = {
       accounts: [],
-      accountInfo: '',
       accountID: '',
       type: ''
     };
@@ -67,7 +66,9 @@ class CreateCard extends Component {
       .then(account => {
         console.log('view cardsssss', account);
         this.setState({
-          accounts: account
+          accounts: account,
+          type: account[0].type,
+          accountID: account[0]._id
         });
       })
       .catch(error => console.log(error));
@@ -88,6 +89,9 @@ class CreateCard extends Component {
       type: this.state.type,
       expiryDate
     };
+
+    console.log('hereeeeeee', card);
+    console.log('stateeeeeee', this.state);
 
     creatingCard(card)
       .then(card => {

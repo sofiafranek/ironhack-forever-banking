@@ -33,6 +33,7 @@ class Cards extends Component {
     return (
       <div>
         <div className="">
+          <h1>Cards</h1>
           {this.state.cards.map(card => (
             <Card key={card._id} {...card} />
           ))}

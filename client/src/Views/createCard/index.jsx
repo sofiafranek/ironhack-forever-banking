@@ -12,6 +12,8 @@ import Layout from '../../Components/Layout';
 import { creatingCard } from './../../Services/card';
 import { userIDAccounts } from './../../Services/account';
 
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+
 class CreateCard extends Component {
   constructor(props) {
     super(props);
@@ -103,7 +105,11 @@ class CreateCard extends Component {
   render() {
     return (
       <Layout>
-        <h1>New Card</h1>
+        <Breadcrumb>
+          <Breadcrumb.Item href="/cards">Cards</Breadcrumb.Item>
+          <Breadcrumb.Item className="disable-breadcrumb">Create a New Card</Breadcrumb.Item>
+        </Breadcrumb>
+        <h1 className="mb-4">Create a New Card</h1>
         {this.state.accounts.length > 0 && (
           <form onSubmit={event => this.setData(event)}>
             <Grid container spacing={2}>
@@ -125,7 +131,7 @@ class CreateCard extends Component {
               </Grid>
             </Grid>
             <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">
-              Create Card
+              Create New Card
             </Button>
           </form>
         )}

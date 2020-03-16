@@ -12,6 +12,8 @@ import Alert from '@material-ui/lab/Alert';
 import { createTransaction } from '../../Services/transaction';
 import { userIDAccounts } from './../../Services/account';
 
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+
 class AddTransaction extends Component {
   constructor(props) {
     super(props);
@@ -112,7 +114,13 @@ class AddTransaction extends Component {
   render() {
     return (
       <Layout>
-        <h1 className="mb-4">Creating a new transaction</h1>
+        <Breadcrumb>
+          <Breadcrumb.Item href="/transactions">Transactions</Breadcrumb.Item>
+          <Breadcrumb.Item className="disable-breadcrumb">
+            Creating a New Transaction
+          </Breadcrumb.Item>
+        </Breadcrumb>
+        <h1 className="mb-4">Creating a New Transaction</h1>
         <form onSubmit={event => this.setData(event)} className="add-account-form">
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
@@ -180,7 +188,7 @@ class AddTransaction extends Component {
             </Grid>
           </Grid>
           <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">
-            Create Transaction
+            Create New Transaction
           </Button>
         </form>
       </Layout>

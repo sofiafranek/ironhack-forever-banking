@@ -7,8 +7,6 @@ const User = require('./../models/user');
 
 const router = new Router();
 
-/* const RouteGuard = require("./../middleware/route-guard"); */
-
 router.get('/userinformation', (req, res, next) => {
   console.log('USERERR', req.user);
   res.json({ user: req.user || null });

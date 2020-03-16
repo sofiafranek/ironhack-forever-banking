@@ -97,7 +97,7 @@ const Navigation = props => {
             onClose={handleClose}
           >
             <Link to="/profile">
-              <MenuItem onClick={handleClose}>My Account</MenuItem>
+              <MenuItem onClick={handleClose}>My Profile</MenuItem>
             </Link>
 
             <Link to="/">

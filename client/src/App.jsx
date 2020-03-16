@@ -18,6 +18,7 @@ import Analytics from './Views/Analytics';
 import Cards from './Views/Cards';
 import SignIn from './Views/SignIn';
 import SignUp from './Views/SignUp';
+import Summary from './Views/Summary';
 import { loadUserInformation } from './Services/authentication';
 import Messages from './Views/Messages';
 import Notifications from './Views/Notifications';
@@ -138,6 +139,15 @@ class App extends Component {
                 render={props => <CreateAccount {...props} changeActiveNav={this.disableNav} />}
                 exact
               />
+
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
+                path="/summary"
+                render={props => <Summary {...props} changeActiveNav={this.disableNav} />}
+                exact
+              />
+
               <ProtectedRoute
                 authorized={this.state.user}
                 redirect={'/signin'}

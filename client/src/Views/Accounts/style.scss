@@ -23,6 +23,7 @@
   .filter {
     height: 45px;
     min-width: 30%;
+    border: 1px solid lightgray;
   }
   .search-box {
     min-width: 60%;
@@ -33,10 +34,10 @@
   .account-section {
     margin-top: 10px;
   }
-  .filter {
-    min-width: 100%;
-  }
-  .search-filter {
-    flex-direction: column;
-  }
+  // .filter {
+  //   min-width: 100%;
+  // }
+  // .search-filter {
+  //   flex-direction: column;
+  // }
 }

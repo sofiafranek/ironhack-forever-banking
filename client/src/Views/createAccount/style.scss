@@ -1,5 +1,3 @@
-.create-account {
-  select {
-    min-width: 300px !important;
-  }
+select.MuiSelect-root.MuiSelect-select.MuiInputBase-input.MuiInput-input {
+  min-width: 300px !important;
 }

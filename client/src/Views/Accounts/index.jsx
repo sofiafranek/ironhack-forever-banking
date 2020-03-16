@@ -64,7 +64,6 @@ class Accounts extends Component {
 
   refresh() {
     window.location.reload();
-    console.log('refresh');
   }
 
   getData() {
@@ -74,7 +73,6 @@ class Accounts extends Component {
         this.setState({
           account
         });
-        console.log('after asyncs code');
       })
       .catch(error => console.log(error));
   }
@@ -108,7 +106,7 @@ class Accounts extends Component {
         <div className="search-filter">
           <Search search={this.searchData} />
           <select name="filter" className="filter" onChange={this.filter}>
-            <option value="">--Filter by--</option>
+            <option value="">-- Filter Accounts --</option>
             <option value="Current">Current</option>
             <option value="Savings">Savings</option>
             <option value="Credit">Credit</option>

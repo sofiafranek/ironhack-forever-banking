@@ -5,7 +5,8 @@ import { Badge, Button, Accordion, Card } from 'react-bootstrap';
 
 class Transaction extends Component {
   render() {
-    const { totalAmount, dateTransaction, reference, endPoint, category } = this.props;
+    console.log(this.props);
+    const { totalAmount, dateTransaction, reference, endPoint, category, accountIDFrom, accountIDTo} = this.props;
     return (
       <Accordion className="hvr-grow transaction pb-3">
         <Card>
@@ -20,7 +21,7 @@ class Transaction extends Component {
             </Accordion.Toggle>
           </Card.Header>
           <Accordion.Collapse eventKey="0">
-            <Card.Body>{endPoint}</Card.Body>
+            <Card.Body>{'Transfer from ' + accountIDFrom.accountNumber + ' to ' + accountIDTo.accountNumber}</Card.Body>
           </Accordion.Collapse>
         </Card>
       </Accordion>

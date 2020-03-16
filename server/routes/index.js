@@ -2,19 +2,23 @@
 
 const { Router } = require('express');
 const router = new Router();
-
-const Account = require('../models/account');
+const UserAccount = require('./../models/userAccount');
 
 const RouteGuard = require('./../middleware/route-guard');
 
-router.get('/activity', RouteGuard, (req, res, next) => {
-  Account.find()
-    .then(accounts => {
-      res.json({ accounts });
-    })
-    .catch(error => {
-      next(error);
-    });
+router.get('/:userID/activity', RouteGuard, (req, res, next) => {
+  const { userID } = req.params;
+  UserAccount.find({
+    userID: userID
+  })
+  .populate('accountID')
+  .then(accounts => {
+    const accountsUser = accounts.map(account => account.accountID);
+    res.json({ accountsUser });
+  })
+  .catch(error => {
+    next(error);
+  });
 });
 
 module.exports = router;

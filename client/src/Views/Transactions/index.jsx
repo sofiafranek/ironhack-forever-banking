@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import * as transactionService from './../../Services/transaction';
 import { userAccounts } from './../../Services/account';
+import Search from '../../Components/Search';
 
 class Transactions extends Component {
   constructor(props) {
@@ -14,13 +15,28 @@ class Transactions extends Component {
       accounts: [],
       transactionsReceived: [],
       transactionsSent: [],
-      allTransactions: []
+      allTransactions: [],
+      filter: 'All',
+      renderTransactions: []
     };
   }
 
   refresh() {
     window.location.reload();
-    console.log('refresh');
+  }
+
+  handleInputChange(event){
+    const value = event.target.value;
+    let trans = [];
+
+    (value === 'Income') ? trans = [...this.state.transactionsReceived] : (value === 'Outcome') ?
+    trans = [...this.state.transactionsSent] : trans = [...this.state.allTransactions];
+
+    console.log(trans);
+    
+    this.setState({
+      renderTransactions: trans
+    });
   }
 
   componentDidMount() {
@@ -50,9 +66,9 @@ class Transactions extends Component {
                   .allTransactions(accounts)
                   .then(transactions => {
                     this.setState({
-                      allTransactions: transactions
+                      allTransactions: transactions,
+                      renderTransactions: transactions
                     });
-                    console.log(transactions, 'ALL TRANSACTIONS');
                   })
                   .catch(error => {
                     console.log(error);
@@ -88,9 +104,18 @@ class Transactions extends Component {
               <i className="fas fa-sync-alt"></i>
             </Button>
           </div>
-          {this.state.allTransactions.map(transaction => (
-            <Transaction {...transaction}></Transaction>
-          ))}
+          <div className="search-filter">
+            <select name="filter" className="filter" onChange={(event) => this.handleInputChange(event)}>
+              <option value="All">All</option>
+              <option value="Income">Income</option>
+              <option value="Outcome">Outcome</option>
+            </select>
+          </div>
+          {
+            this.state.renderTransactions.map(transaction => (
+              <Transaction {...transaction}></Transaction>
+            ))
+          }
         </div>
       </Layout>
     );

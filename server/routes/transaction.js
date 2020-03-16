@@ -66,6 +66,8 @@ router.post('/received', (req, res, next) => {
   const transactions = req.body.map(value => value.accountID);
 
   Transaction.find({ accountIDTo: { $in: transactions }, status: 'Executed'})
+    .populate('accountIDTo')
+    .populate('accountIDFrom')
     .then(transactionsTo => {
       res.json({ transactionsTo });
     })
@@ -78,6 +80,8 @@ router.post('/sent', (req, res, next) => {
   const transactions = req.body.map(value => value.accountID);
 
   Transaction.find({ accountIDFrom: { $in: transactions }, status: 'Executed'})
+    .populate('accountIDTo')
+    .populate('accountIDFrom')
     .then(transactionsFrom => {
       res.json({ transactionsFrom });
     })
@@ -93,6 +97,8 @@ router.post('/all', (req, res, next) => {
     $or: [{ accountIDFrom: { $in: transactions } }, { accountIDTo: { $in: transactions } }],
     status: 'Executed'
   })
+    .populate('accountIDTo')
+    .populate('accountIDFrom')
     .then(allTransactions => {
       res.json({ allTransactions });
     })

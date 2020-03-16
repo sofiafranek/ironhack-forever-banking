@@ -23,7 +23,7 @@ const transactionRouter = require('./routes/transaction');
 
 const app = express();
 
-
+/** TRYING NODE SCHEDULE **/
 const schedule = require('node-schedule');
  
 const j = schedule.scheduleJob('20 * * * *', function(){

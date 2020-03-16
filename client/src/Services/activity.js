@@ -5,13 +5,14 @@ const instance = axios.create({
 });
 
 // shows all the accounts that exist in the database
-const activity = () =>
+const activity = userID =>
   new Promise((resolve, reject) => {
+    console.log(userID);
     instance
-      .get('/activity')
+      .get(`/${userID}/activity`)
       .then(result => {
-        const accounts = result.data.accounts;
-        resolve(accounts);
+        const accountsUser = result.data.accountsUser;
+        resolve(accountsUser);
       })
       .catch(reject);
   });

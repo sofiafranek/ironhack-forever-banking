@@ -6,9 +6,6 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { createTransaction, createListTransactions } from '../../Services/transaction';
 import { userIDAccounts } from './../../Services/account';
-import { createTransaction } from '../../Services/transaction';
-import { userIDAccounts } from './../../Services/account';
-
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 const useStyles = makeStyles({
   root: {

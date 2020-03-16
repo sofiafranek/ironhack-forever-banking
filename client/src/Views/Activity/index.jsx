@@ -25,7 +25,6 @@ class Dashboard extends Component {
         this.setState({
           information
         });
-        console.log(this.state.information, 'information');
       })
       .catch(error => console.log(error));
   }
@@ -89,6 +88,7 @@ class Dashboard extends Component {
           <h4 className="pb-2">Accounts Listed Here</h4>
           {this.state.information.length > 0 ? (
             this.state.information.map(single => {
+              console.log(single);
               return <ActivityAccount key={single._id} {...single} />;
             })
           ) : (

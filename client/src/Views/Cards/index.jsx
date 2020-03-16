@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Card from './../../Components/Card';
 
 import Layout from '../../Components/Layout';
-import { cards } from './../../Services/card';
+import { Usercards } from './../../Services/card';
 
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
@@ -24,9 +24,10 @@ class Cards extends Component {
   }
 
   fetchData() {
-    cards()
+    const userID = this.props.userID;
+
+    Usercards(userID)
       .then(cards => {
-        console.log(' Cards', cards);
         this.setState({
           cards
         });

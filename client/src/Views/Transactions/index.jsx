@@ -18,6 +18,11 @@ class Transactions extends Component {
     };
   }
 
+  refresh() {
+    window.location.reload();
+    console.log('refresh');
+  }
+
   componentDidMount() {
     const userID = this.props.userID;
 
@@ -31,23 +36,31 @@ class Transactions extends Component {
           .receivedTransactions(accounts)
           .then(transactions => {
             this.setState({
-              transactionsReceived: transactions,
-              allTransactions: transactions
+              transactionsReceived: transactions
             });
-          })
-          .catch(error => {
-            console.log(error);
-          });
 
-        transactionService
-          .sentTransactions(accounts)
-          .then(transactions => {
-            this.setState(previousState => {
-              return {
-                transactionsSent: transactions,
-                allTransactions: [...previousState.allTransactions, transactions]
-              };
-            });
+            transactionService
+              .sentTransactions(accounts)
+              .then(transactions => {
+                this.setState({
+                  transactionsSent: transactions
+                });
+
+                transactionService
+                  .allTransactions(accounts)
+                  .then(transactions => {
+                    this.setState({
+                      allTransactions: transactions
+                    });
+                    console.log(transactions, 'ALL TRANSACTIONS');
+                  })
+                  .catch(error => {
+                    console.log(error);
+                  });
+              })
+              .catch(error => {
+                console.log(error);
+              });
           })
           .catch(error => {
             console.log(error);
@@ -70,13 +83,13 @@ class Transactions extends Component {
               <i className="fas fa-plus"></i>
             </Button>
           </Link>
-          <Button variant="contained" className="secondary" onClick={this.refreshAccount}>
+          <Button variant="contained" className="secondary" onClick={this.refresh}>
             <i className="fas fa-sync-alt"></i>
           </Button>
-          {this.state.allTransactions.map(transaction => (
-            <Transaction {...transaction}></Transaction>
-          ))}
         </div>
+        {this.state.allTransactions.map(transaction => (
+          <Transaction {...transaction}></Transaction>
+        ))}
       </Layout>
     );
   }

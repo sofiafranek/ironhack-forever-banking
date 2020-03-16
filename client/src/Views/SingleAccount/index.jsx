@@ -68,7 +68,7 @@ class SingleAccount extends Component {
                     ? 'Total Credit Limit'
                     : 'Available Balance'}
                 </h6>
-                <h5>Account Number : {this.state.account.accountNumber}</h5>
+                <h5>IBAN Number : {this.state.account.accountNumber}</h5>
                 <h5>Account Type : {this.state.account.type}</h5>
                 <h5>Card Number : 1234 1234 1234 1234</h5>
                 <h5>Card Expirty : 12 / 04</h5>

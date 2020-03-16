@@ -27,8 +27,21 @@ router.get('/:id', RouteGuard, (req, res, next) => {
     });
 });
 
+router.get('/:id/user-cards', RouteGuard, (req, res, next) => {
+  const id = req.params.id;
+
+  Card.find({ userID: id })
+    .populate('accountID')
+    .then(card => {
+      res.json({ card });
+    })
+    .catch(error => {
+      next(error);
+    });
+});
+
 router.post('/create-card', RouteGuard, (req, res, next) => {
-  const { accountID, cardNumber, pin, CVV, expiryDate, type } = req.body;
+  const { accountID, cardNumber, pin, CVV, expiryDate, type, userID } = req.body;
 
   Card.create({
     accountID,
@@ -36,7 +49,8 @@ router.post('/create-card', RouteGuard, (req, res, next) => {
     pin,
     CVV,
     type,
-    expiryDate
+    expiryDate,
+    userID
   })
     .then(card => {
       console.log(card);

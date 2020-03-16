@@ -29,23 +29,40 @@ const receivedTransactions = data =>
 const sentTransactions = data =>
   new Promise((resolve, reject) => {
     instance
-        .post('/sent', data)
-        .then(result => {
-            const transactions = result.data.transactionsFrom;
-            resolve(transactions);
-        })
-         .catch(reject);
+      .post('/sent', data)
+      .then(result => {
+        const transactions = result.data.transactionsFrom;
+        resolve(transactions);
+      })
+      .catch(reject);
+  });
+
+const allTransactions = data =>
+  new Promise((resolve, reject) => {
+    instance
+      .post('/all', data)
+      .then(result => {
+        const transactions = result.data.allTransactions;
+        resolve(transactions);
+      })
+      .catch(reject);
   });
 
 const singleTransaction = id =>
-    new Promise((resolve, reject) => {
-        instance
-            .get(`/${id}`)
-            .then(result => {
-                const transaction = result.data.transaction;
-                resolve(transaction);
-            })
-            .catch(reject);
-    });
+  new Promise((resolve, reject) => {
+    instance
+      .get(`/${id}`)
+      .then(result => {
+        const transaction = result.data.transaction;
+        resolve(transaction);
+      })
+      .catch(reject);
+  });
 
-export { createTransaction, receivedTransactions, sentTransactions, singleTransaction };
+export {
+  createTransaction,
+  receivedTransactions,
+  sentTransactions,
+  singleTransaction,
+  allTransactions
+};

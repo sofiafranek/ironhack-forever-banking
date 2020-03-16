@@ -16,6 +16,18 @@ const cards = () =>
       .catch(reject);
   });
 
+const Usercards = userID =>
+  new Promise((resolve, reject) => {
+    instance
+      .get(`/${userID}/user-cards`)
+      .then(result => {
+        console.log(result);
+        const cards = result.data.card;
+        resolve(cards);
+      })
+      .catch(reject);
+  });
+
 // creating a card to add to user account
 const creatingCard = data =>
   new Promise((resolve, reject) => {
@@ -40,4 +52,4 @@ const singleCard = id =>
       .catch(reject);
   });
 
-export { cards, creatingCard, singleCard };
+export { cards, creatingCard, singleCard, Usercards };

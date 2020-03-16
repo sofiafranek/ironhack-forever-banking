@@ -46,7 +46,7 @@ class AddTransaction extends Component {
   handleInputChange(event) {
     const inputName = event.target.name;
     const value = event.target.value;
-    
+
     this.setState({
       [inputName]: value
     });
@@ -63,28 +63,28 @@ class AddTransaction extends Component {
     userIDAccounts(userID)
       .then(account => {
         this.setState({
-          accounts: account
+          accounts: account,
+          type: account[0].type,
+          accountIDFrom: account[0]._id
         });
       })
       .catch(error => console.log(error));
   }
-
 
   setData(event) {
     event.preventDefault();
     const transaction = Object.assign({}, this.state);
 
     createTransaction(transaction)
-    .then(transaction => {
-      if(transaction.res){
-        console.log("NOT ENOUGH MONEY");
-      }
-      this.props.history.push({
-        pathname: '/transactions'
-      });
-    })
-    .catch(error => console.log(error));
-
+      .then(transaction => {
+        if (transaction.res) {
+          console.log('NOT ENOUGH MONEY');
+        }
+        this.props.history.push({
+          pathname: '/transactions'
+        });
+      })
+      .catch(error => console.log(error));
   }
 
   render() {
@@ -94,23 +94,28 @@ class AddTransaction extends Component {
         <form onSubmit={event => this.setData(event)} className="add-account-form">
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
+<<<<<<< HEAD
             <FormControl>
                 <h4 className="pt-3 pb-2">Account From</h4>
+=======
+              <FormControl>
+                <InputLabel htmlFor="age-native-simple">Account From</InputLabel>
+>>>>>>> 8348d9bb313e8a6b0eb30674ea6480b0827d45c9
                 <Select
-                    name="accountInfo"
-                    native
-                    onChange={event => this.handleAccountFromChange(event)}
-                  >
-                    {this.state.accounts.map(acc => (
-                      <option value={acc._id + ' ' + acc.type} key={acc.accountNumber}>
-                        {acc.accountNumber + ' ' + acc.type}
-                      </option>
-                    ))}
-                  </Select>
-            </FormControl>
+                  name="accountInfo"
+                  native
+                  onChange={event => this.handleAccountFromChange(event)}
+                >
+                  {this.state.accounts.map(acc => (
+                    <option value={acc._id + ' ' + acc.type} key={acc.accountNumber}>
+                      {acc.accountNumber + ' ' + acc.type}
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={12} sm={12}>
-              <h4 className="pt-3 pb-2">Account Number that you want to transfer</h4>
+              <h4 className="pt-3 pb-2">IBAN Number that you want to transfer</h4>
               <TextField
                 variant="outlined"
                 required

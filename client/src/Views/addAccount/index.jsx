@@ -14,8 +14,11 @@ class AddAccount extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      balance: '',
       types: ['Savings', 'Current', 'Credit'],
-      balance: ''
+      type: 'Savings',
+      options: ['Existing', 'External'],
+      option: 'Existing'
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.getData = this.getData.bind(this);
@@ -33,20 +36,30 @@ class AddAccount extends Component {
     this.props.changeActiveNav();
   }
 
-  randomKey(length) {
-    let result = '';
-    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  randomKey() {
+    let Numberresult = '';
+    let Numbercharacters = '0123456789';
+    let NumbercharactersLength = Numbercharacters.length;
+    for (let i = 0; i < 2; i++) {
+      Numberresult += Numbercharacters.charAt(Math.floor(Math.random() * NumbercharactersLength));
     }
+
+    let Letterresult = '';
+    let Lettercharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let LettercharactersLength = Lettercharacters.length;
+    for (let i = 0; i < 20; i++) {
+      Letterresult += Lettercharacters.charAt(Math.floor(Math.random() * LettercharactersLength));
+    }
+
+    let result = Numberresult + Letterresult;
+    console.log(result);
     return result;
   }
 
   getData(event) {
     event.preventDefault();
     const userID = this.props.userID;
-    const accountNumber = this.randomKey(15);
+    const accountNumber = this.randomKey();
 
     const account = Object.assign({}, this.state);
     account.accountNumber = accountNumber;
@@ -72,14 +85,7 @@ class AddAccount extends Component {
             <Grid item xs={12} sm={12}>
               <FormControl>
                 <InputLabel htmlFor="age-native-simple">Type of Account</InputLabel>
-                <Select
-                  name="type"
-                  native
-                  onChange={event => this.handleInputChange(event)}
-                  inputProps={{
-                    type: ''
-                  }}
-                >
+                <Select name="type" native onChange={event => this.handleInputChange(event)}>
                   {this.state.types.map(type => (
                     <option value={type} key={type}>
                       {type}
@@ -88,80 +94,76 @@ class AddAccount extends Component {
                 </Select>
               </FormControl>
             </Grid>
-            {/* need to add logic here if you want to top up with internal account or external account */}
             <Grid item xs={12} sm={12}>
               <h4 className="pt-3 pb-2">Add money to your account</h4>
               <FormControl>
                 <InputLabel htmlFor="age-native-simple">Choose to top up using:</InputLabel>
-                <Select name="whichaccount" native>
-                  <option value="existing">Exisiting Account Here</option>
-                  <option value="external">External Account</option>
+                <Select name="option" native onChange={event => this.handleInputChange(event)}>
+                  {this.state.options.map(option => (
+                    <option value={option} key={option}>
+                      {option}
+                    </option>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={12}>
-              <h4 className="pt-3 pb-2">Amount of money you would like to add</h4>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="balance"
-                label="Balance"
-                name="balance"
-                type="number"
-                value={this.state.balance}
-                onChange={event => this.handleInputChange(event)}
-              />
-            </Grid>
-            <h4 className="pl-2 pt-3 pb-2">Add money to your new account</h4>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="externalAccountNo"
-                label="externalAccountNo"
-                name="externalAccountNo"
-                type="number"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="externalSortCode"
-                label="externalSortCode"
-                name="externalSortCode"
-                type="number"
-              />
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="reference"
-                label="reference"
-                name="reference"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="balance"
-                label="Balance"
-                name="balance"
-                type="number"
-                value={this.state.balance}
-                onChange={event => this.handleInputChange(event)}
-              />
-            </Grid>
+            {this.state.option === 'Existing' ? (
+              <Grid item xs={12} sm={12}>
+                <h4 className="pt-3 pb-2">Amount of money you would like to add</h4>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="balance"
+                  label="Balance"
+                  name="balance"
+                  type="number"
+                  value={this.state.balance}
+                  onChange={event => this.handleInputChange(event)}
+                />
+              </Grid>
+            ) : (
+              <>
+                <h4 className="pl-2 pt-3 pb-2">Add money to your new account</h4>
+                <Grid item xs={12} sm={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="iban"
+                    label="IBAN"
+                    name="iabn"
+                    type="number"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="reference"
+                    label="Reference"
+                    name="reference"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="balance"
+                    label="Balance"
+                    name="balance"
+                    type="number"
+                    value={this.state.balance}
+                    onChange={event => this.handleInputChange(event)}
+                  />
+                </Grid>
+              </>
+            )}
           </Grid>
           <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">
-            Create Account
+            Create New Account
           </Button>
         </form>
       </Layout>

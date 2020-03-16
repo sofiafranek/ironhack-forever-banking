@@ -17,7 +17,6 @@ class CreateCard extends Component {
     super(props);
     this.state = {
       accounts: [],
-      accountInfo: '',
       accountID: '',
       type: ''
     };
@@ -67,7 +66,9 @@ class CreateCard extends Component {
       .then(account => {
         console.log('view cardsssss', account);
         this.setState({
-          accounts: account
+          accounts: account,
+          type: account[0].type,
+          accountID: account[0]._id
         });
       })
       .catch(error => console.log(error));
@@ -79,6 +80,7 @@ class CreateCard extends Component {
     const pin = this.generatePin();
     const CVV = this.generateCVV();
     const expiryDate = this.generateExpiryDate();
+    const userID = this.props.userID;
 
     const card = {
       cardNumber,
@@ -86,7 +88,8 @@ class CreateCard extends Component {
       CVV,
       accountID: this.state.accountID,
       type: this.state.type,
-      expiryDate
+      expiryDate,
+      userID
     };
 
     creatingCard(card)

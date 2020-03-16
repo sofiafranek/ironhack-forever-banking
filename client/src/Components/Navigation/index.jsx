@@ -46,7 +46,6 @@ const Navigation = props => {
   const handleSignOut = () => {
     signOut()
       .then(() => {
-        console.log(props);
         props.updateUserInformation(null);
       })
       .catch(error => {
@@ -98,7 +97,7 @@ const Navigation = props => {
             onClose={handleClose}
           >
             <Link to="/profile">
-              <MenuItem onClick={handleClose}>My Account</MenuItem>
+              <MenuItem onClick={handleClose}>My Profile</MenuItem>
             </Link>
 
             <Link to="/">
@@ -116,7 +115,7 @@ const Navigation = props => {
       >
         <div className={classes.toolbar} />
         <List className="pt-4">
-          {['Dashboard'].map((text, index) => (
+          {['Activity'].map((text, index) => (
             <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
               <ListItem button>
                 <ListItemText primary={text} activeclassname="active" />
@@ -126,7 +125,7 @@ const Navigation = props => {
         </List>
         <Divider className="mr-3 ml-3" />
         <List>
-          {['Accounts', 'Transactions', 'Analytics', 'Cards'].map((text, index) => (
+          {['Accounts', 'Transactions', 'Cards', 'Analytics'].map((text, index) => (
             <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
               <ListItem button>
                 <ListItemText primary={text} activeclassname="active" />

@@ -1,7 +1,7 @@
 .action-container {
   position: absolute;
-  right: 30px;
-  top: 20px;
+  right: 0px;
+  top: 0px;
   i {
     font-size: 0.7em;
   }
@@ -16,8 +16,28 @@
   }
 }
 
+.search-filter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .filter {
+    height: 45px;
+    min-width: 30%;
+    border: 1px solid lightgray;
+  }
+  .search-box {
+    min-width: 60%;
+  }
+}
+
 @media (min-width: 980px) {
   .account-section {
     margin-top: 10px;
   }
+  // .filter {
+  //   min-width: 100%;
+  // }
+  // .search-filter {
+  //   flex-direction: column;
+  // }
 }

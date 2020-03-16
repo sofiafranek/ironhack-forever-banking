@@ -55,3 +55,16 @@
   min-width: 50px !important;
   line-height: inherit !important;
 }
+
+.breadcrumb a {
+  color: #85ace2;
+}
+
+.disable-breadcrumb a {
+  color: black !important;
+}
+
+.disable-breadcrumb a:hover {
+  color: black !important;
+  cursor: default;
+}

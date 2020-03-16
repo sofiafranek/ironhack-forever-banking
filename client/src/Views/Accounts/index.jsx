@@ -15,22 +15,55 @@ class Accounts extends Component {
     super(props);
     this.state = {
       account: [],
-      search: ''
+      search: '',
+      filter: ''
     };
     this.removeAccount = this.removeAccount.bind(this);
     this.searchData = this.searchData.bind(this);
+    this.filter = this.filter.bind(this);
   }
 
   searchData(word) {
-    console.log(word, 'WORD');
     this.setState({
       search: word
     });
   }
 
+  filterMethod(filtered) {
+    this.setState(previousState => {
+      return {
+        account: previousState.account.filter(acc => acc.type === filtered)
+      };
+    });
+  }
+
+  filter(event) {
+    event.preventDefault();
+    const filter = event.target.value;
+
+    this.setState({
+      filter
+    });
+
+    const userID = this.props.user._id;
+    userIDAccounts(userID)
+      .then(account => {
+        this.setState({
+          account
+        });
+        if (filter === 'Current') {
+          this.filterMethod('Current');
+        } else if (filter === 'Savings') {
+          this.filterMethod('Savings');
+        } else if (filter === 'Credit') {
+          this.filterMethod('Credit');
+        }
+      })
+      .catch(error => console.log(error));
+  }
+
   refresh() {
     window.location.reload();
-    console.log('refresh');
   }
 
   getData() {
@@ -59,27 +92,37 @@ class Accounts extends Component {
   render() {
     return (
       <Layout>
-        <h1 className="pb-3">Accounts</h1>
-        <div className="action-container">
-          <Link to={`/accounts/add-account`}>
-            <Button variant="contained" className="primary">
-              <i className="fas fa-plus"></i>
+        <div className="relative">
+          <h1 className="pb-3">Accounts</h1>
+          <div className="action-container">
+            <Link to={`/accounts/add-account`}>
+              <Button variant="contained" className="primary">
+                <i className="fas fa-plus"></i>
+              </Button>
+            </Link>
+            <Button variant="contained" className="secondary" onClick={this.refresh}>
+              <i className="fas fa-sync-alt"></i>
             </Button>
-          </Link>
-          <Button variant="contained" className="secondary" onClick={this.refresh}>
-            <i className="fas fa-sync-alt"></i>
-          </Button>
+          </div>
+          <div className="search-filter">
+            <Search search={this.searchData} />
+            <select name="filter" className="filter" onChange={this.filter}>
+              <option value="">-- Filter Accounts --</option>
+              <option value="Current">Current</option>
+              <option value="Savings">Savings</option>
+              <option value="Credit">Credit</option>
+            </select>
+          </div>
+          {this.state.account.length > 0 ? (
+            this.state.account.map(single => {
+              if (single.type.toLowerCase().includes(this.state.search)) {
+                return <Account key={single._id} {...single} />;
+              }
+            })
+          ) : (
+            <p className="pt-3">There are no accounts</p>
+          )}
         </div>
-        <Search search={this.searchData} />
-        {this.state.account.length > 0 ? (
-          this.state.account.map(single => {
-            if (single.type.toLowerCase().includes(this.state.search)) {
-              return <Account key={single._id} {...single} />;
-            }
-          })
-        ) : (
-          <p className="pt-3">There are no accounts</p>
-        )}
       </Layout>
     );
   }

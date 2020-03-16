@@ -42,21 +42,23 @@ class Cards extends Component {
   render() {
     return (
       <Layout>
-        <h1 className="pb-3">Cards</h1>
-        <div className="action-container">
-          <Link to={`/cards/add-card`}>
-            <Button variant="contained" className="primary">
-              <i className="fas fa-plus"></i>
+        <div className="relative">
+          <h1 className="pb-3">Cards</h1>
+          <div className="action-container">
+            <Link to={`/cards/add-card`}>
+              <Button variant="contained" className="primary">
+                <i className="fas fa-plus"></i>
+              </Button>
+            </Link>
+            <Button variant="contained" className="secondary" onClick={this.refresh}>
+              <i className="fas fa-sync-alt"></i>
             </Button>
-          </Link>
-          <Button variant="contained" className="secondary" onClick={this.refresh}>
-            <i className="fas fa-sync-alt"></i>
-          </Button>
-        </div>
-        <div className="">
-          {this.state.cards.map(card => (
-            <Card key={card._id} {...card} />
-          ))}
+          </div>
+          <div>
+            {this.state.cards.map(card => (
+              <Card key={card._id} {...card} />
+            ))}
+          </div>
         </div>
       </Layout>
     );

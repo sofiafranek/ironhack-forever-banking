@@ -7,7 +7,7 @@ import ProtectedRoute from './Components/ProtectedRoute';
 
 import Home from './Views/Home';
 
-import Dashboard from './Views/Dashboard';
+import Activity from './Views/Activity';
 import Accounts from './Views/Accounts';
 import CreateAccount from './Views/createAccount';
 import SingleAccount from './Views/SingleAccount';
@@ -18,6 +18,7 @@ import Analytics from './Views/Analytics';
 import Cards from './Views/Cards';
 import SignIn from './Views/SignIn';
 import SignUp from './Views/SignUp';
+import Summary from './Views/Summary';
 import { loadUserInformation } from './Services/authentication';
 import Messages from './Views/Messages';
 import Notifications from './Views/Notifications';
@@ -53,7 +54,7 @@ class App extends Component {
         });
       })
       .catch(error => {
-        console.log('ERROR', error);
+        console.log(error);
       });
   }
 
@@ -124,9 +125,9 @@ class App extends Component {
               <ProtectedRoute
                 authorized={this.state.user}
                 redirect={'/signin'}
-                path="/dashboard"
+                path="/activity"
                 render={props => (
-                  <Dashboard {...props} changeActiveNav={this.activeNav} user={this.state.user} />
+                  <Activity {...props} changeActiveNav={this.activeNav} user={this.state.user} />
                 )}
                 exact
               />
@@ -138,6 +139,15 @@ class App extends Component {
                 render={props => <CreateAccount {...props} changeActiveNav={this.disableNav} />}
                 exact
               />
+
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
+                path="/summary"
+                render={props => <Summary {...props} changeActiveNav={this.disableNav} />}
+                exact
+              />
+
               <ProtectedRoute
                 authorized={this.state.user}
                 redirect={'/signin'}

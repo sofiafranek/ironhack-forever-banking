@@ -6,7 +6,10 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { createTransaction, createListTransactions } from '../../Services/transaction';
 import { userIDAccounts } from './../../Services/account';
+import { createTransaction } from '../../Services/transaction';
+import { userIDAccounts } from './../../Services/account';
 
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 const useStyles = makeStyles({
   root: {
     '&:hover': {
@@ -62,6 +65,7 @@ function StyledRadio(props) {
     />
   );
 }
+
 
 class AddTransaction extends Component {
   constructor(props) {
@@ -268,7 +272,13 @@ class AddTransaction extends Component {
   render() {
     return (
       <Layout>
-        <h1 className="mb-4">Creating a new transaction</h1>
+        <Breadcrumb>
+          <Breadcrumb.Item href="/transactions">Transactions</Breadcrumb.Item>
+          <Breadcrumb.Item className="disable-breadcrumb">
+            Creating a New Transaction
+          </Breadcrumb.Item>
+        </Breadcrumb>
+        <h1 className="mb-4">Creating a New Transaction</h1>
         <form onSubmit={event => this.setData(event)} className="add-account-form">
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
@@ -312,20 +322,18 @@ class AddTransaction extends Component {
                 onChange={event => this.handleInputChange(event)}
               />
             </Grid>
-            <FormControl>
-                <h4 className="pt-3 pb-2">Category</h4>
-                <Select
-                    name="category"
-                    native
-                    onChange={event => this.handleInputChange(event)}
-                  >
-                    {this.state.categories.map(category => (
-                      <option value={category} key={category}>
-                        {category}
-                      </option>
-                    ))}
-                  </Select>
-            </FormControl>
+            <Grid item xs={12} sm={12}>
+              <h4 className="pt-3 pb-2">Category</h4>
+              <FormControl>
+                <Select name="category" native onChange={event => this.handleInputChange(event)}>
+                  {this.state.categories.map(category => (
+                    <option value={category} key={category}>
+                      {category}
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
             <h4 className="pl-2 pt-3 pb-2">Reference</h4>
             <Grid item xs={12} sm={12}>
               <TextField
@@ -386,7 +394,7 @@ class AddTransaction extends Component {
             </Fragment> 
             )}
           <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">
-            Create Transaction
+            Create New Transaction
           </Button>
         </form>
       </Layout>

@@ -76,20 +76,22 @@ class Transactions extends Component {
   render() {
     return (
       <Layout>
-        <h1 className="pb-4">Transactions</h1>
-        <div className="action-container">
-          <Link to={`/transactions/addTransaction`} onClick={this.addingAccount}>
-            <Button variant="contained" className="primary">
-              <i className="fas fa-plus"></i>
+        <div className="relative">
+          <h1 className="pb-4">Transactions</h1>
+          <div className="action-container">
+            <Link to={`/transactions/addTransaction`} onClick={this.addingAccount}>
+              <Button variant="contained" className="primary">
+                <i className="fas fa-plus"></i>
+              </Button>
+            </Link>
+            <Button variant="contained" className="secondary" onClick={this.refresh}>
+              <i className="fas fa-sync-alt"></i>
             </Button>
-          </Link>
-          <Button variant="contained" className="secondary" onClick={this.refresh}>
-            <i className="fas fa-sync-alt"></i>
-          </Button>
+          </div>
+          {this.state.allTransactions.map(transaction => (
+            <Transaction {...transaction}></Transaction>
+          ))}
         </div>
-        {this.state.allTransactions.map(transaction => (
-          <Transaction {...transaction}></Transaction>
-        ))}
       </Layout>
     );
   }

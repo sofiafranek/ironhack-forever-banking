@@ -4,8 +4,6 @@ import Layout from '../../Components/Layout';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormLabel from '@material-ui/core/FormLabel';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
 import { createTransaction } from '../../Services/transaction';
@@ -163,16 +161,18 @@ class AddTransaction extends Component {
                 onChange={event => this.handleInputChange(event)}
               />
             </Grid>
-            <FormControl>
+            <Grid item xs={12} sm={12}>
               <h4 className="pt-3 pb-2">Category</h4>
-              <Select name="category" native onChange={event => this.handleInputChange(event)}>
-                {this.state.categories.map(category => (
-                  <option value={category} key={category}>
-                    {category}
-                  </option>
-                ))}
-              </Select>
-            </FormControl>
+              <FormControl>
+                <Select name="category" native onChange={event => this.handleInputChange(event)}>
+                  {this.state.categories.map(category => (
+                    <option value={category} key={category}>
+                      {category}
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
             <h4 className="pl-2 pt-3 pb-2">Reference</h4>
             <Grid item xs={12} sm={12}>
               <TextField

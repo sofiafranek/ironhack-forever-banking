@@ -103,7 +103,7 @@ class CreateAccount extends Component {
           })
           .catch(error => console.log(error));
 
-        this.props.history.push('/dashboard');
+        this.props.history.push('/summary');
       })
       .catch(error => console.log(error));
   }

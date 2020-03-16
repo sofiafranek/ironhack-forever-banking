@@ -115,7 +115,7 @@ const Navigation = props => {
       >
         <div className={classes.toolbar} />
         <List className="pt-4">
-          {['Dashboard'].map((text, index) => (
+          {['Activity'].map((text, index) => (
             <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
               <ListItem button>
                 <ListItemText primary={text} activeclassname="active" />

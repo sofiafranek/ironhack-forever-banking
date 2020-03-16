@@ -37,8 +37,6 @@ class SingleAccount extends Component {
       })
       .catch(error => console.log(error));
     console.log('delete account');
-    console.log(this.props.location);
-    //this.props.location.removeAccount(accountID);
   }
 
   componentDidMount() {

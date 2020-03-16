@@ -7,7 +7,7 @@ import ProtectedRoute from './Components/ProtectedRoute';
 
 import Home from './Views/Home';
 
-import Dashboard from './Views/Dashboard';
+import Activity from './Views/Activity';
 import Accounts from './Views/Accounts';
 import CreateAccount from './Views/createAccount';
 import SingleAccount from './Views/SingleAccount';
@@ -125,9 +125,9 @@ class App extends Component {
               <ProtectedRoute
                 authorized={this.state.user}
                 redirect={'/signin'}
-                path="/dashboard"
+                path="/activity"
                 render={props => (
-                  <Dashboard {...props} changeActiveNav={this.activeNav} user={this.state.user} />
+                  <Activity {...props} changeActiveNav={this.activeNav} user={this.state.user} />
                 )}
                 exact
               />

@@ -92,35 +92,37 @@ class Accounts extends Component {
   render() {
     return (
       <Layout>
-        <h1 className="pb-3">Accounts</h1>
-        <div className="action-container">
-          <Link to={`/accounts/add-account`}>
-            <Button variant="contained" className="primary">
-              <i className="fas fa-plus"></i>
+        <div className="relative">
+          <h1 className="pb-3">Accounts</h1>
+          <div className="action-container">
+            <Link to={`/accounts/add-account`}>
+              <Button variant="contained" className="primary">
+                <i className="fas fa-plus"></i>
+              </Button>
+            </Link>
+            <Button variant="contained" className="secondary" onClick={this.refresh}>
+              <i className="fas fa-sync-alt"></i>
             </Button>
-          </Link>
-          <Button variant="contained" className="secondary" onClick={this.refresh}>
-            <i className="fas fa-sync-alt"></i>
-          </Button>
+          </div>
+          <div className="search-filter">
+            <Search search={this.searchData} />
+            <select name="filter" className="filter" onChange={this.filter}>
+              <option value="">-- Filter Accounts --</option>
+              <option value="Current">Current</option>
+              <option value="Savings">Savings</option>
+              <option value="Credit">Credit</option>
+            </select>
+          </div>
+          {this.state.account.length > 0 ? (
+            this.state.account.map(single => {
+              if (single.type.toLowerCase().includes(this.state.search)) {
+                return <Account key={single._id} {...single} />;
+              }
+            })
+          ) : (
+            <p className="pt-3">There are no accounts</p>
+          )}
         </div>
-        <div className="search-filter">
-          <Search search={this.searchData} />
-          <select name="filter" className="filter" onChange={this.filter}>
-            <option value="">-- Filter Accounts --</option>
-            <option value="Current">Current</option>
-            <option value="Savings">Savings</option>
-            <option value="Credit">Credit</option>
-          </select>
-        </div>
-        {this.state.account.length > 0 ? (
-          this.state.account.map(single => {
-            if (single.type.toLowerCase().includes(this.state.search)) {
-              return <Account key={single._id} {...single} />;
-            }
-          })
-        ) : (
-          <p className="pt-3">There are no accounts</p>
-        )}
       </Layout>
     );
   }

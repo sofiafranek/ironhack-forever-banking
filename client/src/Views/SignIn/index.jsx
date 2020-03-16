@@ -37,7 +37,7 @@ class SignInSide extends Component {
     signIn(user)
       .then(user => {
         this.props.updateUserInformation(user);
-        this.props.history.push('/dashboard');
+        this.props.history.push('/activity');
       })
       .catch(error => console.log(error));
   }

@@ -8,7 +8,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormLabel from '@material-ui/core/FormLabel';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
-import Alert from '@material-ui/lab/Alert';
 import { createTransaction } from '../../Services/transaction';
 import { userIDAccounts } from './../../Services/account';
 
@@ -22,7 +21,29 @@ class AddTransaction extends Component {
       accountIDFrom: '',
       accountInfo: '',
       accounts: [],
-      categories: ['Housing', 'Transport', 'Food & Dining', 'Utility bills', 'Cell phone', 'Childcare and school costs', 'Pet food', 'Pet insurance', 'Clothing', 'Health insurance', 'Fitness', 'Auto insurance', 'Life insurance', 'Fun stuff', 'Travel', 'Student loans', 'Credit-card debt', 'Retirement', 'Emergency fund', 'Large purchases', 'Other'],
+      categories: [
+        'Housing',
+        'Transport',
+        'Food & Dining',
+        'Utility bills',
+        'Cell phone',
+        'Childcare and school costs',
+        'Pet food',
+        'Pet insurance',
+        'Clothing',
+        'Health insurance',
+        'Fitness',
+        'Auto insurance',
+        'Life insurance',
+        'Fun stuff',
+        'Travel',
+        'Student loans',
+        'Credit-card debt',
+        'Retirement',
+        'Emergency fund',
+        'Large purchases',
+        'Other'
+      ],
       category: 'Housing'
     };
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -94,13 +115,8 @@ class AddTransaction extends Component {
         <form onSubmit={event => this.setData(event)} className="add-account-form">
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
-<<<<<<< HEAD
-            <FormControl>
-                <h4 className="pt-3 pb-2">Account From</h4>
-=======
               <FormControl>
                 <InputLabel htmlFor="age-native-simple">Account From</InputLabel>
->>>>>>> 8348d9bb313e8a6b0eb30674ea6480b0827d45c9
                 <Select
                   name="accountInfo"
                   native
@@ -140,18 +156,14 @@ class AddTransaction extends Component {
               />
             </Grid>
             <FormControl>
-                <h4 className="pt-3 pb-2">Category</h4>
-                <Select
-                    name="category"
-                    native
-                    onChange={event => this.handleInputChange(event)}
-                  >
-                    {this.state.categories.map(category => (
-                      <option value={category} key={category}>
-                        {category}
-                      </option>
-                    ))}
-                  </Select>
+              <h4 className="pt-3 pb-2">Category</h4>
+              <Select name="category" native onChange={event => this.handleInputChange(event)}>
+                {this.state.categories.map(category => (
+                  <option value={category} key={category}>
+                    {category}
+                  </option>
+                ))}
+              </Select>
             </FormControl>
             <h4 className="pl-2 pt-3 pb-2">Reference</h4>
             <Grid item xs={12} sm={12}>

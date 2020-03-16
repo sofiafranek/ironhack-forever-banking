@@ -9,6 +9,7 @@ import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import { creatingAccount } from './../../Services/account';
+import { creatingCard } from './../../Services/card';
 
 class CreateAccount extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class CreateAccount extends Component {
       balance: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.getData = this.getData.bind(this);
+    this.setData = this.setData.bind(this);
   }
 
   handleInputChange(event) {
@@ -54,7 +55,23 @@ class CreateAccount extends Component {
     return result;
   }
 
-  getData(event) {
+  generateCardNumber() {
+    return Math.floor(Math.random() * 9000000000) + 1000000000;
+  }
+
+  generatePin() {
+    return Math.floor(Math.random() * 9000) + 1000;
+  }
+
+  generateCVV() {
+    return Math.floor(Math.random() * 900) + 100;
+  }
+
+  generateExpiryDate() {
+    return Math.floor(Math.random() * 900) + 100;
+  }
+
+  setData(event) {
     event.preventDefault();
     const userID = this.props.location.state.idUser;
     const accountNumber = this.randomKey();
@@ -65,6 +82,27 @@ class CreateAccount extends Component {
 
     creatingAccount(account)
       .then(account => {
+        const cardNumber = this.generateCardNumber();
+        const pin = this.generatePin();
+        const CVV = this.generateCVV();
+        const expiryDate = this.generateExpiryDate();
+
+        const card = {
+          cardNumber,
+          pin,
+          CVV,
+          accountID: account._id,
+          type: account.type,
+          expiryDate,
+          userID
+        };
+
+        creatingCard(card)
+          .then(card => {
+            console.log(card);
+          })
+          .catch(error => console.log(error));
+
         this.props.history.push('/dashboard');
       })
       .catch(error => console.log(error));
@@ -74,7 +112,7 @@ class CreateAccount extends Component {
     return (
       <Container className="layout-width centered-page">
         <h1 className="mb-4">Create an Account</h1>
-        <form onSubmit={event => this.getData(event)}>
+        <form onSubmit={event => this.setData(event)}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <FormControl>

@@ -127,7 +127,47 @@ const Navigation = props => {
         </List>
         <Divider className="mr-3 ml-3" />
         <List>
-          {['Accounts', 'Transactions', 'Cards', 'Analytics'].map((text, index) => (
+          {['Accounts', 'Linked Accounts'].map((text, index) => (
+            <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
+              <ListItem button>
+                <ListItemText primary={text} activeclassname="active" />
+              </ListItem>
+            </NavLink>
+          ))}
+        </List>
+        <Divider className="mr-3 ml-3" />
+        <List>
+          {['Transactions'].map((text, index) => (
+            <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
+              <ListItem button>
+                <ListItemText primary={text} activeclassname="active" />
+              </ListItem>
+            </NavLink>
+          ))}
+        </List>
+        <Divider className="mr-3 ml-3" />
+        <List>
+          {['Cards'].map((text, index) => (
+            <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
+              <ListItem button>
+                <ListItemText primary={text} activeclassname="active" />
+              </ListItem>
+            </NavLink>
+          ))}
+        </List>
+        <Divider className="mr-3 ml-3" />
+        <List>
+          {['Analytics'].map((text, index) => (
+            <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
+              <ListItem button>
+                <ListItemText primary={text} activeclassname="active" />
+              </ListItem>
+            </NavLink>
+          ))}
+        </List>
+        <Divider className="mr-3 ml-3" />
+        <List>
+          {['Exchange Rates'].map((text, index) => (
             <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
               <ListItem button>
                 <ListItemText primary={text} activeclassname="active" />

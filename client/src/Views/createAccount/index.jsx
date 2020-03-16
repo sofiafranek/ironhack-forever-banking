@@ -51,7 +51,6 @@ class CreateAccount extends Component {
     }
 
     let result = Numberresult + Letterresult;
-    console.log(result);
     return result;
   }
 

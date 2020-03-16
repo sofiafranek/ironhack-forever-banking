@@ -9,7 +9,6 @@ const cards = () =>
     instance
       .get('/')
       .then(result => {
-        console.log(result);
         const cards = result.data.card;
         resolve(cards);
       })
@@ -21,7 +20,6 @@ const Usercards = userID =>
     instance
       .get(`/${userID}/user-cards`)
       .then(result => {
-        console.log(result);
         const cards = result.data.card;
         resolve(cards);
       })
@@ -45,7 +43,6 @@ const singleCard = id =>
     instance
       .get(`/${id}`)
       .then(result => {
-        console.log(result);
         const card = result.data.card;
         resolve(card);
       })

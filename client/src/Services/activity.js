@@ -7,10 +7,10 @@ const instance = axios.create({
 // shows all the accounts that exist in the database
 const activity = userID =>
   new Promise((resolve, reject) => {
-    console.log(userID);
     instance
       .get(`/${userID}/activity`)
       .then(result => {
+        console.log(result, 'result');
         const accountsUser = result.data.accountsUser;
         resolve(accountsUser);
       })

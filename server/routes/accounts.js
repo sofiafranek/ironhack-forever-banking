@@ -9,6 +9,7 @@ const router = new Router();
 
 const RouteGuard = require('./../middleware/route-guard');
 
+// Displays all the accounts
 router.get('/', RouteGuard, (req, res, next) => {
   Account.find()
     .then(accounts => {
@@ -19,6 +20,7 @@ router.get('/', RouteGuard, (req, res, next) => {
     });
 });
 
+// Displays a account using the ID
 router.get('/:id', RouteGuard, (req, res, next) => {
   const id = req.params.id;
 
@@ -31,6 +33,7 @@ router.get('/:id', RouteGuard, (req, res, next) => {
     });
 });
 
+// When user is signing up this creates their first account
 router.post('/create-account', (req, res, next) => {
   const { balance, type, accountNumber, userID } = req.body;
   const balanceNumber = Number(balance);
@@ -59,11 +62,10 @@ router.post('/create-account', (req, res, next) => {
     });
 });
 
+// When user is logged in they can add another account
 router.post('/add-account', RouteGuard, (req, res, next) => {
   const { balance, type, accountNumber, userID } = req.body;
   const balanceNumber = Number(balance);
-
-  console.log(req.body);
 
   Account.create({
     accountNumber,
@@ -89,6 +91,7 @@ router.post('/add-account', RouteGuard, (req, res, next) => {
     });
 });
 
+// Returning all ID's of the accounts of the user
 router.get('/:userID/user-accounts', RouteGuard, (req, res, next) => {
   const userID = req.params.userID;
 
@@ -97,7 +100,6 @@ router.get('/:userID/user-accounts', RouteGuard, (req, res, next) => {
   })
     .select({ accountID: 1, _id: 0 })
     .then(accounts => {
-      console.log(accounts);
       res.json({ accounts });
     })
     .catch(error => {
@@ -105,7 +107,7 @@ router.get('/:userID/user-accounts', RouteGuard, (req, res, next) => {
     });
 });
 
-// to get all the accounts from the user logged in
+// Get all the accounts from the user logged in
 router.get('/:userID/accounts', RouteGuard, (req, res, next) => {
   const userID = req.params.userID;
 
@@ -122,14 +124,12 @@ router.get('/:userID/accounts', RouteGuard, (req, res, next) => {
     });
 });
 
+// Deletes specific account using the ID
 router.post('/:id/delete-account', RouteGuard, (req, res, next) => {
   const id = req.params.id;
 
-  console.log(id);
-
   Account.findByIdAndRemove(id)
     .then(() => {
-      console.log('deleteing account');
       UserAccount.findOneAndRemove({
         accountID: id
       })

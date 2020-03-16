@@ -21,13 +21,17 @@
 }
 
 .layout-width {
-  max-width: 500px;
+  max-width: 500px !important;
   margin: auto;
   padding: 50px 20px;
 }
 
 .relative {
   position: relative;
+}
+
+.MuiButton-containedPrimary {
+  background-color: #3264a8 !important;
 }
 
 .primary {
@@ -62,11 +66,12 @@
 
 .breadcrumb a {
   color: #3264a8;
+  font-weight: bold;
 }
 
 .disable-breadcrumb a {
   color: black !important;
-  font-weight: bold;
+  font-weight: 400 !important;
 }
 
 .disable-breadcrumb a:hover {

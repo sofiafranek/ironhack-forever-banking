@@ -16,8 +16,27 @@
   }
 }
 
+.search-filter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .filter {
+    height: 45px;
+    min-width: 30%;
+  }
+  .search-box {
+    min-width: 60%;
+  }
+}
+
 @media (min-width: 980px) {
   .account-section {
     margin-top: 10px;
+  }
+  .filter {
+    min-width: 100%;
+  }
+  .search-filter {
+    flex-direction: column;
   }
 }

@@ -37,7 +37,7 @@ class CreateCard extends Component {
   }
 
   generateExpiryDate() {
-    return Math.floor(Math.random() * 900) + 100;
+    return 21;
   }
 
   handleInputChange(event) {

@@ -116,7 +116,7 @@ class AddTransaction extends Component {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
               <FormControl>
-                <InputLabel htmlFor="age-native-simple">Account From</InputLabel>
+                <h4 className="pt-3 pb-2">Account From</h4>
                 <Select
                   name="accountInfo"
                   native

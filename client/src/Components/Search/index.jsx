@@ -12,7 +12,6 @@ class Search extends Component {
 
   startSearch(event) {
     const search = event.target.value;
-    console.log(search, 'SEARCH');
     this.setState({
       search
     });
@@ -21,8 +20,8 @@ class Search extends Component {
 
   render() {
     return (
-      <div className="search-box">
-        <form className="col-12">
+      <div className="search-box mb-3">
+        <form>
           <input
             type="search"
             name="search"

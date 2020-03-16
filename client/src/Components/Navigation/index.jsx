@@ -46,7 +46,6 @@ const Navigation = props => {
   const handleSignOut = () => {
     signOut()
       .then(() => {
-        console.log(props);
         props.updateUserInformation(null);
       })
       .catch(error => {
@@ -126,7 +125,7 @@ const Navigation = props => {
         </List>
         <Divider className="mr-3 ml-3" />
         <List>
-          {['Accounts', 'Transactions', 'Analytics', 'Cards'].map((text, index) => (
+          {['Accounts', 'Transactions', 'Cards', 'Analytics'].map((text, index) => (
             <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
               <ListItem button>
                 <ListItemText primary={text} activeclassname="active" />

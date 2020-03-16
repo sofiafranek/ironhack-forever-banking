@@ -76,7 +76,7 @@ class Transactions extends Component {
   render() {
     return (
       <Layout>
-        <h1>Transactions</h1>
+        <h1 className="pb-4">Transactions</h1>
         <div className="action-container">
           <Link to={`/transactions/addTransaction`} onClick={this.addingAccount}>
             <Button variant="contained" className="primary">

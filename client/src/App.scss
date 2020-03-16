@@ -16,6 +16,10 @@
   transform: scale(1.01);
 }
 
+.card a:hover {
+  color: black;
+}
+
 .layout-width {
   max-width: 500px;
   margin: auto;
@@ -57,11 +61,12 @@
 }
 
 .breadcrumb a {
-  color: #85ace2;
+  color: #3264a8;
 }
 
 .disable-breadcrumb a {
   color: black !important;
+  font-weight: bold;
 }
 
 .disable-breadcrumb a:hover {

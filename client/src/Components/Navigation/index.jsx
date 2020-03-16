@@ -71,7 +71,7 @@ const Navigation = props => {
         <Toolbar>
           <Link to="/">
             <Typography variant="h6" noWrap>
-              Scrooge McDuck
+              Virtual Bank
             </Typography>
           </Link>
           <div>
@@ -83,6 +83,8 @@ const Navigation = props => {
             <Link to="/notifications">
               <Button aria-controls="simple-menu" aria-haspopup="true">
                 <i className="far fa-bell"></i>
+                {/* if there is a notification change the bell to this icon */}
+                {/* <i className="fas fa-bell alert-red"></i> */}
               </Button>
             </Link>
             <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>

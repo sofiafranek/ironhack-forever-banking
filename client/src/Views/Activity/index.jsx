@@ -83,7 +83,7 @@ class Dashboard extends Component {
           ) : (
             ''
           )}
-          <h1 className="pb-3">{user.name}</h1>
+          <h1 className="pb-3">Your Activity - {user.name}</h1>
           <hr className="pb-1 pt-1"></hr>
           <h4 className="pb-2">Accounts Listed Here</h4>
           {this.state.information.length > 0 ? (
@@ -92,7 +92,7 @@ class Dashboard extends Component {
               return <ActivityAccount key={single._id} {...single} />;
             })
           ) : (
-            <p className="pt-3">There are no accounts</p>
+            <p className="pt-3">No Accounts Listed</p>
           )}
         </div>
       </Layout>

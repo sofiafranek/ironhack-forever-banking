@@ -31,9 +31,17 @@ class Account extends Component {
               state: this.state.account
             }}
           >
-            <Card.Header>
-              <h4 className="pb-2">{this.props.type} Account</h4>
-              <h5 className="pb-2">IBAN Number: {this.props.accountNumber}</h5>
+            <Card.Header
+              className={
+                this.props.type === 'Current'
+                  ? 'current-color'
+                  : this.props.type === 'Credit'
+                  ? 'credit-color'
+                  : 'savings-color'
+              }
+            >
+              <h4>{this.props.type} Account</h4>
+              <h5 className="pb-2 pt-2">IBAN Number: {this.props.accountNumber}</h5>
               <h5>
                 {this.props.type === 'Credit' ? 'Credit Allowance' : 'Available Balance'} :{' '}
                 {this.props.balance}€

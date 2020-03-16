@@ -120,7 +120,7 @@ class Accounts extends Component {
               }
             })
           ) : (
-            <p className="pt-3">There are no accounts</p>
+            <p className="pt-3">No Accounts Listed</p>
           )}
         </div>
       </Layout>

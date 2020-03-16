@@ -24,7 +24,6 @@ class SingleAccount extends Component {
 
   refreshAccount() {
     window.location.reload();
-    console.log('refresh');
   }
 
   deleteAnAccount() {
@@ -58,7 +57,10 @@ class SingleAccount extends Component {
               </Breadcrumb.Item>
             </Breadcrumb>
             <section className="single-account">
-              <h1>Single Account Page</h1>
+              <h1>{this.state.account.balance}€</h1>
+              <h5>
+                {this.state.account.type === 'Current' ? 'Total Credit Limit' : 'Available Balance'}
+              </h5>
               <div className="action-container">
                 <Button variant="contained" className="secondary" onClick={this.refreshAccount}>
                   <i className="fas fa-sync-alt"></i>
@@ -69,19 +71,12 @@ class SingleAccount extends Component {
               </div>
               <Tabs defaultActiveKey="summary" className="pt-3">
                 <Tab eventKey="summary" title="Summary">
-                  <h1>{this.state.account.balance}€</h1>
-                  <h6 className="pb-3">
-                    {this.state.account.type === 'current' || 'savings'
-                      ? 'Total Credit Limit'
-                      : 'Available Balance'}
-                  </h6>
                   <h5>IBAN Number : {this.state.account.accountNumber}</h5>
                   <h5>Account Type : {this.state.account.type}</h5>
                   <h5>Card Number : 1234 1234 1234 1234</h5>
                   <h5>Card Expirty : 12 / 04</h5>
                 </Tab>
                 <Tab eventKey="transactions" title="Transactions">
-                  {/* <Chart /> */}
                   <Transaction />
                   <Transaction />
                   <Transaction />

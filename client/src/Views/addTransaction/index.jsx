@@ -8,7 +8,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormLabel from '@material-ui/core/FormLabel';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
-import Alert from '@material-ui/lab/Alert';
 import { createTransaction } from '../../Services/transaction';
 import { userIDAccounts } from './../../Services/account';
 

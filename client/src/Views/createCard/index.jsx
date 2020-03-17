@@ -31,7 +31,7 @@ class CreateCard extends Component {
   };
 
   generateCardNumber() {
-    return Math.floor(Math.random() * 9000000000000) + 1000000000000;
+    return Math.floor(Math.random() * 9000000000000000) + 1000000000000000;
   }
 
   generatePin() {

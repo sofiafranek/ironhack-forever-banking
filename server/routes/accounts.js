@@ -42,8 +42,7 @@ router.post('/create-account', async (req, res, next) => {
     const accountID = account._id;
     await UserAccount.createUserAccount(userID, accountID);
     res.json({ account });
-  } 
-  catch (error) {
+  } catch (error) {
     console.log(error);
     next(error);
   }

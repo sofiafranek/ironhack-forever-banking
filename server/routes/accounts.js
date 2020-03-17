@@ -4,91 +4,53 @@ const { Router } = require('express');
 
 const Account = require('../models/account');
 const UserAccount = require('../models/userAccount');
+const Card = require('../models/card');
+const Transaction = require('../models/transaction');
 
 const router = new Router();
 
 const RouteGuard = require('./../middleware/route-guard');
 
-router.get('/', RouteGuard, (req, res, next) => {
-  Account.find()
-    .then(accounts => {
-      res.json({ accounts });
-    })
-    .catch(error => {
-      next(error);
-    });
+// Displays all the accounts
+router.get('/', RouteGuard, async (req, res, next) => {
+  try {
+    const accounts = await Account.getAccounts();
+    res.json({ accounts });
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.get('/:id', RouteGuard, (req, res, next) => {
+// Displays a account using the ID
+router.get('/:id', RouteGuard, async (req, res, next) => {
   const id = req.params.id;
-
-  Account.findById(id)
-    .then(account => {
-      res.json({ account });
-    })
-    .catch(error => {
-      next(error);
-    });
+  try {
+    const account = Account.getAccountById(id);
+    res.json({ account });
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.post('/create-account', (req, res, next) => {
+// When user is signing up this creates their first account
+router.post('/create-account', async (req, res, next) => {
   const { balance, type, accountNumber, userID } = req.body;
   const balanceNumber = Number(balance);
 
-  Account.create({
-    accountNumber,
-    type,
-    balance: balanceNumber
-  })
-    .then(account => {
-      const accountID = account._id;
-
-      UserAccount.create({
-        userID,
-        accountID
-      })
-        .then(newUserAccount => {
-          console.log(newUserAccount);
-        })
-        .catch(error => next(error));
-
-      res.json({ account });
-    })
-    .catch(error => {
-      next(error);
-    });
+  try {
+    const account = await Account.createAccount(accountNumber, type, balanceNumber);
+    console.log(account);
+    const accountID = account._id;
+    await UserAccount.createUserAccount(userID, accountID);
+    res.json({ account });
+  } 
+  catch (error) {
+    console.log(error);
+    next(error);
+  }
 });
 
-router.post('/add-account', RouteGuard, (req, res, next) => {
-  const { balance, type, accountNumber, userID } = req.body;
-  const balanceNumber = Number(balance);
-
-  console.log(req.body);
-
-  Account.create({
-    accountNumber,
-    type,
-    balance: balanceNumber
-  })
-    .then(account => {
-      const accountID = account._id;
-
-      UserAccount.create({
-        userID,
-        accountID
-      })
-        .then(newUserAccount => {
-          console.log(newUserAccount);
-        })
-        .catch(error => next(error));
-
-      res.json({ account });
-    })
-    .catch(error => {
-      next(error);
-    });
-});
-
+// Returning all ID's of the accounts of the user
 router.get('/:userID/user-accounts', RouteGuard, (req, res, next) => {
   const userID = req.params.userID;
 
@@ -97,7 +59,6 @@ router.get('/:userID/user-accounts', RouteGuard, (req, res, next) => {
   })
     .select({ accountID: 1, _id: 0 })
     .then(accounts => {
-      console.log(accounts);
       res.json({ accounts });
     })
     .catch(error => {
@@ -105,42 +66,30 @@ router.get('/:userID/user-accounts', RouteGuard, (req, res, next) => {
     });
 });
 
-// to get all the accounts from the user logged in
-router.get('/:userID/accounts', RouteGuard, (req, res, next) => {
-  const userID = req.params.userID;
-
-  UserAccount.find({
-    userID: userID
-  })
-    .populate('accountID')
-    .then(accounts => {
+// Get all the accounts from the user logged in
+router.get('/:userID/accounts', RouteGuard, async (req, res, next) => { 
+    const userID = req.params.userID;
+    try {
+      const accounts = await UserAccount.getUserAccounts(userID);
       const accountsUser = accounts.map(account => account.accountID);
       res.json({ accountsUser });
-    })
-    .catch(error => {
+    }    
+    catch (error) {
       next(error);
-    });
+    }
 });
 
-router.post('/:id/delete-account', RouteGuard, (req, res, next) => {
-  const id = req.params.id;
-
-  console.log(id);
-
-  Account.findByIdAndRemove(id)
-    .then(() => {
-      console.log('deleteing account');
-      UserAccount.findOneAndRemove({
-        accountID: id
-      })
-        .then(() => res.json({}))
-        .catch(error => {
-          next(error);
-        });
-    })
-    .catch(error => {
-      next(error);
-    });
+// Deletes specific account using the ID
+router.post('/:id/delete-account', RouteGuard, async (req, res, next) => {
+  const idAccount = req.params.id;
+  try {
+    await Account.removeAccount(idAccount);
+    await UserAccount.removeAccount(idAccount);
+    await Card.removeCard(idAccount);  
+  }
+  catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;

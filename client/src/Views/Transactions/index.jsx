@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import * as transactionService from './../../Services/transaction';
 import { userAccounts } from './../../Services/account';
+import Search from '../../Components/Search';
 
 class Transactions extends Component {
   constructor(props) {
@@ -14,13 +15,38 @@ class Transactions extends Component {
       accounts: [],
       transactionsReceived: [],
       transactionsSent: [],
-      allTransactions: []
+      allTransactions: [],
+      filter: 'All',
+      search: '',
+      renderTransactions: []
     };
+    this.searchData = this.searchData.bind(this);
   }
 
   refresh() {
     window.location.reload();
-    console.log('refresh');
+  }
+
+  searchData(word) {
+    this.setState({
+      search: word
+    });
+  }
+
+  handleInputChange(event) {
+    const value = event.target.value;
+    let trans = [];
+
+    value === 'Income'
+      ? (trans = [...this.state.transactionsReceived])
+      : value === 'Outcome'
+      ? (trans = [...this.state.transactionsSent])
+      : (trans = [...this.state.allTransactions]);
+
+
+    this.setState({
+      renderTransactions: trans
+    });
   }
 
   componentDidMount() {
@@ -50,9 +76,9 @@ class Transactions extends Component {
                   .allTransactions(accounts)
                   .then(transactions => {
                     this.setState({
-                      allTransactions: transactions
+                      allTransactions: transactions,
+                      renderTransactions: transactions
                     });
-                    console.log(transactions, 'ALL TRANSACTIONS');
                   })
                   .catch(error => {
                     console.log(error);
@@ -69,27 +95,41 @@ class Transactions extends Component {
       .catch(error => {
         console.log(error);
       });
-
-    console.log(this.state);
   }
 
   render() {
     return (
       <Layout>
-        <h1 className="pb-4">Transactions</h1>
-        <div className="action-container">
-          <Link to={`/transactions/addTransaction`} onClick={this.addingAccount}>
-            <Button variant="contained" className="primary">
-              <i className="fas fa-plus"></i>
+        <div className="relative">
+          <h1 className="pb-4">Transactions</h1>
+          <div className="action-container">
+            <Link to={`/transactions/addTransaction`} onClick={this.addingAccount}>
+              <Button variant="contained" className="primary">
+                <i className="fas fa-plus"></i>
+              </Button>
+            </Link>
+            <Button variant="contained" className="secondary" onClick={this.refresh}>
+              <i className="fas fa-sync-alt"></i>
             </Button>
-          </Link>
-          <Button variant="contained" className="secondary" onClick={this.refresh}>
-            <i className="fas fa-sync-alt"></i>
-          </Button>
+          </div>
+          <div className="search-filter">
+            <Search search={this.searchData}/>
+            <select
+              name="filter"
+              className="filter"
+              onChange={event => this.handleInputChange(event)}
+            >
+              <option value="All">All</option>
+              <option value="Income">Income</option>
+              <option value="Outcome">Outcome</option>
+            </select>
+          </div>
+          {this.state.renderTransactions.map(transaction => {
+            if(transaction.reference.toLowerCase().includes(this.state.search.toLowerCase()) ||
+                transaction.category.toLowerCase().includes(this.state.search.toLowerCase()))
+             return <Transaction {...transaction}></Transaction>
+          })}
         </div>
-        {this.state.allTransactions.map(transaction => (
-          <Transaction {...transaction}></Transaction>
-        ))}
       </Layout>
     );
   }

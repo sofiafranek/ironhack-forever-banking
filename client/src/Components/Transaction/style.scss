@@ -25,14 +25,22 @@ h6 {
 }
 
 .card-transaction {
-  display: block;
-  text-align: left;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   width: 100%;
   color: black;
   text-decoration: none;
-  padding: 5px 0 0;
+  padding: 10px 0;
+  align-items: center;
   small {
     padding: 0 30px;
+  }
+  span {
+    padding: 0 10px;
+  }
+  .badge {
+    padding: 8px 20px;
   }
 }
 

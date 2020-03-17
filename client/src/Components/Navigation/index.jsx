@@ -71,7 +71,7 @@ const Navigation = props => {
         <Toolbar>
           <Link to="/">
             <Typography variant="h6" noWrap>
-              Scrooge McDuck
+              Virtual Bank
             </Typography>
           </Link>
           <div>
@@ -83,6 +83,8 @@ const Navigation = props => {
             <Link to="/notifications">
               <Button aria-controls="simple-menu" aria-haspopup="true">
                 <i className="far fa-bell"></i>
+                {/* if there is a notification change the bell to this icon */}
+                {/* <i className="fas fa-bell alert-red"></i> */}
               </Button>
             </Link>
             <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
@@ -97,7 +99,7 @@ const Navigation = props => {
             onClose={handleClose}
           >
             <Link to="/profile">
-              <MenuItem onClick={handleClose}>My Account</MenuItem>
+              <MenuItem onClick={handleClose}>My Profile</MenuItem>
             </Link>
 
             <Link to="/">
@@ -115,7 +117,7 @@ const Navigation = props => {
       >
         <div className={classes.toolbar} />
         <List className="pt-4">
-          {['Dashboard'].map((text, index) => (
+          {['Activity'].map((text, index) => (
             <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
               <ListItem button>
                 <ListItemText primary={text} activeclassname="active" />
@@ -125,7 +127,47 @@ const Navigation = props => {
         </List>
         <Divider className="mr-3 ml-3" />
         <List>
-          {['Accounts', 'Transactions', 'Cards', 'Analytics'].map((text, index) => (
+          {['Accounts', 'Linked Accounts'].map((text, index) => (
+            <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
+              <ListItem button>
+                <ListItemText primary={text} activeclassname="active" />
+              </ListItem>
+            </NavLink>
+          ))}
+        </List>
+        <Divider className="mr-3 ml-3" />
+        <List>
+          {['Transactions'].map((text, index) => (
+            <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
+              <ListItem button>
+                <ListItemText primary={text} activeclassname="active" />
+              </ListItem>
+            </NavLink>
+          ))}
+        </List>
+        <Divider className="mr-3 ml-3" />
+        <List>
+          {['Cards'].map((text, index) => (
+            <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
+              <ListItem button>
+                <ListItemText primary={text} activeclassname="active" />
+              </ListItem>
+            </NavLink>
+          ))}
+        </List>
+        <Divider className="mr-3 ml-3" />
+        <List>
+          {['Analytics'].map((text, index) => (
+            <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
+              <ListItem button>
+                <ListItemText primary={text} activeclassname="active" />
+              </ListItem>
+            </NavLink>
+          ))}
+        </List>
+        <Divider className="mr-3 ml-3" />
+        <List>
+          {['Exchange Rates'].map((text, index) => (
             <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
               <ListItem button>
                 <ListItemText primary={text} activeclassname="active" />

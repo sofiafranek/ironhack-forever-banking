@@ -38,4 +38,65 @@ const schema = new mongoose.Schema({
   }
 });
 
+
+schema.statics.getCards = async function() {
+  const Model = this;
+  const cards = await Model.find().exec();
+  return cards;
+};
+
+schema.statics.getCardById = async function(id) {
+  const Model = this;
+  const card = await Model.findById(id).exec();
+  return card;
+};
+
+schema.statics.createCard = async function(accountID,
+  cardNumber,
+  pin,
+  CVV,
+  type,
+  expiryDate,
+  userID) 
+  {
+  const Model = this;
+  const card = await Model.create({
+    accountID,
+    cardNumber,
+    pin,
+    CVV,
+    type,
+    expiryDate,
+    userID
+  });
+  return card;
+};
+
+schema.statics.getUserCards = async function(userID) {
+  const Model = this;
+  const card = await Model.find({
+    userID
+  }).populate('accountID').exec();
+
+  return card;
+};
+
+schema.statics.getUserCard = async function(userID) {
+  const Model = this;
+  const card = await Model.findOne({
+    userID
+  }).exec();
+
+  return card;
+};
+
+schema.statics.removeCard = async function(accountID) {
+  const Model = this;
+  const removedCard = await Model.findOneAndRemove({
+    accountID
+  }).exec();
+
+  return removedCard;
+};
+
 module.exports = mongoose.model('Card', schema);

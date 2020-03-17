@@ -1,6 +1,11 @@
 .single-account {
+  position: relative;
   .tab-content {
     margin-top: 25px;
+  }
+  .action-container {
+    top: 0;
+    right: 0;
   }
   .tab-content .active {
     color: black;

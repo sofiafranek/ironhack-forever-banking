@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './style.scss';
 
-class Card extends Component {
-  constructor() {
-    super();
-  }
+const Card = props => {
+  const { accountID, cardNumber, CVV, expiryDate, type, bgColor, color } = props;
+  const style = { backgroundColor: bgColor, color };
 
+<<<<<<< HEAD
   render() {
     const { accountID, cardNumber, CVV, expiryDate, type, bgColor, color } = this.props;
     const style = { backgroundColor: bgColor, color };
@@ -41,5 +41,18 @@ class Card extends Component {
     );
   }
 }
+=======
+  return (
+    <div className="card-header card hvr-grow mb-3" style={style}>
+      <h4>{type}</h4>
+      <h5 className="mb-2">Card Number: {cardNumber}</h5>
+      <h5 className="mb-2">Expiry Date: 01/{expiryDate}</h5>
+      <h5 className="mb-0">CVV: {CVV}</h5>
+      <hr></hr>
+      <h6>Card Account: {accountID.accountNumber}</h6>
+    </div>
+  );
+};
+>>>>>>> 896004f694d9a4cd1d07e92f4af98666f2c922d5
 
 export default Card;

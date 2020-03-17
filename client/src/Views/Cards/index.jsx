@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
 import Card from '../../Components/Card';
+=======
+import './style.scss';
+
+import Card from './../../Components/Card';
+>>>>>>> 896004f694d9a4cd1d07e92f4af98666f2c922d5
 
 import Layout from '../../Components/Layout';
 import { Usercards } from './../../Services/card';
@@ -40,21 +46,23 @@ class Cards extends Component {
   render() {
     return (
       <Layout>
-        <h1 className="pb-3">Cards</h1>
-        <div className="action-container">
-          <Link to={`/cards/add-card`}>
-            <Button variant="contained" className="primary">
-              <i className="fas fa-plus"></i>
+        <div className="relative">
+          <h1 className="pb-3">Cards</h1>
+          <div className="action-container">
+            <Link to={`/cards/add-card`}>
+              <Button variant="contained" className="primary">
+                <i className="fas fa-plus"></i>
+              </Button>
+            </Link>
+            <Button variant="contained" className="secondary" onClick={this.refresh}>
+              <i className="fas fa-sync-alt"></i>
             </Button>
-          </Link>
-          <Button variant="contained" className="secondary" onClick={this.refresh}>
-            <i className="fas fa-sync-alt"></i>
-          </Button>
-        </div>
-        <div>
-          {this.state.cards.map(card => (
-            <Card key={card._id} {...card} />
-          ))}
+          </div>
+          <div>
+            {this.state.cards.map(card => (
+              <Card key={card._id} {...card} />
+            ))}
+          </div>
         </div>
       </Layout>
     );

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import './style.scss';
 
 import { Link } from 'react-router-dom';
 
 import Card from 'react-bootstrap/Card';
 
-class Account extends Component {
+class ActivityAccount extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,21 +30,13 @@ class Account extends Component {
               state: this.state.account
             }}
           >
-            <Card.Header
-              className={
-                this.props.type === 'Current'
-                  ? 'current-color'
-                  : this.props.type === 'Credit'
-                  ? 'credit-color'
-                  : 'savings-color'
-              }
-            >
-              <h4>{this.props.type} Account</h4>
-              <h5 className="pb-2 pt-2">IBAN Number: {this.props.accountNumber}</h5>
-              <h5>
+            <Card.Header>
+              <h6 className="mb-1">{this.props.type} Account</h6>
+              <h6 className="mb-0">IBAN Number: {this.props.accountNumber}</h6>
+              {/* <h5>
                 {this.props.type === 'Credit' ? 'Credit Allowance' : 'Available Balance'} :{' '}
                 {this.props.balance}€
-              </h5>
+              </h5> */}
             </Card.Header>
           </Link>
         </Card>
@@ -54,4 +45,4 @@ class Account extends Component {
   }
 }
 
-export default Account;
+export default ActivityAccount;

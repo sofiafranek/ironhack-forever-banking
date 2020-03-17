@@ -27,8 +27,8 @@ const Mobilenavigation = () => {
       className={`${classes.root} bottomNavigation`}
     >
       <div>
-        <Link to="/dashboard">
-          <BottomNavigationAction label="Dashboard" icon={<i className="fas fa-stream"></i>} />
+        <Link to="/activity">
+          <BottomNavigationAction label="Activity" icon={<i className="fas fa-stream"></i>} />
         </Link>
       </div>
       <Link to="/accounts">

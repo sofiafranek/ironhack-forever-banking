@@ -13,7 +13,7 @@ const serveFavicon = require('serve-favicon');
 const basicAuthenticationSerializer = require('./middleware/basic-authentication-serializer.js');
 const bindUserToViewLocals = require('./middleware/bind-user-to-view-locals.js');
 const passportConfigure = require('./passport-configuration.js');
-
+const scheduler = require('./scheduler.js');
 const indexRouter = require('./routes/index');
 const authenticationRouter = require('./routes/authentication');
 const accountRouter = require('./routes/accounts');

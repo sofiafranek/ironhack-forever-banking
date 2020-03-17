@@ -27,7 +27,7 @@ class Search extends Component {
             name="search"
             value={this.state.search}
             onChange={this.startSearch}
-            placeholder="Search Accounts"
+            placeholder="Search"
             autoComplete="off"
           />
         </form>

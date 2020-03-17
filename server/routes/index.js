@@ -14,7 +14,7 @@ router.get('/:userID/activity', RouteGuard, async (req, res, next) => {
   const activity = new Object();
 
   try {
-    const accounts = await UserAccount.getUserAccounts(userID);
+    const accounts = await UserAccount.getUserActiveAccounts(userID);
     const accountsUser = accounts.map(account => account._id);
     activity.accountsUser = accounts;
     const transactions = await Transaction.getAllTransactions(accountsUser);

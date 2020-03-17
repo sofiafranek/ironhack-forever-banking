@@ -10,6 +10,11 @@ const schema = new mongoose.Schema({
   accountID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Account'
+  },
+  status: {
+    type: String,
+    enum: ['Active', 'NoActive'],
+    default: 'Active'
   }
 });
 
@@ -23,20 +28,33 @@ schema.statics.createUserAccount = async function(userID, accountID) {
   return userAccount;
 };
 
-schema.statics.getUserAccounts = async function(userID) {
+schema.statics.getUserActiveAccounts = async function(userID) {
+  const Model = this;
+  const userAccount = await Model.find(
+    { $and:[ { userID}, { status : 'Active' } ]}
+    ).populate('accountID').exec();
+
+  console.log("herrr", userAccount);
+  return userAccount;
+};
+
+schema.statics.getUserAllAccounts = async function(userID) {
   const Model = this;
   const userAccount = await Model.find({
     userID
-  }).populate('accountID').exec();
+  })
+  .select({ accountID: 1, _id: 0 })
+  .exec();
 
   return userAccount;
 };
 
 schema.statics.removeAccount = async function(accountID) {
   const Model = this;
-  const removedAccount = await Model.findOneAndRemove({
-    accountID
-  }).exec();
+  const filter = { accountID };
+  const update = { status: 'NoActive' };
+  const removedAccount = await Model.updateOne(filter, update).exec();
+  console.log("removeddd", removedAccount);
 
   return removedAccount;
 };

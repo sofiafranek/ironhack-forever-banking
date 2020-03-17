@@ -28,7 +28,8 @@ class SingleAccount extends Component {
     window.location.reload();
   }
 
-  deleteAnAccount() {
+  deleteAnAccount(event) {
+    event.preventDefault();
     const accountID = this.props.match.params.id;
     deleteAccount(accountID)
       .then(() => {
@@ -80,7 +81,7 @@ class SingleAccount extends Component {
                 <Button variant="contained" className="secondary" onClick={this.refreshAccount}>
                   <i className="fas fa-sync-alt"></i>
                 </Button>
-                <Button variant="contained" className="third" onClick={this.deleteAnAccount}>
+                <Button variant="contained" className="third" onClick={(event) => this.deleteAnAccount(event)}>
                   <i className="fas fa-times"></i>
                 </Button>
               </div>

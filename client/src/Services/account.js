@@ -45,9 +45,22 @@ const deleteAccount = accountID =>
   new Promise((resolve, reject) => {
     instance
       .post(`/${accountID}/delete-account`)
-      .then((result) => {
+      .then(result => {
         console.log(result.data);
         resolve();
+      })
+      .catch(reject);
+  });
+
+// adding money to an account from users account
+const addingMoney = (accountID, balance) =>
+  new Promise((resolve, reject) => {
+    instance
+      .post(`/${accountID}/add-money`)
+      .then(result => {
+        result = result.data.balance;
+        console.log(result.data);
+        resolve(result);
       })
       .catch(reject);
   });
@@ -64,7 +77,7 @@ const userIDAccounts = userID =>
       .catch(reject);
   });
 
-  // all the accounts, incluing the non active
+// all the accounts, incluing the non active
 const userAccounts = userID =>
   new Promise((resolve, reject) => {
     instance
@@ -78,6 +91,7 @@ const userAccounts = userID =>
 
 export {
   account,
+  addingMoney,
   creatingAccount,
   deleteAccount,
   singleAccount,

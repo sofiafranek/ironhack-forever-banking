@@ -62,24 +62,35 @@ router.get('/:userID/user-accounts', RouteGuard, async (req, res, next) => {
   try {
     const accounts = await UserAccount.getUserAllAccounts(userID);
     res.json({ accounts });
-  }    
-  catch (error) {
+  } catch (error) {
     next(error);
   }
-
 });
 
 // Get all the accounts from the user logged in
-router.get('/:userID/accounts', RouteGuard, async (req, res, next) => { 
-    const userID = req.params.userID;
-    try {
-      const accounts = await UserAccount.getUserActiveAccounts(userID);
-      const accountsUser = accounts.map(account => account.accountID);
-      res.json({ accountsUser });
-    }    
-    catch (error) {
-      next(error);
-    }
+router.get('/:userID/accounts', RouteGuard, async (req, res, next) => {
+  const userID = req.params.userID;
+  try {
+    const accounts = await UserAccount.getUserActiveAccounts(userID);
+    const accountsUser = accounts.map(account => account.accountID);
+    res.json({ accountsUser });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Adding money to specific account using the ID
+router.post('/:id/add-money', RouteGuard, async (req, res, next) => {
+  const id = req.params.id;
+  const balance = req.body.balance;
+  const balanceNumber = Number(balance);
+
+  try {
+    const account = await Account.updateBalance(id, balanceNumber);
+    res.json({ account });
+  } catch (error) {
+    next(error);
+  }
 });
 
 // Deletes specific account using the ID
@@ -88,14 +99,12 @@ router.post('/:id/delete-account', RouteGuard, async (req, res, next) => {
   try {
     await Account.removeAccount(idAccount);
     await UserAccount.removeAccount(idAccount);
-    await Card.removeCard(idAccount);  
-    res.json({ result : 'sucess'});
-  }
-  catch (error) {
+    await Card.removeCard(idAccount);
+    res.json({ result: 'sucess' });
+  } catch (error) {
     next(error);
-    res.json({ result : 'error'});
+    res.json({ result: 'error' });
   }
 });
-
 
 module.exports = router;

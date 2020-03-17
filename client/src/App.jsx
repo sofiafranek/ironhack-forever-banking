@@ -12,6 +12,7 @@ import Accounts from './Views/Accounts';
 import CreateAccount from './Views/createAccount';
 import SingleAccount from './Views/SingleAccount';
 import AddAccount from './Views/addAccount';
+import AddMoney from './Views/addMoney';
 import AddTransaction from './Views/addTransaction';
 import Transactions from './Views/Transactions';
 import Analytics from './Views/Analytics';
@@ -20,7 +21,6 @@ import SignIn from './Views/SignIn';
 import SignUp from './Views/SignUp';
 import Summary from './Views/Summary';
 import { loadUserInformation } from './Services/authentication';
-import Messages from './Views/Messages';
 import Notifications from './Views/Notifications';
 import Profile from './Views/Profile';
 
@@ -173,6 +173,13 @@ class App extends Component {
               <ProtectedRoute
                 authorized={this.state.user}
                 redirect={'/signin'}
+                path="/accounts/:id/add-money"
+                render={props => <AddMoney {...props} changeActiveNav={this.activeNav} />}
+                exact
+              />
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
                 path="/accounts/:id"
                 render={props => <SingleAccount {...props} changeActiveNav={this.activeNav} />}
                 exact
@@ -247,14 +254,6 @@ class App extends Component {
                     updateUserInformation={this.updateUserInformation}
                   />
                 )}
-                exact
-              />
-
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/messages"
-                component={Messages}
                 exact
               />
               <ProtectedRoute

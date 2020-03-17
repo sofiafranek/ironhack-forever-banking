@@ -1,8 +1,8 @@
 .credit-card {
   display: flex;
   flex-direction: column;
-  width: 350px;
-  height: 200px;
+  width: 340px;
+  height: 190px;
   padding: 25px;
   border-radius: 15px;
   color: white;
@@ -77,10 +77,10 @@
   transform-style: preserve-3d;
   cursor: pointer;
   margin-right: 20px;
-  margin-bottom: 20px;
-  width: 350px;
-  height: 200px;
-  perspective: 700px;
+  margin-bottom: 50px;
+  width: 340px;
+  height: 190px;
+  perspective: 680px;
 }
 
 .credit-card__info_name_back {
@@ -117,7 +117,7 @@
 }
 
 .card-container {
-  justify-content: center;
+  justify-content: space-between;
   position: relative;
   button {
     position: absolute;
@@ -127,6 +127,7 @@
     border: none;
     padding: 10px 15px;
     border-radius: 50%;
+    line-height: 0;
   }
 }
 
@@ -142,8 +143,9 @@
   .card-container {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     flex-wrap: wrap;
     margin-right: auto;
+    max-width: 850px;
   }
 }

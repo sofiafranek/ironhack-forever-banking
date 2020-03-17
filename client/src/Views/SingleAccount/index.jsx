@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './style.scss';
+import { Link } from 'react-router-dom';
 
 import Layout from '../../Components/Layout';
 import Transaction from '../../Components/Transaction';
@@ -58,6 +59,7 @@ class SingleAccount extends Component {
   x;
 
   render() {
+    console.log(this.props.location.pathname, 'PROPS');
     return (
       <Layout>
         {this.state.account && (
@@ -78,10 +80,19 @@ class SingleAccount extends Component {
                   : 'Total Credit Limit'}
               </h5>
               <div className="action-container">
+                <Link to={`${this.props.location.pathname}/add-money`}>
+                  <Button variant="contained" className="primary">
+                    <i className="fas fa-plus"></i>
+                  </Button>
+                </Link>
                 <Button variant="contained" className="secondary" onClick={this.refreshAccount}>
                   <i className="fas fa-sync-alt"></i>
                 </Button>
-                <Button variant="contained" className="third" onClick={(event) => this.deleteAnAccount(event)}>
+                <Button
+                  variant="contained"
+                  className="third"
+                  onClick={event => this.deleteAnAccount(event)}
+                >
                   <i className="fas fa-times"></i>
                 </Button>
               </div>

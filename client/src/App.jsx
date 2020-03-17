@@ -12,6 +12,7 @@ import Accounts from './Views/Accounts';
 import CreateAccount from './Views/createAccount';
 import SingleAccount from './Views/SingleAccount';
 import AddAccount from './Views/addAccount';
+import AddMoney from './Views/addMoney';
 import AddTransaction from './Views/addTransaction';
 import Transactions from './Views/Transactions';
 import Analytics from './Views/Analytics';
@@ -168,6 +169,13 @@ class App extends Component {
                     userID={this.state.user._id}
                   />
                 )}
+                exact
+              />
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
+                path="/accounts/:id/add-money"
+                render={props => <AddMoney {...props} changeActiveNav={this.activeNav} />}
                 exact
               />
               <ProtectedRoute

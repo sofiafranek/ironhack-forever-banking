@@ -56,7 +56,7 @@ class Card extends Component {
           }
           onClick={event => this.deleteACard(event)}
         >
-          X
+          <i className="fas fa-times"></i>
         </button>
         <section className="credit-card__section" onClick={event => this.flip(event)}>
           <div className="credit-card credit-card__front">

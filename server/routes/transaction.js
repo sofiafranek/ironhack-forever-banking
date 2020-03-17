@@ -101,6 +101,23 @@ router.post('/sent', (req, res, next) => {
     });
 });
 
+router.get('/:idAccount/allTransactionsAccount', (req, res, next) => {
+  const idAccount = req.params.idAccount;
+
+  Transaction.find({
+    $or: [{ accountIDFrom: idAccount }, { accountIDTo: idAccount }],
+    status: 'Executed'
+  })
+    .populate('accountIDTo')
+    .populate('accountIDFrom')
+    .then(allTransactions => {
+      res.json({ allTransactions });
+    })
+    .catch(error => {
+      next(error);
+    });
+});
+
 router.post('/all', (req, res, next) => {
   const transactions = req.body.map(value => value.accountID);
 
@@ -158,6 +175,8 @@ router.post('/add-list-transactions', (req, res, next) => {
         next(error);
       });
   });
+
+  res.json({});
 });
 
 // Returning a transaction based on the user ID

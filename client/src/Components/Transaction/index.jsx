@@ -31,7 +31,6 @@ class Transaction extends Component {
           </Card.Header>
           <Accordion.Collapse eventKey="0">
             <Card.Body>
-              {'Transfer from ' + accountIDFrom.accountNumber + ' to ' + accountIDTo.accountNumber}
             </Card.Body>
           </Accordion.Collapse>
         </Card>

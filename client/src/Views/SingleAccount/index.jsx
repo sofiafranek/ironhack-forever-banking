@@ -11,12 +11,14 @@ import Button from '@material-ui/core/Button';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 import { deleteAccount } from './../../Services/account';
+import { allTransactionsAccount } from './../../Services/transaction';
 
 class SingleAccount extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      account: null
+      account: null,
+      transactions: []
     };
     this.deleteAnAccount = this.deleteAnAccount.bind(this);
   }
@@ -37,10 +39,19 @@ class SingleAccount extends Component {
   }
 
   componentDidMount() {
+    const accountID = this.props.match.params.id;
     const account = this.props.location.state;
-    this.setState({
-      account: account
-    });
+
+    allTransactionsAccount(accountID)
+    .then((transactions) => {
+      this.setState({
+        transactions,
+        account
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    })
   }
 
   render() {
@@ -74,13 +85,13 @@ class SingleAccount extends Component {
                   <h5>Card Number : 1234 1234 1234 1234</h5>
                   <h5>Card Expirty : 12 / 04</h5>
                 </Tab>
-                <Tab eventKey="transactions" title="Transactions">
-                  <Transaction />
-                  <Transaction />
-                  <Transaction />
-                  <Transaction />
-                  <Transaction />
-                </Tab>
+                 <Tab eventKey="transactions" title="Transactions">
+                   {
+                    this.state.transactions.map(transaction => (
+                      <Transaction {...transaction}/>
+                    ))
+                   }
+                </Tab> 
                 <Tab eventKey="settings" title="Settings">
                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis, fuga.</p>
                 </Tab>

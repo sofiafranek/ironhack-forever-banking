@@ -17,12 +17,20 @@ class Transactions extends Component {
       transactionsSent: [],
       allTransactions: [],
       filter: 'All',
+      search: '',
       renderTransactions: []
     };
+    this.searchData = this.searchData.bind(this);
   }
 
   refresh() {
     window.location.reload();
+  }
+
+  searchData(word) {
+    this.setState({
+      search: word
+    });
   }
 
   handleInputChange(event) {
@@ -35,7 +43,6 @@ class Transactions extends Component {
       ? (trans = [...this.state.transactionsSent])
       : (trans = [...this.state.allTransactions]);
 
-    console.log(trans);
 
     this.setState({
       renderTransactions: trans
@@ -106,6 +113,7 @@ class Transactions extends Component {
             </Button>
           </div>
           <div className="search-filter">
+            <Search search={this.searchData}/>
             <select
               name="filter"
               className="filter"
@@ -116,9 +124,11 @@ class Transactions extends Component {
               <option value="Outcome">Outcome</option>
             </select>
           </div>
-          {this.state.renderTransactions.map(transaction => (
-            <Transaction {...transaction}></Transaction>
-          ))}
+          {this.state.renderTransactions.map(transaction => {
+            if(transaction.reference.toLowerCase().includes(this.state.search.toLowerCase()) ||
+                transaction.category.toLowerCase().includes(this.state.search.toLowerCase()))
+             return <Transaction {...transaction}></Transaction>
+          })}
         </div>
       </Layout>
     );

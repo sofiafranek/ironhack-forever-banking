@@ -34,7 +34,7 @@ const schema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['Executed', 'Pending'],
+    enum: ['Executed', 'Pending', 'Failed'],
     required: true
   },
   dateTransaction: {

@@ -4,6 +4,8 @@ const { Router } = require('express');
 
 const Account = require('../models/account');
 const UserAccount = require('../models/userAccount');
+const Card = require('../models/card');
+const Transaction = require('../models/transaction');
 
 const router = new Router();
 
@@ -127,16 +129,51 @@ router.get('/:userID/accounts', RouteGuard, (req, res, next) => {
 // Deletes specific account using the ID
 router.post('/:id/delete-account', RouteGuard, (req, res, next) => {
   const id = req.params.id;
+  let accountNumber = '';
 
   Account.findByIdAndRemove(id)
-    .then(() => {
+    .then((account) => {
+      accountNumber = account.accountNumber;
       UserAccount.findOneAndRemove({
         accountID: id
       })
-        .then(() => res.json({}))
-        .catch(error => {
-          next(error);
-        });
+      .then(() => {})
+      .catch(error => {
+        next(error);
+      });
+
+      Card.findOneAndRemove({
+        accountID: id
+      })
+      .then(() => {})
+      .catch(error => {
+        next(error);
+      });
+
+      /*Transaction.findAndUpdate({
+        accountIDFrom: id
+      },
+      {
+        accountIDFrom: id
+      })
+      .then()
+      .catch(error => {
+        console.log(error);
+      });
+
+      Transaction.findAndUpdate({
+        accountIDTo: id
+      },
+      {
+        accountIDTo: id
+      })
+      .then()
+      .catch(error => {
+        console.log(error);
+      });*/
+
+      res.json({});
+      
     })
     .catch(error => {
       next(error);

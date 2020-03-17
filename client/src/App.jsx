@@ -144,7 +144,9 @@ class App extends Component {
                 authorized={this.state.user}
                 redirect={'/signin'}
                 path="/summary"
-                render={props => <Summary {...props} changeActiveNav={this.disableNav} />}
+                render={props => (
+                  <Summary {...props} changeActiveNav={this.disableNav} user={this.state.user} />
+                )}
                 exact
               />
 

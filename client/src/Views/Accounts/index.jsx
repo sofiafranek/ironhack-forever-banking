@@ -115,7 +115,7 @@ class Accounts extends Component {
           </div>
           {this.state.account.length > 0 ? (
             this.state.account.map(single => {
-              if (single.type.toLowerCase().includes(this.state.search)) {
+              if (single.type.toLowerCase().includes(this.state.search.toLowerCase())) {
                 return <Account key={single._id} {...single} />;
               }
             })

@@ -105,7 +105,7 @@ class Transactions extends Component {
               <i className="fas fa-sync-alt"></i>
             </Button>
           </div>
-          <div className="search-filter">
+          <div className="search-filter pb-3">
             <select
               name="filter"
               className="filter"

@@ -16,7 +16,7 @@ router.get('/:userID/activity', RouteGuard, async (req, res, next) => {
   try {
     const accounts = await UserAccount.getUserAccounts(userID);
     const accountsUser = accounts.map(account => account._id);
-    activity.accountsUser = accountsUser;
+    activity.accountsUser = accounts;
     const transactions = await Transaction.getAllTransactions(accountsUser);
     activity.transactions = transactions;
     res.json({ activity });
@@ -29,7 +29,7 @@ router.get('/:userID/activity', RouteGuard, async (req, res, next) => {
 router.get('/:userID/summary', async (req, res, next) => {
   const userID = req.params.userID;
   const information = new Object();
-  
+
   try {
     const account = await UserAccount.getUserAccount(userID);
     information.account = account;
@@ -39,7 +39,6 @@ router.get('/:userID/summary', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-
 });
 
 module.exports = router;

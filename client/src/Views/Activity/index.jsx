@@ -24,6 +24,7 @@ class Dashboard extends Component {
     const userID = this.props.user._id;
     activity(userID)
       .then(information => {
+        console.log(userID);
         console.log(information);
         this.setState({
           accountsUser: information.accountsUser,
@@ -90,19 +91,22 @@ class Dashboard extends Component {
           <h1 className="pb-3">Your Activity - {user.name}</h1>
           <hr className="pb-1 pt-1"></hr>
           <h4 className="pb-2">Accounts Listed Here</h4>
+          {this.state.accountsUser.length > 0 ? (
+            this.state.accountsUser.map(account => {
+              const single = account.accountID;
+              return <ActivityAccount key={single._id} {...single} />;
+            })
+          ) : (
+            <p className="pt-3">No Accounts Listed</p>
+          )}
+
+          <h4 className="pb-2 pt-4">Transactions Listed Here</h4>
           {this.state.transactions.length > 0 ? (
             this.state.transactions.map(single => {
               return <Transaction key={single._id} {...single} />;
             })
           ) : (
-            <p className="pt-3">No Accounts Listed</p>
-          )}
-          {this.state.accountsUser.length > 0 ? (
-            this.state.accountsUser.map(single => {
-              return <ActivityAccount key={single._id} {...single} />;
-            })
-          ) : (
-            <p className="pt-3">No Accounts Listed</p>
+            <p className="pt-3">No Transactions Listed</p>
           )}
         </div>
       </Layout>

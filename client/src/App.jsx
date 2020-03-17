@@ -21,7 +21,6 @@ import SignIn from './Views/SignIn';
 import SignUp from './Views/SignUp';
 import Summary from './Views/Summary';
 import { loadUserInformation } from './Services/authentication';
-import Messages from './Views/Messages';
 import Notifications from './Views/Notifications';
 import Profile from './Views/Profile';
 
@@ -255,14 +254,6 @@ class App extends Component {
                     updateUserInformation={this.updateUserInformation}
                   />
                 )}
-                exact
-              />
-
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/messages"
-                component={Messages}
                 exact
               />
               <ProtectedRoute

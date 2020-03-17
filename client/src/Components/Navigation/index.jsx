@@ -75,11 +75,6 @@ const Navigation = props => {
             </Typography>
           </Link>
           <div>
-            <Link to="/messages">
-              <Button aria-controls="simple-menu" aria-haspopup="true">
-                <i className="far fa-envelope"></i>
-              </Button>
-            </Link>
             <Link to="/notifications">
               <Button aria-controls="simple-menu" aria-haspopup="true">
                 <i className="far fa-bell"></i>

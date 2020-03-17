@@ -3,20 +3,6 @@ const schedule = require('node-schedule');
 const Transaction = require('./models/transaction');
 const Account = require('./models/account');
 
-function getAccount(idAccount) {
-  return Account.findById(idAccount);
-}
-
-function updateAccountBalance(idAccount, balance) {
-  return Account.findByIdAndUpdate({ _id: idAccount }, { balance: balance });
-}
-
-async function addTransaction(accountIDFrom, accountIDTo) {
-  const accountFrom = await getAccount(accountIDFrom);
-  const accountTo = await getAccount(accountIDTo);
-  //continue
-}
-
 module.exports = schedule.scheduleJob('01 * * * *', async () => {
   try {
     const transactions = await Transaction.find({

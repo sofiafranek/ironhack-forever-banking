@@ -28,18 +28,6 @@ const creatingAccount = data =>
       .catch(reject);
   });
 
-// adding an account when user is signed up and already has an account
-const addAccount = data =>
-  new Promise((resolve, reject) => {
-    instance
-      .post('/add-account', data)
-      .then(result => {
-        const account = result.data.account;
-        resolve(account);
-      })
-      .catch(reject);
-  });
-
 // showing each accounts information on single account view
 const singleAccount = id =>
   new Promise((resolve, reject) => {
@@ -88,7 +76,6 @@ const userAccounts = userID =>
 
 export {
   account,
-  addAccount,
   creatingAccount,
   deleteAccount,
   singleAccount,

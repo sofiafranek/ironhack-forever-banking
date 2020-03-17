@@ -10,8 +10,8 @@ const activity = userID =>
     instance
       .get(`/${userID}/activity`)
       .then(result => {
-        const accountsUser = result.data.accountsUser;
-        resolve(accountsUser);
+        const activity = result.data.activity;
+        resolve(activity);
       })
       .catch(reject);
   });

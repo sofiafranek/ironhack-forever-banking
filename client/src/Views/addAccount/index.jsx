@@ -8,7 +8,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
-import { addAccount, userIDAccounts } from '../../Services/account';
+import { creatingAccount, userIDAccounts } from '../../Services/account';
 
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
@@ -105,7 +105,7 @@ class AddAccount extends Component {
     account.accountNumber = accountNumber;
     account.userID = userID;
 
-    addAccount(account)
+    creatingAccount(account)
       .then(account => {
         this.props.history.push({
           pathname: '/accounts'

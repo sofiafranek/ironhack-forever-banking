@@ -3,6 +3,7 @@ import './style.scss';
 
 import Layout from '../../Components/Layout';
 import ActivityAccount from '../../Components/ActivityAccount';
+import Transaction from '../../Components/Transaction';
 
 import { Link } from 'react-router-dom';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -14,7 +15,8 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       mobile: false,
-      information: []
+      accountsUser: [],
+      transactions: []
     };
   }
 
@@ -22,8 +24,10 @@ class Dashboard extends Component {
     const userID = this.props.user._id;
     activity(userID)
       .then(information => {
+        console.log(information);
         this.setState({
-          information
+          accountsUser: information.accountsUser,
+          transactions: information.transactions
         });
       })
       .catch(error => console.log(error));
@@ -86,9 +90,15 @@ class Dashboard extends Component {
           <h1 className="pb-3">Your Activity - {user.name}</h1>
           <hr className="pb-1 pt-1"></hr>
           <h4 className="pb-2">Accounts Listed Here</h4>
-          {this.state.information.length > 0 ? (
-            this.state.information.map(single => {
-              console.log(single);
+          {this.state.transactions.length > 0 ? (
+            this.state.transactions.map(single => {
+              return <Transaction key={single._id} {...single} />;
+            })
+          ) : (
+            <p className="pt-3">No Accounts Listed</p>
+          )}
+          {this.state.accountsUser.length > 0 ? (
+            this.state.accountsUser.map(single => {
               return <ActivityAccount key={single._id} {...single} />;
             })
           ) : (

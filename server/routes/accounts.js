@@ -5,7 +5,6 @@ const { Router } = require('express');
 const Account = require('../models/account');
 const UserAccount = require('../models/userAccount');
 const Card = require('../models/card');
-const Transaction = require('../models/transaction');
 
 const router = new Router();
 

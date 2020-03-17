@@ -127,7 +127,7 @@ class Transactions extends Component {
           {this.state.renderTransactions.map(transaction => {
             if(transaction.reference.toLowerCase().includes(this.state.search.toLowerCase()) ||
                 transaction.category.toLowerCase().includes(this.state.search.toLowerCase()))
-             return <Transaction {...transaction}></Transaction>
+             return <Transaction key={transaction._id} {...transaction}></Transaction>
           })}
         </div>
       </Layout>

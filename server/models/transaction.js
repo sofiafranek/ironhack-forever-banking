@@ -54,7 +54,7 @@ schema.statics.getTransactionById = async function(id) {
   return transaction;
 };
 
-schema.statics.createTransaction = async function(accountID,
+schema.statics.createTransaction = async function(
   accountIDFrom,
   accountIDTo,
   totalAmount,

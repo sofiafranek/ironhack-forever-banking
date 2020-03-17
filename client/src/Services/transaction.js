@@ -19,8 +19,8 @@ const createListTransactions = data =>
   new Promise((resolve, reject) => {
     instance
       .post('/add-list-transactions', data)
-      .then(result => {
-        console.log("HEREEEE")
+      .then(() => {
+        console.log("hrere");
         resolve();
       })
       .catch(reject);

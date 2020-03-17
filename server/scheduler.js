@@ -15,8 +15,8 @@ module.exports = schedule.scheduleJob('01 * * * *', async () => {
       const accountIDTo = transaction.accountIDTo;
       const amount = transaction.totalAmount;
 
-      const accountFrom = await Account.findById(accountIDFrom);
-      const accountTo = await Account.findById(accountIDTo);
+      const accountFrom = await Account.getAccountById(accountIDFrom);
+      const accountTo = await Account.getAccountById(accountIDTo);
 
       const balanceFrom = accountFrom.balance;
       const balanceTo = accountTo.balance;
@@ -33,8 +33,8 @@ module.exports = schedule.scheduleJob('01 * * * *', async () => {
       );
 
       if (minusBalance > 0) {
-        await Account.findByIdAndUpdate({ _id: accountIDFrom }, { balance: minusBalance });
-        await Account.findByIdAndUpdate({ _id: accountIDTo }, { balance: addBalance });
+        await Account.updateBalance(accountIDFrom, minusBalance);
+        await Account.updateBalance(accountIDTo, addBalance);
       }
     }
   } catch (error) {

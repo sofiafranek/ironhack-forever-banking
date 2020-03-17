@@ -45,8 +45,9 @@ const deleteAccount = accountID =>
   new Promise((resolve, reject) => {
     instance
       .post(`/${accountID}/delete-account`)
-      .then(result => {
-        resolve(result);
+      .then((result) => {
+        console.log(result.data);
+        resolve();
       })
       .catch(reject);
   });
@@ -63,6 +64,7 @@ const userIDAccounts = userID =>
       .catch(reject);
   });
 
+  // all the accounts, incluing the non active
 const userAccounts = userID =>
   new Promise((resolve, reject) => {
     instance

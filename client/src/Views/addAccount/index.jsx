@@ -1,16 +1,37 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './style.scss';
 
 import Layout from '../../Components/Layout';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import Grid from '@material-ui/core/Grid';
+import {
+  RadioGroup,
+  Button,
+  TextField,
+  FormControl,
+  Select,
+  Grid,
+  FormControlLabel,
+  InputLabel,
+  Radio
+} from '@material-ui/core';
+import clsx from 'clsx';
 import { creatingAccount, userIDAccounts } from '../../Services/account';
-
+import { useStyles } from './../../Utilities/useStyles';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+
+function StyledRadio(props) {
+  const classes = useStyles();
+
+  return (
+    <Radio
+      className={classes.root}
+      disableRipple
+      color="default"
+      checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+      icon={<span className={classes.icon} />}
+      {...props}
+    />
+  );
+}
 
 class AddAccount extends Component {
   constructor(props) {
@@ -23,7 +44,9 @@ class AddAccount extends Component {
       types: ['Credit', 'Savings', 'Current'],
       type: 'Credit',
       options: ['Existing', 'External'],
-      option: 'Existing'
+      option: 'Existing',
+      sharedAccount: false,
+      sharedUser: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.getData = this.getData.bind(this);
@@ -32,7 +55,11 @@ class AddAccount extends Component {
 
   handleInputChange(event) {
     const inputName = event.target.name;
-    const value = event.target.value;
+    let value = event.target.value;
+    if (inputName === 'sharedAccount') value === 'No' ? (value = false) : (value = true);
+
+    console.log(value);
+
     this.setState({
       [inputName]: value
     });
@@ -104,6 +131,9 @@ class AddAccount extends Component {
     const account = Object.assign({}, this.state);
     account.accountNumber = accountNumber;
     account.userID = userID;
+    delete account.types;
+    delete account.options;
+    account.accounts = null;
 
     creatingAccount(account)
       .then(account => {
@@ -136,7 +166,43 @@ class AddAccount extends Component {
                 </Select>
               </FormControl>
             </Grid>
-
+            <FormControl component="fieldset">
+              <h4 className="pl-2 pt-4 pb-2">Shared Account</h4>
+              <RadioGroup
+                name="sharedAccount"
+                className="scheduled-transaction"
+              >
+                <FormControlLabel
+                  value="Yes"
+                  control={<StyledRadio />}
+                  label="Yes"
+                  onChange={event => this.handleInputChange(event)}
+                />
+                <FormControlLabel
+                  value="No"
+                  control={<StyledRadio />}
+                  label="No"
+                  onChange={event => this.handleInputChange(event)}
+                />
+              </RadioGroup>
+            </FormControl>
+            {this.state.sharedAccount && (
+            <Fragment>
+            <h4 className="pl-2 pt-4 pb-2">User Phone Number</h4>
+            <Grid item xs={12} sm={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="sharedUser"
+                label="sharedUser"
+                name="sharedUser"
+                onChange={event => this.handleInputChange(event)}
+              />
+            </Grid>
+            </Fragment>
+            )
+            }
             {this.state.type === 'Credit' ? (
               <Grid item xs={12} sm={12}>
                 <div>We offer a 5.000€ starting credit limit</div>

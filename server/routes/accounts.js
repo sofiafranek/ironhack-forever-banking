@@ -5,6 +5,7 @@ const { Router } = require('express');
 const Account = require('../models/account');
 const UserAccount = require('../models/userAccount');
 const Card = require('../models/card');
+const User = require('../models/user');
 
 const router = new Router();
 
@@ -33,14 +34,21 @@ router.get('/:id', RouteGuard, async (req, res, next) => {
 
 // When user is signing up this creates their first account
 router.post('/create-account', async (req, res, next) => {
-  const { balance, type, accountNumber, userID } = req.body;
+  const { balance, type, accountNumber, userID, sharedAccount, sharedUser } = req.body;
   const balanceNumber = Number(balance);
 
   try {
-    const account = await Account.createAccount(accountNumber, type, balanceNumber);
+    const account = await Account.createAccount(accountNumber, type, balanceNumber, sharedAccount);
     const accountID = account._id;
     await UserAccount.createUserAccount(userID, accountID);
+
+    if (sharedAccount) {
+      const sharedUserID = await User.getUserByPhoneNumber(sharedUser);
+      await UserAccount.createUserAccount(sharedUserID, accountID);
+    }
+
     res.json({ account });
+
   } catch (error) {
     console.log(error);
     next(error);

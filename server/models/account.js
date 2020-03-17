@@ -22,6 +22,9 @@ const schema = new mongoose.Schema({
     type: String,
     enum: ['Active', 'NoActive'],
     default: 'Active'
+  },
+  shared: {
+    type: Boolean
   }
 });
 
@@ -48,12 +51,13 @@ schema.statics.getAccountByNumber = async function(accountNumber) {
   return account;
 };
 
-schema.statics.createAccount = async function(accountNumber, type, balance) {
+schema.statics.createAccount = async function(accountNumber, type, balance, shared) {
   const Model = this;
   const account = await Model.create({
     accountNumber,
     type,
-    balance
+    balance,
+    shared
   });
   return account;
 };

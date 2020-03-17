@@ -52,7 +52,7 @@ class Cards extends Component {
               <i className="fas fa-sync-alt"></i>
             </Button>
           </div>
-          <div>
+          <div className="card-container">
             {this.state.cards.map(card => (
               <Card key={card._id} {...card} />
             ))}

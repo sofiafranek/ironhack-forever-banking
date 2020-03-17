@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
+import Card from '../../Components/Card';
+=======
 import './style.scss';
 
 import Card from './../../Components/Card';
+>>>>>>> 896004f694d9a4cd1d07e92f4af98666f2c922d5
 
 import Layout from '../../Components/Layout';
 import { Usercards } from './../../Services/card';

@@ -26,8 +26,12 @@ class CreateCard extends Component {
     this.getData = this.getData.bind(this);
   }
 
+  flip = () => {
+    this.setState({ flipped: !this.state.flipped });
+  };
+
   generateCardNumber() {
-    return Math.floor(Math.random() * 9000000000) + 1000000000;
+    return Math.floor(Math.random() * 9000000000000) + 1000000000000;
   }
 
   generatePin() {

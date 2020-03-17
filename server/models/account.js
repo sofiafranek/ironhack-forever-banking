@@ -20,4 +20,9 @@ const schema = new mongoose.Schema({
   }
 });
 
+schema.statics('updateBalance', async function(id, balance) {
+  const Model = this;
+  await Model.findByIdAndUpdate(id, { balance });
+});
+
 module.exports = mongoose.model('Account', schema);

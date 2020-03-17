@@ -6,8 +6,8 @@ const Account = require('./models/account');
 module.exports = schedule.scheduleJob('01 * * * *', async () => {
   try {
     const transactions = await Transaction.find({
-      status: 'Pending',
-      dateTransaction: { $lt: new Date() }
+      status: 'Pending'
+      /*dateTransaction: { $lt: new Date() }*/
     });
 
     for (const transaction of transactions) {
@@ -28,7 +28,7 @@ module.exports = schedule.scheduleJob('01 * * * *', async () => {
           _id: transaction._id
         },
         {
-          status: minusBalance > 0 ? 'Executed' : 'Failed'
+          status: minusBalance >= 0 ? 'Executed' : 'Failed'
         }
       );
 

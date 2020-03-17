@@ -128,13 +128,10 @@ class AddTransaction extends Component {
 
     while (i < weeks) {
       if (day > 23) {
-        console.log('greater');
         month++;
         day = 30 - day + 7;
         newDate = new Date(2020, month, day);
       } else {
-        console.log(' not greater');
-        console.log('DAYYY', day);
         day = day + 7;
         newDate = new Date(2020, month, day);
       }
@@ -205,6 +202,11 @@ class AddTransaction extends Component {
         transaction.status = 'Pending';
       }
       transaction.dateTransaction = allDates[j];
+      delete transaction.categories;
+      delete transaction.accounts;
+      delete transaction.schedulePeriods;
+      delete transaction.times;
+      delete transaction.accountInfo;
       allTransactions.push(transaction);
     }
     return allTransactions;
@@ -273,6 +275,17 @@ class AddTransaction extends Component {
 
   createListTransactions() {
     const allT = this.calculateTransactions();
+    const firstT = allT[0];
+    allT.shift();
+
+    createTransaction(firstT)
+      .then(transaction => {
+        this.props.history.push({
+          pathname: '/transactions'
+        });
+      })
+      .catch(error => console.log(error));
+
     createListTransactions(allT)
       .then(() => {
         this.props.history.push({

@@ -28,8 +28,8 @@ router.post('/add-transaction', async (req, res, next) => {
     const minusBalance = balanceFrom - Number(totalAmount);
     const addBalance = Number(balanceTo) + Number(totalAmount);
 
-    if (minusBalance > 0) {
-      const transaction = await Transaction.createTransaction({
+    if (minusBalance >= 0) {
+      const transaction = await Transaction.createTransaction(
         accountIDFrom,
         accountIDTo,
         totalAmount,
@@ -39,7 +39,7 @@ router.post('/add-transaction', async (req, res, next) => {
         schedule,
         status,
         dateTransaction
-      });
+      );
 
       await Account.updateBalance(accountIDFrom, minusBalance);
       await Account.updateBalance(accountIDTo, addBalance);
@@ -93,7 +93,6 @@ router.post('/all', async (req, res, next) => {
 
 router.post('/add-list-transactions', async (req, res, next) => {
   const all = req.body;
-
   try {
     for (const transaction of all) {
       const {
@@ -107,10 +106,11 @@ router.post('/add-list-transactions', async (req, res, next) => {
         status,
         dateTransaction
       } = transaction;
+
       const accountTo = await Account.getAccountByNumber(accountNumber);
       const accountIDTo = accountTo._id;
 
-      await Transaction.createTransaction({
+      await Transaction.createTransaction(
         accountIDFrom,
         accountIDTo,
         totalAmount,
@@ -120,9 +120,10 @@ router.post('/add-list-transactions', async (req, res, next) => {
         schedule,
         status,
         dateTransaction
-      });
+      );
     }
   } catch (error) {
+    console.log(error);
     next(error);
   }
 

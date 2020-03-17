@@ -43,8 +43,7 @@ router.post('/create-account', async (req, res, next) => {
     const accountID = account._id;
     await UserAccount.createUserAccount(userID, accountID);
     res.json({ account });
-  } 
-  catch (error) {
+  } catch (error) {
     console.log(error);
     next(error);
   }
@@ -67,16 +66,15 @@ router.get('/:userID/user-accounts', RouteGuard, (req, res, next) => {
 });
 
 // Get all the accounts from the user logged in
-router.get('/:userID/accounts', RouteGuard, async (req, res, next) => { 
-    const userID = req.params.userID;
-    try {
-      const accounts = await UserAccount.getUserAccounts(userID);
-      const accountsUser = accounts.map(account => account.accountID);
-      res.json({ accountsUser });
-    }    
-    catch (error) {
-      next(error);
-    }
+router.get('/:userID/accounts', RouteGuard, async (req, res, next) => {
+  const userID = req.params.userID;
+  try {
+    const accounts = await UserAccount.getUserAccounts(userID);
+    const accountsUser = accounts.map(account => account.accountID);
+    res.json({ accountsUser });
+  } catch (error) {
+    next(error);
+  }
 });
 
 // Deletes specific account using the ID
@@ -85,9 +83,8 @@ router.post('/:id/delete-account', RouteGuard, async (req, res, next) => {
   try {
     await Account.removeAccount(idAccount);
     await UserAccount.removeAccount(idAccount);
-    await Card.removeCard(idAccount);  
-  }
-  catch (error) {
+    await Card.removeCard(idAccount);
+  } catch (error) {
     next(error);
   }
 });

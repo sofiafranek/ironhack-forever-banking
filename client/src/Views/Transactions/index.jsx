@@ -43,7 +43,6 @@ class Transactions extends Component {
       ? (trans = [...this.state.transactionsSent])
       : (trans = [...this.state.allTransactions]);
 
-
     this.setState({
       renderTransactions: trans
     });
@@ -112,8 +111,8 @@ class Transactions extends Component {
               <i className="fas fa-sync-alt"></i>
             </Button>
           </div>
-          <div className="search-filter">
-            <Search search={this.searchData}/>
+          <div className="search-filter pb-3">
+            <Search search={this.searchData} />
             <select
               name="filter"
               className="filter"
@@ -125,9 +124,11 @@ class Transactions extends Component {
             </select>
           </div>
           {this.state.renderTransactions.map(transaction => {
-            if(transaction.reference.toLowerCase().includes(this.state.search.toLowerCase()) ||
-                transaction.category.toLowerCase().includes(this.state.search.toLowerCase()))
-             return <Transaction {...transaction}></Transaction>
+            if (
+              transaction.reference.toLowerCase().includes(this.state.search.toLowerCase()) ||
+              transaction.category.toLowerCase().includes(this.state.search.toLowerCase())
+            )
+              return <Transaction {...transaction}></Transaction>;
           })}
         </div>
       </Layout>

@@ -1,7 +1,7 @@
 .credit-card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  // justify-content: space-between;
 
   width: 350px;
   height: 200px;
@@ -81,7 +81,8 @@
   transition: transform 2s;
   transform-style: preserve-3d;
   cursor: pointer;
-  margin: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
   width: 350px;
   height: 200px;
   perspective: 700px;
@@ -111,11 +112,16 @@
   }
 }
 
-@media (min-width: 1000px) {
+.card-container {
+  justify-content: left;
+}
+
+@media (min-width: 850px) {
   .card-container {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
+    margin-right: auto;
   }
 }

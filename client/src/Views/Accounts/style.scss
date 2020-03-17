@@ -31,14 +31,15 @@
   }
 }
 
+.mobile-filter {
+  padding-bottom: 15px;
+}
+
 @media (min-width: 980px) {
   .account-section {
     margin-top: 10px;
   }
-  // .filter {
-  //   min-width: 100%;
-  // }
-  // .search-filter {
-  //   flex-direction: column;
-  // }
+  .mobile-filter {
+    padding-bottom: 0px;
+  }
 }

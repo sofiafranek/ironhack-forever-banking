@@ -18,50 +18,52 @@ class Card extends Component {
     const style = { backgroundColor: bgColor, color };
 
     return (
-      <section className="credit-card__section" onClick={event => this.flip(event)}>
-        <div className="credit-card credit-card__front">
-          <div className="credit-card__top">
-            <i className="fab fa-modx"></i>
-            <h6>{type}</h6>
-          </div>
-
-          <div className="credit-card__number">{cardNumber}</div>
-
-          <div className="credit-card__info">
-            <div className="credit-card__info_name">
-              <div className="credit-card__info_label">CARDHOLDER'S NAME</div>
-              <p>MATT SMITH</p>
+      <section className="card-container">
+        <section className="credit-card__section" onClick={event => this.flip(event)}>
+          <div className="credit-card credit-card__front">
+            <div className="credit-card__top">
+              <i className="fab fa-modx"></i>
+              <h6>{type}</h6>
             </div>
 
-            <div className="credit-card__info_expiry">
-              <div className="credit-card__info_label">VALID UP TO</div>
-              <p>01/{expiryDate}</p>
+            <div className="credit-card__number">{cardNumber}</div>
+
+            <div className="credit-card__info">
+              <div className="credit-card__info_name">
+                <div className="credit-card__info_label">CARDHOLDER'S NAME</div>
+                <p>MATT SMITH</p>
+              </div>
+
+              <div className="credit-card__info_expiry">
+                <div className="credit-card__info_label">VALID UP TO</div>
+                <p>01/{expiryDate}</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="credit-card credit-card__back">
-          <div className="credit-card__top">
-            <i className="fab fa-modx"></i>
-            <h6>{type}</h6>
-          </div>
-
-          <div className="credit-card__block">
-            <span>{CVV}</span>
-          </div>
-
-          <div className="credit-card__info">
-            <div className="credit-card__info_name">
-              <div className="credit-card__info_label">CARDHOLDER'S NAME</div>
-              <p>SOFIA FRANEK</p>
+          <div className="credit-card credit-card__back">
+            <div className="credit-card__top">
+              <i className="fab fa-modx"></i>
+              <h6>{type}</h6>
             </div>
 
-            <div className="credit-card__info_expiry">
-              <div className="credit-card__info_label">VALID UP TO</div>
-              <p>01/{expiryDate}</p>
+            <div className="credit-card__block">
+              <span>{CVV}</span>
+            </div>
+
+            <div className="credit-card__info">
+              <div className="credit-card__info_name">
+                <div className="credit-card__info_label">CARDHOLDER'S NAME</div>
+                <p>SOFIA FRANEK</p>
+              </div>
+
+              <div className="credit-card__info_expiry">
+                <div className="credit-card__info_label">VALID UP TO</div>
+                <p>01/{expiryDate}</p>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
       </section>
     );
   }

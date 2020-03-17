@@ -104,10 +104,10 @@ class Accounts extends Component {
               <i className="fas fa-sync-alt"></i>
             </Button>
           </div>
-          <div className="search-filter">
+          <div className="search-filter mobile-filter">
             <Search search={this.searchData} />
             <select name="filter" className="filter" onChange={this.filter}>
-              <option value="">-- Filter Accounts --</option>
+              <option value="">All</option>
               <option value="Current">Current</option>
               <option value="Savings">Savings</option>
               <option value="Credit">Credit</option>

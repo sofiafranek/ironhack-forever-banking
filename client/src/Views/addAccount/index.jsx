@@ -20,8 +20,8 @@ class AddAccount extends Component {
       accountIDFrom: '',
       accountInfo: '',
       balance: '',
-      types: ['Savings', 'Current', 'Credit'],
-      type: 'Savings',
+      types: ['Credit', 'Savings', 'Current'],
+      type: 'Credit',
       options: ['Existing', 'External'],
       option: 'Existing'
     };
@@ -49,7 +49,7 @@ class AddAccount extends Component {
   }
 
   handleAccountFromChange(event) {
-    const inputName = event.target.name;
+    // const inputName = event.target.name;
     const value = event.target.value;
 
     const accountSplitted = value.split(' ');

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './style.scss';
 
 import Layout from '../../Components/Layout';
-import Transaction from '../../Components/Transaction';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 
@@ -52,7 +51,7 @@ class SingleAccount extends Component {
     .catch((error) => {
       console.log(error);
     })
-  }
+  }x
 
   render() {
     return (
@@ -68,7 +67,11 @@ class SingleAccount extends Component {
             <section className="single-account">
               <h1>{this.state.account.balance}€</h1>
               <h5>
-                {this.state.account.type === 'Current' ? 'Total Credit Limit' : 'Available Balance'}
+                {this.state.account.type === 'Current'
+                  ? 'Available Balance'
+                  : this.state.account.type === 'Savings'
+                  ? 'Available Balance'
+                  : 'Total Credit Limit'}
               </h5>
               <div className="action-container">
                 <Button variant="contained" className="secondary" onClick={this.refreshAccount}>

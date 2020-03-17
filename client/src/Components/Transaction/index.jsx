@@ -19,13 +19,17 @@ class Transaction extends Component {
         <Card>
           <Card.Header>
             <Accordion.Toggle className="card-transaction" as={Button} variant="link" eventKey="0">
-              {reference && <h6>{reference}</h6>}
-              <Badge pill variant="info">
-                {category}
-              </Badge>
+              {reference && (
+                <h6>
+                  {reference} <span>-</span>
+                  <Badge pill variant="info">
+                    {category}
+                  </Badge>
+                </h6>
+              )}
               <div>
-                {dateTransaction && <small>{dateTransaction.split('T')[0]}</small>}
-                {totalAmount > 0 && <small>{totalAmount + ' €'}</small>}
+                {dateTransaction && <h6>{dateTransaction.split('T')[0]}</h6>}
+                {totalAmount > 0 && <h6>{totalAmount + ' €'}</h6>}
               </div>
             </Accordion.Toggle>
           </Card.Header>

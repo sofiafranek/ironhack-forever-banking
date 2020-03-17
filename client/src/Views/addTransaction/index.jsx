@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import './style.scss';
 
 import Layout from '../../Components/Layout';
 import {
@@ -210,7 +211,7 @@ class AddTransaction extends Component {
   }
 
   handleAccountFromChange(event) {
-    const inputName = event.target.name;
+    // const inputName = event.target.name;
     const value = event.target.value;
 
     const accountSplitted = value.split(' ');
@@ -347,17 +348,15 @@ class AddTransaction extends Component {
             </Grid>
             <Grid item xs={12} sm={12}>
               <h4 className="pt-3 pb-2">Category</h4>
-              <FormControl>
-                <Select name="category" native onChange={event => this.handleInputChange(event)}>
-                  {this.state.categories.map(category => (
-                    <option value={category} key={category}>
-                      {category}
-                    </option>
-                  ))}
-                </Select>
-              </FormControl>
+              <Select name="category" native onChange={event => this.handleInputChange(event)}>
+                {this.state.categories.map(category => (
+                  <option value={category} key={category}>
+                    {category}
+                  </option>
+                ))}
+              </Select>
             </Grid>
-            <h4 className="pl-2 pt-3 pb-2">Reference</h4>
+            <h4 className="pl-2 pt-4 pb-2">Reference</h4>
             <Grid item xs={12} sm={12}>
               <TextField
                 variant="outlined"
@@ -370,8 +369,13 @@ class AddTransaction extends Component {
               />
             </Grid>
             <FormControl component="fieldset">
-              <h4 className="pl-2 pt-3 pb-2">Scheduled</h4>
-              <RadioGroup defaultValue="female" aria-label="gender" name="schedule">
+              <h4 className="pl-2 pt-4 pb-2">Scheduled</h4>
+              <RadioGroup
+                defaultValue="female"
+                aria-label="gender"
+                name="schedule"
+                className="scheduled-transaction"
+              >
                 <FormControlLabel
                   value="Yes"
                   control={<StyledRadio />}

@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.scss';
 
-const Card = (props) => {
+const Card = props => {
   const { accountID, cardNumber, CVV, expiryDate, type, bgColor, color } = props;
   const style = { backgroundColor: bgColor, color };
 

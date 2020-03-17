@@ -10,11 +10,21 @@ const activity = userID =>
     instance
       .get(`/${userID}/activity`)
       .then(result => {
-        console.log(result, 'result');
         const accountsUser = result.data.accountsUser;
         resolve(accountsUser);
       })
       .catch(reject);
   });
 
-export { activity };
+const summary = userID =>
+  new Promise((resolve, reject) => {
+    instance
+      .get(`/${userID}/summary`)
+      .then(result => {
+        const information = result.data.information;
+        resolve(information);
+      })
+      .catch(reject);
+  });
+
+export { activity, summary };

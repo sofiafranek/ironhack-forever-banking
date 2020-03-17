@@ -2,6 +2,7 @@
 
 const { Router } = require('express');
 const Card = require('../models/card');
+const UserAccount = require('../models/userAccount');
 const router = new Router();
 const RouteGuard = require('./../middleware/route-guard');
 
@@ -21,11 +22,9 @@ router.get('/:id', RouteGuard, async (req, res, next) => {
   try {
     const card = await Card.getCardById(id);
     res.json({ card });
-  }
-  catch (error) {
+  } catch (error) {
     next(error);
   }
-
 });
 
 // Returning only the cards that belong to the user logged in
@@ -34,11 +33,11 @@ router.get('/:id/user-cards', RouteGuard, async (req, res, next) => {
 
   try {
     const card = await Card.getUserCards(id);
+    console.log(card);
     res.json({ card });
   } catch (error) {
     next(error);
-  } 
-
+  }
 });
 
 // When user is logged in they create a card
@@ -46,21 +45,24 @@ router.post('/create-card', RouteGuard, async (req, res, next) => {
   const { accountID, cardNumber, pin, CVV, expiryDate, type, userID } = req.body;
 
   try {
-    const card = await Card.createCard(
-      accountID,
-      cardNumber,
-      pin,
-      CVV,
-      type,
-      expiryDate,
-      userID
-    );
+    const card = await Card.createCard(accountID, cardNumber, pin, CVV, type, expiryDate, userID);
+    console.log('addd', card);
     res.json({ card });
-  }
-  catch (error) {
+  } catch (error) {
     next(error);
   }
+});
 
+// Deletes specific account using the ID
+router.post('/:id/delete-card', RouteGuard, async (req, res, next) => {
+  const cardNumber = req.params.id;
+  try {
+    await Card.removeCard(cardNumber);
+    res.json({ result: 'sucess' });
+  } catch (error) {
+    res.json({ result: 'error' });
+    next(error);
+  }
 });
 
 module.exports = router;

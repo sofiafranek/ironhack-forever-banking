@@ -210,7 +210,12 @@ class App extends Component {
                 redirect={'/signin'}
                 path="/cards"
                 render={props => (
-                  <Cards {...props} changeActiveNav={this.activeNav} userID={this.state.user._id} />
+                  <Cards
+                    {...props}
+                    changeActiveNav={this.activeNav}
+                    userID={this.state.user._id}
+                    user={this.state.user}
+                  />
                 )}
                 exact
               />

@@ -21,6 +21,7 @@ const Usercards = userID =>
       .get(`/${userID}/user-cards`)
       .then(result => {
         const cards = result.data.card;
+        console.log('services', cards);
         resolve(cards);
       })
       .catch(reject);
@@ -49,4 +50,16 @@ const singleCard = id =>
       .catch(reject);
   });
 
-export { cards, creatingCard, singleCard, Usercards };
+// deleting card from users account
+const deleteCard = accountID =>
+  new Promise((resolve, reject) => {
+    instance
+      .post(`/${accountID}/delete-card`)
+      .then(result => {
+        console.log(result.data);
+        resolve();
+      })
+      .catch(reject);
+  });
+
+export { cards, creatingCard, singleCard, Usercards, deleteCard };

@@ -22,9 +22,9 @@ const schema = new mongoose.Schema({
     lowercase: true,
     trim: true
   },
-  DOB: {
-    type: Date
-    // required: true
+  dob: {
+    type: Date,
+    required: true
   },
   nationality: {
     type: String,
@@ -42,9 +42,19 @@ const schema = new mongoose.Schema({
     type: String,
     required: true
   },
+  income: {
+    type: Number,
+    required: true
+  },
   passwordHash: {
     type: String
   }
 });
 
+schema.statics.getUserByPhoneNumber = async function(phoneNumber) {
+  const Model = this;
+  const user = await Model.findOne({ phoneNumber }).exec();
+
+  return user;
+};
 module.exports = mongoose.model('User', schema);

@@ -4,49 +4,54 @@ const instance = axios.create({
   baseURL: '/api/cards'
 });
 
-const cards = () =>
-  new Promise((resolve, reject) => {
-    instance
-      .get('/')
-      .then(result => {
-        const cards = result.data.card;
-        resolve(cards);
-      })
-      .catch(reject);
-  });
+const cards = async () => {
+  try {
+    const result = await instance.get('/');
+    const cards = result.data.card;
+    return cards;
+  } catch (error) {
+    throw error;
+  }
+};
 
-const Usercards = userID =>
-  new Promise((resolve, reject) => {
-    instance
-      .get(`/${userID}/user-cards`)
-      .then(result => {
-        const cards = result.data.card;
-        resolve(cards);
-      })
-      .catch(reject);
-  });
+const Usercards = async (userID) => {
+  try {
+    const result = await instance.get(`/${userID}/user-cards`);
+    const cards = result.data.card;
+    return cards;
+  } catch (error) {
+    throw error;
+  }
+};
 
 // creating a card to add to user account
-const creatingCard = data =>
-  new Promise((resolve, reject) => {
-    instance
-      .post('/create-card', data)
-      .then(result => {
-        const card = result.data.card;
-        resolve(card);
-      })
-      .catch(reject);
-  });
+const creatingCard = async (data) => {
+  try {
+    const result = await instance.post('/create-card', data);
+    const card = result.data.card;
+    return card;
+  } catch (error) {
+    throw error;
+  }
+};
 
-const singleCard = id =>
-  new Promise((resolve, reject) => {
-    instance
-      .get(`/${id}`)
-      .then(result => {
-        const card = result.data.card;
-        resolve(card);
-      })
-      .catch(reject);
-  });
+const singleCard = async (id) => {
+  try {
+    const result = await instance.get(`/${id}`);
+    const card = result.data.card;
+    return card;
+  } catch (error) {
+    throw error;
+  }
+};
 
-export { cards, creatingCard, singleCard, Usercards };
+// deleting card from users account
+const deleteCard = async (accountID) => {
+  try {
+    await instance.post(`/${accountID}/delete-card`);
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { cards, creatingCard, singleCard, Usercards, deleteCard };

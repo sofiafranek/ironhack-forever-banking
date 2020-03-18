@@ -1,14 +1,36 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './style.scss';
-
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
+import {
+  RadioGroup,
+  Button,
+  TextField,
+  FormControl,
+  Select,
+  Grid,
+  FormControlLabel,
+  InputLabel,
+  Radio,
+  Container
+} from '@material-ui/core';
+import clsx from 'clsx';
 import { creatingAccount } from './../../Services/account';
 import { creatingCard } from './../../Services/card';
+import { useStyles } from './../../Utilities/useStyles';
+
+function StyledRadio(props) {
+  const classes = useStyles();
+
+  return (
+    <Radio
+      className={classes.root}
+      disableRipple
+      color="default"
+      checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+      icon={<span className={classes.icon} />}
+      {...props}
+    />
+  );
+}
 
 class CreateAccount extends Component {
   constructor(props) {
@@ -16,7 +38,9 @@ class CreateAccount extends Component {
     this.state = {
       type: 'Savings',
       types: ['Savings', 'Current', 'Credit'],
-      balance: ''
+      balance: '',
+      sharedAccount: false,
+      sharedUser: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.setData = this.setData.bind(this);
@@ -24,7 +48,9 @@ class CreateAccount extends Component {
 
   handleInputChange(event) {
     const inputName = event.target.name;
-    const value = event.target.value;
+    let value = event.target.value;
+    if (inputName === 'sharedAccount') value === 'No' ? (value = false) : (value = true);
+
     this.setState({
       [inputName]: value
     });
@@ -123,6 +149,43 @@ class CreateAccount extends Component {
                   </option>
                 ))}
               </Select>
+              <FormControl component="fieldset">
+              <h4 className="pl-2 pt-4 pb-2">Shared Account</h4>
+              <RadioGroup
+                name="sharedAccount"
+                className="scheduled-transaction"
+              >
+                <FormControlLabel
+                  value="Yes"
+                  control={<StyledRadio />}
+                  label="Yes"
+                  onChange={event => this.handleInputChange(event)}
+                />
+                <FormControlLabel
+                  value="No"
+                  control={<StyledRadio />}
+                  label="No"
+                  onChange={event => this.handleInputChange(event)}
+                />
+              </RadioGroup>
+            </FormControl>
+            {this.state.sharedAccount && (
+            <Fragment>
+            <h4 className="pl-2 pt-4 pb-2">User Phone Number</h4>
+            <Grid item xs={12} sm={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="sharedUser"
+                label="sharedUser"
+                name="sharedUser"
+                onChange={event => this.handleInputChange(event)}
+              />
+            </Grid>
+            </Fragment>
+            )
+            }
               {this.state.type === 'Credit' ? (
                 <Grid item xs={12} sm={12}>
                   <div className="pt-3">We offer a 5.000€ starting credit limit</div>
@@ -160,6 +223,7 @@ class CreateAccount extends Component {
                       id="balance"
                       label="Balance"
                       name="balance"
+                      type="number"
                       className="pb-3"
                       value={this.state.balance}
                       onChange={event => this.handleInputChange(event)}

@@ -38,7 +38,6 @@ const schema = new mongoose.Schema({
   }
 });
 
-
 schema.statics.getCards = async function() {
   const Model = this;
   const cards = await Model.find().exec();
@@ -51,14 +50,15 @@ schema.statics.getCardById = async function(id) {
   return card;
 };
 
-schema.statics.createCard = async function(accountID,
+schema.statics.createCard = async function(
+  accountID,
   cardNumber,
   pin,
   CVV,
   type,
   expiryDate,
-  userID) 
-  {
+  userID
+) {
   const Model = this;
   const card = await Model.create({
     accountID,
@@ -69,6 +69,8 @@ schema.statics.createCard = async function(accountID,
     expiryDate,
     userID
   });
+
+  console.log('model card', card);
   return card;
 };
 
@@ -76,7 +78,9 @@ schema.statics.getUserCards = async function(userID) {
   const Model = this;
   const card = await Model.find({
     userID
-  }).populate('accountID').exec();
+  })
+    .populate('accountID')
+    .exec();
 
   return card;
 };
@@ -90,10 +94,10 @@ schema.statics.getUserCard = async function(userID) {
   return card;
 };
 
-schema.statics.removeCard = async function(accountID) {
+schema.statics.removeCard = async function(cardNumber) {
   const Model = this;
   const removedCard = await Model.findOneAndRemove({
-    accountID
+    cardNumber
   }).exec();
 
   return removedCard;

@@ -4,47 +4,42 @@ const instance = axios.create({
   baseURL: '/api/authentication'
 });
 
-const signUp = data =>
-  new Promise((resolve, reject) => {
-    instance
-      .post('/signup', data)
-      .then(result => {
-        const user = result.data.user;
-        resolve(user);
-      })
-      .catch(reject);
-  });
+const signUp = async (data) => {
+  try {
+    const result = await instance.post('/signup', data);
+    const user = result.data.user;
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
 
-const signIn = data =>
-  new Promise((resolve, reject) => {
-    instance
-      .post('/signin', data)
-      .then(result => {
-        const user = result.data.user;
-        resolve(user);
-      })
-      .catch(reject);
-  });
+const signIn = async (data) => {
+  try {
+    const result = await instance.post('/signin', data)
+    const user = result.data.user;
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
 
-const signOut = () =>
-  new Promise((resolve, reject) => {
-    instance
-      .post('/signout')
-      .then(() => {
-        resolve();
-      })
-      .catch(reject);
-  });
+const signOut = async () => {
+  try {
+    await instance.post('/signout');
+  } catch (error) {
+    throw error;
+  }
+};
 
-const loadUserInformation = () =>
-  new Promise((resolve, reject) => {
-    instance
-      .get('/userinformation')
-      .then(result => {
-        const user = result.data.user;
-        resolve(user);
-      })
-      .catch(reject);
-  });
+const loadUserInformation = async () => {
+  try {
+    const result = await instance.get('/userinformation');
+    const user = result.data.user;
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export { signIn, signUp, signOut, loadUserInformation };

@@ -4,82 +4,71 @@ const instance = axios.create({
   baseURL: '/api/transaction'
 });
 
-const createTransaction = data =>
-  new Promise((resolve, reject) => {
-    instance
-      .post('/add-transaction', data)
-      .then(result => {
-        const transaction = result.data;
-        resolve(transaction);
-      })
-      .catch(reject);
-  });
+const createTransaction = async (data) => {
+  try {
+    await instance.post('/add-transaction', data);
+  } catch (error) {
+    throw error;
+  }
+};
 
-const createListTransactions = data =>
-  new Promise((resolve, reject) => {
-    instance
-      .post('/add-list-transactions', data)
-      .then(() => {
-        console.log("hrere");
-        resolve();
-      })
-      .catch(reject);
-  });
+const createListTransactions = async (data) => {
+  try {
+    await instance.post('/add-list-transactions', data);
+  } catch (error) {
+    throw error;
+  }
+};
 
-const receivedTransactions = data =>
-  new Promise((resolve, reject) => {
-    instance
-      .post('/received', data)
-      .then(result => {
-        const transactions = result.data.transactionsTo;
-        resolve(transactions);
-      })
-      .catch(reject);
-  });
+const receivedTransactions = async (data) => {
+  try {
+    const result = await instance.post('/received', data);
+    const transactions = result.data.transactionsTo;
+    return transactions;
+  } catch (error) {
+    throw error;
+  }
+};
 
-const sentTransactions = data =>
-  new Promise((resolve, reject) => {
-    instance
-      .post('/sent', data)
-      .then(result => {
-        const transactions = result.data.transactionsFrom;
-        resolve(transactions);
-      })
-      .catch(reject);
-  });
+const sentTransactions = async (data) => {
+  try {
+    const result = await instance.post('/sent', data);
+    const transactions = result.data.transactionsFrom;
+    return transactions;
+  } catch (error) {
+    throw error;
+  }
+};
 
-const allTransactions = data =>
-  new Promise((resolve, reject) => {
-    instance
-      .post('/all', data)
-      .then(result => {
-        const transactions = result.data.allTransactions;
-        resolve(transactions);
-      })
-      .catch(reject);
-});
+const allTransactions = async (data) => {
+  try {
+    const result = await instance.post('/all', data);
+    const transactions = result.data.allTransactions;
+    return transactions;
+  } catch (error) {
+    throw error;
+  }
+};
 
-const allTransactionsAccount = idAccount =>
-  new Promise((resolve, reject) => {
-    instance
-      .get(`/${idAccount}/allTransactionsAccount`)
-      .then(result => {
-        const transactions = result.data.allTransactions;
-        resolve(transactions);
-      })
-      .catch(reject);
-});
+const allTransactionsAccount = async (idAccount) => {
+  try {
+    const result = await instance.get(`/${idAccount}/allTransactionsAccount`);
+    const transactions = result.data.allTransactions;
+    return transactions;
+  } catch (error) {
+    throw error;
+  }
+};
 
-const singleTransaction = id =>
-  new Promise((resolve, reject) => {
-    instance
-      .get(`/${id}`)
-      .then(result => {
-        const transaction = result.data.transaction;
-        resolve(transaction);
-      })
-      .catch(reject);
-  });
+const singleTransaction = async (id) => {
+  try {
+    const result = await instance.get(`/${id}`);
+    const transaction = result.data.transaction;
+    return transaction;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export {
   createTransaction,

@@ -2,9 +2,9 @@
 
 const { Router } = require('express');
 const router = new Router();
-const UserAccount = require('./../models/userAccount');
-const Card = require('./../models/card');
-const Transaction = require('./../models/transaction');
+const UserAccount = require('./../database/models/userAccount');
+const Card = require('./../database/models/card');
+const Transaction = require('./../database/models/transaction');
 
 const RouteGuard = require('./../middleware/route-guard');
 
@@ -15,10 +15,13 @@ router.get('/:userID/activity', RouteGuard, async (req, res, next) => {
 
   try {
     const accounts = await UserAccount.getUserActiveAccounts(userID);
-    const accountsUser = accounts.map(account => account._id);
     activity.accountsUser = accounts;
-    const transactions = await Transaction.getAllTransactions(accountsUser);
+
+    const allAccounts = await UserAccount.getUserAllAccounts(userID);
+    const allAccountsIDs = allAccounts.map(account => account.accountID);
+    const transactions = await Transaction.getAllTransactions(allAccountsIDs);
     activity.transactions = transactions;
+    
     res.json({ activity });
   } catch (error) {
     next(error);

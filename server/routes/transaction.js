@@ -1,8 +1,8 @@
 'use strict';
 
 const { Router } = require('express');
-const Transaction = require('../models/transaction');
-const Account = require('../models/account');
+const Transaction = require('./../database/models/transaction');
+const Account = require('./../database/models/account');
 const router = new Router();
 
 // User can add a transaction

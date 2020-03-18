@@ -75,11 +75,6 @@ const Navigation = props => {
             </Typography>
           </Link>
           <div>
-            <Link to="/messages">
-              <Button aria-controls="simple-menu" aria-haspopup="true">
-                <i className="far fa-envelope"></i>
-              </Button>
-            </Link>
             <Link to="/notifications">
               <Button aria-controls="simple-menu" aria-haspopup="true">
                 <i className="far fa-bell"></i>
@@ -126,9 +121,18 @@ const Navigation = props => {
           ))}
         </List>
         <Divider className="mr-3 ml-3" />
-        <List>
-          {['Accounts', 'Linked Accounts'].map((text, index) => (
+        <List className="pb-0">
+          {['Accounts'].map((text, index) => (
             <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
+              <ListItem button>
+                <ListItemText primary={text} activeclassname="active" />
+              </ListItem>
+            </NavLink>
+          ))}
+        </List>
+        <List className="pt-0">
+          {['Linked Accounts'].map((text, index) => (
+            <NavLink to={'/linked-accounts'} key={text} exact>
               <ListItem button>
                 <ListItemText primary={text} activeclassname="active" />
               </ListItem>
@@ -168,7 +172,7 @@ const Navigation = props => {
         <Divider className="mr-3 ml-3" />
         <List>
           {['Exchange Rates'].map((text, index) => (
-            <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
+            <NavLink to={'/exchange-rates'} key={text} exact>
               <ListItem button>
                 <ListItemText primary={text} activeclassname="active" />
               </ListItem>

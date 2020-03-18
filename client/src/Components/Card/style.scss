@@ -1,15 +1,11 @@
 .credit-card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-
-  width: 350px;
-  height: 200px;
+  width: 340px;
+  height: 190px;
   padding: 25px;
   border-radius: 15px;
-
   color: white;
-
   background-image: linear-gradient(25deg, #0f509e, #1399cd);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   margin-bottom: 30px;
@@ -18,7 +14,6 @@
 .credit-card__number {
   display: flex;
   justify-content: left;
-
   font-family: sans-serif;
   font-size: 30px;
   letter-spacing: 1px;
@@ -81,10 +76,20 @@
   transition: transform 2s;
   transform-style: preserve-3d;
   cursor: pointer;
-  margin: 20px;
-  width: 350px;
-  height: 200px;
-  perspective: 700px;
+  margin-right: 20px;
+  margin-bottom: 50px;
+  width: 340px;
+  height: 190px;
+  perspective: 680px;
+}
+
+.credit-card__info_name_back {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  p {
+    font-size: 0.6em;
+  }
 }
 
 .card {
@@ -111,11 +116,36 @@
   }
 }
 
-@media (min-width: 1000px) {
+.card-container {
+  justify-content: space-between;
+  position: relative;
+  button {
+    position: absolute;
+    right: 5px;
+    top: -15px;
+    z-index: 2;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50%;
+    line-height: 0;
+  }
+}
+
+.delete-card-button--show {
+  display: block;
+}
+
+.delete-card-button--hide {
+  display: none;
+}
+
+@media (min-width: 850px) {
   .card-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     flex-wrap: wrap;
+    margin-right: auto;
+    max-width: 850px;
   }
 }

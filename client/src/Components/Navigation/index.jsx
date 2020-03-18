@@ -121,9 +121,18 @@ const Navigation = props => {
           ))}
         </List>
         <Divider className="mr-3 ml-3" />
-        <List>
-          {['Accounts', 'Linked Accounts'].map((text, index) => (
+        <List className="pb-0">
+          {['Accounts'].map((text, index) => (
             <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
+              <ListItem button>
+                <ListItemText primary={text} activeclassname="active" />
+              </ListItem>
+            </NavLink>
+          ))}
+        </List>
+        <List className="pt-0">
+          {['Linked Accounts'].map((text, index) => (
+            <NavLink to={'/linked-accounts'} key={text} exact>
               <ListItem button>
                 <ListItemText primary={text} activeclassname="active" />
               </ListItem>
@@ -163,7 +172,7 @@ const Navigation = props => {
         <Divider className="mr-3 ml-3" />
         <List>
           {['Exchange Rates'].map((text, index) => (
-            <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
+            <NavLink to={'/exchange-rates'} key={text} exact>
               <ListItem button>
                 <ListItemText primary={text} activeclassname="active" />
               </ListItem>

@@ -1,5 +1,5 @@
 {
-  "name": "react-apparel-shop",
+  "name": "banking-app",
   "version": "1.0.0",
   "scripts": {
     "client:build": "cd client && npm install && npm run build && cd ..",

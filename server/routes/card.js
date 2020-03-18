@@ -1,8 +1,8 @@
 'use strict';
 
 const { Router } = require('express');
-const Card = require('../models/card');
-const UserAccount = require('../models/userAccount');
+const Card = require('./../database/models/card');
+const UserAccount = require('./../database/models/userAccount');
 const router = new Router();
 const RouteGuard = require('./../middleware/route-guard');
 

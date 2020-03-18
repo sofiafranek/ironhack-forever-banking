@@ -1,7 +1,7 @@
 /** TRYING NODE SCHEDULE **/
 const schedule = require('node-schedule');
-const Transaction = require('./models/transaction');
-const Account = require('./models/account');
+const Transaction = require('./database/models/transaction');
+const Account = require('./database/models/account');
 
 module.exports = schedule.scheduleJob('01 * * * *', async () => {
   try {

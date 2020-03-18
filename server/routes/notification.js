@@ -3,7 +3,7 @@
 const { Router } = require('express');
 const router = new Router();
 const RouteGuard = require('../middleware/route-guard');
-const Notification = require('./../models/notification');
+const Notification = require('./../database/models/notification');
 
 router.post('/create-notification', RouteGuard, async (req, res, next) => {
     const {

@@ -2,9 +2,9 @@
 
 const { Router } = require('express');
 const router = new Router();
-const UserAccount = require('./../models/userAccount');
-const Card = require('./../models/card');
-const Transaction = require('./../models/transaction');
+const UserAccount = require('./../database/models/userAccount');
+const Card = require('./../database/models/card');
+const Transaction = require('./../database/models/transaction');
 
 const RouteGuard = require('./../middleware/route-guard');
 

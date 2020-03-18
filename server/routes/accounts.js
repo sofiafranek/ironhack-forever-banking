@@ -48,7 +48,6 @@ router.post('/create-account', async (req, res, next) => {
     }
 
     res.json({ account });
-
   } catch (error) {
     console.log(error);
     next(error);
@@ -84,6 +83,8 @@ router.post('/:id/add-money', RouteGuard, async (req, res, next) => {
   const id = req.params.id;
   const balance = req.body.balance;
   const balanceNumber = Number(balance);
+
+  console.log('backend hereee');
 
   try {
     const account = await Account.updateBalance(id, balanceNumber);

@@ -49,7 +49,7 @@ const deleteAccount = async (accountID) => {
 // adding money to an account from users account
 const addingMoney = async (accountID, balance) => {
   try {
-    return await instance.post(`/${accountID}/add-money`);
+    await instance.post(`/${accountID}/add-money`, { balance });
   } catch (error) {
     throw error;
   }

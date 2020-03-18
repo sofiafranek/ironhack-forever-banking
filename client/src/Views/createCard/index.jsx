@@ -12,7 +12,7 @@ import Layout from '../../Components/Layout';
 import { creatingCard } from './../../Services/card';
 import { userIDAccounts } from './../../Services/account';
 
-import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import Breadcrumb from 'greact-bootstrap/Breadcrumb';
 
 class CreateCard extends Component {
   constructor(props) {
@@ -32,10 +32,6 @@ class CreateCard extends Component {
 
   generateCardNumber() {
     return Math.floor(Math.random() * 9000000000000000) + 1000000000000000;
-  }
-
-  generatePin() {
-    return Math.floor(Math.random() * 9000) + 1000;
   }
 
   generateCVV() {
@@ -80,14 +76,12 @@ class CreateCard extends Component {
   setData(event) {
     event.preventDefault();
     const cardNumber = this.generateCardNumber();
-    const pin = this.generatePin();
     const CVV = this.generateCVV();
     const expiryDate = this.generateExpiryDate();
     const userID = this.props.userID;
 
     const card = {
       cardNumber,
-      pin,
       CVV,
       accountID: this.state.accountID,
       type: this.state.type,

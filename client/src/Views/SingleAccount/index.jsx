@@ -5,9 +5,6 @@ import { Link } from 'react-router-dom';
 import Layout from '../../Components/Layout';
 import Transaction from '../../Components/Transaction';
 
-import Tabs from 'react-bootstrap/Tabs';
-import Tab from 'react-bootstrap/Tab';
-
 import Button from '@material-ui/core/Button';
 
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
@@ -23,10 +20,6 @@ class SingleAccount extends Component {
       transactions: []
     };
     this.deleteAnAccount = this.deleteAnAccount.bind(this);
-  }
-
-  refreshAccount() {
-    window.location.reload();
   }
 
   deleteAnAccount(event) {
@@ -79,6 +72,18 @@ class SingleAccount extends Component {
                   ? 'Available Balance'
                   : 'Total Credit Limit'}
               </h5>
+              <hr></hr>
+              <h5>IBAN Number : {this.state.account.accountNumber}</h5>
+              <h5>Account Type : {this.state.account.type}</h5>
+              <h5>Card Number : 1234 1234 1234 1234</h5>
+              <h5>Card Expirty : 12 / 04</h5>
+              <hr></hr>
+              <section className="pt-2">
+                {/* <h4 className="pb-3">Transactions for this Account</h4> */}
+                {this.state.transactions.map(transaction => (
+                  <Transaction {...transaction} />
+                ))}
+              </section>
               <div className="action-container">
                 <Link 
                  to={{
@@ -91,8 +96,8 @@ class SingleAccount extends Component {
                     <i className="fas fa-plus"></i>
                   </Button>
                 </Link>
-                <Button variant="contained" className="secondary" onClick={this.refreshAccount}>
-                  <i className="fas fa-sync-alt"></i>
+                <Button variant="contained" className="secondary">
+                  <i className="fas fa-link"></i>
                 </Button>
                 <Button
                   variant="contained"
@@ -102,22 +107,6 @@ class SingleAccount extends Component {
                   <i className="fas fa-times"></i>
                 </Button>
               </div>
-              <Tabs defaultActiveKey="summary" className="pt-3">
-                <Tab eventKey="summary" title="Summary">
-                  <h5>IBAN Number : {this.state.account.accountNumber}</h5>
-                  <h5>Account Type : {this.state.account.type}</h5>
-                  <h5>Card Number : 1234 1234 1234 1234</h5>
-                  <h5>Card Expirty : 12 / 04</h5>
-                </Tab>
-                <Tab eventKey="transactions" title="Transactions">
-                  {this.state.transactions.map(transaction => (
-                    <Transaction {...transaction} />
-                  ))}
-                </Tab>
-                <Tab eventKey="settings" title="Settings">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis, fuga.</p>
-                </Tab>
-              </Tabs>
             </section>
           </>
         )}

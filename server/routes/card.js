@@ -42,10 +42,10 @@ router.get('/:id/user-cards', RouteGuard, async (req, res, next) => {
 
 // When user is logged in they create a card
 router.post('/create-card', RouteGuard, async (req, res, next) => {
-  const { accountID, cardNumber, pin, CVV, expiryDate, type, userID } = req.body;
+  const { accountID, cardNumber, CVV, expiryDate, type, userID } = req.body;
 
   try {
-    const card = await Card.createCard(accountID, cardNumber, pin, CVV, type, expiryDate, userID);
+    const card = await Card.createCard(accountID, cardNumber, CVV, type, expiryDate, userID);
     console.log('addd', card);
     res.json({ card });
   } catch (error) {

@@ -12,29 +12,28 @@ class Transaction extends Component {
       endPoint,
       category,
       accountIDFrom,
-      accountIDTo
+      accountIDTo,
+      colorCategory
     } = this.props;
     return (
       <Accordion className="hvr-grow transaction pb-3">
         <Card>
           <Card.Header>
             <Accordion.Toggle className="card-transaction" as={Button} variant="link" eventKey="0">
-              {reference && (
-                <h6>
-                  {reference} <span>-</span>
-                  <Badge pill variant="info">
-                    {category}
-                  </Badge>
-                </h6>
-              )}
-              <div>
-                {dateTransaction && <h6>{dateTransaction.split('T')[0]}</h6>}
-                {totalAmount > 0 && <h6>{totalAmount + ' €'}</h6>}
-              </div>
+              {reference && <h6>{reference}</h6>}
+              <div>{totalAmount > 0 && <h6>{totalAmount + ' €'}</h6>}</div>
             </Accordion.Toggle>
           </Card.Header>
           <Accordion.Collapse eventKey="0">
             <Card.Body>
+              <div className="transaction-toggle">
+                <div>
+                  Executed on: {dateTransaction && <h6>{dateTransaction.split('T')[0]}</h6>}
+                </div>
+                <Badge pill variant={colorCategory}>
+                  {category}
+                </Badge>
+              </div>
             </Card.Body>
           </Accordion.Collapse>
         </Card>

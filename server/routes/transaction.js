@@ -16,7 +16,8 @@ router.post('/add-transaction', async (req, res, next) => {
     category,
     schedule,
     status,
-    dateTransaction
+    dateTransaction,
+    colorCategory
   } = req.body;
 
   try {
@@ -38,17 +39,18 @@ router.post('/add-transaction', async (req, res, next) => {
         category,
         schedule,
         status,
-        dateTransaction
+        dateTransaction,
+        colorCategory
       );
 
       await Account.updateBalance(accountIDFrom, minusBalance);
       await Account.updateBalance(accountIDTo, addBalance);
-      
+
       res.json({ transaction });
     }
   } catch (error) {
     next(error);
-  }            
+  }
 });
 
 router.post('/received', async (req, res, next) => {
@@ -126,7 +128,6 @@ router.post('/add-list-transactions', async (req, res, next) => {
     console.log(error);
     next(error);
   }
-
 });
 
 // Returning a transaction based on the user ID

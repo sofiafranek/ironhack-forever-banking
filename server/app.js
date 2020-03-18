@@ -24,6 +24,7 @@ const transactionRouter = require('./routes/transaction');
 
 const app = express();
 
+app.use(express.static(join(__dirname, './../client/build')));
 app.use(serveFavicon(join(__dirname, 'public/images', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(express.json());
@@ -57,6 +58,10 @@ app.use('/api/analytics', analyticsRouter);
 app.use('/api/cards', cardRouter);
 app.use('/api/transaction', transactionRouter);
 // app.use('/api/exchange-rates', exchangerateRouter);
+
+app.get('*', (req, res, next) => {
+  res.sendFile(join(__dirname, './../client/build/index.html'));
+});
 
 // Catch missing routes and forward to error handler
 app.use((req, res, next) => {

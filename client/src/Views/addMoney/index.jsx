@@ -34,11 +34,6 @@ class addMoney extends Component {
     this.setState({
       [inputName]: value
     });
-    if (value === 'Credit') {
-      this.setState({
-        balance: '5000'
-      });
-    }
   }
 
   componentDidMount() {
@@ -47,7 +42,6 @@ class addMoney extends Component {
   }
 
   handleAccountFromChange(event) {
-    // const inputName = event.target.name;
     const value = event.target.value;
 
     const accountSplitted = value.split(' ');
@@ -82,7 +76,9 @@ class addMoney extends Component {
     const accountID = this.state.accountID;
     const balance = this.state.balance;
 
-    addingMoney(accountID, balance)
+    const info = { accountID, balance };
+
+    addingMoney(info)
       .then(() => {
         this.props.history.push({
           pathname: '/accounts'

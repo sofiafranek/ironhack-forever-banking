@@ -79,17 +79,17 @@ router.get('/:userID/accounts', RouteGuard, async (req, res, next) => {
 });
 
 // Adding money to specific account using the ID
-router.post('/:id/add-money', RouteGuard, async (req, res, next) => {
-  const id = req.params.id;
+router.post('/add-money', RouteGuard, async (req, res, next) => {
+  console.log(req.body, 'BDOYYYY');
+
+  const accountID = req.body.accountID;
   const balance = req.body.balance;
   const balanceNumber = Number(balance);
 
-  console.log('backend hereee');
-
   try {
-    const account = await Account.updateBalance(id, balanceNumber);
-    res.json({ account });
+    await Account.updateBalance(accountID, balanceNumber);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 });

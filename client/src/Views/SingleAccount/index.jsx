@@ -59,7 +59,7 @@ class SingleAccount extends Component {
   x;
 
   render() {
-    console.log(this.props.location.pathname, 'PROPS');
+    const accountID = this.props.match.params.id;
     return (
       <Layout>
         {this.state.account && (
@@ -80,7 +80,7 @@ class SingleAccount extends Component {
                   : 'Total Credit Limit'}
               </h5>
               <div className="action-container">
-                <Link to={`${this.props.location.pathname}/add-money`}>
+                <Link to={`/accounts/${accountID}/add-money`}>
                   <Button variant="contained" className="primary">
                     <i className="fas fa-plus"></i>
                   </Button>

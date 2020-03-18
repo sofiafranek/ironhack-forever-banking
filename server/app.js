@@ -24,6 +24,7 @@ const transactionRouter = require('./routes/transaction');
 
 const app = express();
 
+app.use(express.static(join(__dirname, './../client/build')));
 app.use(serveFavicon(join(__dirname, 'public/images', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(express.json());

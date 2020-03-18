@@ -2,7 +2,7 @@
   "name": "banking-app",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3020",
+  "proxy": "http://0.0.0.0:3020",
   "dependencies": {
     "@material-ui/core": "^4.9.5",
     "@material-ui/lab": "^4.0.0-alpha.45",

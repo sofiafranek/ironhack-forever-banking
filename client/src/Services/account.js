@@ -5,87 +5,77 @@ const instance = axios.create({
 });
 
 // shows all the accounts that exist in the database
-const account = () =>
-  new Promise((resolve, reject) => {
-    instance
-      .get('/')
-      .then(result => {
-        const accounts = result.data.accounts;
-        resolve(accounts);
-      })
-      .catch(reject);
-  });
+const account = async () => {
+  try {
+    const result = await instance.get('/');
+    const accounts = result.data.accounts;
+    return accounts;
+  } catch (error) {
+    throw error;
+  }
+};
 
 // creating a user account when they sign up
-const creatingAccount = data =>
-  new Promise((resolve, reject) => {
-    instance
-      .post('/create-account', data)
-      .then(result => {
-        const account = result.data.account;
-        resolve(account);
-      })
-      .catch(reject);
-  });
+const creatingAccount = async data => {
+  try {
+    const result = await instance.post('/create-account');
+    const account = result.data.account;
+    return account;
+  } catch (error) {
+    throw error;
+  }
+};
 
 // showing each accounts information on single account view
-const singleAccount = id =>
-  new Promise((resolve, reject) => {
-    instance
-      .get(`/${id}`)
-      .then(result => {
-        const account = result.data.account;
-        resolve(account);
-      })
-      .catch(reject);
-  });
+const singleAccount = async id => {
+  try {
+    const result = await instance.get(`/${id}`);
+    const account = result.data.account;
+    return account;
+  } catch (error) {
+    throw error;
+  }
+};
 
 // deleting an account from users account
-const deleteAccount = accountID =>
-  new Promise((resolve, reject) => {
-    instance
-      .post(`/${accountID}/delete-account`)
-      .then(result => {
-        console.log(result.data);
-        resolve();
-      })
-      .catch(reject);
-  });
+const deleteAccount = async accountID => {
+  try {
+    await instance.post(`/${accountID}/delete-account`);
+  } catch (error) {
+    throw error;
+  }
+};
 
 // adding money to an account from users account
-const addingMoney = data =>
-  new Promise((resolve, reject) => {
-    instance
-      .post('/add-money', data)
-      .then(() => {
-        resolve();
-      })
-      .catch(reject);
-  });
+const addingMoney = async (accountID, balance) => {
+  try {
+    await instance.post(`/${accountID}/add-money`, { balance });
+  } catch (error) {
+    throw error;
+  }
+};
 
 // only showing the accounts that belong to that user
-const userIDAccounts = userID =>
-  new Promise((resolve, reject) => {
-    instance
-      .get(`/${userID}/accounts`)
-      .then(result => {
-        const account = result.data.accountsUser;
-        resolve(account);
-      })
-      .catch(reject);
-  });
+const userIDAccounts = async userID => {
+  try {
+    const result = await instance.get(`/${userID}/accounts`);
+    const account = result.data.accountsUser;
+    return account;
+  } catch (error) {
+    throw error;
+  }
+};
 
 // all the accounts, incluing the non active
-const userAccounts = userID =>
-  new Promise((resolve, reject) => {
-    instance
-      .get(`/${userID}/user-accounts`)
-      .then(result => {
-        const accounts = result.data.accounts;
-        resolve(accounts);
-      })
-      .catch(reject);
-  });
+const userAccounts = async userID => {
+  try {
+    const result = await instance.get(`/${userID}/user-accounts`);
+    const accounts = result.data.accounts;
+    return accounts;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export {
   account,

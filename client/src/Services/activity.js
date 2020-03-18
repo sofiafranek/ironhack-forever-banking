@@ -5,26 +5,24 @@ const instance = axios.create({
 });
 
 // shows all the accounts that exist in the database
-const activity = userID =>
-  new Promise((resolve, reject) => {
-    instance
-      .get(`/${userID}/activity`)
-      .then(result => {
-        const activity = result.data.activity;
-        resolve(activity);
-      })
-      .catch(reject);
-  });
+const activity = async (userID) => {
+  try {
+    const result = await instance.get(`/${userID}/activity`);
+    const activity = result.data.activity;
+    return activity;
+  } catch (error) {
+    throw error;
+  }
+};
 
-const summary = userID =>
-  new Promise((resolve, reject) => {
-    instance
-      .get(`/${userID}/summary`)
-      .then(result => {
-        const information = result.data.information;
-        resolve(information);
-      })
-      .catch(reject);
-  });
+const summary = async (userID) => {
+  try {
+    const result = await instance.get(`/${userID}/summary`);
+    const information = result.data.information;
+    return information;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export { activity, summary };

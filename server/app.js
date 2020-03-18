@@ -58,6 +58,10 @@ app.use('/api/cards', cardRouter);
 app.use('/api/transaction', transactionRouter);
 // app.use('/api/exchange-rates', exchangerateRouter);
 
+app.get('*', (req, res, next) => {
+  res.sendFile(join(__dirname, './../client/build/index.html'));
+});
+
 // Catch missing routes and forward to error handler
 app.use((req, res, next) => {
   next(createError(404));

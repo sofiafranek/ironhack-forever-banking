@@ -7,6 +7,8 @@ const router = new Router();
 
 // User can add a transaction
 router.post('/add-transaction', async (req, res, next) => {
+  console.log(req.body);
+  
   const {
     accountIDFrom,
     accountNumber,
@@ -20,6 +22,7 @@ router.post('/add-transaction', async (req, res, next) => {
     colorCategory
   } = req.body;
 
+
   try {
     const accountFrom = await Account.getAccountById(accountIDFrom);
     const balanceFrom = accountFrom.balance;
@@ -30,6 +33,10 @@ router.post('/add-transaction', async (req, res, next) => {
     const addBalance = Number(balanceTo) + Number(totalAmount);
 
     if (minusBalance >= 0) {
+      console.log("BALANCE", balanceTo);
+      console.log("ADDD", addBalance);
+      console.log("MINUSS", minusBalance);
+
       const transaction = await Transaction.createTransaction(
         accountIDFrom,
         accountIDTo,
@@ -42,10 +49,13 @@ router.post('/add-transaction', async (req, res, next) => {
         dateTransaction,
         colorCategory
       );
+      console.log('survived');
+
 
       await Account.updateBalance(accountIDFrom, minusBalance);
       await Account.updateBalance(accountIDTo, addBalance);
 
+      console.log(transaction);
       res.json({ transaction });
     }
   } catch (error) {

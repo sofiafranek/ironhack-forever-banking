@@ -23,7 +23,7 @@ const schema = new mongoose.Schema({
     trim: true
   },
   dob: {
-    type: Date,
+    type: String,
     required: true
   },
   nationality: {

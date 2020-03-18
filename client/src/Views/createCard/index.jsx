@@ -12,7 +12,7 @@ import Layout from '../../Components/Layout';
 import { creatingCard } from './../../Services/card';
 import { userIDAccounts } from './../../Services/account';
 
-import Breadcrumb from 'greact-bootstrap/Breadcrumb';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 class CreateCard extends Component {
   constructor(props) {

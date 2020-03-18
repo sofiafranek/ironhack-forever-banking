@@ -55,6 +55,7 @@ router.post('/create-account', async (req, res, next) => {
   }
 });
 
+/*
 router.post('/:accountID/create-account', async (req, res, next) => {
   const { accountID } = req.params;
   const { phoneNumberUser } = req.body;
@@ -66,7 +67,7 @@ router.post('/:accountID/create-account', async (req, res, next) => {
     console.log(error);
     next(error);
   }
-});
+});*/
 
 // Returning all ID's of the accounts of the user, including non active
 router.get('/:userID/user-accounts', RouteGuard, async (req, res, next) => {

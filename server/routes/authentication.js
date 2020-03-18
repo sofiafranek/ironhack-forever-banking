@@ -48,6 +48,7 @@ router.post('/signup', (req, res, next) => {
       res.json({ user });
     })
     .catch(error => {
+      console.log(error);
       next(error);
     });
 });

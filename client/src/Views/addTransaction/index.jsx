@@ -174,7 +174,6 @@ class AddTransaction extends Component {
   }
 
   handleAccountFromChange(event) {
-    // const inputName = event.target.name;
     const value = event.target.value;
 
     const accountSplitted = value.split(' ');
@@ -216,26 +215,26 @@ class AddTransaction extends Component {
 
   chooseColor() {
     const category = this.state.category;
-    let colorCategory = '';
+    let colorCategory = 'info';
 
-    if (category === 'Housing') {
-      colorCategory = 'info';
-    } else if (category === 'Transport') {
+    if (category === 'Transport') {
       colorCategory = 'success';
+    } else if (category === 'Auto insurance') {
+      colorCategory = 'primary';
     } else if (category === 'Food & Dining') {
       colorCategory = 'primary';
     } else if (category === 'Utility bills') {
       colorCategory = 'secondary';
     } else if (category === 'Cell phone') {
       colorCategory = 'danger';
-    } else if (category === 'Childcare and school costs') {
+    } else if (category === 'Fun stuff') {
+      colorCategory = 'danger';
+    }else if (category === 'Childcare and school costs') {
       colorCategory = 'warning';
     } else if (category === 'Pet food') {
       colorCategory = 'light';
     } else if (category === 'Pet insurance') {
       colorCategory = 'dark';
-    } else if (category === 'Auto insurance') {
-      colorCategory = 'success';
     } else if (category === 'Life insurance') {
       colorCategory = 'light';
     } else if (category === 'Fun stuff') {
@@ -256,9 +255,7 @@ class AddTransaction extends Component {
       colorCategory = 'info';
     }
 
-    this.setState({
-      colorCategory
-    });
+    return colorCategory;
   }
 
   createOneTransaction() {
@@ -303,15 +300,20 @@ class AddTransaction extends Component {
       });
   }
 
+
   setData(event) {
     event.preventDefault();
-    this.chooseColor();
-
-    if (this.state.schedule) {
-      this.createListTransactions();
-    } else {
-      this.createOneTransaction();
-    }
+    const colorCategory = this.chooseColor();
+    
+    this.setState({
+        colorCategory
+    }, () => {
+        if (this.state.schedule) {
+          this.createListTransactions();
+        } else {
+          this.createOneTransaction();
+        }
+    });
   }
 
   render() {

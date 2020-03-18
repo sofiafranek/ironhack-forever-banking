@@ -8,7 +8,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
-import { addingMoney, userIDAccounts } from '../../Services/account';
+import { userIDAccounts } from '../../Services/account';
 import { createTransaction } from '../../Services/transaction';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 

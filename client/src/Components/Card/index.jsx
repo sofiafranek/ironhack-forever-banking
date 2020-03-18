@@ -4,15 +4,11 @@ import './style.scss';
 import { deleteCard } from './../../Services/card';
 
 class Card extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   flip(event) {
     event.preventDefault();
     let element = event.currentTarget;
     if (element.className === 'credit-card__section') {
-      if (element.style.transform == 'rotateY(180deg)') {
+      if (element.style.transform === 'rotateY(180deg)') {
         element.style.transform = 'rotateY(0deg)';
       } else {
         element.style.transform = 'rotateY(180deg)';

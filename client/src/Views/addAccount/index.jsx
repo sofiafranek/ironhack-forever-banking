@@ -15,6 +15,7 @@ import {
 } from '@material-ui/core';
 import clsx from 'clsx';
 import { creatingAccount, userIDAccounts } from '../../Services/account';
+import { createTransaction } from '../../Services/transaction';
 import { useStyles } from './../../Utilities/useStyles';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
@@ -49,8 +50,27 @@ class AddAccount extends Component {
       sharedUser: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.getData = this.getData.bind(this);
+    this.setData = this.setData.bind(this);
     this.handleAccountFromChange = this.handleAccountFromChange.bind(this);
+  }
+
+  randomKey() {
+    let Numberresult = '';
+    let Numbercharacters = '0123456789';
+    let NumbercharactersLength = Numbercharacters.length;
+    for (let i = 0; i < 2; i++) {
+      Numberresult += Numbercharacters.charAt(Math.floor(Math.random() * NumbercharactersLength));
+    }
+
+    let Letterresult = '';
+    let Lettercharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let LettercharactersLength = Lettercharacters.length;
+    for (let i = 0; i < 20; i++) {
+      Letterresult += Lettercharacters.charAt(Math.floor(Math.random() * LettercharactersLength));
+    }
+
+    let result = Numberresult + Letterresult;
+    return result;
   }
 
   handleInputChange(event) {
@@ -66,11 +86,6 @@ class AddAccount extends Component {
         balance: '5000'
       });
     }
-  }
-
-  componentDidMount() {
-    this.props.changeActiveNav();
-    this.getInfo();
   }
 
   handleAccountFromChange(event) {
@@ -101,26 +116,12 @@ class AddAccount extends Component {
       .catch(error => console.log(error));
   }
 
-  randomKey() {
-    let Numberresult = '';
-    let Numbercharacters = '0123456789';
-    let NumbercharactersLength = Numbercharacters.length;
-    for (let i = 0; i < 2; i++) {
-      Numberresult += Numbercharacters.charAt(Math.floor(Math.random() * NumbercharactersLength));
-    }
-
-    let Letterresult = '';
-    let Lettercharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    let LettercharactersLength = Lettercharacters.length;
-    for (let i = 0; i < 20; i++) {
-      Letterresult += Lettercharacters.charAt(Math.floor(Math.random() * LettercharactersLength));
-    }
-
-    let result = Numberresult + Letterresult;
-    return result;
+  componentDidMount() {
+    this.props.changeActiveNav();
+    this.getInfo();
   }
 
-  getData(event) {
+  setData(event) {
     event.preventDefault();
     const userID = this.props.userID;
     const accountNumber = this.randomKey();
@@ -130,20 +131,38 @@ class AddAccount extends Component {
     account.userID = userID;
     delete account.types;
     delete account.options;
+    account.balance = 0;
     account.accounts = null;
 
     creatingAccount(account)
-      .then(account => {
+    .then((account) => {
+      const transaction = {
+        accountIDFrom: this.state.accountIDFrom,
+        accountNumber: account.accountNumber,
+        totalAmount: this.state.balance,
+        reference: 'Transfering money',
+        endPoint: 'Transfer between accounts',
+        category: 'Other',
+        schedule: false,
+        status: 'Executed',
+        dateTransaction: Date.now(),
+        colorCategory: 'info'
+      };
+
+      createTransaction(transaction)
+      .then(() => {
         this.props.history.push({
           pathname: '/accounts'
         });
       })
       .catch(error => console.log(error));
-
-      if(this.state.sharedAccount){
-        userIDFrom userIDTo message
-        createNotification()
-      }
+    })
+    .catch(error => console.log(error));
+      
+    if(this.state.sharedAccount){
+      //userIDFrom userIDTo message
+      //createNotification()
+    }
   }
 
   render() {
@@ -154,7 +173,7 @@ class AddAccount extends Component {
           <Breadcrumb.Item className="disable-breadcrumb">Creating a New Account</Breadcrumb.Item>
         </Breadcrumb>
         <h1 className="mb-4">Creating a New Account</h1>
-        <form onSubmit={event => this.getData(event)} className="add-account-form">
+        <form onSubmit={event => this.setData(event)} className="add-account-form">
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
               <FormControl>

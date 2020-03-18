@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import Layout from '../../Components/Layout';
 
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 
-class linkedAccounts extends Component {
+class LinkedAccounts extends Component {
   render() {
     return (
       <Layout>
@@ -36,4 +36,4 @@ class linkedAccounts extends Component {
   }
 }
 
-export default linkedAccounts;
+export default LinkedAccounts;

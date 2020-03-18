@@ -70,7 +70,6 @@ const userAccounts = async userID => {
 
 export {
   account,
-  addingMoney,
   creatingAccount,
   deleteAccount,
   singleAccount,

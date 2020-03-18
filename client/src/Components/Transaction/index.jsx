@@ -15,6 +15,8 @@ class Transaction extends Component {
       accountIDTo,
       colorCategory
     } = this.props;
+    console.log(category);
+    console.log(dateTransaction);
     return (
       <Accordion className="hvr-grow transaction pb-3">
         <Card>

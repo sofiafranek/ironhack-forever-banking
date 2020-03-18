@@ -58,8 +58,6 @@ class AddAccount extends Component {
     let value = event.target.value;
     if (inputName === 'sharedAccount') value === 'No' ? (value = false) : (value = true);
 
-    console.log(value);
-
     this.setState({
       [inputName]: value
     });
@@ -76,7 +74,6 @@ class AddAccount extends Component {
   }
 
   handleAccountFromChange(event) {
-    // const inputName = event.target.name;
     const value = event.target.value;
 
     const accountSplitted = value.split(' ');
@@ -142,6 +139,11 @@ class AddAccount extends Component {
         });
       })
       .catch(error => console.log(error));
+
+      if(this.state.sharedAccount){
+        userIDFrom userIDTo message
+        createNotification()
+      }
   }
 
   render() {

@@ -92,22 +92,6 @@ router.get('/:userID/accounts', RouteGuard, async (req, res, next) => {
   }
 });
 
-// Adding money to specific account using the ID
-router.post('/add-money', RouteGuard, async (req, res, next) => {
-  console.log(req.body, 'BDOYYYY');
-
-  const accountID = req.body.accountID;
-  const balance = req.body.balance;
-  const balanceNumber = Number(balance);
-
-  try {
-    await Account.updateBalance(accountID, balanceNumber);
-  } catch (error) {
-    console.log(error);
-    next(error);
-  }
-});
-
 // Deletes specific account using the ID
 router.post('/:id/delete-account', RouteGuard, async (req, res, next) => {
   const idAccount = req.params.id;

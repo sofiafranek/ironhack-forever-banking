@@ -34,7 +34,6 @@ schema.statics.getUserActiveAccounts = async function(userID) {
     { $and:[ { userID}, { status : 'Active' } ]}
     ).populate('accountID').exec();
 
-  console.log("herrr", userAccount);
   return userAccount;
 };
 

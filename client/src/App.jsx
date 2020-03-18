@@ -185,7 +185,13 @@ class App extends Component {
                 authorized={this.state.user}
                 redirect={'/signin'}
                 path="/accounts/:id/add-money"
-                render={props => <AddMoney {...props} changeActiveNav={this.activeNav} />}
+                render={props => (
+                  <AddMoney
+                    {...props}
+                    changeActiveNav={this.activeNav}
+                    userID={this.state.user._id}
+                  />
+                )}
                 exact
               />
               <ProtectedRoute

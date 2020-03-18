@@ -56,11 +56,10 @@ const deleteAccount = accountID =>
 const addingMoney = (accountID, balance) =>
   new Promise((resolve, reject) => {
     instance
-      .post(`/${accountID}/add-money`)
+      .post(`/${accountID}/add-money`, { balance })
       .then(result => {
-        result = result.data.balance;
         console.log(result.data);
-        resolve(result);
+        resolve();
       })
       .catch(reject);
   });

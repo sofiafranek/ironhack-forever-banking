@@ -17,15 +17,15 @@ class addMoney extends Component {
     super(props);
     this.state = {
       accounts: [],
-      accountIDFrom: '',
+      accountID: '',
       accountInfo: '',
       balance: '',
       options: ['Existing', 'External'],
       option: 'Existing'
     };
     this.handleInputChange = this.handleInputChange.bind(this);
-    // this.getData = this.getData.bind(this);
-    // this.handleAccountFromChange = this.handleAccountFromChange.bind(this);
+    this.getData = this.getData.bind(this);
+    this.handleAccountFromChange = this.handleAccountFromChange.bind(this);
   }
 
   handleInputChange(event) {
@@ -51,21 +51,23 @@ class addMoney extends Component {
     const value = event.target.value;
 
     const accountSplitted = value.split(' ');
-    const accountIDFrom = accountSplitted[0];
+    const accountID = accountSplitted[0];
 
     this.setState({
-      accountIDFrom
+      accountID
     });
   }
 
   getInfo() {
     const userID = this.props.userID;
+    console.log(userID, 'USERID');
 
     const account = Object.assign({}, this.state);
     account.userID = userID;
 
     userIDAccounts(userID)
       .then(account => {
+        console.log(account, 'USERIDACCOUNTS');
         this.setState({
           accounts: account,
           type: account[0].type,
@@ -77,20 +79,16 @@ class addMoney extends Component {
 
   getData(event) {
     event.preventDefault();
-    console.log('get data');
-    // const accountID = this.props.accountID;
+    const accountID = this.state.accountID;
+    const balance = this.state.balance;
 
-    // const account = Object.assign({}, this.state);
-    // account.balance = balance;
-    // account.accountID = accountID;
-
-    // addingMoney(accountID, balance)
-    //   .then(account => {
-    //     this.props.history.push({
-    //       pathname: '/accounts'
-    //     });
-    //   })
-    //   .catch(error => console.log(error));
+    addingMoney(accountID, balance)
+      .then(() => {
+        this.props.history.push({
+          pathname: '/accounts'
+        });
+      })
+      .catch(error => console.log(error));
   }
 
   render() {

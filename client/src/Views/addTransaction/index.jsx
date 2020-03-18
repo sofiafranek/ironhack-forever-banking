@@ -223,9 +223,7 @@ class AddTransaction extends Component {
     transaction.status = 'Executed';
 
     createTransaction(transaction)
-      .then(transaction => {
-        if (transaction.res) {
-        }
+      .then(() => {
         this.props.history.push({
           pathname: '/transactions'
         });

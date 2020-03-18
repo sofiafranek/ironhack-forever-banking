@@ -13,10 +13,29 @@ const schema = new mongoose.Schema({
     },
     message: {
         type: String
-    },
-    read: {
-        type: Boolean
     }
 });
+
+schema.statics.createNotification = async function(userIDFrom, userIDTo, message) {
+    const Model = this;
+
+    const notification = await Model.create({
+        userIDFrom,
+        userIDTo,
+        message
+    });
+    
+    return notification;
+  };
+
+schema.statics.listNotifications = async function(userIDTo) {
+    const Model = this;
+
+    const listNotifications = await Model.find({
+        userIDTo
+    });
+
+    return listNotifications;
+};
 
 module.exports = mongoose.model('Notification', schema);

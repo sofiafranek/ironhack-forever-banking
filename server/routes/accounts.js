@@ -2,10 +2,10 @@
 
 const { Router } = require('express');
 
-const Account = require('../models/account');
-const UserAccount = require('../models/userAccount');
-const Card = require('../models/card');
-const User = require('../models/user');
+const Account = require('./../models/account');
+const UserAccount = require('./../models/userAccount');
+const Card = require('./../models/card');
+const User = require('./../models/user');
 
 const router = new Router();
 

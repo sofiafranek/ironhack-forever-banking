@@ -20,6 +20,7 @@ const accountRouter = require('./routes/accounts');
 const analyticsRouter = require('./routes/analytics');
 const cardRouter = require('./routes/card');
 const transactionRouter = require('./routes/transaction');
+const notificationRouter = require('./routes/notification');
 
 const app = express();
 
@@ -55,6 +56,8 @@ app.use('/api/accounts', accountRouter);
 app.use('/api/analytics', analyticsRouter);
 app.use('/api/cards', cardRouter);
 app.use('/api/transaction', transactionRouter);
+app.use('/api/authorization', notificationRouter);
+
 
 // Catch missing routes and forward to error handler
 app.use((req, res, next) => {

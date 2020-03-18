@@ -100,7 +100,7 @@ class Dashboard extends Component {
             <p className="pt-3">No Accounts Listed</p>
           )}
 
-          <h4 className="pb-2 pt-4">Transactions Listed Here</h4>
+          <h4 className="pb-3 pt-4">Transactions Listed Here</h4>
           {this.state.transactions.length > 0 ? (
             this.state.transactions.map(single => {
               return <Transaction key={single._id} {...single} />;

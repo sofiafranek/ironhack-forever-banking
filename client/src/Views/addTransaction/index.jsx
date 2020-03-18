@@ -47,23 +47,23 @@ class AddTransaction extends Component {
         'Housing',
         'Transport',
         'Food & Dining',
-        'Utility bills',
-        'Cell phone',
-        'Childcare and school costs',
-        'Pet food',
-        'Pet insurance',
+        'Utility Bills',
+        'Cell Phone',
+        'Childcare and School Costs',
+        'Pet Food',
+        'Pet Insurance',
         'Clothing',
-        'Health insurance',
+        'Health Insurance',
         'Fitness',
-        'Auto insurance',
-        'Life insurance',
-        'Fun stuff',
+        'Auto Insurance',
+        'Life Insurance',
+        'Fun Stuff',
         'Travel',
-        'Student loans',
-        'Credit-card debt',
+        'Student Loans',
+        'Credit Card Debt',
         'Retirement',
-        'Emergency fund',
-        'Large purchases',
+        'Emergency Fund',
+        'Large Purchases',
         'Other'
       ],
       category: 'Housing',
@@ -343,10 +343,7 @@ class AddTransaction extends Component {
             </Grid>
             <FormControl component="fieldset">
               <h4 className="pl-2 pt-4 pb-2">Scheduled</h4>
-              <RadioGroup
-                name="schedule"
-                className="scheduled-transaction"
-              >
+              <RadioGroup name="schedule" className="scheduled-transaction">
                 <FormControlLabel
                   value="Yes"
                   control={<StyledRadio />}

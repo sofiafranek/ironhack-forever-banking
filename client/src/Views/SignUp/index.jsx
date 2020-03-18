@@ -17,9 +17,10 @@ class SignUp extends Component {
       nationality: '',
       occupation: '',
       password: '',
-      date: '',
+      dob: '',
       ID: '',
-      address: ''
+      address: '',
+      income: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.getData = this.getData.bind(this);
@@ -114,18 +115,31 @@ class SignUp extends Component {
                 autoComplete="current-password"
               />
             </Grid>
-            {/*              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  type='date'
-                  value={this.state.date}
-                  onChange={(event) => this.handleInputChange(event)
-                  }
-                  id="dateOfbirtth"
-                />
-              </Grid> */}
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="dob"
+                value={this.state.dob}
+                onChange={event => this.handleInputChange(event)}
+                type="date"
+                id="dob"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="phoneNumber"
+                value={this.state.phoneNumber}
+                onChange={event => this.handleInputChange(event)}
+                label="Phone Number"
+                type="string"
+                id="phoneNumber"
+              />
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -183,12 +197,12 @@ class SignUp extends Component {
                 variant="outlined"
                 required
                 fullWidth
-                name="phoneNumber"
-                value={this.state.phoneNumber}
+                name="income"
+                value={this.state.income}
                 onChange={event => this.handleInputChange(event)}
-                label="Phone Number"
+                label="Income"
                 type="string"
-                id="phoneNumber"
+                id="income"
               />
             </Grid>
           </Grid>

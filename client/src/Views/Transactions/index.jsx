@@ -124,9 +124,11 @@ class Transactions extends Component {
             </select>
           </div>
           {this.state.renderTransactions.map(transaction => {
-            if(transaction.reference.toLowerCase().includes(this.state.search.toLowerCase()) ||
-                transaction.category.toLowerCase().includes(this.state.search.toLowerCase()))
-             return <Transaction key={transaction._id} {...transaction}></Transaction>
+            if (
+              transaction.reference.toLowerCase().includes(this.state.search.toLowerCase()) ||
+              transaction.category.toLowerCase().includes(this.state.search.toLowerCase())
+            )
+              return <Transaction key={transaction._id} {...transaction}></Transaction>;
           })}
         </div>
       </Layout>

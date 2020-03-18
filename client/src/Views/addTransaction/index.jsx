@@ -72,7 +72,8 @@ class AddTransaction extends Component {
       schedulePeriods: ['Hour', 'Week', 'Month'],
       time: 'Month',
       times: ['Month', 'Trimester', 'Semester'],
-      dateTransaction: new Date()
+      dateTransaction: new Date(),
+      colorCategory: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleAccountFromChange = this.handleAccountFromChange.bind(this);
@@ -213,6 +214,53 @@ class AddTransaction extends Component {
       .catch(error => console.log(error));
   }
 
+  chooseColor() {
+    const category = this.state.category;
+    let colorCategory = '';
+
+    if (category === 'Housing') {
+      colorCategory = 'info';
+    } else if (category === 'Transport') {
+      colorCategory = 'success';
+    } else if (category === 'Food & Dining') {
+      colorCategory = 'primary';
+    } else if (category === 'Utility bills') {
+      colorCategory = 'secondary';
+    } else if (category === 'Cell phone') {
+      colorCategory = 'danger';
+    } else if (category === 'Childcare and school costs') {
+      colorCategory = 'warning';
+    } else if (category === 'Pet food') {
+      colorCategory = 'light';
+    } else if (category === 'Pet insurance') {
+      colorCategory = 'dark';
+    } else if (category === 'Auto insurance') {
+      colorCategory = 'success';
+    } else if (category === 'Life insurance') {
+      colorCategory = 'light';
+    } else if (category === 'Fun stuff') {
+      colorCategory = 'danger';
+    } else if (category === 'Travel') {
+      colorCategory = 'warning';
+    } else if (category === 'Student loans') {
+      colorCategory = 'success';
+    } else if (category === 'Credit-card debt') {
+      colorCategory = 'info';
+    } else if (category === 'Retirement') {
+      colorCategory = 'success';
+    } else if (category === 'Emergency fund') {
+      colorCategory = 'warning';
+    } else if (category === 'Large purchases') {
+      colorCategory = 'success';
+    } else if (category === 'Other') {
+      colorCategory = 'info';
+    }
+
+    this.setState({
+      colorCategory
+    });
+  }
+
   createOneTransaction() {
     const transaction = Object.assign({}, this.state);
     delete transaction.categories;
@@ -257,6 +305,8 @@ class AddTransaction extends Component {
 
   setData(event) {
     event.preventDefault();
+    this.chooseColor();
+
     if (this.state.schedule) {
       this.createListTransactions();
     } else {

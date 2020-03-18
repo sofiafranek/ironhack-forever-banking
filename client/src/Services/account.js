@@ -17,7 +17,6 @@ const account = async () => {
 
 // creating a user account when they sign up
 const creatingAccount = async (data) => {
-  console.log(data);
   try {
     const result = await instance.post('/create-account', data);
     const account = result.data.account;
@@ -28,7 +27,7 @@ const creatingAccount = async (data) => {
 };
 
 // showing each accounts information on single account view
-const singleAccount = async (id) => {
+const singleAccount = async id => {
   try {
     const result = await instance.get(`/${id}`);
     const account = result.data.account;
@@ -39,7 +38,7 @@ const singleAccount = async (id) => {
 };
 
 // deleting an account from users account
-const deleteAccount = async (accountID) => {
+const deleteAccount = async accountID => {
   try {
     await instance.post(`/${accountID}/delete-account`);
   } catch (error) {
@@ -57,7 +56,7 @@ const addingMoney = async (accountID, balance) => {
 };
 
 // only showing the accounts that belong to that user
-const userIDAccounts = async (userID) => {
+const userIDAccounts = async userID => {
   try {
     const result = await instance.get(`/${userID}/accounts`);
     const account = result.data.accountsUser;
@@ -68,7 +67,7 @@ const userIDAccounts = async (userID) => {
 };
 
 // all the accounts, incluing the non active
-const userAccounts = async (userID) => {
+const userAccounts = async userID => {
   try {
     const result = await instance.get(`/${userID}/user-accounts`);
     const accounts = result.data.accounts;

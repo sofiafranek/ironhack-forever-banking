@@ -54,14 +54,11 @@ class addMoney extends Component {
 
   getInfo() {
     const userID = this.props.userID;
-    console.log(userID, 'USERID');
-
     const account = Object.assign({}, this.state);
     account.userID = userID;
 
     userIDAccounts(userID)
       .then(account => {
-        console.log(account, 'USERIDACCOUNTS');
         this.setState({
           accounts: account,
           type: account[0].type,
@@ -73,10 +70,14 @@ class addMoney extends Component {
 
   getData(event) {
     event.preventDefault();
-    const accountID = this.state.accountID;
-    const balance = this.state.balance;
+    const accountIDTo = this.state.accountID;
+    const totalAmount = this.state.balance;
+    const schedule = false;
+    const status = 'Executed';
+    const accountIDFrom = this.props.location.pathname.split("/")[2];
+    const info = { accountIDTo, accountIDFrom, totalAmount, schedule, status };
 
-    const info = { accountID, balance };
+    //createTransaction()
 
     addingMoney(info)
       .then(() => {

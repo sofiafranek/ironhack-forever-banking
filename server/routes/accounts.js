@@ -34,6 +34,7 @@ router.get('/:id', RouteGuard, async (req, res, next) => {
 
 // When user is signing up this creates their first account
 router.post('/create-account', async (req, res, next) => {
+  console.log(req.body);
   const { balance, type, accountNumber, userID, sharedAccount, sharedUser } = req.body;
   const balanceNumber = Number(balance);
 
@@ -48,6 +49,19 @@ router.post('/create-account', async (req, res, next) => {
     }
 
     res.json({ account });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+router.post('/:accountID/create-account', async (req, res, next) => {
+  const { accountID } = req.params;
+  const { phoneNumberUser } = req.body;
+
+  try {
+      const sharedUserID = await User.getUserByPhoneNumber(phoneNumberUser);
+      await UserAccount.createUserAccount(sharedUserID, accountID);
   } catch (error) {
     console.log(error);
     next(error);

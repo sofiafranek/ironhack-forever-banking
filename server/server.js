@@ -46,7 +46,7 @@ const onListening = server => {
   const { port } = server.address();
   debug(`Node server listening on ${port}`);
   if (process.env.NODE_ENV === 'development')
-    debug(`Visit http://0.0.0.0:${port} to develop your app`);
+    debug(`Visit http://localhost:${port} to develop your app`);
 };
 
 const initiate = () => {

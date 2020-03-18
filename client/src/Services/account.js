@@ -17,8 +17,9 @@ const account = async () => {
 
 // creating a user account when they sign up
 const creatingAccount = async (data) => {
+  console.log(data);
   try {
-    const result = await instance.post('/create-account');
+    const result = await instance.post('/create-account', data);
     const account = result.data.account;
     return account;
   } catch (error) {

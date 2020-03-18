@@ -65,6 +65,7 @@ class addMoney extends Component {
     const account = Object.assign({}, this.state);
     account.userID = userID;
 
+    console.log("getInfo")
     userIDAccounts(userID)
       .then(account => {
         console.log(account, 'USERIDACCOUNTS');

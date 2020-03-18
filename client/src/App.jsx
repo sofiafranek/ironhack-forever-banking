@@ -9,6 +9,7 @@ import Home from './Views/Home';
 
 import Activity from './Views/Activity';
 import Accounts from './Views/Accounts';
+import LinkedAccounts from './Views/linkedAccounts';
 import CreateAccount from './Views/createAccount';
 import SingleAccount from './Views/SingleAccount';
 import AddAccount from './Views/addAccount';
@@ -23,6 +24,7 @@ import Summary from './Views/Summary';
 import { loadUserInformation } from './Services/authentication';
 import Notifications from './Views/Notifications';
 import Profile from './Views/Profile';
+import ExchangeRates from './Views/exchangeRates';
 
 import Navigation from './Components/Navigation';
 import Mobilenavigation from './Components/Mobilenavigation';
@@ -157,6 +159,15 @@ class App extends Component {
                 render={props => <Accounts {...props} user={this.state.user} />}
                 exact
               />
+
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
+                path="/linked-accounts"
+                render={props => <LinkedAccounts {...props} user={this.state.user} />}
+                exact
+              />
+
               <ProtectedRoute
                 authorized={this.state.user}
                 redirect={'/signin'}
@@ -231,6 +242,14 @@ class App extends Component {
                 redirect={'/signin'}
                 path="/cards/add-card"
                 render={props => <CreateCard {...props} userID={this.state.user._id} />}
+                exact
+              />
+
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
+                path="/exchange-rates"
+                render={props => <ExchangeRates {...props} user={this.state.user} />}
                 exact
               />
 

@@ -1,0 +1,13 @@
+.profile-page {
+  text-align: center;
+}
+
+.profile-page .breadcrumb {
+  display: flex;
+}
+
+@media (min-width: 980px) {
+  .profile-page .breadcrumb {
+    display: block;
+  }
+}

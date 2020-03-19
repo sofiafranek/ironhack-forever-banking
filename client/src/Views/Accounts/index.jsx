@@ -55,8 +55,6 @@ class Accounts extends Component {
           this.filterMethod('Current');
         } else if (filter === 'Savings') {
           this.filterMethod('Savings');
-        } else if (filter === 'Credit') {
-          this.filterMethod('Credit');
         }
       })
       .catch(error => console.log(error));
@@ -92,7 +90,7 @@ class Accounts extends Component {
   render() {
     return (
       <Layout>
-        <div className="relative">
+        <div className="relative accounts-page">
           <h1 className="pb-3">Accounts</h1>
           <div className="action-container">
             <Link to={`/accounts/add-account`}>
@@ -110,7 +108,6 @@ class Accounts extends Component {
               <option value="">All</option>
               <option value="Current">Current</option>
               <option value="Savings">Savings</option>
-              <option value="Credit">Credit</option>
             </select>
           </div>
           {this.state.account.length > 0 ? (

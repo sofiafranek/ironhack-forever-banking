@@ -37,7 +37,7 @@ class CreateAccount extends Component {
     super(props);
     this.state = {
       type: 'Savings',
-      types: ['Savings', 'Current', 'Credit'],
+      types: ['Current', 'Savings'],
       balance: '',
       sharedAccount: false,
       sharedUser: ''
@@ -156,87 +156,75 @@ class CreateAccount extends Component {
                 ))}
               </Select>
               <FormControl component="fieldset">
-              <h4 className="pl-2 pt-4 pb-2">Shared Account</h4>
-              <RadioGroup
-                name="sharedAccount"
-                className="scheduled-transaction"
-              >
-                <FormControlLabel
-                  value="Yes"
-                  control={<StyledRadio />}
-                  label="Yes"
-                  onChange={event => this.handleInputChange(event)}
-                />
-                <FormControlLabel
-                  value="No"
-                  control={<StyledRadio />}
-                  label="No"
-                  onChange={event => this.handleInputChange(event)}
-                />
-              </RadioGroup>
-            </FormControl>
-            {this.state.sharedAccount && (
-            <Fragment>
-            <h4 className="pl-2 pt-4 pb-2">User Phone Number</h4>
-            <Grid item xs={12} sm={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="sharedUser"
-                label="sharedUser"
-                name="sharedUser"
-                onChange={event => this.handleInputChange(event)}
-              />
-            </Grid>
-            </Fragment>
-            )
-            }
-              {this.state.type === 'Credit' ? (
-                <Grid item xs={12} sm={12}>
-                  <div className="pt-3">We offer a 5.000€ starting credit limit</div>
-                </Grid>
-              ) : (
-                <>
-                  <h4 className="pt-4 pb-3">Add money to your new account</h4>
+                <h4 className="pl-2 pt-4 pb-2">Shared Account</h4>
+                <RadioGroup name="sharedAccount" className="scheduled-transaction">
+                  <FormControlLabel
+                    value="Yes"
+                    control={<StyledRadio />}
+                    label="Yes"
+                    onChange={event => this.handleInputChange(event)}
+                  />
+                  <FormControlLabel
+                    value="No"
+                    control={<StyledRadio />}
+                    label="No"
+                    onChange={event => this.handleInputChange(event)}
+                  />
+                </RadioGroup>
+              </FormControl>
+              {this.state.sharedAccount && (
+                <Fragment>
+                  <h4 className="pl-2 pt-4 pb-2">User Phone Number</h4>
                   <Grid item xs={12} sm={12}>
                     <TextField
                       variant="outlined"
                       required
                       fullWidth
-                      id="iban"
-                      label="IBAN"
-                      name="iabn"
-                      className="pb-3"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12}>
-                    <TextField
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="reference"
-                      label="Reference"
-                      name="reference"
-                      className="pb-3"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12}>
-                    <TextField
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="balance"
-                      label="Balance"
-                      name="balance"
-                      type="number"
-                      className="pb-3"
-                      value={this.state.balance}
+                      id="sharedUser"
+                      label="sharedUser"
+                      name="sharedUser"
                       onChange={event => this.handleInputChange(event)}
                     />
                   </Grid>
-                </>
+                </Fragment>
               )}
+              <h4 className="pt-4 pb-3">Add money to your new account</h4>
+              <Grid item xs={12} sm={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="iban"
+                  label="IBAN"
+                  name="iabn"
+                  className="pb-3"
+                />
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="reference"
+                  label="Reference"
+                  name="reference"
+                  className="pb-3"
+                />
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="balance"
+                  label="Balance"
+                  name="balance"
+                  type="number"
+                  className="pb-3"
+                  value={this.state.balance}
+                  onChange={event => this.handleInputChange(event)}
+                />
+              </Grid>
             </Grid>
           </Grid>
           <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">

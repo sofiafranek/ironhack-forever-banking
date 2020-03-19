@@ -70,7 +70,7 @@ class Dashboard extends Component {
     const user = this.props.user;
     return (
       <Layout>
-        <div className="relative">
+        <div className="relative activity-page">
           {this.state.mobile === true ? (
             <div className="d-flex dashboard-action-buttons">
               <Link to="/profile">

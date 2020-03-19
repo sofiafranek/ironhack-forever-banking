@@ -7,14 +7,20 @@ class Home extends Component {
   }
   render() {
     return (
-      <section className="home-page">
-        <h1>The New Exclusive Virtual Bank</h1>
-        <h3>Say hello to the future of banking.</h3>
-        <h5>
-          <a href="/signup">Sign Up Now</a> or
-          <a href="/signin"> Sign In </a>
-          if you're already banking with us
-        </h5>
+      <section className="homepage">
+        <div className="homepage--info">
+          <nav className="homepage-nav">
+            <a href="/signin">Login</a>
+            <a href="/signup">
+              <button>Sign Up Now</button>
+            </a>
+          </nav>
+          <h1>
+            Banking <br></br>has never been <br></br>so rewarding.
+          </h1>
+          <h2>A banking experience consisting of an app with limitless capabilities.</h2>
+        </div>
+        <div className="homepage--image"></div>
       </section>
     );
   }

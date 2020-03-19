@@ -1,22 +1,56 @@
+.navigation {
+  margin: 30px 15px;
+  border-radius: 30px;
+  overflow: hidden;
+  height: auto;
+  padding: 20px;
+  width: 100px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-shadow: 14px 28px 59px -31px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 14px 28px 59px -31px rgba(0, 0, 0, 0.75);
+  box-shadow: 14px 28px 59px -31px rgba(0, 0, 0, 0.75);
+  ul a:hover {
+    background-color: none !important;
+  }
+  button {
+    min-width: 60px !important;
+    padding-left: 0;
+  }
+  button:hover {
+    background-color: none !important;
+  }
+  button:hover {
+    background-color: white !important;
+  }
+  .navigation-top .MuiList-padding {
+    padding: 20px 0;
+  }
+}
+
+.menu-hover {
+  top: 0px !important;
+  left: 100px !important;
+  .MuiPaper-rounded {
+    border-radius: 15px !important;
+  }
+}
+
 .MuiAppBar-colorPrimary {
   background-color: white !important;
   color: black !important;
 }
 
-.MuiToolbar-regular {
-  justify-content: space-between;
-}
-
-.alert-red {
-  color: #9999ff;
-}
-
 .far {
-  font-size: 1.5em;
+  font-size: 1.3em;
 }
 
 .fas {
-  font-size: 1.5em;
+  font-size: 1.3em;
 }
 
 a {
@@ -25,11 +59,9 @@ a {
 
 a:hover {
   text-decoration: none;
+  color: #007bff;
 }
 
-.active {
-  color: #8db7d9;
-  span {
-    font-weight: bold;
-  }
+a div:hover {
+  background-color: white !important;
 }

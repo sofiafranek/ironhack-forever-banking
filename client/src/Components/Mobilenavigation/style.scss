@@ -5,9 +5,8 @@
   right: 0;
   z-index: 5;
   border-top: 1px solid lightgray;
-  height: 75px !important;
+  height: 65px !important;
   justify-content: space-between !important;
-  padding: 0 20px;
 }
 
 .bottomNavigation button {
@@ -28,10 +27,4 @@
 
 .MuiBottomNavigationAction-label {
   opacity: 1 !important;
-}
-
-@media (min-width: 500px) {
-  .bottomNavigation {
-    padding: 0 10%;
-  }
 }

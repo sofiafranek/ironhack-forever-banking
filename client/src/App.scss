@@ -1,3 +1,9 @@
+// red color #f12a40
+
+h1 {
+  font-weight: bold;
+}
+
 /* Grow Animation */
 .hvr-grow {
   vertical-align: middle;
@@ -77,4 +83,15 @@
 .disable-breadcrumb a:hover {
   color: black !important;
   cursor: default;
+}
+
+button {
+  border-radius: 15px !important;
+}
+
+.breadcrumb {
+  margin-bottom: 2rem;
+  border-radius: none;
+  padding-left: 0;
+  background-color: white !important;
 }

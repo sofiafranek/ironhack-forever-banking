@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './style.scss';
 
 import Layout from '../../Components/Layout';
 import Transaction from '../../Components/Transaction';
@@ -99,7 +100,7 @@ class Transactions extends Component {
   render() {
     return (
       <Layout>
-        <div className="relative">
+        <div className="relative transactions-page">
           <h1 className="pb-4">Transactions</h1>
           <div className="action-container">
             <Link to={`/transactions/addTransaction`} onClick={this.addingAccount}>
@@ -124,9 +125,11 @@ class Transactions extends Component {
             </select>
           </div>
           {this.state.renderTransactions.map(transaction => {
-            if(transaction.reference.toLowerCase().includes(this.state.search.toLowerCase()) ||
-                transaction.category.toLowerCase().includes(this.state.search.toLowerCase()))
-             return <Transaction key={transaction._id} {...transaction}></Transaction>
+            if (
+              transaction.reference.toLowerCase().includes(this.state.search.toLowerCase()) ||
+              transaction.category.toLowerCase().includes(this.state.search.toLowerCase())
+            )
+              return <Transaction key={transaction._id} {...transaction}></Transaction>;
           })}
         </div>
       </Layout>

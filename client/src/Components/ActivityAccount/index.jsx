@@ -33,10 +33,6 @@ class ActivityAccount extends Component {
             <Card.Header>
               <h6 className="mb-1">{this.props.type} Account</h6>
               <h6 className="mb-0">IBAN Number: {this.props.accountNumber}</h6>
-              {/* <h5>
-                {this.props.type === 'Credit' ? 'Credit Allowance' : 'Available Balance'} :{' '}
-                {this.props.balance}€
-              </h5> */}
             </Card.Header>
           </Link>
         </Card>

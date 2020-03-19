@@ -41,8 +41,8 @@ class AddAccount extends Component {
       accountIDFrom: '',
       accountInfo: '',
       balance: '',
-      types: ['Credit', 'Savings', 'Current'],
-      type: 'Credit',
+      types: ['Current', 'Savings'],
+      type: 'Current',
       options: ['Existing', 'External'],
       option: 'Existing',
       sharedAccount: false,
@@ -63,11 +63,6 @@ class AddAccount extends Component {
     this.setState({
       [inputName]: value
     });
-    if (value === 'Credit') {
-      this.setState({
-        balance: '5000'
-      });
-    }
   }
 
   componentDidMount() {
@@ -168,10 +163,7 @@ class AddAccount extends Component {
             </Grid>
             <FormControl component="fieldset">
               <h4 className="pl-2 pt-4 pb-2">Shared Account</h4>
-              <RadioGroup
-                name="sharedAccount"
-                className="scheduled-transaction"
-              >
+              <RadioGroup name="sharedAccount" className="scheduled-transaction">
                 <FormControlLabel
                   value="Yes"
                   control={<StyledRadio />}
@@ -187,58 +179,89 @@ class AddAccount extends Component {
               </RadioGroup>
             </FormControl>
             {this.state.sharedAccount && (
-            <Fragment>
-            <h4 className="pl-2 pt-4 pb-2">User Phone Number</h4>
-            <Grid item xs={12} sm={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="sharedUser"
-                label="sharedUser"
-                name="sharedUser"
-                onChange={event => this.handleInputChange(event)}
-              />
-            </Grid>
-            </Fragment>
-            )
-            }
-            {this.state.type === 'Credit' ? (
-              <Grid item xs={12} sm={12}>
-                <div>We offer a 5.000€ starting credit limit</div>
-              </Grid>
-            ) : (
-              <>
+              <Fragment>
+                <h4 className="pl-2 pt-4 pb-2">User Phone Number</h4>
                 <Grid item xs={12} sm={12}>
-                  <h4 className="pt-3 pb-2">Add money to your account</h4>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="sharedUser"
+                    label="sharedUser"
+                    name="sharedUser"
+                    onChange={event => this.handleInputChange(event)}
+                  />
+                </Grid>
+              </Fragment>
+            )}
+            <>
+              <Grid item xs={12} sm={12}>
+                <h4 className="pt-3 pb-2">Add money to your account</h4>
+                <FormControl>
+                  <InputLabel htmlFor="age-native-simple">Choose to top up using:</InputLabel>
+                  <Select name="option" native onChange={event => this.handleInputChange(event)}>
+                    {this.state.options.map(option => (
+                      <option value={option} key={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              {this.state.option === 'Existing' ? (
+                <Grid item xs={12} sm={12}>
+                  <h4 className="pt-3 pb-2">Amount of money you would like to add</h4>
                   <FormControl>
-                    <InputLabel htmlFor="age-native-simple">Choose to top up using:</InputLabel>
-                    <Select name="option" native onChange={event => this.handleInputChange(event)}>
-                      {this.state.options.map(option => (
-                        <option value={option} key={option}>
-                          {option}
+                    <Select
+                      name="accountInfo"
+                      native
+                      className="mb-4"
+                      onChange={event => this.handleAccountFromChange(event)}
+                    >
+                      {this.state.accounts.map(acc => (
+                        <option value={acc._id + ' ' + acc.type} key={acc.accountNumber}>
+                          {acc.accountNumber + ' ' + acc.type}
                         </option>
                       ))}
                     </Select>
                   </FormControl>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="balance"
+                    label="Balance"
+                    name="balance"
+                    type="number"
+                    value={this.state.balance}
+                    onChange={event => this.handleInputChange(event)}
+                  />
                 </Grid>
-                {this.state.option === 'Existing' ? (
+              ) : (
+                <>
+                  <h4 className="pl-2 pt-3 pb-2">Add money to your new account</h4>
                   <Grid item xs={12} sm={12}>
-                    <h4 className="pt-3 pb-2">Amount of money you would like to add</h4>
-                    <FormControl>
-                      <Select
-                        name="accountInfo"
-                        native
-                        className="mb-4"
-                        onChange={event => this.handleAccountFromChange(event)}
-                      >
-                        {this.state.accounts.map(acc => (
-                          <option value={acc._id + ' ' + acc.type} key={acc.accountNumber}>
-                            {acc.accountNumber + ' ' + acc.type}
-                          </option>
-                        ))}
-                      </Select>
-                    </FormControl>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="iban"
+                      label="IBAN"
+                      name="iabn"
+                      type="number"
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="reference"
+                      label="Reference"
+                      name="reference"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
                     <TextField
                       variant="outlined"
                       required
@@ -251,47 +274,9 @@ class AddAccount extends Component {
                       onChange={event => this.handleInputChange(event)}
                     />
                   </Grid>
-                ) : (
-                  <>
-                    <h4 className="pl-2 pt-3 pb-2">Add money to your new account</h4>
-                    <Grid item xs={12} sm={12}>
-                      <TextField
-                        variant="outlined"
-                        required
-                        fullWidth
-                        id="iban"
-                        label="IBAN"
-                        name="iabn"
-                        type="number"
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={12}>
-                      <TextField
-                        variant="outlined"
-                        required
-                        fullWidth
-                        id="reference"
-                        label="Reference"
-                        name="reference"
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        variant="outlined"
-                        required
-                        fullWidth
-                        id="balance"
-                        label="Balance"
-                        name="balance"
-                        type="number"
-                        value={this.state.balance}
-                        onChange={event => this.handleInputChange(event)}
-                      />
-                    </Grid>
-                  </>
-                )}
-              </>
-            )}
+                </>
+              )}
+            </>
           </Grid>
           <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">
             Create New Account

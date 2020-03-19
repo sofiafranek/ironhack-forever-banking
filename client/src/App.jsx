@@ -10,6 +10,7 @@ import Home from './Views/Home';
 import Activity from './Views/Activity';
 import Accounts from './Views/Accounts';
 import LinkedAccounts from './Views/linkedAccounts';
+import Credit from './Views/Credit';
 import CreateAccount from './Views/createAccount';
 import SingleAccount from './Views/SingleAccount';
 import AddAccount from './Views/addAccount';
@@ -165,6 +166,14 @@ class App extends Component {
                 redirect={'/signin'}
                 path="/linked-accounts"
                 render={props => <LinkedAccounts {...props} user={this.state.user} />}
+                exact
+              />
+
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
+                path="/credit"
+                render={props => <Credit {...props} changeActiveNav={this.activeNav} />}
                 exact
               />
 

@@ -19,29 +19,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import { signOut } from './../../Services/authentication';
 
-const drawerWidth = 240;
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex'
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0
-  },
-  drawerPaper: {
-    width: drawerWidth
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3)
-  },
-  toolbar: theme.mixins.toolbar
-}));
-
 const Navigation = props => {
   const handleSignOut = () => {
     signOut()
@@ -53,7 +30,6 @@ const Navigation = props => {
       });
   };
 
-  const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = event => {
@@ -65,121 +41,103 @@ const Navigation = props => {
   };
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <Link to="/">
-            <Typography variant="h6" noWrap>
-              Virtual Bank
-            </Typography>
-          </Link>
-          <div>
-            <Link to="/notifications">
-              <Button aria-controls="simple-menu" aria-haspopup="true">
-                <i className="far fa-bell"></i>
-                {/* if there is a notification change the bell to this icon */}
-                {/* <i className="fas fa-bell alert-red"></i> */}
-              </Button>
-            </Link>
-            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-              <i className="far fa-user"></i>
-            </Button>
-          </div>
+    <div className="navigation">
+      <div className="navigation-top">
+        <List>
+          {['Activity'].map((text, index) => (
+            <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
+              <ListItem button>
+                <i className="fas fa-chart-line"></i>
+              </ListItem>
+            </NavLink>
+          ))}
+        </List>
+        <List>
+          <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+            <i className="fas fa-wallet"></i>
+          </Button>
           <Menu
             id="simple-menu"
             anchorEl={anchorEl}
             keepMounted
             open={Boolean(anchorEl)}
             onClose={handleClose}
+            className="menu-hover"
           >
-            <Link to="/profile">
-              <MenuItem onClick={handleClose}>My Profile</MenuItem>
+            <Link to="/accounts">
+              <MenuItem onClick={handleClose}>Accounts</MenuItem>
             </Link>
 
-            <Link to="/">
-              <MenuItem onClick={handleSignOut}>Logout</MenuItem>
+            <Link to="/linked-accounts">
+              <MenuItem onClick={handleClose}>Linked Accounts</MenuItem>
+            </Link>
+
+            <Link to="/credit">
+              <MenuItem onClick={handleClose}>Credit</MenuItem>
+            </Link>
+
+            <Link to="/cards">
+              <MenuItem onClick={handleClose}>Cards</MenuItem>
             </Link>
           </Menu>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper
-        }}
-      >
-        <div className={classes.toolbar} />
-        <List className="pt-4">
-          {['Activity'].map((text, index) => (
-            <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
-              <ListItem button>
-                <ListItemText primary={text} activeclassname="active" />
-              </ListItem>
-            </NavLink>
-          ))}
         </List>
-        <Divider className="mr-3 ml-3" />
-        <List className="pb-0">
-          {['Accounts'].map((text, index) => (
-            <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
-              <ListItem button>
-                <ListItemText primary={text} activeclassname="active" />
-              </ListItem>
-            </NavLink>
-          ))}
-        </List>
-        <List className="pt-0">
-          {['Linked Accounts'].map((text, index) => (
-            <NavLink to={'/linked-accounts'} key={text} exact>
-              <ListItem button>
-                <ListItemText primary={text} activeclassname="active" />
-              </ListItem>
-            </NavLink>
-          ))}
-        </List>
-        <Divider className="mr-3 ml-3" />
         <List>
           {['Transactions'].map((text, index) => (
             <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
               <ListItem button>
-                <ListItemText primary={text} activeclassname="active" />
+                <i className="fas fa-arrows-alt-h"></i>
               </ListItem>
             </NavLink>
           ))}
         </List>
-        <Divider className="mr-3 ml-3" />
-        <List>
-          {['Cards'].map((text, index) => (
-            <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
-              <ListItem button>
-                <ListItemText primary={text} activeclassname="active" />
-              </ListItem>
-            </NavLink>
-          ))}
-        </List>
-        <Divider className="mr-3 ml-3" />
         <List>
           {['Analytics'].map((text, index) => (
             <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
               <ListItem button>
-                <ListItemText primary={text} activeclassname="active" />
+                <i className="fas fa-chart-pie"></i>
               </ListItem>
             </NavLink>
           ))}
         </List>
-        <Divider className="mr-3 ml-3" />
         <List>
           {['Exchange Rates'].map((text, index) => (
             <NavLink to={'/exchange-rates'} key={text} exact>
               <ListItem button>
-                <ListItemText primary={text} activeclassname="active" />
+                <i className="fas fa-globe-europe"></i>
               </ListItem>
             </NavLink>
           ))}
         </List>
-      </Drawer>
+      </div>
+      <div>
+        <List>
+          {['Notifications'].map((text, index) => (
+            <NavLink to={'/notifications'} key={text} exact>
+              <ListItem button>
+                <i className="far fa-bell"></i>
+              </ListItem>
+            </NavLink>
+          ))}
+        </List>
+        <List>
+          {['Profile'].map((text, index) => (
+            <NavLink to={'/profile'} key={text} exact>
+              <ListItem button>
+                <i className="far fa-user"></i>
+              </ListItem>
+            </NavLink>
+          ))}
+        </List>
+        <List>
+          {['Log Out'].map((text, index) => (
+            <NavLink to={'/'} key={text} exact>
+              <ListItem button>
+                <i className="fas fa-sign-out-alt"></i>
+              </ListItem>
+            </NavLink>
+          ))}
+        </List>
+      </div>
     </div>
   );
 };

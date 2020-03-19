@@ -31,6 +31,17 @@
   }
 }
 
+.accounts-page {
+  .action-container {
+    position: absolute;
+    right: 0px;
+    top: -65px;
+  }
+}
+.accounts-page h1 {
+  margin-top: 60px;
+}
+
 .mobile-filter {
   padding-bottom: 15px;
 }
@@ -41,5 +52,19 @@
   }
   .mobile-filter {
     padding-bottom: 0px;
+  }
+}
+
+// needs to be 800px for people for longer names to not overlap on the icons
+@media (min-width: 800px) {
+  .accounts-page {
+    .action-container {
+      position: absolute;
+      right: 0px;
+      top: 0px;
+    }
+  }
+  .accounts-page h1 {
+    margin-top: 0px;
   }
 }

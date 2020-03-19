@@ -9,7 +9,7 @@ const schema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['Savings', 'Current', 'Credit']
+    enum: ['Savings', 'Current']
   },
   balance: {
     type: Number
@@ -35,7 +35,7 @@ schema.statics.updateBalance = async function(id, balance) {
 
 schema.statics.getAccounts = async function() {
   const Model = this;
-  const accounts = await Model.find({ status : 'Active' }).exec();
+  const accounts = await Model.find({ status: 'Active' }).exec();
   return accounts;
 };
 
@@ -64,12 +64,12 @@ schema.statics.createAccount = async function(accountNumber, type, balance, shar
 
 schema.statics.removeAccount = async function(id) {
   const Model = this;
-  const account = await Model.findByIdAndUpdate(id, { 
+  const account = await Model.findByIdAndUpdate(id, {
     accountNumber: '',
     type: '',
     createdAt: null,
     status: 'NoActive'
-    }).exec();
+  }).exec();
   return account;
 };
 

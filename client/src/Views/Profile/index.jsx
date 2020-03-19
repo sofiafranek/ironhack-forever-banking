@@ -1,21 +1,29 @@
 import React from 'react';
+import './style.scss';
 
 import Layout from '../../Components/Layout';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 const Profile = props => {
   console.log(props.user, 'PROPS');
   const user = props.user;
   return (
-    <div>
+    <div className="profile-page">
       <Layout>
-        <h1 className="pb-3">Profile</h1>
-        <h5 className="pb-3">User Name: {user.name}</h5>
-        <h5 className="pb-3">Email: {user.email}</h5>
-        <h5 className="pb-3">Phone Number: {user.phoneNumber}</h5>
-        <h5 className="pb-3">Nationality: {user.nationality}</h5>
-        <h5 className="pb-3">Occupation: {user.occupation}</h5>
-        <h5 className="pb-3">Address: {user.address}</h5>
-        <h5>Joined Date: {user.createdAt}</h5>
+        <Breadcrumb>
+          <Breadcrumb.Item href="/activity">Activity</Breadcrumb.Item>
+          <Breadcrumb.Item className="disable-breadcrumb">Profile</Breadcrumb.Item>
+        </Breadcrumb>
+        <section>
+          <h1 className="pb-3">Profile</h1>
+          <h5 className="pb-3">User Name: {user.name}</h5>
+          <h5 className="pb-3">Email: {user.email}</h5>
+          <h5 className="pb-3">Phone Number: {user.phoneNumber}</h5>
+          <h5 className="pb-3">Nationality: {user.nationality}</h5>
+          <h5 className="pb-3">Occupation: {user.occupation}</h5>
+          <h5 className="pb-3">Address: {user.address}</h5>
+          <h5>Joined Date: {user.createdAt}</h5>
+        </section>
       </Layout>
     </div>
   );

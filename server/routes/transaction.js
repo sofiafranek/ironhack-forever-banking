@@ -51,16 +51,16 @@ router.post('/add-transaction', async (req, res, next) => {
         await Account.updateBalance(accountIDFrom, minusBalance);
         await Account.updateBalance(accountIDTo, addBalance);
         
-        // If everything goes right send the transaction
-        res.json({ result : 'Success: Transaction executed' });
+        // Success message
+        res.json({ result: true });
       }
       else {
-        res.json({ result : 'Insuccess: Account doesnt exist'});
+        res.json({ result : false, message: 0});
       }
     }
     else {
       // Insuccess message 
-      res.json({ result : 'Insuccess: Not enough money'});
+      res.json({ result : false, message: 1});
     }
   } catch (error) {
     console.log(error);

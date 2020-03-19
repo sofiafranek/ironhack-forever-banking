@@ -12,6 +12,7 @@ import {
   FormControlLabel,
   Radio
 } from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
 import clsx from 'clsx';
 import { createTransaction, createListTransactions } from '../../Services/transaction';
 import { userIDAccounts } from './../../Services/account';
@@ -31,6 +32,10 @@ function StyledRadio(props) {
       {...props}
     />
   );
+}
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 class AddTransaction extends Component {
@@ -73,7 +78,9 @@ class AddTransaction extends Component {
       time: 'Month',
       times: ['Month', 'Trimester', 'Semester'],
       dateTransaction: new Date(),
-      colorCategory: ''
+      colorCategory: '',
+      success: true,
+      message: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleAccountFromChange = this.handleAccountFromChange.bind(this);
@@ -197,6 +204,12 @@ class AddTransaction extends Component {
   componentDidMount() {
     this.props.changeActiveNav();
     this.getData();
+
+    console.log("MOUNT")
+  }
+
+  componentDidUpdate(){
+    console.log('UPDATE');
   }
 
   getData() {
@@ -268,10 +281,22 @@ class AddTransaction extends Component {
     transaction.status = 'Executed';
 
     createTransaction(transaction)
-      .then(() => {
-        this.props.history.push({
-          pathname: '/transactions'
-        });
+      .then((response) => {
+        const { result, message } = response;
+        let inssucessMessage = '';
+        if(result) {
+          this.props.history.push({
+            pathname: '/transactions'
+          });
+        }
+        else {
+          (message === 0) ? inssucessMessage = 'Not enough money' : inssucessMessage = 'Account doesnt exist';
+          this.setState({
+            success: false,
+            message: inssucessMessage
+          })
+        }
+
       })
       .catch(error => console.log(error));
   }
@@ -282,7 +307,7 @@ class AddTransaction extends Component {
     allT.shift();
 
     createTransaction(firstT)
-      .then(transaction => {
+      .then((result) => {
         this.props.history.push({
           pathname: '/transactions'
         });
@@ -447,6 +472,10 @@ class AddTransaction extends Component {
               </Grid>
             </Fragment>
           )}
+          {
+          (!this.state.success) && 
+            <Alert severity="error">{this.state.message}</Alert>
+          }
           <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">
             Create New Transaction
           </Button>

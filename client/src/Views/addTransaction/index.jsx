@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import clsx from 'clsx';
-import { createTransaction, createListTransactions } from '../../Services/transaction';
+import { createTransactionAccount, createTransactionPhone, createListTransactions } from '../../Services/transaction';
 import { userIDAccounts } from './../../Services/account';
 import { useStyles } from './../../Utilities/useStyles';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
@@ -208,18 +208,19 @@ class AddTransaction extends Component {
     this.getData();
   }
 
-  getData() {
+  async getData() {
     const userID = this.props.userID;
 
-    userIDAccounts(userID)
-      .then(account => {
-        this.setState({
-          accounts: account,
-          type: account[0].type,
-          accountIDFrom: account[0]._id
-        });
+    try {
+      const account = await userIDAccounts(userID);
+      this.setState({
+        accounts: account,
+        type: account[0].type,
+        accountIDFrom: account[0]._id
       })
-      .catch(error => console.log(error));
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   chooseColor() {
@@ -267,7 +268,73 @@ class AddTransaction extends Component {
     return colorCategory;
   }
 
-  createOneTransaction() {
+  async createNotification(){
+    try {
+      /*const notification = {
+
+        }
+          
+        const response = await createNotification();
+          
+        */
+    } catch {
+    
+    }
+  }
+
+  async createTransactionAccount(transaction){
+    let insuccessMessage = '';
+    try {
+      const response = await createTransactionAccount(transaction)
+      const { result, message } = response;
+
+      if(result) {
+        this.props.history.push({
+          pathname: '/transactions'
+        });
+      }
+      else {
+        if(message === 0){
+          insuccessMessage = 'Not enough money';
+        } else {
+          insuccessMessage = 'Account doesnt exist';
+        } 
+      }
+
+      return insuccessMessage;
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async createTransactionPhoneNumber(transaction){
+    let insuccessMessage = '';
+    try {
+      const response = await createTransactionPhone(transaction)
+      const { result, message } = response;
+
+      if(result) {
+        this.props.history.push({
+          pathname: '/transactions'
+        });
+      }
+      else {
+        if(message === 0){
+          insuccessMessage = 'Not enough money';
+        } else {
+          insuccessMessage = 'Phone Number is not register';
+        } 
+      }
+
+      return insuccessMessage;
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async createOneTransaction() {
     const userIDFrom = this.props.userID;
     console.log(userIDFrom);
     const transaction = Object.assign({}, this.state);
@@ -277,59 +344,50 @@ class AddTransaction extends Component {
     delete transaction.times;
     delete transaction.accountInfo;
     transaction.status = 'Executed';
+    
+    let insuccessMessage = '';
 
-    createTransaction(transaction)
-      .then((response) => {
-        const { result, message } = response;
-        let inssucessMessage = '';
-        if(result) {
-          /*const notification = {
+    if(this.state.optionTransfer === 'AccountNumber') {
+      insuccessMessage = await this.createTransactionAccount(transaction);
+    } else {
+      insuccessMessage = await this.createTransactionPhoneNumber(transaction);
+    }
 
-          }
-          createNotification()
-          .then((response) => {
-            console.log(response);
-            this.props.history.push({
-              pathname: '/transactions'
-            });
-          })
-          .catch((error) => {
-            console.log(error);
-          })*/
-        }
-        else {
-          (message === 0) ? inssucessMessage = 'Not enough money' : inssucessMessage = 'Account doesnt exist';
-          this.setState({
-            success: false,
-            message: inssucessMessage
-          })
-        }
+    if(insuccessMessage !== ''){
+      this.setState({
+        success: false,
+        message: insuccessMessage
       })
-      .catch(error => console.log(error));
+    }
   }
 
-  createListTransactions() {
+  async createListTransactions() {
     const allT = this.calculateTransactions();
     const firstT = allT[0];
     allT.shift();
+    let insuccessMessage = '';
 
-    createTransaction(firstT)
-      .then((result) => {
-        this.props.history.push({
-          pathname: '/transactions'
-        });
-      })
-      .catch(error => console.log(error));
+    if(this.state.optionTransfer === 'AccountNumber') {
+      insuccessMessage = await this.createTransactionAccount(firstT);
+    } else {
+      insuccessMessage = await this.createTransactionPhoneNumber(firstT);
+    }
 
-    createListTransactions(allT)
-      .then(() => {
-        this.props.history.push({
-          pathname: '/transactions'
-        });
+    if(insuccessMessage !== ''){
+      this.setState({
+        success: false,
+        message: insuccessMessage
+      }, async () => { 
+        try {
+          await createListTransactions(allT)
+          this.props.history.push({
+            pathname: '/transactions'
+          });
+        }catch (error) {
+          console.log(error);
+        }
       })
-      .catch(error => {
-        console.log(error);
-      });
+    }
   }
 
 

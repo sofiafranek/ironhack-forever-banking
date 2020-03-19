@@ -19,21 +19,13 @@ router.post('/add-transaction', async (req, res, next) => {
     schedule,
     status,
     dateTransaction,
-    colorCategory,
-    phoneNumber
+    colorCategory
   } = req.body;
 
   try {
     const accountFrom = await Account.getAccountById(accountIDFrom);
     const balanceFrom = accountFrom.balance;
-    let accountTo = null;
-    if (phoneNumber !== '') {
-      const user = await User.getUserByPhoneNumber(phoneNumber);
-      const userID = user._id;
-      accountTo = await UserAccount.getUserPrimaryAccount(userID);
-    } else {
-      accountTo = await Account.getAccountByNumber(accountNumber);
-    }
+    const accountTo = await Account.getAccountByNumber(accountNumber);
 
     if (accountTo) {
       const balanceTo = accountTo.balance;
@@ -76,6 +68,70 @@ router.post('/add-transaction', async (req, res, next) => {
     next(error);
   }
 });
+
+// User can add a transaction
+router.post('/add-transaction-phone', async (req, res, next) => {
+  const {
+    accountIDFrom,
+    totalAmount,
+    reference,
+    endPoint,
+    category,
+    schedule,
+    status,
+    dateTransaction,
+    colorCategory,
+    phoneNumber
+  } = req.body;
+
+  try {
+    const accountFrom = await Account.getAccountById(accountIDFrom);
+    const balanceFrom = accountFrom.balance;
+    
+    const user = await User.getUserByPhoneNumber(phoneNumber);
+    if (user) {
+      const userID = user._id;
+      const accountTo = await UserAccount.getUserPrimaryAccount(userID);
+
+      const balanceTo = accountTo.balance;
+      const accountIDTo = accountTo._id;
+      const minusBalance = Number(balanceFrom) - Number(totalAmount);
+      const addBalance = Number(balanceTo) + Number(totalAmount);
+
+      if (minusBalance >= 0) {
+
+        await Transaction.createTransaction(
+          accountIDFrom,
+          accountIDTo,
+          totalAmount,
+          reference,
+          endPoint,
+          category,
+          schedule,
+          status,
+          dateTransaction,
+          colorCategory
+        );
+
+        await Account.updateBalance(accountIDFrom, minusBalance);
+        await Account.updateBalance(accountIDTo, addBalance);
+  
+        // Success message
+        res.json({ result: true });
+      } else {
+        res.json({ result : false, message: 0});
+      }
+    }
+    else {
+      res.json({ result : false, message: 2});
+    }
+  } catch (error) {
+    console.log(error);
+    // Insuccess message 
+    next(error);
+  }
+});
+
 
 router.post('/received', async (req, res, next) => {
   try {

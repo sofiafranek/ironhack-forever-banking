@@ -4,11 +4,20 @@ const instance = axios.create({
   baseURL: '/api/transaction'
 });
 
-const createTransaction = async (data) => {
+const createTransactionAccount = async (data) => {
   try {
     const response = await instance.post('/add-transaction', data);
     const result = response.data;
-    console.log(result);
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const createTransactionPhone = async (data) => {
+  try {
+    const response = await instance.post('/add-transaction-phone', data);
+    const result = response.data;
     return result;
   } catch (error) {
     throw error;
@@ -74,7 +83,8 @@ const singleTransaction = async (id) => {
 };
 
 export {
-  createTransaction,
+  createTransactionAccount,
+  createTransactionPhone,
   receivedTransactions,
   sentTransactions,
   singleTransaction,

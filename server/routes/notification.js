@@ -9,19 +9,22 @@ router.post('/create-notification', RouteGuard, async (req, res, next) => {
     const {
         userIDFrom,
         userIDTo,
-        message
+        messageFrom,
+        messageTo
     } = req.body;
 
     try {
-        const notification = await Notification.createNotification(userIDFrom, userIDTo, message);
+        const notification = await Notification.createNotification(userIDFrom, userIDTo, messageFrom, messageTo);
         res.json({ notification });
     } catch (error) {
+        console.log(error);
         next(error);
     }
 });
 
 router.get('/:userID/list', RouteGuard, async (req, res, next) => {
-    const { userID } = this.params;
+
+    const { userID } = req.params;
 
     try {
         const notifications = await Notification.listNotifications(userID);

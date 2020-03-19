@@ -11,6 +11,7 @@ import Activity from './Views/Activity';
 import Accounts from './Views/Accounts';
 import LinkedAccounts from './Views/linkedAccounts';
 import Credit from './Views/Credit';
+import ApplyForCredit from './Views/applyForCredit';
 import CreateAccount from './Views/createAccount';
 import SingleAccount from './Views/SingleAccount';
 import AddAccount from './Views/addAccount';
@@ -181,6 +182,20 @@ class App extends Component {
               <ProtectedRoute
                 authorized={this.state.user}
                 redirect={'/signin'}
+                path="/credit/apply-for-credit"
+                render={props => (
+                  <ApplyForCredit
+                    {...props}
+                    changeActiveNav={this.activeNav}
+                    userID={this.state.user._id}
+                  />
+                )}
+                exact
+              />
+
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
                 path="/accounts/add-account"
                 render={props => (
                   <AddAccount
@@ -227,7 +242,7 @@ class App extends Component {
                   <AddTransaction
                     {...props}
                     changeActiveNav={this.activeNav}
-                    userID={this.state.user._id}
+                    user={this.state.user}
                   />
                 )}
                 exact
@@ -295,7 +310,11 @@ class App extends Component {
                 authorized={this.state.user}
                 redirect={'/signin'}
                 path="/notifications"
-                component={Notifications}
+                render={() => (
+                  <Notifications
+                    userID={this.state.user._id}
+                  />
+                )}
                 exact
               />
               <ProtectedRoute

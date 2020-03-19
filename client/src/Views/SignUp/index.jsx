@@ -15,7 +15,6 @@ class SignUp extends Component {
       lastName: '',
       email: '',
       nationality: '',
-      occupation: '',
       password: '',
       dob: '',
       ID: '',
@@ -175,19 +174,6 @@ class SignUp extends Component {
                 label="Address"
                 type="string"
                 id="address"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="occupation"
-                value={this.state.occupation}
-                onChange={event => this.handleInputChange(event)}
-                label="Occupation"
-                type="string"
-                id="occupation"
               />
             </Grid>
             <Grid item xs={12}>

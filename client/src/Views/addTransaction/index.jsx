@@ -298,7 +298,7 @@ class AddTransaction extends Component {
           messageTo,
           messageFrom
         };
-        console.log('nottttttt');
+
         await this.createNotificationUser(notification);
         this.props.history.push({
           pathname: '/transactions'

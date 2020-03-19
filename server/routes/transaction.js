@@ -75,6 +75,7 @@ router.post('/add-transaction', async (req, res, next) => {
 
 // User can add a transaction
 router.post('/add-transaction-phone', async (req, res, next) => {
+  console.log(req.body);
   const {
     accountIDFrom,
     totalAmount,

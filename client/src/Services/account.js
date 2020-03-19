@@ -15,12 +15,21 @@ const account = async () => {
   }
 };
 
+
 // creating a user account when they sign up
-const creatingAccount = async (data) => {
+const creatingAccountFromInternal = async (data) => {
   try {
-    const result = await instance.post('/create-account', data);
-    const account = result.data.account;
-    return account;
+    const result = await instance.post('/create-account-internal', data);
+    return result.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const creatingAccountFromExternal = async (data) => {
+  try {
+    const result = await instance.post('/create-account-external', data);
+    return result.data.account;
   } catch (error) {
     throw error;
   }
@@ -70,7 +79,8 @@ const userAccounts = async userID => {
 
 export {
   account,
-  creatingAccount,
+  creatingAccountFromInternal,
+  creatingAccountFromExternal,
   deleteAccount,
   singleAccount,
   userIDAccounts,

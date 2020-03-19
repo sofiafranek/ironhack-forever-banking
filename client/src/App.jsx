@@ -203,7 +203,7 @@ class App extends Component {
                   <AddAccount
                     {...props}
                     changeActiveNav={this.activeNav}
-                    userID={this.state.user._id}
+                    user={this.state.user}
                   />
                 )}
                 exact

@@ -27,9 +27,7 @@ const Usercards = async (userID) => {
 // creating a card to add to user account
 const creatingCard = async (data) => {
   try {
-    const result = await instance.post('/create-card', data);
-    const card = result.data.card;
-    return card;
+    await instance.post('/create-card', data);
   } catch (error) {
     throw error;
   }

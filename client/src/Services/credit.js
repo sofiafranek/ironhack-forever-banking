@@ -19,7 +19,8 @@ const account = async () => {
 const userIDAccounts = async userID => {
   try {
     const result = await instance.get(`/${userID}/credit`);
-    const account = result.data.accountsUser;
+    console.log(result, 'RESULT');
+    const account = result.data;
     return account;
   } catch (error) {
     throw error;

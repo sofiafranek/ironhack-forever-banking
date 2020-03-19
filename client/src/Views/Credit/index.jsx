@@ -16,10 +16,17 @@ class Credit extends Component {
     };
   }
 
+  componentDidMount() {
+    this.getData();
+  }
+
   getData() {
     const userID = this.props.user._id;
+    console.log(userID, 'USER ID');
+
     userIDAccounts(userID)
       .then(account => {
+        console.log(account, 'ACCOUNT');
         this.setState({
           account
         });
@@ -33,7 +40,7 @@ class Credit extends Component {
         <section className="relative">
           <h1 className="pb-4">Credit</h1>
           <div className="action-container">
-            <Link to={`/credit/add-credit`}>
+            <Link to={'/credit/apply-for-credit'}>
               <Button variant="contained" className="primary">
                 <i className="fas fa-plus"></i>
               </Button>
@@ -45,14 +52,12 @@ class Credit extends Component {
         </section>
         {this.state.account.length > 0 ? (
           this.state.account.map(single => {
-            if (single.type.toLowerCase().includes(this.state.search.toLowerCase())) {
-              return <SingleCredit key={single._id} {...single} />;
-            }
+            return <SingleCredit key={single._id} {...single} />;
           })
         ) : (
           <p className="pt-3">No Credit Accounts Listed</p>
         )}
-        <a href="/credit/apply-for-credit">Apply for Credit</a>
+        {/* <a href="/credit/apply-for-credit">Apply for Credit</a> */}
       </Layout>
     );
   }

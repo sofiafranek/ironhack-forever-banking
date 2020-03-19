@@ -13,7 +13,7 @@ import {
   Container
 } from '@material-ui/core';
 import clsx from 'clsx';
-import { creatingAccount } from './../../Services/account';
+import { creatingAccountFromExternal } from './../../Services/account';
 import { creatingCard } from './../../Services/card';
 import { useStyles } from './../../Utilities/useStyles';
 
@@ -97,7 +97,7 @@ class CreateAccount extends Component {
     return Math.floor(Math.random() * 900) + 100;
   }
 
-  setData(event) {
+  async setData(event) {
     event.preventDefault();
     const userID = this.props.location.state.idUser;
     const accountNumber = this.randomKey();
@@ -108,30 +108,29 @@ class CreateAccount extends Component {
     account.primary = true;
     account.balance = Number(this.state.balance);
 
-    creatingAccount(account)
-      .then(account => {
-        const cardNumber = this.generateCardNumber();
-        const CVV = this.generateCVV();
-        const expiryDate = this.generateExpiryDate();
+    try {
+      const newAccount = await creatingAccountFromExternal(account);
 
-        const card = {
-          cardNumber,
-          CVV,
-          accountID: account._id,
-          type: account.type,
-          expiryDate,
-          userID
-        };
+      const cardNumber = this.generateCardNumber();
+      const CVV = this.generateCVV();
+      const expiryDate = this.generateExpiryDate();
 
-        creatingCard(card)
-          .then(card => {
-            console.log(card);
-          })
-          .catch(error => console.log(error));
+      const card = {
+        cardNumber,
+        CVV,
+        accountID: newAccount._id,
+        type: newAccount.type,
+        expiryDate,
+        userID
+      };
 
-        this.props.history.push('/summary');
-      })
-      .catch(error => console.log(error));
+      await creatingCard(card);
+      this.props.history.push('/summary');
+      
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
   render() {

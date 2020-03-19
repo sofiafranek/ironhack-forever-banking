@@ -33,7 +33,7 @@ router.get('/:id', RouteGuard, async (req, res, next) => {
 });
 
 // When user is signing up this creates their first account
-router.post('/create-account', async (req, res, next) => {
+router.post('/create-account-external', async (req, res, next) => {
   console.log(req.body);
   const { balance, type, accountNumber, userID, sharedAccount, sharedUser, primary } = req.body;
   const balanceNumber = Number(balance);
@@ -55,19 +55,51 @@ router.post('/create-account', async (req, res, next) => {
   }
 });
 
-/*
-router.post('/:accountID/create-account', async (req, res, next) => {
-  const { accountID } = req.params;
-  const { phoneNumberUser } = req.body;
+
+router.post('/create-account-internal', async (req, res, next) => {
+  console.log(req.body);
+  const { accountIDFrom, balance, type, accountNumber, userID, sharedAccount, sharedUser, primary } = req.body;
 
   try {
-      const sharedUserID = await User.getUserByPhoneNumber(phoneNumberUser);
-      await UserAccount.createUserAccount(sharedUserID, accountID);
+    // GO TO ACCOUNT THAT YOU WANT TO TRANSFER
+    const accountFrom = await Account.getAccountById(accountIDFrom);
+    const balanceFrom = accountFrom.balance;
+
+    const minusBalance = Number(balanceFrom) - Number(balance);
+    const addBalance = Number(balance);
+
+
+    if (minusBalance >= 0) {
+      await Account.updateBalance(accountIDFrom, minusBalance);
+      const account = await Account.createAccount(accountNumber, type, addBalance, sharedAccount);
+      const accountID = account._id;
+      await UserAccount.createUserAccount(userID, accountID, primary);
+
+      if (sharedAccount) {
+
+        const sharedAccountUser = await User.getUserByPhoneNumber(sharedUser);
+        const sharedUserID = sharedAccountUser._id;
+        const userName = sharedAccountUser.name;
+
+        if (sharedAccountUser) {
+          await UserAccount.createUserAccount(sharedAccountUser, accountID, primary);  
+          res.json({ result: true , sharedUserID, userName});
+        }
+        else {
+          res.json({ result : false, message: 2});
+        }
+      } else {
+        res.json({ result: true });
+      }
+    }
+    else {
+      res.json({ result : false, message: 0});
+    }
   } catch (error) {
     console.log(error);
     next(error);
   }
-});*/
+});
 
 // Returning all ID's of the accounts of the user, including non active
 router.get('/:userID/user-accounts', RouteGuard, async (req, res, next) => {

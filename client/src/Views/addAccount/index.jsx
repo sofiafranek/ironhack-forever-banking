@@ -14,8 +14,8 @@ import {
   Radio
 } from '@material-ui/core';
 import clsx from 'clsx';
-import { creatingAccount, userIDAccounts, deleteAccount } from '../../Services/account';
-import { createTransactionPhone } from '../../Services/transaction';
+import { creatingAccountFromInternal, userIDAccounts } from '../../Services/account';
+import { createNotification } from '../../Services/notification';
 import { useStyles } from './../../Utilities/useStyles';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import MuiAlert from '@material-ui/lab/Alert';
@@ -103,7 +103,7 @@ class AddAccount extends Component {
   }
 
   getInfo() {
-    const userID = this.props.userID;
+    const userID = this.props.user._id;
 
     const account = Object.assign({}, this.state);
     account.userID = userID;
@@ -126,7 +126,7 @@ class AddAccount extends Component {
 
   async setData(event) {
     event.preventDefault();
-    const userID = this.props.userID;
+    const userID = this.props.user._id;
     const accountNumber = this.randomKey();
 
     const account = Object.assign({}, this.state);
@@ -134,37 +134,45 @@ class AddAccount extends Component {
     account.userID = userID;
     delete account.types;
     delete account.options;
-    account.balance = 0;
     account.accounts = null;
     account.primary = false;
 
-    const newAccount = await creatingAccount(account);        
-
-    const transaction = {
-      accountIDFrom: this.state.accountIDFrom,
-      accountNumber: accountNumber,
-      totalAmount: Number(this.state.balance),
-      reference: 'Transfering money',
-      endPoint: 'Transfer between accounts',
-      category: 'Other',
-      schedule: false,
-      status: 'Executed',
-      dateTransaction: Date.now(),
-      colorCategory: 'info',
-      phoneNumber: this.state.sharedUser
-    };
-
-    const response = await createTransactionPhone(transaction);
+    const response = await creatingAccountFromInternal(account);        
     const { result, message } = response;
     let insuccessMessage = '';
 
     if(result) {
+      if(this.state.sharedAccount){
+
+          const { userID, userName } = response;
+          const userIDFrom = this.props.user._id;
+          const userIDTo = userID;
+          const userNameFrom = this.props.user.name;
+          const userNameShared = userName;
+          const messageTo = `${userNameFrom} created an shared account with you`;
+          const messageFrom = `You just created an account with ${userNameShared}`;
+
+          const notification = {
+            userIDFrom,
+            userIDTo,
+            messageTo,
+            messageFrom
+          };
+
+          try {
+            await createNotification(notification); 
+          } catch (error) {
+            console.log(error);
+          }
+        }
+        this.props.history.push({
+          pathname: '/transactions'
+        });
       this.props.history.push({
         pathname: '/accounts'
       });
     }
     else {
-      await deleteAccount(newAccount._id);
       if(message === 0){
         insuccessMessage = 'Not enough money';
       } else {
@@ -175,11 +183,7 @@ class AddAccount extends Component {
         message: insuccessMessage
       })
     }
-           
-    if(this.state.sharedAccount){
-      //userIDFrom userIDTo message
-      //createNotification()
-    }
+          
   }
 
   render() {

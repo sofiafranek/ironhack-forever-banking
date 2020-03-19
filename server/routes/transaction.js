@@ -7,7 +7,6 @@ const router = new Router();
 
 // User can add a transaction
 router.post('/add-transaction', async (req, res, next) => {
-  console.log(req.body);
   
   const {
     accountIDFrom,
@@ -27,38 +26,45 @@ router.post('/add-transaction', async (req, res, next) => {
     const accountFrom = await Account.getAccountById(accountIDFrom);
     const balanceFrom = accountFrom.balance;
     const accountTo = await Account.getAccountByNumber(accountNumber);
-    const balanceTo = accountTo.balance;
-    const accountIDTo = accountTo._id;
-    const minusBalance = balanceFrom - Number(totalAmount);
-    const addBalance = Number(balanceTo) + Number(totalAmount);
 
-    if (minusBalance >= 0) {
-      console.log("BALANCE", balanceTo);
-      console.log("ADDD", addBalance);
-      console.log("MINUSS", minusBalance);
+    if (accountTo) {
+      const balanceTo = accountTo.balance;
+      const accountIDTo = accountTo._id;
+      const minusBalance = balanceFrom - Number(totalAmount);
+      const addBalance = Number(balanceTo) + Number(totalAmount);
 
-      const transaction = await Transaction.createTransaction(
-        accountIDFrom,
-        accountIDTo,
-        totalAmount,
-        reference,
-        endPoint,
-        category,
-        schedule,
-        status,
-        dateTransaction,
-        colorCategory
-      );
-      console.log('survived');
+      if (minusBalance >= 0) {
 
+        await Transaction.createTransaction(
+          accountIDFrom,
+          accountIDTo,
+          totalAmount,
+          reference,
+          endPoint,
+          category,
+          schedule,
+          status,
+          dateTransaction,
+          colorCategory
+        );
 
-      await Account.updateBalance(accountIDFrom, minusBalance);
-      await Account.updateBalance(accountIDTo, addBalance);
-
-      console.log(transaction);
-      res.json({ transaction });
+        await Account.updateBalance(accountIDFrom, minusBalance);
+        await Account.updateBalance(accountIDTo, addBalance);
+        
+        // If everything goes right send the transaction
+        res.json({ result : 'Success: Transaction executed' });
+      }
+      else {
+        res.json({ result : 'Insuccess: Account doesnt exist'});
+      }
+    }
+    else {
+      // Insuccess message 
+      res.json({ result : 'Insuccess: Not enough money'});
     }
   } catch (error) {
+    console.log(error);
+    // Insuccess message 
     next(error);
   }
 });

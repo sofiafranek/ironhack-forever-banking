@@ -6,7 +6,9 @@ const instance = axios.create({
 
 const createTransaction = async (data) => {
   try {
-    await instance.post('/add-transaction', data);
+    const response = await instance.post('/add-transaction', data);
+    const result = response.data.result;
+    console.log(result);
   } catch (error) {
     throw error;
   }

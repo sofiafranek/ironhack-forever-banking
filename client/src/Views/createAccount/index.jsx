@@ -60,8 +60,6 @@ class CreateAccount extends Component {
         balance: '5000'
       });
     }
-
-    console.log(this.state.balance, 'hello blaance');
   }
 
   componentDidMount() {
@@ -107,6 +105,8 @@ class CreateAccount extends Component {
     const account = Object.assign({}, this.state);
     account.accountNumber = accountNumber;
     account.userID = userID;
+    account.primary = true;
+    account.balance = Number(this.state.balance);
 
     creatingAccount(account)
       .then(account => {

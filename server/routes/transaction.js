@@ -3,11 +3,12 @@
 const { Router } = require('express');
 const Transaction = require('./../database/models/transaction');
 const Account = require('./../database/models/account');
+const UserAccount = require('./../database/models/userAccount');
+const User = require('./../database/models/user');
 const router = new Router();
 
 // User can add a transaction
 router.post('/add-transaction', async (req, res, next) => {
-  
   const {
     accountIDFrom,
     accountNumber,
@@ -18,19 +19,26 @@ router.post('/add-transaction', async (req, res, next) => {
     schedule,
     status,
     dateTransaction,
-    colorCategory
+    colorCategory,
+    phoneNumber
   } = req.body;
-
 
   try {
     const accountFrom = await Account.getAccountById(accountIDFrom);
     const balanceFrom = accountFrom.balance;
-    const accountTo = await Account.getAccountByNumber(accountNumber);
+    let accountTo = null;
+    if (phoneNumber !== '') {
+      const user = await User.getUserByPhoneNumber(phoneNumber);
+      const userID = user._id;
+      accountTo = await UserAccount.getUserPrimaryAccount(userID);
+    } else {
+      accountTo = await Account.getAccountByNumber(accountNumber);
+    }
 
     if (accountTo) {
       const balanceTo = accountTo.balance;
       const accountIDTo = accountTo._id;
-      const minusBalance = balanceFrom - Number(totalAmount);
+      const minusBalance = Number(balanceFrom) - Number(totalAmount);
       const addBalance = Number(balanceTo) + Number(totalAmount);
 
       if (minusBalance >= 0) {
@@ -50,7 +58,7 @@ router.post('/add-transaction', async (req, res, next) => {
 
         await Account.updateBalance(accountIDFrom, minusBalance);
         await Account.updateBalance(accountIDTo, addBalance);
-        
+  
         // Success message
         res.json({ result: true });
       }

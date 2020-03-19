@@ -15,14 +15,19 @@ const schema = new mongoose.Schema({
     type: String,
     enum: ['Active', 'NoActive'],
     default: 'Active'
+  },
+  primary: {
+    type: Boolean,
+    required: true
   }
 });
 
-schema.statics.createUserAccount = async function(userID, accountID) {
+schema.statics.createUserAccount = async function(userID, accountID, primary) {
   const Model = this;
   const userAccount = await Model.create({
     userID,
-    accountID
+    accountID,
+    primary
   });
 
   return userAccount;
@@ -65,6 +70,15 @@ schema.statics.getUserAccount = async function(userID) {
   }).populate('accountID').exec();
 
   return account;
+};
+
+schema.statics.getUserPrimaryAccount = async function(userID) {
+  const Model = this;
+  const account = await Model.findOne({
+    $and:[ { userID}, { primary: true } ]    
+  }).populate('accountID').exec();
+
+  return account.accountID;
 };
 
 module.exports = mongoose.model('userAccount', schema);

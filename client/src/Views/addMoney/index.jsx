@@ -11,6 +11,11 @@ import Grid from '@material-ui/core/Grid';
 import { userIDAccounts } from '../../Services/account';
 import { createTransaction } from '../../Services/transaction';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 class addMoney extends Component {
   constructor(props) {
@@ -20,7 +25,9 @@ class addMoney extends Component {
       accountIDFrom: '',
       balance: '',
       options: ['Existing', 'External'],
-      option: 'Existing'
+      option: 'Existing',
+      success: true,
+      message: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.getData = this.getData.bind(this);
@@ -68,10 +75,20 @@ class addMoney extends Component {
     const info = { accountNumber, accountIDFrom, totalAmount, schedule, status, reference, category };
 
     createTransaction(info)
-      .then(() => {
-        this.props.history.push({
-          pathname: '/accounts'
-        });
+      .then((response) => {
+        const { result } = response;
+        let message = 'Not enough money';
+        if(result) {
+          this.props.history.push({
+            pathname: '/accounts'
+          });
+        }
+        else {
+          this.setState({
+            success: false,
+            message
+          })
+        }
       })
       .catch(error => console.log(error));
   }
@@ -171,6 +188,10 @@ class addMoney extends Component {
               </>
             )}
           </>
+          {
+          (!this.state.success) && 
+            <Alert severity="error">{this.state.message}</Alert>
+          }
           <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">
             Add Money to Account
           </Button>

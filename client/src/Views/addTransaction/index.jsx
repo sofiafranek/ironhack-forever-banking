@@ -80,7 +80,9 @@ class AddTransaction extends Component {
       dateTransaction: new Date(),
       colorCategory: '',
       success: true,
-      message: ''
+      message: '',
+      optionTransfer: '',
+      phoneNumber: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleAccountFromChange = this.handleAccountFromChange.bind(this);
@@ -204,12 +206,6 @@ class AddTransaction extends Component {
   componentDidMount() {
     this.props.changeActiveNav();
     this.getData();
-
-    console.log("MOUNT")
-  }
-
-  componentDidUpdate(){
-    console.log('UPDATE');
   }
 
   getData() {
@@ -272,6 +268,8 @@ class AddTransaction extends Component {
   }
 
   createOneTransaction() {
+    const userIDFrom = this.props.userID;
+    console.log(userIDFrom);
     const transaction = Object.assign({}, this.state);
     delete transaction.categories;
     delete transaction.accounts;
@@ -285,9 +283,19 @@ class AddTransaction extends Component {
         const { result, message } = response;
         let inssucessMessage = '';
         if(result) {
-          this.props.history.push({
-            pathname: '/transactions'
-          });
+          /*const notification = {
+
+          }
+          createNotification()
+          .then((response) => {
+            console.log(response);
+            this.props.history.push({
+              pathname: '/transactions'
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          })*/
         }
         else {
           (message === 0) ? inssucessMessage = 'Not enough money' : inssucessMessage = 'Account doesnt exist';
@@ -296,7 +304,6 @@ class AddTransaction extends Component {
             message: inssucessMessage
           })
         }
-
       })
       .catch(error => console.log(error));
   }
@@ -369,18 +376,51 @@ class AddTransaction extends Component {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={12}>
-              <h4 className="pt-3 pb-2">IBAN Number that you want to transfer</h4>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="accountNumber"
-                label="Account Number To"
-                name="accountNumber"
-                onChange={event => this.handleInputChange(event)}
-              />
-            </Grid>
+            <FormControl component="fieldset">
+              <h4 className="pl-2 pt-4 pb-2">Option to Transfer</h4>
+              <RadioGroup name="optionTransfer">
+                <FormControlLabel
+                  value="AccountNumber"
+                  control={<StyledRadio />}
+                  label="AccountNumber"
+                  onChange={event => this.handleInputChange(event)}
+                />
+                <FormControlLabel
+                  value="PhoneNumber"
+                  control={<StyledRadio />}
+                  label="PhoneNumber"
+                  onChange={event => this.handleInputChange(event)}
+                />
+              </RadioGroup>
+            </FormControl>
+            {
+              (this.state.optionTransfer === 'AccountNumber' &&
+                <Grid item xs={12} sm={12}>
+                <h4 className="pt-3 pb-2">IBAN Number that you want to transfer</h4>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="accountNumber"
+                  label="Account Number To"
+                  name="accountNumber"
+                  onChange={event => this.handleInputChange(event)}
+                />
+                </Grid>
+              ) || (this.state.optionTransfer === 'PhoneNumber' &&
+                <Grid item xs={12} sm={12}>
+                <h4 className="pt-3 pb-2">Phone Number that you want to transfer</h4>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="phoneNumber"
+                  label="Phone Number To"
+                  name="phoneNumber"
+                  onChange={event => this.handleInputChange(event)}
+                />
+              </Grid>
+              )}
             <h4 className="pl-2 pt-3 pb-2">Amount</h4>
             <Grid item xs={12} sm={12}>
               <TextField
@@ -473,8 +513,8 @@ class AddTransaction extends Component {
             </Fragment>
           )}
           {
-          (!this.state.success) && 
-            <Alert severity="error">{this.state.message}</Alert>
+            (!this.state.success) && 
+              <Alert severity="error">{this.state.message}</Alert>
           }
           <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">
             Create New Transaction

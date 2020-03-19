@@ -18,6 +18,7 @@ import { creatingAccount, userIDAccounts } from '../../Services/account';
 import { createTransaction } from '../../Services/transaction';
 import { useStyles } from './../../Utilities/useStyles';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import MuiAlert from '@material-ui/lab/Alert';
 
 function StyledRadio(props) {
   const classes = useStyles();
@@ -34,6 +35,11 @@ function StyledRadio(props) {
   );
 }
 
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 class AddAccount extends Component {
   constructor(props) {
     super(props);
@@ -47,7 +53,9 @@ class AddAccount extends Component {
       options: ['Existing', 'External'],
       option: 'Existing',
       sharedAccount: false,
-      sharedUser: ''
+      sharedUser: '',
+      success: true,
+      message: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.setData = this.setData.bind(this);
@@ -133,27 +141,39 @@ class AddAccount extends Component {
     delete account.options;
     account.balance = 0;
     account.accounts = null;
+    account.primary = false;
 
     creatingAccount(account)
     .then((account) => {
       const transaction = {
         accountIDFrom: this.state.accountIDFrom,
         accountNumber: account.accountNumber,
-        totalAmount: this.state.balance,
+        totalAmount: Number(this.state.balance),
         reference: 'Transfering money',
         endPoint: 'Transfer between accounts',
         category: 'Other',
         schedule: false,
         status: 'Executed',
         dateTransaction: Date.now(),
-        colorCategory: 'info'
+        colorCategory: 'info',
+        phoneNumber: ''
       };
 
       createTransaction(transaction)
-      .then(() => {
-        this.props.history.push({
-          pathname: '/accounts'
-        });
+      .then((response) => {
+          const { result } = response;
+          let message = 'Not enough money';
+          if(result) {
+            this.props.history.push({
+              pathname: '/accounts'
+            });
+          }
+          else {
+            this.setState({
+              success: false,
+              message
+            })
+          }
       })
       .catch(error => console.log(error));
     })
@@ -314,6 +334,10 @@ class AddAccount extends Component {
               </>
             )}
           </Grid>
+          {
+          (!this.state.success) && 
+            <Alert severity="error">{this.state.message}</Alert>
+          }
           <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">
             Create New Account
           </Button>

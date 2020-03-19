@@ -46,15 +46,6 @@ const deleteAccount = async accountID => {
   }
 };
 
-// adding money to an account from users account
-const addingMoney = async (accountID, balance) => {
-  try {
-    await instance.post(`/${accountID}/add-money`, { balance });
-  } catch (error) {
-    throw error;
-  }
-};
-
 // only showing the accounts that belong to that user
 const userIDAccounts = async userID => {
   try {
@@ -79,7 +70,6 @@ const userAccounts = async userID => {
 
 export {
   account,
-  addingMoney,
   creatingAccount,
   deleteAccount,
   singleAccount,

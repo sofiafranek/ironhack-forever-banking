@@ -60,8 +60,6 @@ class CreateAccount extends Component {
         balance: '5000'
       });
     }
-
-    console.log(this.state.balance, 'hello blaance');
   }
 
   componentDidMount() {
@@ -91,10 +89,6 @@ class CreateAccount extends Component {
     return Math.floor(Math.random() * 9000000000) + 1000000000;
   }
 
-  generatePin() {
-    return Math.floor(Math.random() * 9000) + 1000;
-  }
-
   generateCVV() {
     return Math.floor(Math.random() * 900) + 100;
   }
@@ -111,17 +105,17 @@ class CreateAccount extends Component {
     const account = Object.assign({}, this.state);
     account.accountNumber = accountNumber;
     account.userID = userID;
+    account.primary = true;
+    account.balance = Number(this.state.balance);
 
     creatingAccount(account)
       .then(account => {
         const cardNumber = this.generateCardNumber();
-        const pin = this.generatePin();
         const CVV = this.generateCVV();
         const expiryDate = this.generateExpiryDate();
 
         const card = {
           cardNumber,
-          pin,
           CVV,
           accountID: account._id,
           type: account.type,

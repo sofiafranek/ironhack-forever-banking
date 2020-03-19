@@ -3,6 +3,8 @@
 const { Router } = require('express');
 const Transaction = require('./../database/models/transaction');
 const Account = require('./../database/models/account');
+const UserAccount = require('./../database/models/userAccount');
+const User = require('./../database/models/user');
 const router = new Router();
 
 // User can add a transaction
@@ -16,39 +18,63 @@ router.post('/add-transaction', async (req, res, next) => {
     category,
     schedule,
     status,
-    dateTransaction
+    dateTransaction,
+    colorCategory,
+    phoneNumber
   } = req.body;
 
   try {
     const accountFrom = await Account.getAccountById(accountIDFrom);
     const balanceFrom = accountFrom.balance;
-    const accountTo = await Account.getAccountByNumber(accountNumber);
-    const balanceTo = accountTo.balance;
-    const accountIDTo = accountTo._id;
-    const minusBalance = balanceFrom - Number(totalAmount);
-    const addBalance = Number(balanceTo) + Number(totalAmount);
+    let accountTo = null;
+    if (phoneNumber !== '') {
+      const user = await User.getUserByPhoneNumber(phoneNumber);
+      const userID = user._id;
+      accountTo = await UserAccount.getUserPrimaryAccount(userID);
+    } else {
+      accountTo = await Account.getAccountByNumber(accountNumber);
+    }
 
-    if (minusBalance >= 0) {
-      const transaction = await Transaction.createTransaction(
-        accountIDFrom,
-        accountIDTo,
-        totalAmount,
-        reference,
-        endPoint,
-        category,
-        schedule,
-        status,
-        dateTransaction
-      );
+    if (accountTo) {
+      const balanceTo = accountTo.balance;
+      const accountIDTo = accountTo._id;
+      const minusBalance = Number(balanceFrom) - Number(totalAmount);
+      const addBalance = Number(balanceTo) + Number(totalAmount);
 
-      await Account.updateBalance(accountIDFrom, minusBalance);
-      await Account.updateBalance(accountIDTo, addBalance);
-      
-      res.json({ transaction });
+      if (minusBalance >= 0) {
+
+        await Transaction.createTransaction(
+          accountIDFrom,
+          accountIDTo,
+          totalAmount,
+          reference,
+          endPoint,
+          category,
+          schedule,
+          status,
+          dateTransaction,
+          colorCategory
+        );
+
+        await Account.updateBalance(accountIDFrom, minusBalance);
+        await Account.updateBalance(accountIDTo, addBalance);
+  
+        // Success message
+        res.json({ result: true });
+      }
+      else {
+        res.json({ result : false, message: 0});
+      }
+    }
+    else {
+      // Insuccess message 
+      res.json({ result : false, message: 1});
     }
   } catch (error) {
+    console.log(error);
+    // Insuccess message 
     next(error);
-  }            
+  }
 });
 
 router.post('/received', async (req, res, next) => {
@@ -126,7 +152,6 @@ router.post('/add-list-transactions', async (req, res, next) => {
     console.log(error);
     next(error);
   }
-
 });
 
 // Returning a transaction based on the user ID

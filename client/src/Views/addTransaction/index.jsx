@@ -12,6 +12,7 @@ import {
   FormControlLabel,
   Radio
 } from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
 import clsx from 'clsx';
 import { createTransaction, createListTransactions } from '../../Services/transaction';
 import { userIDAccounts } from './../../Services/account';
@@ -31,6 +32,10 @@ function StyledRadio(props) {
       {...props}
     />
   );
+}
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 class AddTransaction extends Component {
@@ -72,7 +77,12 @@ class AddTransaction extends Component {
       schedulePeriods: ['Hour', 'Week', 'Month'],
       time: 'Month',
       times: ['Month', 'Trimester', 'Semester'],
-      dateTransaction: new Date()
+      dateTransaction: new Date(),
+      colorCategory: '',
+      success: true,
+      message: '',
+      optionTransfer: '',
+      phoneNumber: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleAccountFromChange = this.handleAccountFromChange.bind(this);
@@ -173,7 +183,6 @@ class AddTransaction extends Component {
   }
 
   handleAccountFromChange(event) {
-    // const inputName = event.target.name;
     const value = event.target.value;
 
     const accountSplitted = value.split(' ');
@@ -213,7 +222,54 @@ class AddTransaction extends Component {
       .catch(error => console.log(error));
   }
 
+  chooseColor() {
+    const category = this.state.category;
+    let colorCategory = 'info';
+
+    if (category === 'Transport') {
+      colorCategory = 'success';
+    } else if (category === 'Auto insurance') {
+      colorCategory = 'primary';
+    } else if (category === 'Food & Dining') {
+      colorCategory = 'primary';
+    } else if (category === 'Utility bills') {
+      colorCategory = 'secondary';
+    } else if (category === 'Cell phone') {
+      colorCategory = 'danger';
+    } else if (category === 'Fun stuff') {
+      colorCategory = 'danger';
+    }else if (category === 'Childcare and school costs') {
+      colorCategory = 'warning';
+    } else if (category === 'Pet food') {
+      colorCategory = 'light';
+    } else if (category === 'Pet insurance') {
+      colorCategory = 'dark';
+    } else if (category === 'Life insurance') {
+      colorCategory = 'light';
+    } else if (category === 'Fun stuff') {
+      colorCategory = 'danger';
+    } else if (category === 'Travel') {
+      colorCategory = 'warning';
+    } else if (category === 'Student loans') {
+      colorCategory = 'success';
+    } else if (category === 'Credit-card debt') {
+      colorCategory = 'info';
+    } else if (category === 'Retirement') {
+      colorCategory = 'success';
+    } else if (category === 'Emergency fund') {
+      colorCategory = 'warning';
+    } else if (category === 'Large purchases') {
+      colorCategory = 'success';
+    } else if (category === 'Other') {
+      colorCategory = 'info';
+    }
+
+    return colorCategory;
+  }
+
   createOneTransaction() {
+    const userIDFrom = this.props.userID;
+    console.log(userIDFrom);
     const transaction = Object.assign({}, this.state);
     delete transaction.categories;
     delete transaction.accounts;
@@ -223,10 +279,31 @@ class AddTransaction extends Component {
     transaction.status = 'Executed';
 
     createTransaction(transaction)
-      .then(() => {
-        this.props.history.push({
-          pathname: '/transactions'
-        });
+      .then((response) => {
+        const { result, message } = response;
+        let inssucessMessage = '';
+        if(result) {
+          /*const notification = {
+
+          }
+          createNotification()
+          .then((response) => {
+            console.log(response);
+            this.props.history.push({
+              pathname: '/transactions'
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          })*/
+        }
+        else {
+          (message === 0) ? inssucessMessage = 'Not enough money' : inssucessMessage = 'Account doesnt exist';
+          this.setState({
+            success: false,
+            message: inssucessMessage
+          })
+        }
       })
       .catch(error => console.log(error));
   }
@@ -237,7 +314,7 @@ class AddTransaction extends Component {
     allT.shift();
 
     createTransaction(firstT)
-      .then(transaction => {
+      .then((result) => {
         this.props.history.push({
           pathname: '/transactions'
         });
@@ -255,13 +332,20 @@ class AddTransaction extends Component {
       });
   }
 
+
   setData(event) {
     event.preventDefault();
-    if (this.state.schedule) {
-      this.createListTransactions();
-    } else {
-      this.createOneTransaction();
-    }
+    const colorCategory = this.chooseColor();
+    
+    this.setState({
+        colorCategory
+    }, () => {
+        if (this.state.schedule) {
+          this.createListTransactions();
+        } else {
+          this.createOneTransaction();
+        }
+    });
   }
 
   render() {
@@ -292,18 +376,51 @@ class AddTransaction extends Component {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={12}>
-              <h4 className="pt-3 pb-2">IBAN Number that you want to transfer</h4>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="accountNumber"
-                label="Account Number To"
-                name="accountNumber"
-                onChange={event => this.handleInputChange(event)}
-              />
-            </Grid>
+            <FormControl component="fieldset">
+              <h4 className="pl-2 pt-4 pb-2">Option to Transfer</h4>
+              <RadioGroup name="optionTransfer">
+                <FormControlLabel
+                  value="AccountNumber"
+                  control={<StyledRadio />}
+                  label="AccountNumber"
+                  onChange={event => this.handleInputChange(event)}
+                />
+                <FormControlLabel
+                  value="PhoneNumber"
+                  control={<StyledRadio />}
+                  label="PhoneNumber"
+                  onChange={event => this.handleInputChange(event)}
+                />
+              </RadioGroup>
+            </FormControl>
+            {
+              (this.state.optionTransfer === 'AccountNumber' &&
+                <Grid item xs={12} sm={12}>
+                <h4 className="pt-3 pb-2">IBAN Number that you want to transfer</h4>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="accountNumber"
+                  label="Account Number To"
+                  name="accountNumber"
+                  onChange={event => this.handleInputChange(event)}
+                />
+                </Grid>
+              ) || (this.state.optionTransfer === 'PhoneNumber' &&
+                <Grid item xs={12} sm={12}>
+                <h4 className="pt-3 pb-2">Phone Number that you want to transfer</h4>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="phoneNumber"
+                  label="Phone Number To"
+                  name="phoneNumber"
+                  onChange={event => this.handleInputChange(event)}
+                />
+              </Grid>
+              )}
             <h4 className="pl-2 pt-3 pb-2">Amount</h4>
             <Grid item xs={12} sm={12}>
               <TextField
@@ -395,6 +512,10 @@ class AddTransaction extends Component {
               </Grid>
             </Fragment>
           )}
+          {
+            (!this.state.success) && 
+              <Alert severity="error">{this.state.message}</Alert>
+          }
           <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">
             Create New Transaction
           </Button>

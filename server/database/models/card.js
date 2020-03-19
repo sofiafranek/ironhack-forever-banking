@@ -15,10 +15,6 @@ const schema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  pin: {
-    type: Number,
-    required: true
-  },
   CVV: {
     type: Number,
     required: true
@@ -50,20 +46,11 @@ schema.statics.getCardById = async function(id) {
   return card;
 };
 
-schema.statics.createCard = async function(
-  accountID,
-  cardNumber,
-  pin,
-  CVV,
-  type,
-  expiryDate,
-  userID
-) {
+schema.statics.createCard = async function(accountID, cardNumber, CVV, type, expiryDate, userID) {
   const Model = this;
   const card = await Model.create({
     accountID,
     cardNumber,
-    pin,
     CVV,
     type,
     expiryDate,

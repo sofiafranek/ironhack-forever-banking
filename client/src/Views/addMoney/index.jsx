@@ -8,24 +8,29 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
-import { addingMoney, userIDAccounts } from '../../Services/account';
-
+import { userIDAccounts } from '../../Services/account';
+import { createTransaction } from '../../Services/transaction';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 class addMoney extends Component {
   constructor(props) {
     super(props);
     this.state = {
       accounts: [],
-      accountID: '',
-      accountInfo: '',
+      accountIDFrom: '',
       balance: '',
       options: ['Existing', 'External'],
-      option: 'Existing'
+      option: 'Existing',
+      success: true,
+      message: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.getData = this.getData.bind(this);
-    this.handleAccountFromChange = this.handleAccountFromChange.bind(this);
   }
 
   handleInputChange(event) {
@@ -39,17 +44,6 @@ class addMoney extends Component {
   componentDidMount() {
     this.props.changeActiveNav();
     this.getInfo();
-  }
-
-  handleAccountFromChange(event) {
-    const value = event.target.value;
-
-    const accountSplitted = value.split(' ');
-    const accountID = accountSplitted[0];
-
-    this.setState({
-      accountID
-    });
   }
 
   getInfo() {
@@ -70,20 +64,31 @@ class addMoney extends Component {
 
   getData(event) {
     event.preventDefault();
-    const accountIDTo = this.state.accountID;
+    const accountNumber = this.props.history.location.state.accountNumber;
     const totalAmount = this.state.balance;
     const schedule = false;
     const status = 'Executed';
-    const accountIDFrom = this.props.location.pathname.split("/")[2];
-    const info = { accountIDTo, accountIDFrom, totalAmount, schedule, status };
+    // TODO see reference and category
+    const reference = 'Transfer money';
+    const category = 'Other';
+    const accountIDFrom = this.state.accountIDFrom;
+    const info = { accountNumber, accountIDFrom, totalAmount, schedule, status, reference, category };
 
-    //createTransaction()
-
-    addingMoney(info)
-      .then(() => {
-        this.props.history.push({
-          pathname: '/accounts'
-        });
+    createTransaction(info)
+      .then((response) => {
+        const { result } = response;
+        let message = 'Not enough money';
+        if(result) {
+          this.props.history.push({
+            pathname: '/accounts'
+          });
+        }
+        else {
+          this.setState({
+            success: false,
+            message
+          })
+        }
       })
       .catch(error => console.log(error));
   }
@@ -116,13 +121,13 @@ class addMoney extends Component {
                 <h4 className="pt-4 pb-2">Amount of money you would like to add</h4>
                 <FormControl>
                   <Select
-                    name="accountInfo"
+                    name="accountIDFrom"
                     native
                     className="mb-4"
-                    onChange={event => this.handleAccountFromChange(event)}
+                    onChange={event => this.handleInputChange(event)}
                   >
                     {this.state.accounts.map(acc => (
-                      <option value={acc._id + ' ' + acc.type} key={acc.accountNumber}>
+                      <option value={acc._id} key={acc.accountNumber}>
                         {acc.accountNumber + ' ' + acc.type}
                       </option>
                     ))}
@@ -183,6 +188,10 @@ class addMoney extends Component {
               </>
             )}
           </>
+          {
+          (!this.state.success) && 
+            <Alert severity="error">{this.state.message}</Alert>
+          }
           <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">
             Add Money to Account
           </Button>

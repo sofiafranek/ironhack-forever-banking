@@ -40,9 +40,7 @@ class SignUp extends Component {
 
   getData(event) {
     event.preventDefault();
-
     const user = Object.assign({}, this.state);
-
     signUp(user)
       .then(user => {
         const idUser = user._id;
@@ -201,7 +199,7 @@ class SignUp extends Component {
                 value={this.state.income}
                 onChange={event => this.handleInputChange(event)}
                 label="Income"
-                type="string"
+                type="number"
                 id="income"
               />
             </Grid>

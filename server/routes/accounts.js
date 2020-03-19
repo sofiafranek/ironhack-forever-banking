@@ -35,13 +35,13 @@ router.get('/:id', RouteGuard, async (req, res, next) => {
 // When user is signing up this creates their first account
 router.post('/create-account', async (req, res, next) => {
   console.log(req.body);
-  const { balance, type, accountNumber, userID, sharedAccount, sharedUser } = req.body;
+  const { balance, type, accountNumber, userID, sharedAccount, sharedUser, primary } = req.body;
   const balanceNumber = Number(balance);
 
   try {
     const account = await Account.createAccount(accountNumber, type, balanceNumber, sharedAccount);
     const accountID = account._id;
-    await UserAccount.createUserAccount(userID, accountID);
+    await UserAccount.createUserAccount(userID, accountID, primary);
 
     if (sharedAccount) {
       const sharedUserID = await User.getUserByPhoneNumber(sharedUser);
@@ -50,11 +50,13 @@ router.post('/create-account', async (req, res, next) => {
 
     res.json({ account });
   } catch (error) {
+    console.log("CREATE ACCCOUNTTTNTNTNTNTNTNTNTN");
     console.log(error);
     next(error);
   }
 });
 
+/*
 router.post('/:accountID/create-account', async (req, res, next) => {
   const { accountID } = req.params;
   const { phoneNumberUser } = req.body;
@@ -66,7 +68,7 @@ router.post('/:accountID/create-account', async (req, res, next) => {
     console.log(error);
     next(error);
   }
-});
+});*/
 
 // Returning all ID's of the accounts of the user, including non active
 router.get('/:userID/user-accounts', RouteGuard, async (req, res, next) => {
@@ -88,22 +90,6 @@ router.get('/:userID/accounts', RouteGuard, async (req, res, next) => {
     const accountsUser = accounts.map(account => account.accountID);
     res.json({ accountsUser });
   } catch (error) {
-    next(error);
-  }
-});
-
-// Adding money to specific account using the ID
-router.post('/add-money', RouteGuard, async (req, res, next) => {
-  console.log(req.body, 'BDOYYYY');
-
-  const accountID = req.body.accountID;
-  const balance = req.body.balance;
-  const balanceNumber = Number(balance);
-
-  try {
-    await Account.updateBalance(accountID, balanceNumber);
-  } catch (error) {
-    console.log(error);
     next(error);
   }
 });

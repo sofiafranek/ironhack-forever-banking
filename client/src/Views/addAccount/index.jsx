@@ -15,8 +15,10 @@ import {
 } from '@material-ui/core';
 import clsx from 'clsx';
 import { creatingAccount, userIDAccounts } from '../../Services/account';
+import { createTransaction } from '../../Services/transaction';
 import { useStyles } from './../../Utilities/useStyles';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import MuiAlert from '@material-ui/lab/Alert';
 
 function StyledRadio(props) {
   const classes = useStyles();
@@ -33,6 +35,11 @@ function StyledRadio(props) {
   );
 }
 
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 class AddAccount extends Component {
   constructor(props) {
     super(props);
@@ -46,11 +53,32 @@ class AddAccount extends Component {
       options: ['Existing', 'External'],
       option: 'Existing',
       sharedAccount: false,
-      sharedUser: ''
+      sharedUser: '',
+      success: true,
+      message: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.getData = this.getData.bind(this);
+    this.setData = this.setData.bind(this);
     this.handleAccountFromChange = this.handleAccountFromChange.bind(this);
+  }
+
+  randomKey() {
+    let Numberresult = '';
+    let Numbercharacters = '0123456789';
+    let NumbercharactersLength = Numbercharacters.length;
+    for (let i = 0; i < 2; i++) {
+      Numberresult += Numbercharacters.charAt(Math.floor(Math.random() * NumbercharactersLength));
+    }
+
+    let Letterresult = '';
+    let Lettercharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let LettercharactersLength = Lettercharacters.length;
+    for (let i = 0; i < 20; i++) {
+      Letterresult += Lettercharacters.charAt(Math.floor(Math.random() * LettercharactersLength));
+    }
+
+    let result = Numberresult + Letterresult;
+    return result;
   }
 
   handleInputChange(event) {
@@ -58,20 +86,12 @@ class AddAccount extends Component {
     let value = event.target.value;
     if (inputName === 'sharedAccount') value === 'No' ? (value = false) : (value = true);
 
-    console.log(value);
-
     this.setState({
       [inputName]: value
     });
   }
 
-  componentDidMount() {
-    this.props.changeActiveNav();
-    this.getInfo();
-  }
-
   handleAccountFromChange(event) {
-    // const inputName = event.target.name;
     const value = event.target.value;
 
     const accountSplitted = value.split(' ');
@@ -99,26 +119,12 @@ class AddAccount extends Component {
       .catch(error => console.log(error));
   }
 
-  randomKey() {
-    let Numberresult = '';
-    let Numbercharacters = '0123456789';
-    let NumbercharactersLength = Numbercharacters.length;
-    for (let i = 0; i < 2; i++) {
-      Numberresult += Numbercharacters.charAt(Math.floor(Math.random() * NumbercharactersLength));
-    }
-
-    let Letterresult = '';
-    let Lettercharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    let LettercharactersLength = Lettercharacters.length;
-    for (let i = 0; i < 20; i++) {
-      Letterresult += Lettercharacters.charAt(Math.floor(Math.random() * LettercharactersLength));
-    }
-
-    let result = Numberresult + Letterresult;
-    return result;
+  componentDidMount() {
+    this.props.changeActiveNav();
+    this.getInfo();
   }
 
-  getData(event) {
+  setData(event) {
     event.preventDefault();
     const userID = this.props.userID;
     const accountNumber = this.randomKey();
@@ -128,15 +134,50 @@ class AddAccount extends Component {
     account.userID = userID;
     delete account.types;
     delete account.options;
+    account.balance = 0;
     account.accounts = null;
+    account.primary = false;
 
     creatingAccount(account)
-      .then(account => {
-        this.props.history.push({
-          pathname: '/accounts'
-        });
+    .then((account) => {
+      const transaction = {
+        accountIDFrom: this.state.accountIDFrom,
+        accountNumber: account.accountNumber,
+        totalAmount: Number(this.state.balance),
+        reference: 'Transfering money',
+        endPoint: 'Transfer between accounts',
+        category: 'Other',
+        schedule: false,
+        status: 'Executed',
+        dateTransaction: Date.now(),
+        colorCategory: 'info',
+        phoneNumber: ''
+      };
+
+      createTransaction(transaction)
+      .then((response) => {
+          const { result } = response;
+          let message = 'Not enough money';
+          if(result) {
+            this.props.history.push({
+              pathname: '/accounts'
+            });
+          }
+          else {
+            this.setState({
+              success: false,
+              message
+            })
+          }
       })
       .catch(error => console.log(error));
+    })
+    .catch(error => console.log(error));
+      
+    if(this.state.sharedAccount){
+      //userIDFrom userIDTo message
+      //createNotification()
+    }
   }
 
   render() {
@@ -147,7 +188,7 @@ class AddAccount extends Component {
           <Breadcrumb.Item className="disable-breadcrumb">Creating a New Account</Breadcrumb.Item>
         </Breadcrumb>
         <h1 className="mb-4">Creating a New Account</h1>
-        <form onSubmit={event => this.getData(event)} className="add-account-form">
+        <form onSubmit={event => this.setData(event)} className="add-account-form">
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
               <FormControl>
@@ -278,6 +319,10 @@ class AddAccount extends Component {
               )}
             </>
           </Grid>
+          {
+          (!this.state.success) && 
+            <Alert severity="error">{this.state.message}</Alert>
+          }
           <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">
             Create New Account
           </Button>

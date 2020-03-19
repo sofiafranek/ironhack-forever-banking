@@ -34,10 +34,6 @@ class CreateCard extends Component {
     return Math.floor(Math.random() * 9000000000000000) + 1000000000000000;
   }
 
-  generatePin() {
-    return Math.floor(Math.random() * 9000) + 1000;
-  }
-
   generateCVV() {
     return Math.floor(Math.random() * 900) + 100;
   }
@@ -80,14 +76,12 @@ class CreateCard extends Component {
   setData(event) {
     event.preventDefault();
     const cardNumber = this.generateCardNumber();
-    const pin = this.generatePin();
     const CVV = this.generateCVV();
     const expiryDate = this.generateExpiryDate();
     const userID = this.props.userID;
 
     const card = {
       cardNumber,
-      pin,
       CVV,
       accountID: this.state.accountID,
       type: this.state.type,

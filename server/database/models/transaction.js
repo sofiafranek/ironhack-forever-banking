@@ -14,7 +14,7 @@ const schema = new mongoose.Schema({
   totalAmount: {
     type: Number
   },
-  reference:{
+  reference: {
     type: String
   },
   endPoint: {
@@ -22,7 +22,33 @@ const schema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ['Housing', 'Transport', 'Food & Dining', 'Utility bills', 'Cell phone', 'Childcare and school costs', 'Pet food', 'Pet insurance', 'Clothing', 'Health insurance', 'Fitness', 'Auto insurance', 'Life insurance', 'Fun stuff', 'Travel', 'Student loans', 'Credit-card debt', 'Retirement', 'Emergency fund', 'Large purchases', 'Other']
+    enum: [
+      'Housing',
+      'Transport',
+      'Food & Dining',
+      'Utility bills',
+      'Cell phone',
+      'Childcare and school costs',
+      'Pet food',
+      'Pet insurance',
+      'Clothing',
+      'Health insurance',
+      'Fitness',
+      'Auto insurance',
+      'Life insurance',
+      'Fun stuff',
+      'Travel',
+      'Student loans',
+      'Credit-card debt',
+      'Retirement',
+      'Emergency fund',
+      'Large purchases',
+      'Other'
+    ]
+  },
+  colorCategory: {
+    type: String,
+    enum: ['info', 'success', 'primary', 'secondary', 'danger', 'warning', 'light', 'dark']
   },
   schedule: {
     type: Boolean,
@@ -63,8 +89,9 @@ schema.statics.createTransaction = async function(
   category,
   schedule,
   status,
-  dateTransaction) 
-  {
+  dateTransaction,
+  colorCategory
+) {
   const Model = this;
   const transaction = await Model.create({
     accountIDFrom,
@@ -75,7 +102,8 @@ schema.statics.createTransaction = async function(
     category,
     schedule,
     status,
-    dateTransaction
+    dateTransaction,
+    colorCategory
   });
 
   return transaction;
@@ -83,30 +111,39 @@ schema.statics.createTransaction = async function(
 
 schema.statics.getReceivedTransactions = async function(transactions) {
   const Model = this;
-  const transactionsTo = await Model.find({ accountIDTo: { $in: transactions }, status: 'Executed' })
-  .populate('accountIDTo')
-  .populate('accountIDFrom')
-  .exec();
+  const transactionsTo = await Model.find({
+    accountIDTo: { $in: transactions },
+    status: 'Executed'
+  })
+    .populate('accountIDTo')
+    .populate('accountIDFrom')
+    .exec();
 
   return transactionsTo;
 };
 
 schema.statics.getSentTransactions = async function(transactions) {
   const Model = this;
-  const transactionsFrom = await Model.find({ accountIDFrom: { $in: transactions }, status: 'Executed' })
-  .populate('accountIDTo')
-  .populate('accountIDFrom')
-  .exec();
+  const transactionsFrom = await Model.find({
+    accountIDFrom: { $in: transactions },
+    status: 'Executed'
+  })
+    .populate('accountIDTo')
+    .populate('accountIDFrom')
+    .exec();
 
   return transactionsFrom;
 };
 
 schema.statics.getAllTransactions = async function(accounts) {
   const Model = this;
-  const allTransactions = await Model.find({$or: [{ accountIDFrom: { $in: accounts } }, { accountIDTo: { $in: accounts } }], status: 'Executed' })
-  .populate('accountIDTo')
-  .populate('accountIDFrom')
-  .exec();
+  const allTransactions = await Model.find({
+    $or: [{ accountIDFrom: { $in: accounts } }, { accountIDTo: { $in: accounts } }],
+    status: 'Executed'
+  })
+    .populate('accountIDTo')
+    .populate('accountIDFrom')
+    .exec();
   return allTransactions;
 };
 
@@ -116,12 +153,11 @@ schema.statics.getAllTransactionsAccount = async function(idAccount) {
     $or: [{ accountIDFrom: idAccount }, { accountIDTo: idAccount }],
     status: 'Executed'
   })
-  .populate('accountIDTo')
-  .populate('accountIDFrom')
-  .exec();
+    .populate('accountIDTo')
+    .populate('accountIDFrom')
+    .exec();
 
   return allTransactions;
 };
-
 
 module.exports = mongoose.model('Transaction', schema);

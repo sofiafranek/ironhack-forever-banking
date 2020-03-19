@@ -12,8 +12,11 @@ class Transaction extends Component {
       endPoint,
       category,
       accountIDFrom,
-      accountIDTo
+      accountIDTo,
+      colorCategory
     } = this.props;
+    console.log(category);
+    console.log(dateTransaction);
     return (
       <Accordion className="hvr-grow transaction pb-3">
         <Card>
@@ -29,7 +32,7 @@ class Transaction extends Component {
                 <div>
                   Executed on: {dateTransaction && <h6>{dateTransaction.split('T')[0]}</h6>}
                 </div>
-                <Badge pill variant="info">
+                <Badge pill variant={colorCategory}>
                   {category}
                 </Badge>
               </div>

@@ -62,13 +62,10 @@ app.use('/api/accounts', accountRouter);
 app.use('/api/analytics', analyticsRouter);
 app.use('/api/cards', cardRouter);
 app.use('/api/transaction', transactionRouter);
-<<<<<<< HEAD
 app.use('/api/notification', notificationRouter);
 
 // app.use('/api/exchange-rates', exchangerateRouter);
-=======
 app.use('/api/credit', creditRouter);
->>>>>>> 1170b55d7c3da8adbec3629abe8b494cbce09e56
 
 app.get('*', (req, res, next) => {
   res.sendFile(join(__dirname, './../client/build/index.html'));

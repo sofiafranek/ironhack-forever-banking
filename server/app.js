@@ -20,12 +20,9 @@ const accountRouter = require('./routes/accounts');
 const analyticsRouter = require('./routes/analytics');
 const cardRouter = require('./routes/card');
 const transactionRouter = require('./routes/transaction');
-<<<<<<< HEAD
 const notificationRouter = require('./routes/notification');
 // const exchangerateRouter = require('./routes/exchange-rates');
-=======
 const creditRouter = require('./routes/credit');
->>>>>>> 1170b55d7c3da8adbec3629abe8b494cbce09e56
 
 const app = express();
 

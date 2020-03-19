@@ -19,8 +19,7 @@ const account = async () => {
 const userIDAccounts = async userID => {
   try {
     const result = await instance.get(`/${userID}/credit`);
-    console.log(result, 'RESULT');
-    const account = result.data;
+    const account = result.data.accounts;
     return account;
   } catch (error) {
     throw error;
@@ -32,7 +31,6 @@ const createAccount = async data => {
   try {
     const result = await instance.post('/apply-for-credit', data);
     const account = result.data.account;
-    console.log(result, account, 'RESULT & ACCOUNT');
     return account;
   } catch (error) {
     throw error;

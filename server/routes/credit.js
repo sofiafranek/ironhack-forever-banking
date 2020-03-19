@@ -24,9 +24,7 @@ router.get('/:userID/credit', RouteGuard, async (req, res, next) => {
   const userID = req.params.userID;
   try {
     const accounts = await Credit.getCreditAccounts(userID);
-    console.log(accounts, 'ACCOUNTS BACK');
-    const accountsUser = accounts.map(account => account.accountID);
-    res.json({ accountsUser });
+    res.json({ accounts });
   } catch (error) {
     next(error);
   }
@@ -34,21 +32,11 @@ router.get('/:userID/credit', RouteGuard, async (req, res, next) => {
 
 // When user applys for credit we create the credit account
 router.post('/apply-for-credit', RouteGuard, async (req, res, next) => {
-  const { accountNumber, balance, type, primary } = req.body;
+  const { accountNumber, balance, type, userID } = req.body;
   const balanceNumber = Number(balance);
 
   try {
-    const account = await Credit.createCreditAccount(accountNumber, type, balanceNumber);
-
-    console.log(account, 'ACCOUNT CREATED CREDIT');
-
-    const accountID = account._id;
-    const userID = account.userID;
-
-    console.log(primary, 'PRIMARYYY');
-
-    await UserAccount.createUserAccount(userID, accountID, primary);
-
+    const account = await Credit.createCreditAccount(accountNumber, type, balanceNumber, userID);
     res.json({ account });
   } catch (error) {
     console.log(error);

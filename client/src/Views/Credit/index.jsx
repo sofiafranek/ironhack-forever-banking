@@ -26,7 +26,6 @@ class Credit extends Component {
 
     userIDAccounts(userID)
       .then(account => {
-        console.log(account, 'ACCOUNT');
         this.setState({
           account
         });
@@ -57,7 +56,6 @@ class Credit extends Component {
         ) : (
           <p className="pt-3">No Credit Accounts Listed</p>
         )}
-        {/* <a href="/credit/apply-for-credit">Apply for Credit</a> */}
       </Layout>
     );
   }

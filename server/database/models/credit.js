@@ -64,35 +64,22 @@ const schema = new mongoose.Schema({
   }
 });
 
-schema.statics.updateBalance = async function(id, balance) {
-  const Model = this;
-  await Model.findByIdAndUpdate(id, { balance }).exec();
-};
-
 schema.statics.getCreditAccounts = async function(userID) {
   const Model = this;
-  const accounts = await Model.find(userID, { status: 'Active' }).exec();
-  return accounts;
+  const userAccount = await Model.find({ $and: [{ userID }, { status: 'Active' }] })
+    // .populate('accountID')
+    .exec();
+
+  return userAccount;
 };
 
-schema.statics.getCreditAccountById = async function(id) {
-  const Model = this;
-  const account = await Model.findById(id).exec();
-  return account;
-};
-
-schema.statics.getCreditAccountByNumber = async function(accountNumber) {
-  const Model = this;
-  const account = await Model.findOne({ accountNumber }).exec();
-  return account;
-};
-
-schema.statics.createCreditAccount = async function(accountNumber, type, balance) {
+schema.statics.createCreditAccount = async function(accountNumber, type, balance, userID) {
   const Model = this;
   const account = await Model.create({
     accountNumber,
     type,
-    balance
+    balance,
+    userID
   });
   return account;
 };

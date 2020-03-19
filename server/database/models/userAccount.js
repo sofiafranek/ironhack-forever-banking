@@ -35,9 +35,9 @@ schema.statics.createUserAccount = async function(userID, accountID, primary) {
 
 schema.statics.getUserActiveAccounts = async function(userID) {
   const Model = this;
-  const userAccount = await Model.find(
-    { $and:[ { userID}, { status : 'Active' } ]}
-    ).populate('accountID').exec();
+  const userAccount = await Model.find({ $and: [{ userID }, { status: 'Active' }] })
+    .populate('accountID')
+    .exec();
 
   return userAccount;
 };
@@ -47,8 +47,8 @@ schema.statics.getUserAllAccounts = async function(userID) {
   const userAccount = await Model.find({
     userID
   })
-  .select({ accountID: 1, _id: 0 })
-  .exec();
+    .select({ accountID: 1, _id: 0 })
+    .exec();
 
   return userAccount;
 };
@@ -66,7 +66,9 @@ schema.statics.getUserAccount = async function(userID) {
   const Model = this;
   const account = await Model.findOne({
     userID
-  }).populate('accountID').exec();
+  })
+    .populate('accountID')
+    .exec();
 
   return account;
 };
@@ -83,8 +85,10 @@ schema.statics.getAccountUser = async function(accountID) {
 schema.statics.getUserPrimaryAccount = async function(userID) {
   const Model = this;
   const account = await Model.findOne({
-    $and:[ { userID}, { primary: true } ]    
-  }).populate('accountID').exec();
+    $and: [{ userID }, { primary: true }]
+  })
+    .populate('accountID')
+    .exec();
 
   return account.accountID;
 };

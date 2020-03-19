@@ -11,6 +11,7 @@ import Activity from './Views/Activity';
 import Accounts from './Views/Accounts';
 import LinkedAccounts from './Views/linkedAccounts';
 import Credit from './Views/Credit';
+import ApplyForCredit from './Views/applyForCredit';
 import CreateAccount from './Views/createAccount';
 import SingleAccount from './Views/SingleAccount';
 import AddAccount from './Views/addAccount';
@@ -174,6 +175,20 @@ class App extends Component {
                 redirect={'/signin'}
                 path="/credit"
                 render={props => <Credit {...props} changeActiveNav={this.activeNav} />}
+                exact
+              />
+
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
+                path="/credit/apply-for-credit"
+                render={props => (
+                  <ApplyForCredit
+                    {...props}
+                    changeActiveNav={this.activeNav}
+                    userID={this.state.user._id}
+                  />
+                )}
                 exact
               />
 

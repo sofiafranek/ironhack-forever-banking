@@ -20,7 +20,7 @@ const accountRouter = require('./routes/accounts');
 const analyticsRouter = require('./routes/analytics');
 const cardRouter = require('./routes/card');
 const transactionRouter = require('./routes/transaction');
-// const exchangerateRouter = require('./routes/exchange-rates');
+const creditRouter = require('./routes/credit');
 
 const app = express();
 
@@ -57,7 +57,7 @@ app.use('/api/accounts', accountRouter);
 app.use('/api/analytics', analyticsRouter);
 app.use('/api/cards', cardRouter);
 app.use('/api/transaction', transactionRouter);
-// app.use('/api/exchange-rates', exchangerateRouter);
+app.use('/api/credit', creditRouter);
 
 app.get('*', (req, res, next) => {
   res.sendFile(join(__dirname, './../client/build/index.html'));

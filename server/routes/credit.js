@@ -10,20 +10,21 @@ const router = new Router();
 const RouteGuard = require('./../middleware/route-guard');
 
 // Displays all the credit accounts
-router.get('/', RouteGuard, async (req, res, next) => {
-  try {
-    const credit = await Credit.getCreditAccounts();
-    res.json({ credit });
-  } catch (error) {
-    next(error);
-  }
-});
+// router.get('/', RouteGuard, async (req, res, next) => {
+//   try {
+//     const credit = await Credit.getCreditAccounts();
+//     res.json({ credit });
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 // Get all the credit accounts from the user logged in
-router.get('/:userID/accounts', RouteGuard, async (req, res, next) => {
+router.get('/:userID/credit', RouteGuard, async (req, res, next) => {
   const userID = req.params.userID;
   try {
     const accounts = await Credit.getCreditAccounts(userID);
+    console.log(accounts, 'ACCOUNTS BACK');
     const accountsUser = accounts.map(account => account.accountID);
     res.json({ accountsUser });
   } catch (error) {

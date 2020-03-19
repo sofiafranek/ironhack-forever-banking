@@ -50,8 +50,6 @@ router.post('/create-account', async (req, res, next) => {
 
     res.json({ account });
   } catch (error) {
-    console.log("CREATE ACCCOUNTTTNTNTNTNTNTNTNTN");
-    console.log(error);
     next(error);
   }
 });

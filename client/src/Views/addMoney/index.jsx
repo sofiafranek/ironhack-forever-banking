@@ -9,7 +9,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
 import { userIDAccounts } from '../../Services/account';
-import { createTransaction } from '../../Services/transaction';
+import { createTransactionAccount } from '../../Services/transaction';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import MuiAlert from '@material-ui/lab/Alert';
 
@@ -74,7 +74,7 @@ class addMoney extends Component {
     const accountIDFrom = this.state.accountIDFrom;
     const info = { accountNumber, accountIDFrom, totalAmount, schedule, status, reference, category };
 
-    createTransaction(info)
+    createTransactionAccount(info)
       .then((response) => {
         const { result } = response;
         let message = 'Not enough money';

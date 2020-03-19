@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import clsx from 'clsx';
 import { creatingAccount, userIDAccounts } from '../../Services/account';
-import { createTransaction } from '../../Services/transaction';
+import { createTransactionAccount } from '../../Services/transaction';
 import { useStyles } from './../../Utilities/useStyles';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import MuiAlert from '@material-ui/lab/Alert';
@@ -154,7 +154,7 @@ class AddAccount extends Component {
         phoneNumber: ''
       };
 
-      createTransaction(transaction)
+      createTransactionAccount(transaction)
       .then((response) => {
           const { result } = response;
           let message = 'Not enough money';

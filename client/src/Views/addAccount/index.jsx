@@ -14,8 +14,8 @@ import {
   Radio
 } from '@material-ui/core';
 import clsx from 'clsx';
-import { creatingAccount, userIDAccounts } from '../../Services/account';
-import { createTransactionAccount } from '../../Services/transaction';
+import { creatingAccount, userIDAccounts, deleteAccount } from '../../Services/account';
+import { createTransactionPhone } from '../../Services/transaction';
 import { useStyles } from './../../Utilities/useStyles';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import MuiAlert from '@material-ui/lab/Alert';
@@ -124,7 +124,7 @@ class AddAccount extends Component {
     this.getInfo();
   }
 
-  setData(event) {
+  async setData(event) {
     event.preventDefault();
     const userID = this.props.userID;
     const accountNumber = this.randomKey();
@@ -138,42 +138,44 @@ class AddAccount extends Component {
     account.accounts = null;
     account.primary = false;
 
-    creatingAccount(account)
-    .then((account) => {
-      const transaction = {
-        accountIDFrom: this.state.accountIDFrom,
-        accountNumber: account.accountNumber,
-        totalAmount: Number(this.state.balance),
-        reference: 'Transfering money',
-        endPoint: 'Transfer between accounts',
-        category: 'Other',
-        schedule: false,
-        status: 'Executed',
-        dateTransaction: Date.now(),
-        colorCategory: 'info',
-        phoneNumber: ''
-      };
+    const newAccount = await creatingAccount(account);        
 
-      createTransactionAccount(transaction)
-      .then((response) => {
-          const { result } = response;
-          let message = 'Not enough money';
-          if(result) {
-            this.props.history.push({
-              pathname: '/accounts'
-            });
-          }
-          else {
-            this.setState({
-              success: false,
-              message
-            })
-          }
+    const transaction = {
+      accountIDFrom: this.state.accountIDFrom,
+      accountNumber: accountNumber,
+      totalAmount: Number(this.state.balance),
+      reference: 'Transfering money',
+      endPoint: 'Transfer between accounts',
+      category: 'Other',
+      schedule: false,
+      status: 'Executed',
+      dateTransaction: Date.now(),
+      colorCategory: 'info',
+      phoneNumber: this.state.sharedUser
+    };
+
+    const response = await createTransactionPhone(transaction);
+    const { result, message } = response;
+    let insuccessMessage = '';
+
+    if(result) {
+      this.props.history.push({
+        pathname: '/accounts'
+      });
+    }
+    else {
+      await deleteAccount(newAccount._id);
+      if(message === 0){
+        insuccessMessage = 'Not enough money';
+      } else {
+        insuccessMessage = 'User doesnt exist';
+      } 
+      this.setState({
+        success: false,
+        message: insuccessMessage
       })
-      .catch(error => console.log(error));
-    })
-    .catch(error => console.log(error));
-      
+    }
+           
     if(this.state.sharedAccount){
       //userIDFrom userIDTo message
       //createNotification()

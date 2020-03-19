@@ -26,11 +26,12 @@ import Summary from './Views/Summary';
 import { loadUserInformation } from './Services/authentication';
 import Notifications from './Views/Notifications';
 import Profile from './Views/Profile';
-import ExchangeRates from './Views/exchangeRates';
+import ExchangeRates from './Views/ExchangeRatesView/index';
 
 import Navigation from './Components/Navigation';
 import Mobilenavigation from './Components/Mobilenavigation';
 import CreateCard from './Views/createCard';
+import CurrencyConverter from './Components/CurrencyConverter/CurrencyConverter';
 
 class App extends Component {
   constructor(props) {
@@ -243,7 +244,7 @@ class App extends Component {
                   <AddTransaction
                     {...props}
                     changeActiveNav={this.activeNav}
-                    userID={this.state.user._id}
+                    user={this.state.user}
                   />
                 )}
                 exact
@@ -311,7 +312,11 @@ class App extends Component {
                 authorized={this.state.user}
                 redirect={'/signin'}
                 path="/notifications"
-                component={Notifications}
+                render={() => (
+                  <Notifications
+                    userID={this.state.user._id}
+                  />
+                )}
                 exact
               />
               <ProtectedRoute

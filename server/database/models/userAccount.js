@@ -58,7 +58,6 @@ schema.statics.removeAccount = async function(accountID) {
   const filter = { accountID };
   const update = { status: 'NoActive' };
   const removedAccount = await Model.updateOne(filter, update).exec();
-  console.log('removeddd', removedAccount);
 
   return removedAccount;
 };
@@ -72,6 +71,15 @@ schema.statics.getUserAccount = async function(userID) {
     .exec();
 
   return account;
+};
+
+schema.statics.getAccountUser = async function(accountID) {
+  const Model = this;
+  const user = await Model.findOne({
+    accountID
+  }).populate('userID').exec();
+
+  return user;
 };
 
 schema.statics.getUserPrimaryAccount = async function(userID) {

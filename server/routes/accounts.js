@@ -45,11 +45,12 @@ router.post('/create-account', async (req, res, next) => {
 
     if (sharedAccount) {
       const sharedUserID = await User.getUserByPhoneNumber(sharedUser);
-      await UserAccount.createUserAccount(sharedUserID, accountID);
+      await UserAccount.createUserAccount(sharedUserID, accountID, primary);
     }
 
     res.json({ account });
   } catch (error) {
+    console.log(error);
     next(error);
   }
 });

@@ -11,32 +11,42 @@ const schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    message: {
+    messageFrom: {
         type: String,
         required: true
+    },
+    messageTo: {
+        type: String,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 });
 
-schema.statics.createNotification = async function(userIDFrom, userIDTo, message) {
+schema.statics.createNotification = async function(userIDFrom, userIDTo, messageFrom, messageTo) {
     const Model = this;
 
     const notification = await Model.create({
         userIDFrom,
         userIDTo,
-        message
+        messageFrom,
+        messageTo
     });
     
     return notification;
   };
 
-schema.statics.listNotifications = async function(userIDTo) {
+schema.statics.listNotifications = async function(userID) {
     const Model = this;
 
     const listNotifications = await Model.find({
-        userIDTo
-    });
+        $or: [ { userIDTo: userID } , { userIDFrom: userID }]
+    }).exec();
 
     return listNotifications;
 };
+
 
 module.exports = mongoose.model('Notification', schema);

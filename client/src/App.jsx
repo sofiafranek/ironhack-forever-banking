@@ -226,7 +226,7 @@ class App extends Component {
                   <AddTransaction
                     {...props}
                     changeActiveNav={this.activeNav}
-                    userID={this.state.user._id}
+                    user={this.state.user}
                   />
                 )}
                 exact
@@ -294,7 +294,11 @@ class App extends Component {
                 authorized={this.state.user}
                 redirect={'/signin'}
                 path="/notifications"
-                component={Notifications}
+                render={() => (
+                  <Notifications
+                    userID={this.state.user._id}
+                  />
+                )}
                 exact
               />
               <ProtectedRoute

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: '/api/authorization'
+  baseURL: '/api/notification'
 });
 
 const listNotifications = async (userID) => {

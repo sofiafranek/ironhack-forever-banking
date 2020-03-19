@@ -33,6 +33,10 @@ router.post('/add-transaction', async (req, res, next) => {
       const minusBalance = Number(balanceFrom) - Number(totalAmount);
       const addBalance = Number(balanceTo) + Number(totalAmount);
 
+      const user = await UserAccount.getAccountUser(accountIDTo);
+      const userID = user._id;
+      const userName = user.name;
+
       if (minusBalance >= 0) {
 
         await Transaction.createTransaction(
@@ -52,7 +56,7 @@ router.post('/add-transaction', async (req, res, next) => {
         await Account.updateBalance(accountIDTo, addBalance);
   
         // Success message
-        res.json({ result: true });
+        res.json({ result: true,  userID, userName});
       }
       else {
         res.json({ result : false, message: 0});
@@ -91,6 +95,7 @@ router.post('/add-transaction-phone', async (req, res, next) => {
     const user = await User.getUserByPhoneNumber(phoneNumber);
     if (user) {
       const userID = user._id;
+      const userName = user.name;
       const accountTo = await UserAccount.getUserPrimaryAccount(userID);
 
       const balanceTo = accountTo.balance;
@@ -117,7 +122,7 @@ router.post('/add-transaction-phone', async (req, res, next) => {
         await Account.updateBalance(accountIDTo, addBalance);
   
         // Success message
-        res.json({ result: true });
+        res.json({ result: true , userID, userName});
       } else {
         res.json({ result : false, message: 0});
       }

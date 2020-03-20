@@ -10,7 +10,9 @@ class Analytics extends Component {
     super(props);
     this.state = {
       transactions: [],
-      dates: []
+      dates: [],
+      categories: [],
+      totalAmount: 0
     };
   }
 
@@ -35,6 +37,50 @@ class Analytics extends Component {
 
   componentDidMount() {
     this.getData();
+  }
+
+  calculatePercentageCategory(){
+    const transactions = this.state.transactions.map(value => {
+      const transaction = new Object();
+      transaction.amount = value.totalAmount;
+      transaction.category = value.category;
+      transaction.color = value.colorCategory;
+      return transaction;
+    });
+
+    const categories = [];
+    let totalAmount = 0;
+    for (const transaction of transactions) {
+      const color = transaction.color;
+      const category = transaction.category;
+      const amount = transaction.amount;
+      totalAmount += amount;
+      if (categories.some(value => value.category === transaction.category)) {
+        const indexCategory = categories.findIndex(value => value.category === transaction.category);
+        categories[indexCategory].amount += amount;
+      } else {
+        categories.push({
+          color,
+          category,
+          amount
+        });
+      }
+    }
+    this.setState({
+      categories,
+      totalAmount
+    }, () => {
+      console.log(this.state)
+    });
+
+    const eachCategories = this.state.categories;
+    const total = this.state.totalAmount;
+    for(const category of eachCategories) {
+      const amount = category.amount;
+      const percentage = amount/total * 100;
+      category.percentage = percentage;
+    }
+    console.log(eachCategories, "EACJHHHHHH");
   }
 
   splitDates() {
@@ -101,6 +147,8 @@ class Analytics extends Component {
     this.setState({
       dates
     });
+
+    this.calculatePercentageCategory();
   }
 
   render() {

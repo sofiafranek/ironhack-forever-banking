@@ -146,8 +146,11 @@ class CreateAccount extends Component {
     account.balance = Number(this.state.balance);
 
     try {
-      const newAccount = await creatingAccountFromExternal(account);
+      const response = await creatingAccountFromExternal(account);
+      const { result } = response;
 
+      if(result){
+      const { accountID, type } = response;
       const cardNumber = this.generateCardNumber();
       const CVV = this.generateCVV();
       const expiryDate = this.generateExpiryDate();
@@ -155,14 +158,17 @@ class CreateAccount extends Component {
       const card = {
         cardNumber,
         CVV,
-        accountID: newAccount._id,
-        type: newAccount.type,
+        accountID,
+        type,
         expiryDate,
         userID
       };
 
       await creatingCard(card);
       this.props.history.push('/summary');
+      } else {
+        //TODO --> CHECK WHEN IS SHARED ACCOUNT AND THE USER DOESNT EXIST
+      }
     } catch (error) {
       console.log(error);
     }

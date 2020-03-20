@@ -20,8 +20,6 @@ class Card extends Component {
     event.preventDefault();
     const cardNumber = this.props.cardNumber;
 
-    console.log(cardNumber);
-
     deleteCard(cardNumber)
       .then(() => {
         this.props.history.push({
@@ -35,15 +33,6 @@ class Card extends Component {
 
   render() {
     const { accountID, cardNumber, CVV, expiryDate, type, userName } = this.props;
-
-    console.log(this.props.toggle, 'toggleee');
-
-    if (this.props.toggle === true) {
-      console.log('true');
-    } else if (this.props.toggle === false) {
-      console.log('false');
-    }
-
     return (
       <section className="card-container">
         <button

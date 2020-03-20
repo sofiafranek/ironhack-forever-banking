@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment } from './node_modules/react';
 import './style.scss';
 
 import Layout from '../../Components/Layout';
@@ -11,14 +11,18 @@ import {
   Grid,
   FormControlLabel,
   Radio
-} from '@material-ui/core';
-import MuiAlert from '@material-ui/lab/Alert';
-import clsx from 'clsx';
-import { createTransactionAccount, createTransactionPhone, createListTransactions } from '../../Services/transaction';
-import { userIDAccounts } from './../../Services/account';
-import { createNotification } from './../../Services/notification';
-import { useStyles } from './../../Utilities/useStyles';
-import Breadcrumb from 'react-bootstrap/Breadcrumb';
+} from '/@material-ui/core';
+import MuiAlert from '/@material-ui/lab/Alert';
+import clsx from '/clsx';
+import {
+  createTransactionAccount,
+  createTransactionPhone,
+  createListTransactions
+} from '../../Services/transaction';
+import { userIDAccounts } from '../../Services/account';
+import { createNotification } from '../../Services/notification';
+import { useStyles } from '../../Utilities/useStyles';
+import Breadcrumb from '/react-bootstrap/Breadcrumb';
 
 function StyledRadio(props) {
   const classes = useStyles();
@@ -218,9 +222,9 @@ class AddTransaction extends Component {
         accounts: account,
         type: account[0].type,
         accountIDFrom: account[0]._id
-      })
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
@@ -240,7 +244,7 @@ class AddTransaction extends Component {
       colorCategory = 'danger';
     } else if (category === 'Fun stuff') {
       colorCategory = 'danger';
-    }else if (category === 'Childcare and school costs') {
+    } else if (category === 'Childcare and school costs') {
       colorCategory = 'warning';
     } else if (category === 'Pet food') {
       colorCategory = 'light';
@@ -269,21 +273,21 @@ class AddTransaction extends Component {
     return colorCategory;
   }
 
-  async createNotificationUser(notification){
-    try {          
-        await createNotification(notification);
+  async createNotificationUser(notification) {
+    try {
+      await createNotification(notification);
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   }
 
-  async createTransactionAccount(transaction){
+  async createTransactionAccount(transaction) {
     let insuccessMessage = '';
     try {
-      const response = await createTransactionAccount(transaction)
+      const response = await createTransactionAccount(transaction);
       const { result, message } = response;
 
-      if(result) {
+      if (result) {
         const { userID, userName } = response;
         const userIDFrom = this.props.user._id;
         const userIDTo = userID;
@@ -303,29 +307,27 @@ class AddTransaction extends Component {
         this.props.history.push({
           pathname: '/transactions'
         });
-      }
-      else {
-        if(message === 0){
+      } else {
+        if (message === 0) {
           insuccessMessage = 'Not enough money';
         } else {
           insuccessMessage = 'Account doesnt exist';
-        } 
+        }
       }
 
       return insuccessMessage;
-
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
-  async createTransactionPhoneNumber(transaction){
+  async createTransactionPhoneNumber(transaction) {
     let insuccessMessage = '';
     try {
-      const response = await createTransactionPhone(transaction)
+      const response = await createTransactionPhone(transaction);
       const { result, message } = response;
 
-      if(result) {
+      if (result) {
         const { userID, userName } = response;
         const userIDFrom = this.props.user._id;
         const userIDTo = userID;
@@ -343,24 +345,21 @@ class AddTransaction extends Component {
 
         console.log(notification);
 
-
         await this.createNotificationUser(notification);
         this.props.history.push({
           pathname: '/transactions'
         });
-      }
-      else {
-        if(message === 0){
+      } else {
+        if (message === 0) {
           insuccessMessage = 'Not enough money';
         } else {
           insuccessMessage = 'Phone Number is not register';
-        } 
+        }
       }
 
       return insuccessMessage;
-
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
@@ -373,20 +372,20 @@ class AddTransaction extends Component {
     delete transaction.times;
     delete transaction.accountInfo;
     transaction.status = 'Executed';
-    
+
     let insuccessMessage = '';
 
-    if(this.state.optionTransfer === 'AccountNumber') {
+    if (this.state.optionTransfer === 'AccountNumber') {
       insuccessMessage = await this.createTransactionAccount(transaction);
     } else {
       insuccessMessage = await this.createTransactionPhoneNumber(transaction);
     }
 
-    if(insuccessMessage !== ''){
+    if (insuccessMessage !== '') {
       this.setState({
         success: false,
         message: insuccessMessage
-      })
+      });
     }
   }
 
@@ -396,43 +395,48 @@ class AddTransaction extends Component {
     allT.shift();
     let insuccessMessage = '';
 
-    if(this.state.optionTransfer === 'AccountNumber') {
+    if (this.state.optionTransfer === 'AccountNumber') {
       insuccessMessage = await this.createTransactionAccount(firstT);
     } else {
       insuccessMessage = await this.createTransactionPhoneNumber(firstT);
     }
 
-    if(insuccessMessage !== ''){
-      this.setState({
-        success: false,
-        message: insuccessMessage
-      }, async () => { 
-        try {
-          await createListTransactions(allT)
-          this.props.history.push({
-            pathname: '/transactions'
-          });
-        }catch (error) {
-          console.log(error);
+    if (insuccessMessage !== '') {
+      this.setState(
+        {
+          success: false,
+          message: insuccessMessage
+        },
+        async () => {
+          try {
+            await createListTransactions(allT);
+            this.props.history.push({
+              pathname: '/transactions'
+            });
+          } catch (error) {
+            console.log(error);
+          }
         }
-      })
+      );
     }
   }
-
 
   setData(event) {
     event.preventDefault();
     const colorCategory = this.chooseColor();
-    
-    this.setState({
+
+    this.setState(
+      {
         colorCategory
-    }, () => {
+      },
+      () => {
         if (this.state.schedule) {
           this.createListTransactions();
         } else {
           this.createOneTransaction();
         }
-    });
+      }
+    );
   }
 
   render() {
@@ -480,9 +484,8 @@ class AddTransaction extends Component {
                 />
               </RadioGroup>
             </FormControl>
-            {
-              (this.state.optionTransfer === 'AccountNumber' &&
-                <Grid item xs={12} sm={12}>
+            {(this.state.optionTransfer === 'AccountNumber' && (
+              <Grid item xs={12} sm={12}>
                 <h4 className="pt-3 pb-2">IBAN Number that you want to transfer</h4>
                 <TextField
                   variant="outlined"
@@ -493,21 +496,22 @@ class AddTransaction extends Component {
                   name="accountNumber"
                   onChange={event => this.handleInputChange(event)}
                 />
-                </Grid>
-              ) || (this.state.optionTransfer === 'PhoneNumber' &&
-                <Grid item xs={12} sm={12}>
-                <h4 className="pt-3 pb-2">Phone Number that you want to transfer</h4>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="phoneNumber"
-                  label="Phone Number To"
-                  name="phoneNumber"
-                  onChange={event => this.handleInputChange(event)}
-                />
               </Grid>
-              )}
+            )) ||
+              (this.state.optionTransfer === 'PhoneNumber' && (
+                <Grid item xs={12} sm={12}>
+                  <h4 className="pt-3 pb-2">Phone Number that you want to transfer</h4>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="phoneNumber"
+                    label="Phone Number To"
+                    name="phoneNumber"
+                    onChange={event => this.handleInputChange(event)}
+                  />
+                </Grid>
+              ))}
             <h4 className="pl-2 pt-3 pb-2">Amount</h4>
             <Grid item xs={12} sm={12}>
               <TextField
@@ -599,10 +603,7 @@ class AddTransaction extends Component {
               </Grid>
             </Fragment>
           )}
-          {
-            (!this.state.success) && 
-              <Alert severity="error">{this.state.message}</Alert>
-          }
+          {!this.state.success && <Alert severity="error">{this.state.message}</Alert>}
           <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">
             Create New Transaction
           </Button>

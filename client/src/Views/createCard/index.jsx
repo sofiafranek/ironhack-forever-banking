@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component } from './node_modules/react';
 import './style.scss';
 
-import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import Grid from '@material-ui/core/Grid';
+import Button from './node_modules/@material-ui/core/Button';
+import FormControl from './node_modules/@material-ui/core/FormControl';
+import InputLabel from './node_modules/@material-ui/core/InputLabel';
+import Select from './node_modules/@material-ui/core/Select';
+import Grid from './node_modules/@material-ui/core/Grid';
 
 import Layout from '../../Components/Layout';
 
-import { creatingCard } from './../../Services/card';
-import { userIDAccounts } from './../../Services/account';
+import { creatingCard } from '../../Services/card';
+import { userIDAccounts } from '../../Services/account';
 
-import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import Breadcrumb from './node_modules/react-bootstrap/Breadcrumb';
 
 class CreateCard extends Component {
   constructor(props) {

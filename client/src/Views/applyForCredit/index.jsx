@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from './node_modules/react';
 import Layout from '../../Components/Layout';
 
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
+import TextField from './node_modules/@material-ui/core/TextField';
+import Grid from './node_modules/@material-ui/core/Grid';
 
 import {
   RadioGroup,
@@ -11,14 +11,14 @@ import {
   Select,
   FormControlLabel,
   Radio
-} from '@material-ui/core';
+} from './node_modules/@material-ui/core';
 
-import clsx from 'clsx';
-import { useStyles } from './../../Utilities/useStyles';
+import clsx from './node_modules/clsx';
+import { useStyles } from '../../Utilities/useStyles';
 
-import Button from '@material-ui/core/Button';
+import Button from './node_modules/@material-ui/core/Button';
 
-import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import Breadcrumb from './node_modules/react-bootstrap/Breadcrumb';
 
 import { createAccount } from '../../Services/credit';
 
@@ -43,7 +43,7 @@ class ApplyForCredit extends Component {
     this.state = {
       balance: 0,
       occupation: '',
-      income: '',
+      income: 0,
       outstandingLoans: false,
       otherCredit: false,
       types: ['Buying Goods', 'Investment', 'Mortgage', 'Car'],
@@ -69,6 +69,7 @@ class ApplyForCredit extends Component {
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.getData = this.getData.bind(this);
+    this.dataCalc = this.dataCalc.bind(this);
   }
 
   randomKey() {
@@ -85,7 +86,6 @@ class ApplyForCredit extends Component {
     for (let i = 0; i < 20; i++) {
       Letterresult += Lettercharacters.charAt(Math.floor(Math.random() * LettercharactersLength));
     }
-
     let result = Numberresult + Letterresult;
     return result;
   }
@@ -104,9 +104,55 @@ class ApplyForCredit extends Component {
     });
   }
 
-  getData(event) {
-    event.preventDefault();
+  dataCalc() {
+    // let apr = 0;
+    // if (this.state.type === 'Buying Goods') return (apr = 20.5);
+    // if (this.state.type === 'Investment') return (apr = 11);
+    // if (this.state.type === 'Mortgage') return (apr = 4);
+    // if (this.state.type === 'Car') return (apr = 7.5);
+    // console.log(apr, 'APR');
 
+    let outstanding = 0;
+    this.state.outstandingLoans === true ? (outstanding = 0) : (outstanding = 5000);
+
+    let otherCredit = 0;
+    this.state.otherCredit === true ? (otherCredit = 0) : (otherCredit = 7500);
+
+    let finanacialSupport = 0;
+    this.state.finanacialSupport === true ? (finanacialSupport = 0) : (finanacialSupport = 3000);
+
+    let children = 0;
+    this.state.children === true ? (children = 0) : (children = 500);
+
+    let status = 0;
+    this.state.status === 'Single'
+      ? (status = 200)
+      : this.state.status === 'Married'
+      ? (status = 400)
+      : this.state.status === 'Widowed'
+      ? (status = 600)
+      : (status = 300);
+
+    let income = 0;
+    this.state.income <= 7500
+      ? (income = 500)
+      : this.state.income <= 10000
+      ? (income = 700)
+      : this.state.income <= 15000
+      ? (income = 1000)
+      : this.state.income <= 20000
+      ? (income = 1200)
+      : this.state.income <= 30000
+      ? (income = 30000)
+      : (income = 0);
+
+    const balance = outstanding + otherCredit + finanacialSupport + children + status + income;
+    console.log(balance, 'BALANCE');
+
+    return balance;
+  }
+
+  createCredit() {
     const userID = this.props.userID;
     const accountNumber = this.randomKey();
 
@@ -117,12 +163,23 @@ class ApplyForCredit extends Component {
 
     createAccount(account)
       .then(account => {
-        console.log(account, 'CREDIT ACCOUNT');
         this.props.history.push({
-          pathname: '/credit'
+          pathname: '/credit-acceptance',
+          state: this.state.account
         });
       })
       .catch(error => console.log(error));
+  }
+
+  getData(event) {
+    event.preventDefault();
+    const balance = this.dataCalc();
+    this.setState(
+      {
+        balance: balance
+      },
+      () => this.createCredit()
+    );
   }
 
   componentDidMount() {

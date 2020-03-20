@@ -9,14 +9,15 @@ import Home from './Views/Home';
 
 import Activity from './Views/Activity';
 import Accounts from './Views/Accounts';
-import LinkedAccounts from './Views/linkedAccounts';
+import LinkedAccounts from './Views/LinkedAccounts';
 import Credit from './Views/Credit';
-import ApplyForCredit from './Views/applyForCredit';
-import CreateAccount from './Views/createAccount';
+import ApplyForCredit from './Views/ApplyForCredit';
+import CreditAcceptance from './Views/CreditAcceptance';
+import CreateAccount from './Views/CreateAccount';
 import SingleAccount from './Views/SingleAccount';
-import AddAccount from './Views/addAccount';
-import AddMoney from './Views/addMoney';
-import AddTransaction from './Views/addTransaction';
+import AddAccount from './Views/AddAccount';
+import AddMoney from './Views/AddMoney';
+import AddTransaction from './Views/AddTransaction';
 import Transactions from './Views/Transactions';
 import Analytics from './Views/Analytics';
 import Cards from './Views/Cards';
@@ -30,7 +31,7 @@ import ExchangeRates from './Views/ExchangeRatesView/index';
 
 import Navigation from './Components/Navigation';
 import Mobilenavigation from './Components/Mobilenavigation';
-import CreateCard from './Views/createCard';
+import CreateCard from './Views/CreateCard';
 import CurrencyConverter from './Components/CurrencyConverter/CurrencyConverter';
 
 class App extends Component {
@@ -198,13 +199,23 @@ class App extends Component {
               <ProtectedRoute
                 authorized={this.state.user}
                 redirect={'/signin'}
-                path="/accounts/add-account"
+                path="/credit-acceptance"
                 render={props => (
-                  <AddAccount
+                  <CreditAcceptance
                     {...props}
                     changeActiveNav={this.activeNav}
                     user={this.state.user}
                   />
+                )}
+                exact
+              />
+
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
+                path="/accounts/add-account"
+                render={props => (
+                  <AddAccount {...props} changeActiveNav={this.activeNav} user={this.state.user} />
                 )}
                 exact
               />
@@ -312,11 +323,7 @@ class App extends Component {
                 authorized={this.state.user}
                 redirect={'/signin'}
                 path="/notifications"
-                render={() => (
-                  <Notifications
-                    userID={this.state.user._id}
-                  />
-                )}
+                render={() => <Notifications userID={this.state.user._id} />}
                 exact
               />
               <ProtectedRoute

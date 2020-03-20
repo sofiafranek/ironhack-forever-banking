@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from './node_modules/react';
+import React, { Component, Fragment } from '/react';
 import './style.scss';
 
 import Layout from '../../Components/Layout';
@@ -11,9 +11,9 @@ import {
   Grid,
   FormControlLabel,
   Radio
-} from '/@material-ui/core';
-import MuiAlert from '/@material-ui/lab/Alert';
-import clsx from '/clsx';
+} from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
+import clsx from 'clsx';
 import {
   createTransactionAccount,
   createTransactionPhone,

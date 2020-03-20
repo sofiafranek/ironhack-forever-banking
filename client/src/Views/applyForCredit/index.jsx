@@ -1,8 +1,8 @@
-import React, { Component } from './node_modules/react';
+import React, { Component } from '/react';
 import Layout from '../../Components/Layout';
 
-import TextField from './node_modules/@material-ui/core/TextField';
-import Grid from './node_modules/@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
 
 import {
   RadioGroup,
@@ -11,14 +11,14 @@ import {
   Select,
   FormControlLabel,
   Radio
-} from './node_modules/@material-ui/core';
+} from '@material-ui/core';
 
-import clsx from './node_modules/clsx';
+import clsx from 'clsx';
 import { useStyles } from '../../Utilities/useStyles';
 
-import Button from './node_modules/@material-ui/core/Button';
+import Button from '@material-ui/core/Button';
 
-import Breadcrumb from './node_modules/react-bootstrap/Breadcrumb';
+import Breadcrumb from '/react-bootstrap/Breadcrumb';
 
 import { createAccount } from '../../Services/credit';
 

@@ -22,7 +22,6 @@ class Credit extends Component {
 
   getData() {
     const userID = this.props.user._id;
-    console.log(userID, 'USER ID');
 
     userIDAccounts(userID)
       .then(account => {

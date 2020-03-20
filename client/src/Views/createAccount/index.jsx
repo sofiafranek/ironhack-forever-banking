@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from './node_modules/react';
+import React, { Component, Fragment } from '/react';
 import './style.scss';
 import {
   RadioGroup,
@@ -11,8 +11,8 @@ import {
   InputLabel,
   Radio,
   Container
-} from './node_modules/@material-ui/core';
-import clsx from './node_modules/clsx';
+} from '@material-ui/core';
+import clsx from 'clsx';
 import { creatingAccountFromExternal } from '../../Services/account';
 import { creatingCard } from '../../Services/card';
 import { useStyles } from '../../Utilities/useStyles';

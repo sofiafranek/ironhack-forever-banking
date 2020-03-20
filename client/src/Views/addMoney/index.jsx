@@ -1,17 +1,17 @@
-import React, { Component } from './node_modules/react';
+import React, { Component } from '/react';
 import './style.scss';
 
 import Layout from '../../Components/Layout';
-import Button from './node_modules/@material-ui/core/Button';
-import TextField from './node_modules/@material-ui/core/TextField';
-import FormControl from './node_modules/@material-ui/core/FormControl';
-import InputLabel from './node_modules/@material-ui/core/InputLabel';
-import Select from './node_modules/@material-ui/core/Select';
-import Grid from './node_modules/@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import Grid from '@material-ui/core/Grid';
 import { userIDAccounts } from '../../Services/account';
 import { createTransactionAccount } from '../../Services/transaction';
-import Breadcrumb from './node_modules/react-bootstrap/Breadcrumb';
-import MuiAlert from './node_modules/@material-ui/lab/Alert';
+import Breadcrumb from '/react-bootstrap/Breadcrumb';
+import MuiAlert from '@material-ui/lab/Alert';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;

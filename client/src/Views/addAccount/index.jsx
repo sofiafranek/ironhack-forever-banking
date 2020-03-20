@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from './node_modules/react';
+import React, { Component, Fragment } from '/react';
 import './style.scss';
 
 import Layout from '../../Components/Layout';
@@ -13,7 +13,7 @@ import {
   InputLabel,
   Radio
 } from '@material-ui/core';
-import clsx from '/clsx';
+import clsx from 'clsx';
 import { creatingAccountFromInternal, userIDAccounts } from '../../Services/account';
 import { createNotification } from '../../Services/notification';
 import { useStyles } from '../../Utilities/useStyles';

@@ -29,7 +29,7 @@ const creatingAccountFromInternal = async (data) => {
 const creatingAccountFromExternal = async (data) => {
   try {
     const result = await instance.post('/create-account-external', data);
-    return result.data.account;
+    return result.data;
   } catch (error) {
     throw error;
   }

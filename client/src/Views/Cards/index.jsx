@@ -51,7 +51,7 @@ class Cards extends Component {
     return (
       <Layout>
         <div className="relative cards-page">
-          <h1 className="pb-4">Cards</h1>
+          <h1 className="pb-5">Cards</h1>
           <div className="action-container">
             <Link to={`/cards/add-card`}>
               <Button variant="contained" className="primary">

@@ -4,6 +4,7 @@ import './style.scss';
 import { Link } from 'react-router-dom';
 
 import Card from 'react-bootstrap/Card';
+import getSymbolFromCurrency from 'currency-symbol-map';
 
 class Account extends Component {
   constructor(props) {
@@ -44,7 +45,7 @@ class Account extends Component {
               <h5 className="pb-2 pt-2">IBAN Number: {this.props.accountNumber}</h5>
               <h5>
                 {this.props.type === 'Credit' ? 'Credit Allowance' : 'Available Balance'} :{' '}
-                {this.props.balance}€
+                {this.props.balance}{getSymbolFromCurrency(this.props.currency)}
               </h5>
             </Card.Header>
           </Link>

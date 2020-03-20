@@ -40,8 +40,42 @@ class CreateAccount extends Component {
       types: ['Current', 'Savings'],
       balance: '',
       sharedAccount: false,
-      sharedUser: ''
+      sharedUser: '',
+      currency: 'CAD'
     };
+    this.currencies = ['CAD',
+    'HKD',
+    'ISK',
+    'PHP',
+    'DKK',
+    'HUF',
+    'CZK',
+    'GBP',
+    'RON',
+    'SEK',
+    'IDR',
+    'INR',
+    'BRL',
+    'RUB',
+    'HRK',
+    'JPY',
+    'THB',
+    'CHF',
+    'EUR',
+    'MYR',
+    'BGN',
+    'TRY',
+    'CNY',
+    'NOK',
+    'NZD',
+    'ZAR',
+    'USD',
+    'MXN',
+    'SGD',
+    'AUD',
+    'ILS',
+    'KRW',
+    'PLN'];
     this.handleInputChange = this.handleInputChange.bind(this);
     this.setData = this.setData.bind(this);
   }
@@ -148,6 +182,16 @@ class CreateAccount extends Component {
                   </option>
                 ))}
               </Select>
+              <FormControl>
+                <InputLabel htmlFor="age-native-simple">Currency</InputLabel>
+                <Select name="currency" native onChange={event => this.handleInputChange(event)}>
+                  {this.currencies.map(currency => (
+                    <option value={currency} key={currency}>
+                      {currency}
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
               <FormControl component="fieldset">
                 <h4 className="pl-2 pt-4 pb-2">Shared Account</h4>
                 <RadioGroup name="sharedAccount" className="scheduled-transaction">

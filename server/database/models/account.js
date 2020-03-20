@@ -25,6 +25,43 @@ const schema = new mongoose.Schema({
   },
   shared: {
     type: Boolean
+  },
+  currency: {
+    type: String,
+    enum: ['CAD',
+    'HKD',
+    'ISK',
+    'PHP',
+    'DKK',
+    'HUF',
+    'CZK',
+    'GBP',
+    'RON',
+    'SEK',
+    'IDR',
+    'INR',
+    'BRL',
+    'RUB',
+    'HRK',
+    'JPY',
+    'THB',
+    'CHF',
+    'EUR',
+    'MYR',
+    'BGN',
+    'TRY',
+    'CNY',
+    'NOK',
+    'NZD',
+    'ZAR',
+    'USD',
+    'MXN',
+    'SGD',
+    'AUD',
+    'ILS',
+    'KRW',
+    'PLN'],
+    required: true
   }
 });
 
@@ -51,13 +88,14 @@ schema.statics.getAccountByNumber = async function(accountNumber) {
   return account;
 };
 
-schema.statics.createAccount = async function(accountNumber, type, balance, shared) {
+schema.statics.createAccount = async function(accountNumber, type, balance, shared, currency) {
   const Model = this;
   const account = await Model.create({
     accountNumber,
     type,
     balance,
-    shared
+    shared,
+    currency
   });
   return account;
 };

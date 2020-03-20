@@ -35,11 +35,11 @@ router.get('/:id', RouteGuard, async (req, res, next) => {
 // When user is signing up this creates their first account
 router.post('/create-account-external', async (req, res, next) => {
   console.log(req.body);
-  const { balance, type, accountNumber, userID, sharedAccount, sharedUser, primary } = req.body;
+  const { balance, type, accountNumber, userID, sharedAccount, sharedUser, primary, currency } = req.body;
   const balanceNumber = Number(balance);
 
   try {
-    const account = await Account.createAccount(accountNumber, type, balanceNumber, sharedAccount);
+    const account = await Account.createAccount(accountNumber, type, balanceNumber, sharedAccount, currency);
     const accountID = account._id;
     await UserAccount.createUserAccount(userID, accountID, primary);
 
@@ -58,7 +58,7 @@ router.post('/create-account-external', async (req, res, next) => {
 
 router.post('/create-account-internal', async (req, res, next) => {
   console.log(req.body);
-  const { accountIDFrom, balance, type, accountNumber, userID, sharedAccount, sharedUser, primary } = req.body;
+  const { accountIDFrom, balance, type, accountNumber, userID, sharedAccount, sharedUser, primary, currency } = req.body;
 
   try {
     // GO TO ACCOUNT THAT YOU WANT TO TRANSFER
@@ -71,7 +71,7 @@ router.post('/create-account-internal', async (req, res, next) => {
 
     if (minusBalance >= 0) {
       await Account.updateBalance(accountIDFrom, minusBalance);
-      const account = await Account.createAccount(accountNumber, type, addBalance, sharedAccount);
+      const account = await Account.createAccount(accountNumber, type, addBalance, sharedAccount, currency);
       const accountID = account._id;
       await UserAccount.createUserAccount(userID, accountID, primary);
 

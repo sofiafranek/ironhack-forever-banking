@@ -36,12 +36,13 @@ class CurrencyConverter extends Component {
       .then(results => {
         return results.json();
       })
-      .then(data =>
+      .then(data => {
+        console.log(data);
         this.setState({
           rates: data['rates'],
           currencies: Object.keys(data['rates']).sort()
         })
-      );
+      });
   }
 
   changeConvertToCurrency(e) {

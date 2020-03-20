@@ -55,8 +55,42 @@ class AddAccount extends Component {
       sharedAccount: false,
       sharedUser: '',
       success: true,
-      message: ''
+      message: '',
+      currency: 'CAD'
     };
+    this.currencies = ['CAD',
+    'HKD',
+    'ISK',
+    'PHP',
+    'DKK',
+    'HUF',
+    'CZK',
+    'GBP',
+    'RON',
+    'SEK',
+    'IDR',
+    'INR',
+    'BRL',
+    'RUB',
+    'HRK',
+    'JPY',
+    'THB',
+    'CHF',
+    'EUR',
+    'MYR',
+    'BGN',
+    'TRY',
+    'CNY',
+    'NOK',
+    'NZD',
+    'ZAR',
+    'USD',
+    'MXN',
+    'SGD',
+    'AUD',
+    'ILS',
+    'KRW',
+    'PLN'];
     this.handleInputChange = this.handleInputChange.bind(this);
     this.setData = this.setData.bind(this);
     this.handleAccountFromChange = this.handleAccountFromChange.bind(this);
@@ -203,6 +237,18 @@ class AddAccount extends Component {
                   {this.state.types.map(type => (
                     <option value={type} key={type}>
                       {type}
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <FormControl>
+                <InputLabel htmlFor="age-native-simple">Currency</InputLabel>
+                <Select name="currency" native onChange={event => this.handleInputChange(event)}>
+                  {this.currencies.map(currency => (
+                    <option value={currency} key={currency}>
+                      {currency}
                     </option>
                   ))}
                 </Select>

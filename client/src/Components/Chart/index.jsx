@@ -10,7 +10,7 @@ const Chart = (props) => {
   console.log(props, "CHART");
   return (
     <React.Fragment>
-      <LineChart width={900} height={300} data={dates}>
+      <LineChart width={300} height={300} data={dates}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="date" />
         <YAxis />

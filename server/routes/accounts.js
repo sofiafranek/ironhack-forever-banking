@@ -34,7 +34,6 @@ router.get('/:id', RouteGuard, async (req, res, next) => {
 
 // When user is signing up this creates their first account
 router.post('/create-account-external', async (req, res, next) => {
-  console.log(req.body);
   const {
     balance,
     type,
@@ -71,7 +70,7 @@ router.post('/create-account-external', async (req, res, next) => {
         res.json({ result: false, message: 2 });
       }
     } else {
-      res.json({ result: true });
+      res.json({ result: true, type, accountID });
     }
   } catch (error) {
     console.log(error);

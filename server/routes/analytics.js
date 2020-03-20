@@ -18,15 +18,5 @@ router.post('/all', RouteGuard, async (req, res, next) => {
   }
 });
 
-/*router.get('/category', RouteGuard, async (req, res, next) => {
-  try {
-    const accounts = req.body.map(value => value.accountID);
-    const outcomes = await Transaction.getOutcomes(accounts);
-    res.json({ outcomes });
-  } catch (error) {
-    console.log(error);
-    next(error);
-  }
-});*/
 
 module.exports = router;

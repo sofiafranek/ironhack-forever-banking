@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Badge, Button, Accordion, Card } from 'react-bootstrap';
+import getSymbolFromCurrency from 'currency-symbol-map';
 import './style.scss';
 
 class Transaction extends Component {
@@ -13,16 +14,18 @@ class Transaction extends Component {
       category,
       accountIDFrom,
       accountIDTo,
-      colorCategory
+      colorCategory,
+      currency
     } = this.props;
-  
+    
+
     return (
       <Accordion className="hvr-grow transaction pb-3">
         <Card>
           <Card.Header>
             <Accordion.Toggle className="card-transaction" as={Button} variant="link" eventKey="0">
               {reference && <h6>{reference}</h6>}
-              <div>{totalAmount > 0 && <h6>{totalAmount + ' €'}</h6>}</div>
+              <div>{totalAmount > 0 && <h6>{totalAmount + ' ' + getSymbolFromCurrency(accountIDFrom.currency)}</h6>}</div>
             </Accordion.Toggle>
           </Card.Header>
           <Accordion.Collapse eventKey="0">

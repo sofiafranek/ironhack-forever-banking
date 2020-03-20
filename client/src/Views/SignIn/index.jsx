@@ -7,13 +7,20 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import { signIn } from './../../Services/authentication';
 import Container from '@material-ui/core/Container';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 class SignInSide extends Component {
   constructor(props) {
     super(props);
     this.state = {
       phoneNumber: '',
-      password: ''
+      password: '',
+      error: false,
+      errorMessage: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
   }
@@ -35,9 +42,19 @@ class SignInSide extends Component {
     const user = Object.assign({}, this.state);
 
     signIn(user)
-      .then(user => {
-        this.props.updateUserInformation(user);
-        this.props.history.push('/activity');
+      .then(data => {
+        if(data.user) {
+          this.props.updateUserInformation(data.user);
+          this.props.history.push('/activity');
+        }
+        else {
+          const error = true;
+          const errorMessage = data.error;
+          this.setState({
+            error,
+            errorMessage
+          });
+        } 
       })
       .catch(error => console.log(error));
   }
@@ -73,6 +90,7 @@ class SignInSide extends Component {
             id="password"
             autoComplete="current-password"
           />
+          {this.state.error && <Alert severity="error">{this.state.errorMessage}</Alert>}
           <Button type="submit" fullWidth variant="contained" color="primary" className="mt-3 mb-3">
             Sign In
           </Button>

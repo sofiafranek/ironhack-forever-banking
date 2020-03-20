@@ -16,7 +16,19 @@ const transactions = async (data) => {
   }
 };
 
+const transactionsCategory = async (data) => {
+  try {
+    
+    const result = await instance.post('/category', data);
+    const outcomesCategory = result.data.outcomes;
+    return outcomesCategory;
+} catch (error) {
+    throw error;
+  }
+};
+
 
 export {
-  transactions 
+  transactions,
+  transactionsCategory 
 };

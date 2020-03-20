@@ -73,6 +73,7 @@ router.post('/signin', (req, res, next) => {
   User.findOne({ phoneNumber })
     .then(document => {
       if (!document) {
+        res.json({ error: "There's no account with that phone number" });
         return Promise.reject(new Error("There's no user with that email."));
       } else {
         user = document;
@@ -84,6 +85,7 @@ router.post('/signin', (req, res, next) => {
         req.session.user = user._id;
         res.json({ user });
       } else {
+        res.json({ error: 'Wrong password' });
         return Promise.reject(new Error('Wrong password.'));
       }
     })

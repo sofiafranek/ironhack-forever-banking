@@ -10,7 +10,6 @@ router.post('/all', RouteGuard, async (req, res, next) => {
   console.log(req.body);
   try {
     const accounts = req.body.map(value => value.accountID);
-    console.log(accounts);
     const outcomes = await Transaction.getOutcomes(accounts);
     res.json({ outcomes });
   } catch (error) {
@@ -19,15 +18,15 @@ router.post('/all', RouteGuard, async (req, res, next) => {
   }
 });
 
-router.get('/category', RouteGuard, async (req, res, next) => {
+/*router.get('/category', RouteGuard, async (req, res, next) => {
   try {
-    const exp = ['5e74ef2038a66d7ed5191f3b'];
-    const transactionsCategory = await Transaction.getSentTransactionsMonth(exp);
-    res.json({ transactionsCategory });
+    const accounts = req.body.map(value => value.accountID);
+    const outcomes = await Transaction.getOutcomes(accounts);
+    res.json({ outcomes });
   } catch (error) {
     console.log(error);
     next(error);
   }
-});
+});*/
 
 module.exports = router;

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import './style.scss';
-
 import { Badge, Button, Accordion, Card } from 'react-bootstrap';
+import './style.scss';
 
 class Transaction extends Component {
   render() {
+    
     const {
       totalAmount,
       dateTransaction,
@@ -15,8 +15,7 @@ class Transaction extends Component {
       accountIDTo,
       colorCategory
     } = this.props;
-    console.log(category);
-    console.log(dateTransaction);
+  
     return (
       <Accordion className="hvr-grow transaction pb-3">
         <Card>

@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import './style.scss';
-
 import { Link } from 'react-router-dom';
-
 import Card from 'react-bootstrap/Card';
 import getSymbolFromCurrency from 'currency-symbol-map';
+import './style.scss';
 
 class Account extends Component {
   constructor(props) {

@@ -16,6 +16,7 @@ import CreditAcceptance from './Views/CreditAcceptance';
 import CreateAccount from './Views/CreateAccount';
 import SingleAccount from './Views/SingleAccount';
 import AddAccount from './Views/AddAccount';
+import SingleCredit from './Views/SingleCredit';
 import AddMoney from './Views/AddMoney';
 import AddTransaction from './Views/AddTransaction';
 import Transactions from './Views/Transactions';
@@ -188,6 +189,20 @@ class App extends Component {
                 path="/credit/apply-for-credit"
                 render={props => (
                   <ApplyForCredit
+                    {...props}
+                    changeActiveNav={this.activeNav}
+                    userID={this.state.user._id}
+                  />
+                )}
+                exact
+              />
+
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
+                path="/credit/:id"
+                render={props => (
+                  <SingleCredit
                     {...props}
                     changeActiveNav={this.activeNav}
                     userID={this.state.user._id}

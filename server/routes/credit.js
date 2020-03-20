@@ -3,27 +3,17 @@
 const { Router } = require('express');
 
 const Credit = require('./../database/models/credit');
-const UserAccount = require('./../database/models/userAccount');
+// const UserAccount = require('./../database/models/userAccount');
 
 const router = new Router();
 
 const RouteGuard = require('./../middleware/route-guard');
 
-// Displays all the credit accounts
-// router.get('/', RouteGuard, async (req, res, next) => {
-//   try {
-//     const credit = await Credit.getCreditAccounts();
-//     res.json({ credit });
-//   } catch (error) {
-//     next(error);
-//   }
-// });
-
 // Returning a credit from the ID
 router.get('/:id', RouteGuard, async (req, res, next) => {
   const id = req.params.id;
   try {
-    const credit = await Credit.getCardById(id);
+    const credit = await Credit.getCreditAccountById(id);
     res.json({ credit });
   } catch (error) {
     next(error);

@@ -139,6 +139,7 @@ class AddAccount extends Component {
 
   getInfo() {
     const userID = this.props.user._id;
+    console.log(userID);
 
     const account = Object.assign({}, this.state);
     account.userID = userID;

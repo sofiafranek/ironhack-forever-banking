@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from '/react';
+import React, { Component, Fragment } from 'react';
 import './style.scss';
 
 import Layout from '../../Components/Layout';
@@ -22,7 +22,7 @@ import {
 import { userIDAccounts } from '../../Services/account';
 import { createNotification } from '../../Services/notification';
 import { useStyles } from '../../Utilities/useStyles';
-import Breadcrumb from '/react-bootstrap/Breadcrumb';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 function StyledRadio(props) {
   const classes = useStyles();

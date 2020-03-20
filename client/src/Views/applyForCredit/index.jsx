@@ -1,4 +1,4 @@
-import React, { Component } from '/react';
+import React, { Component } from 'react';
 import Layout from '../../Components/Layout';
 
 import TextField from '@material-ui/core/TextField';
@@ -18,7 +18,7 @@ import { useStyles } from '../../Utilities/useStyles';
 
 import Button from '@material-ui/core/Button';
 
-import Breadcrumb from '/react-bootstrap/Breadcrumb';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 import { createAccount } from '../../Services/credit';
 

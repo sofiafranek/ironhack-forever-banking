@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React, { Component, Fragment } from '/react';
-=======
 import React, { Component, Fragment } from 'react';
->>>>>>> 3390e65fe4c4af7fc4180e76db3850ebe26437f9
 import './style.scss';
 
 import Layout from '../../Components/Layout';
@@ -21,7 +17,7 @@ import clsx from 'clsx';
 import { creatingAccountFromInternal, userIDAccounts } from '../../Services/account';
 import { createNotification } from '../../Services/notification';
 import { useStyles } from '../../Utilities/useStyles';
-import Breadcrumb from '/react-bootstrap/Breadcrumb';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import MuiAlert from '@material-ui/lab/Alert';
 
 function StyledRadio(props) {

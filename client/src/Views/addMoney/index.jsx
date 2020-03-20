@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React, { Component } from '/react';
-=======
 import React, { Component } from 'react';
->>>>>>> 3390e65fe4c4af7fc4180e76db3850ebe26437f9
 import './style.scss';
 
 import Layout from '../../Components/Layout';
@@ -14,7 +10,7 @@ import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
 import { userIDAccounts } from '../../Services/account';
 import { createTransactionAccount } from '../../Services/transaction';
-import Breadcrumb from '/react-bootstrap/Breadcrumb';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import MuiAlert from '@material-ui/lab/Alert';
 
 function Alert(props) {

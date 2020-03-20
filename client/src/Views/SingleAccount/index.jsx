@@ -72,12 +72,12 @@ class SingleAccount extends Component {
                   ? 'Available Balance'
                   : 'Total Credit Limit'}
               </h5>
-              <hr></hr>
+              <hr className="mb-4"></hr>
               <h5>IBAN Number : {this.state.account.accountNumber}</h5>
               <h5>Account Type : {this.state.account.type}</h5>
               <h5>Card Number : 1234 1234 1234 1234</h5>
               <h5>Card Expirty : 12 / 04</h5>
-              <hr></hr>
+              <hr className="mt-4"></hr>
               <section className="pt-2">
                 {/* <h4 className="pb-3">Transactions for this Account</h4> */}
                 {this.state.transactions.map(transaction => (

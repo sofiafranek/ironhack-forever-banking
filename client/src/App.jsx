@@ -33,7 +33,7 @@ import ExchangeRates from './Views/ExchangeRatesView/index';
 import Navigation from './Components/Navigation';
 import Mobilenavigation from './Components/Mobilenavigation';
 import CreateCard from './Views/CreateCard';
-import CurrencyConverter from './Components/CurrencyConverter/CurrencyConverter';
+import CurrencyConverter from './Components/CurrencyConverter';
 
 class App extends Component {
   constructor(props) {

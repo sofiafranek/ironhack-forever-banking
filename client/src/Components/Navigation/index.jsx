@@ -69,7 +69,7 @@ const Navigation = props => {
             </Link>
 
             <Link to="/linked-accounts">
-              <MenuItem onClick={handleClose}>Linked Accounts</MenuItem>
+              <MenuItem onClick={handleClose}>Shared Accounts</MenuItem>
             </Link>
 
             <Link to="/credit">

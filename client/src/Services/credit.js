@@ -47,4 +47,13 @@ const createAccount = async data => {
   }
 };
 
-export { account, singleAccount, userIDAccounts, createAccount };
+// deleting an account from users account
+const deleteAccount = async idAccount => {
+  try {
+    await instance.post(`/${idAccount}/delete-account`);
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { account, singleAccount, userIDAccounts, createAccount, deleteAccount };

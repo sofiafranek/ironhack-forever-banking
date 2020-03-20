@@ -79,13 +79,32 @@ schema.statics.getCreditAccountById = async function(id) {
   return card;
 };
 
-schema.statics.createCreditAccount = async function(accountNumber, type, balance, userID) {
+schema.statics.createCreditAccount = async function(
+  accountNumber,
+  type,
+  balance,
+  userID,
+  outstanding,
+  otherCredit,
+  finanacialSupport,
+  children,
+  maritalStatus,
+  income,
+  occupation
+) {
   const Model = this;
   const account = await Model.create({
     accountNumber,
     type,
     balance,
-    userID
+    userID,
+    outstanding,
+    otherCredit,
+    finanacialSupport,
+    children,
+    maritalStatus,
+    income,
+    occupation
   });
   return account;
 };

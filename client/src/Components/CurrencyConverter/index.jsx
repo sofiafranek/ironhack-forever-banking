@@ -41,7 +41,7 @@ class CurrencyConverter extends Component {
         this.setState({
           rates: data['rates'],
           currencies: Object.keys(data['rates']).sort()
-        })
+        });
       });
   }
 
@@ -66,8 +66,7 @@ class CurrencyConverter extends Component {
 
     const currencyChoice = currencies.map(currency => (
       <option key={currency} value={currency}>
-        {' '}
-        {currency}{' '}
+        {currency}
       </option>
     ));
 
@@ -76,28 +75,36 @@ class CurrencyConverter extends Component {
     return (
       <div className="form-container">
         <form className="ui mini form">
-          <h3>Convert from: {baseCurrency}</h3>
-          <select value={baseCurrency} onChange={this.changeBaseCurrency}>
-            {currencyChoice}
-            <option>{baseCurrency}</option>
-          </select>
+          <hr></hr>
+          <div className="amount">
+            <h5 className="mb-3">How much would you like to convert?</h5>
+            <input
+              type="number"
+              id="base-amount"
+              defaultValue={baseAmount}
+              onChange={this.changeBaseAmount}
+            ></input>
+          </div>
+          <div className="convert-currency">
+            <div>
+              <h5>Convert from: {baseCurrency}</h5>
+              <select value={baseCurrency} onChange={this.changeBaseCurrency}>
+                {currencyChoice}
+                <option>{baseCurrency}</option>
+              </select>
+            </div>
 
-          <h3>Convert to: {convertToCurrency}</h3>
-          <select value={convertToCurrency} onChange={this.changeConvertToCurrency}>
-            {currencyChoice}
-          </select>
-
-          <h3>Amount:</h3>
-          <input
-            type="number"
-            id="base-amount"
-            defaultValue={baseAmount}
-            onChange={this.changeBaseAmount}
-          ></input>
+            <div>
+              <h5>Convert to: {convertToCurrency}</h5>
+              <select value={convertToCurrency} onChange={this.changeConvertToCurrency}>
+                {currencyChoice}
+              </select>
+            </div>
+          </div>
         </form>
-        <h2 id="result-text">
+        <h4 id="result-text" className="mt-3">
           {baseAmount} {baseCurrency} is equal to {result} {convertToCurrency}
-        </h2>
+        </h4>
       </div>
     );
   }

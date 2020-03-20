@@ -10,7 +10,7 @@ class LinkedAccounts extends Component {
     return (
       <Layout>
         <div className="relative">
-          <h1 className="pb-3">Linked Accounts</h1>
+          <h1 className="pb-3">Shared Accounts</h1>
           <div className="action-container">
             {/* <Link to={`/accounts/add-account`}>
               <Button variant="contained" className="primary">

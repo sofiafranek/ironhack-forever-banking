@@ -33,15 +33,53 @@ router.get('/:userID/credit', RouteGuard, async (req, res, next) => {
 
 // When user applys for credit we create the credit account
 router.post('/apply-for-credit', RouteGuard, async (req, res, next) => {
-  const { accountNumber, balance, type, userID } = req.body;
-  const balanceNumber = Number(balance);
+  const {
+    accountNumber,
+    balance,
+    type,
+    userID,
+    outstanding,
+    otherCredit,
+    finanacialSupport,
+    children,
+    maritalStatus,
+    income,
+    occupation
+  } = req.body;
+  const balanceNumber = Number(balance).toFixed(2);
+
+  console.log(req.body, 'REQUEST CREDIT BODY');
 
   try {
-    const account = await Credit.createCreditAccount(accountNumber, type, balanceNumber, userID);
+    const account = await Credit.createCreditAccount(
+      accountNumber,
+      type,
+      balanceNumber,
+      userID,
+      outstanding,
+      otherCredit,
+      finanacialSupport,
+      children,
+      maritalStatus,
+      income,
+      occupation
+    );
     res.json({ account });
   } catch (error) {
     console.log(error);
     next(error);
+  }
+});
+
+// Deletes specific account using the ID
+router.post('/:id/delete-account', RouteGuard, async (req, res, next) => {
+  const idAccount = req.params.id;
+  try {
+    await Credit.removeCreditAccount(idAccount);
+    res.json({ result: 'sucess' });
+  } catch (error) {
+    next(error);
+    res.json({ result: 'error' });
   }
 });
 

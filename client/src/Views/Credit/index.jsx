@@ -20,6 +20,10 @@ class Credit extends Component {
     this.getData();
   }
 
+  refresh() {
+    window.location.reload();
+  }
+
   getData() {
     const userID = this.props.user._id;
 

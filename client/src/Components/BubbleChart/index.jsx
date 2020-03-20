@@ -1,0 +1,42 @@
+import React from 'react';
+//
+import useChartConfig from 'hooks/useChartConfig';
+import Box from 'components/Box';
+import SyntaxHighlighter from 'components/SyntaxHighlighter';
+import { Chart } from 'react-charts';
+let sourceCode;
+const BubbleChart = () => {
+  const { data, randomizeData } = useChartConfig({
+    dataType: 'linear',
+    series: 10,
+    useR: true
+  });
+  const series = React.useMemo(
+    () => ({
+      type: 'bubble',
+      showPoints: false
+    }),
+    []
+  );
+  const axes = React.useMemo(
+    () => [
+      { primary: true, type: 'linear', position: 'bottom' },
+      { type: 'linear', position: 'left' }
+    ],
+    []
+  );
+  return (
+    <>
+      <button onClick={randomizeData}>Randomize Data</button>
+      <br />
+      <br />
+      {/* <Box> */}
+      <Chart data={data} series={series} axes={axes} grouping="single" tooltip />
+      {/* </Box> */}
+      <br />
+      {/* <SyntaxHighlighter code={sourceCode} /> */}
+    </>
+  );
+};
+
+export default BubbleChart;

@@ -63,7 +63,7 @@ class ApplyForCredit extends Component {
       ],
       occupation: 'Computers & Technology',
       statues: ['Single', 'In a relationship', 'Married', 'Divorced', 'Widowed'],
-      status: 'Single',
+      maritalStatus: 'Single',
       finanacialSupport: false,
       children: false
     };
@@ -105,13 +105,6 @@ class ApplyForCredit extends Component {
   }
 
   dataCalc() {
-    // let apr = 0;
-    // if (this.state.type === 'Buying Goods') return (apr = 20.5);
-    // if (this.state.type === 'Investment') return (apr = 11);
-    // if (this.state.type === 'Mortgage') return (apr = 4);
-    // if (this.state.type === 'Car') return (apr = 7.5);
-    // console.log(apr, 'APR');
-
     let outstanding = 0;
     this.state.outstandingLoans === true ? (outstanding = 0) : (outstanding = 5000);
 
@@ -125,11 +118,11 @@ class ApplyForCredit extends Component {
     this.state.children === true ? (children = 0) : (children = 500);
 
     let status = 0;
-    this.state.status === 'Single'
+    this.state.maritalStatus === 'Single'
       ? (status = 200)
-      : this.state.status === 'Married'
+      : this.state.maritalStatus === 'Married'
       ? (status = 400)
-      : this.state.status === 'Widowed'
+      : this.state.maritalStatus === 'Widowed'
       ? (status = 600)
       : (status = 300);
 
@@ -147,8 +140,6 @@ class ApplyForCredit extends Component {
       : (income = 0);
 
     const balance = outstanding + otherCredit + finanacialSupport + children + status + income;
-    console.log(balance, 'BALANCE');
-
     return balance;
   }
 
@@ -165,7 +156,7 @@ class ApplyForCredit extends Component {
       .then(account => {
         this.props.history.push({
           pathname: '/credit-acceptance',
-          state: this.state.account
+          state: { account: account }
         });
       })
       .catch(error => console.log(error));

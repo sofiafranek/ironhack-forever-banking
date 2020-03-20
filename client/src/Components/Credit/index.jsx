@@ -21,12 +21,13 @@ class Credit extends Component {
   }
 
   render() {
+    console.log(this.props, 'HELLO');
     return (
       <section className="account-section">
         <Link
           to={{
             pathname: `/credit/${this.props._id}`,
-            state: this.props.account
+            state: this.state.account
           }}
         >
           <Card className="hvr-grow account">

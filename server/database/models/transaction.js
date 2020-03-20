@@ -109,10 +109,10 @@ schema.statics.createTransaction = async function(
   return transaction;
 };
 
-schema.statics.getReceivedTransactions = async function(transactions) {
+schema.statics.getReceivedTransactions = async function(accounts) {
   const Model = this;
   const transactionsTo = await Model.find({
-    accountIDTo: { $in: transactions },
+    accountIDTo: { $in: accounts },
     status: 'Executed'
   })
     .populate('accountIDTo')
@@ -122,15 +122,25 @@ schema.statics.getReceivedTransactions = async function(transactions) {
   return transactionsTo;
 };
 
-schema.statics.getSentTransactions = async function(transactions) {
+schema.statics.getSentTransactions = async function(accounts) {
   const Model = this;
   const transactionsFrom = await Model.find({
-    accountIDFrom: { $in: transactions },
+    accountIDFrom: { $in: accounts },
     status: 'Executed'
   })
     .populate('accountIDTo')
     .populate('accountIDFrom')
     .exec();
+
+  return transactionsFrom;
+};
+
+schema.statics.getOutcomes = async function(accounts) {
+  const Model = this;
+  const transactionsFrom = await Model.find({
+    accountIDFrom: { $in: accounts },
+    status: 'Executed'
+  }).exec();
 
   return transactionsFrom;
 };
@@ -159,5 +169,19 @@ schema.statics.getAllTransactionsAccount = async function(idAccount) {
 
   return allTransactions;
 };
+
+/*
+schema.statics.getSentTransactionsMonth = async function(accounts) {
+  const Model = this;
+  console.log(accounts);
+  const transactionsFrom = await Model.aggregate([
+    {$addFields: {  "month" : {$month: '$dateTransaction'}}},
+    {$match: { month: 8}}
+  ]).exec();
+
+  console.log(transactionsFrom);
+
+  return transactionsFrom;
+};*/
 
 module.exports = mongoose.model('Transaction', schema);

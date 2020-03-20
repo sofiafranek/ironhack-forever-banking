@@ -3,7 +3,7 @@ import './style.scss';
 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
-// http://recharts.org/en-US/guide/installation
+//http://recharts.org/en-US/guide/installation
 
 const data = [
   {

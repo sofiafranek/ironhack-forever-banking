@@ -49,7 +49,7 @@ router.post('/add-transaction', async (req, res, next) => {
       const userID = user._id;
       const userName = user.name;
 
-        if (minusBalance >= 0) {
+      if (minusBalance >= 0) {
 
         await Transaction.createTransaction(
           accountIDFrom,
@@ -114,7 +114,18 @@ router.post('/add-transaction-phone', async (req, res, next) => {
       const balanceTo = accountTo.balance;
       const accountIDTo = accountTo._id;
       const minusBalance = Number(balanceFrom) - Number(totalAmount);
-      const addBalance = Number(balanceTo) + Number(totalAmount);
+      let addBalance = 0;
+      
+      if (accountFrom.currency === accountTo.currency) { 
+        addBalance = Number(balanceTo) + Number(totalAmount);
+      } else {
+        const api = `https://api.exchangeratesapi.io/latest?base=${accountFrom.currency}`;
+        const results = await fetch(api);
+        const resultsJSON = await results.json();
+        const rates = resultsJSON.rates;
+        const exchange = Number.parseFloat(totalAmount * rates[accountTo.currency]).toFixed(3);
+        addBalance = Number(balanceTo) + Number(exchange);
+      }
 
       if (minusBalance >= 0) {
 

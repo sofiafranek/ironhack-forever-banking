@@ -12,6 +12,14 @@ router.get('/userinformation', (req, res, next) => {
   res.json({ user: req.user || null });
 });
 
+// Download the helper library from https://www.twilio.com/docs/node/install
+// Your Account Sid and Auth Token from twilio.com/console
+// DANGER! This is insecure. See http://twil.io/secure
+const accountSid = process.env.ACCOUNT_SID;
+const authToken = process.env.AUTH_TOKEN;
+const client = require('twilio')(accountSid, authToken);
+
+
 router.post('/signup', (req, res, next) => {
   const {
     firstName,
@@ -43,6 +51,13 @@ router.post('/signup', (req, res, next) => {
     })
     .then(user => {
       req.session.user = user._id;
+      client.messages
+      .create({
+         from: 'whatsapp:+351916275555',
+         body: 'TRAABAALHA CARALHOOO',
+         to: 'whatsapp:+351919057319'
+       })
+      .then(message => console.log(message.sid));
       res.json({ user });
     })
     .catch(error => {

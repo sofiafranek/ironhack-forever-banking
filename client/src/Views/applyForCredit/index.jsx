@@ -112,7 +112,6 @@ class ApplyForCredit extends Component {
 
     const account = Object.assign({}, this.state);
     account.userID = userID;
-    account.primary = false;
     account.type = 'Credit';
     account.accountNumber = accountNumber;
 

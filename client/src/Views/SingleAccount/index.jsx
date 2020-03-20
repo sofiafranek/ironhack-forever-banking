@@ -6,7 +6,7 @@ import Layout from '../../Components/Layout';
 import Transaction from '../../Components/Transaction';
 
 import Button from '@material-ui/core/Button';
-
+import getSymbolFromCurrency from 'currency-symbol-map';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 import { deleteAccount } from './../../Services/account';
@@ -64,7 +64,7 @@ class SingleAccount extends Component {
               </Breadcrumb.Item>
             </Breadcrumb>
             <section className="single-account">
-              <h1>{this.state.account.balance}€</h1>
+              <h1>{this.state.account.balance} {getSymbolFromCurrency(this.state.account.currency)}</h1>
               <h5>
                 {this.state.account.type === 'Current'
                   ? 'Available Balance'

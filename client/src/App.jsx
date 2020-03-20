@@ -279,7 +279,13 @@ class App extends Component {
                 authorized={this.state.user}
                 redirect={'/signin'}
                 path="/analytics"
-                component={Analytics}
+                render={props => (
+                  <Analytics
+                    {...props}
+                    changeActiveNav={this.activeNav}
+                    userID={this.state.user._id}
+                  />
+                )}
                 exact
               />
               <ProtectedRoute

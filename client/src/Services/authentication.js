@@ -17,8 +17,7 @@ const signUp = async (data) => {
 const signIn = async (data) => {
   try {
     const result = await instance.post('/signin', data)
-    const user = result.data.user;
-    return user;
+    return result.data;
   } catch (error) {
     throw error;
   }

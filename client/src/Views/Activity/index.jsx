@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import './style.scss';
-
+import { Link } from 'react-router-dom';
 import Layout from '../../Components/Layout';
 import ActivityAccount from '../../Components/ActivityAccount';
 import Transaction from '../../Components/Transaction';
-
-import { Link } from 'react-router-dom';
 import MenuItem from '@material-ui/core/MenuItem';
-
 import { activity } from './../../Services/activity';
+import './style.scss';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -20,18 +17,19 @@ class Dashboard extends Component {
     };
   }
 
-  getData() {
+  async getData() {
     const userID = this.props.user._id;
-    activity(userID)
-      .then(information => {
-        console.log(userID);
-        console.log(information);
-        this.setState({
-          accountsUser: information.accountsUser,
-          transactions: information.transactions
-        });
-      })
-      .catch(error => console.log(error));
+
+    try { 
+      const information = await activity(userID);
+      this.setState({
+        accountsUser: information.accountsUser,
+        transactions: information.transactions
+      });
+
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   componentDidMount() {

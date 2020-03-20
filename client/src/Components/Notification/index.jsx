@@ -1,7 +1,6 @@
 import React from 'react';
-import './style.scss';
-
 import Toast from 'react-bootstrap/Toast';
+import './style.scss';
 
 const Notification = (props) => {
   const { userID, userIDFrom, messageFrom, messageTo, createdAt } = props;

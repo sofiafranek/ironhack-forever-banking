@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import './style.scss';
-
 import { deleteCard } from './../../Services/card';
+import './style.scss';
 
 class Card extends Component {
   flip(event) {
@@ -16,17 +15,18 @@ class Card extends Component {
     }
   }
 
-  deleteACard(event) {
+  async deleteACard(event) {
     event.preventDefault();
     const cardNumber = this.props.cardNumber;
 
-    deleteCard(cardNumber)
-      .then(() => {
-        this.props.history.push({
-          pathname: '/cards'
-        });
-      })
-      .catch(error => console.log(error));
+    try {
+      await deleteCard(cardNumber);
+      this.props.history.push({
+        pathname: '/cards'
+      });
+    } catch (error) {
+      console.log(error);
+    }
 
     window.location.reload();
   }
@@ -49,7 +49,6 @@ class Card extends Component {
               <i className="fab fa-modx"></i>
               <h6>{type}</h6>
             </div>
-
             <div className="credit-card__number">{cardNumber}</div>
 
             <div className="credit-card__info">

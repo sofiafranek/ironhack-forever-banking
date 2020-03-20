@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import './style.scss';
-
+import { Link } from 'react-router-dom';
 import Layout from '../../Components/Layout';
 import Account from '../../Components/Account';
 import Search from '../../Components/Search';
-
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
-
 import { userIDAccounts } from './../../Services/account';
+import './style.scss';
 
 class Accounts extends Component {
   constructor(props) {
@@ -21,6 +18,10 @@ class Accounts extends Component {
     this.removeAccount = this.removeAccount.bind(this);
     this.searchData = this.searchData.bind(this);
     this.filter = this.filter.bind(this);
+  }
+
+  componentDidMount() {
+    this.getData();
   }
 
   searchData(word) {
@@ -37,42 +38,50 @@ class Accounts extends Component {
     });
   }
 
-  filter(event) {
+  refresh() {
+    window.location.reload();
+  }
+
+  async filter(event) {
     event.preventDefault();
+    const userID = this.props.user._id;
     const filter = event.target.value;
 
     this.setState({
       filter
     });
 
-    const userID = this.props.user._id;
-    userIDAccounts(userID)
-      .then(account => {
-        this.setState({
-          account
-        });
-        if (filter === 'Current') {
-          this.filterMethod('Current');
-        } else if (filter === 'Savings') {
-          this.filterMethod('Savings');
-        }
-      })
-      .catch(error => console.log(error));
+    try {
+      const account = await userIDAccounts(userID)
+      this.setState({
+        account
+      });
+
+      if (filter === 'Current') {
+        this.filterMethod('Current');
+      } else if (filter === 'Savings') {
+        this.filterMethod('Savings');
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  refresh() {
-    window.location.reload();
-  }
 
-  getData() {
+  async getData() {
     const userID = this.props.user._id;
-    userIDAccounts(userID)
-      .then(account => {
-        this.setState({
-          account
-        });
-      })
-      .catch(error => console.log(error));
+
+    try {
+      const account = await userIDAccounts(userID);
+      this.setState({
+        account
+      });
+
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
   removeAccount(id) {
@@ -81,10 +90,6 @@ class Accounts extends Component {
         account: previousState.account.filter(acc => acc._id !== id)
       };
     });
-  }
-
-  componentDidMount() {
-    this.getData();
   }
 
   render() {

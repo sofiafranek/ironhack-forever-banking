@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { Component, Fragment } from '/react';
+=======
+import React, { Component, Fragment } from 'react';
+>>>>>>> 3390e65fe4c4af7fc4180e76db3850ebe26437f9
 import './style.scss';
 
 import Layout from '../../Components/Layout';

@@ -45,13 +45,14 @@ router.post('/create-account-external', async (req, res, next) => {
     primary,
     currency
   } = req.body;
-  const balanceNumber = Number(balance).toFixed(2);
+  const balanceNumber = Number(balance);
+  const balanceDecimal = balanceNumber.toFixed(2);
 
   try {
     const account = await Account.createAccount(
       accountNumber,
       type,
-      balanceNumber,
+      balanceDecimal,
       sharedAccount,
       currency
     );
@@ -59,11 +60,19 @@ router.post('/create-account-external', async (req, res, next) => {
     await UserAccount.createUserAccount(userID, accountID, primary);
 
     if (sharedAccount) {
-      const sharedUserID = await User.getUserByPhoneNumber(sharedUser);
-      await UserAccount.createUserAccount(sharedUserID, accountID, primary);
-    }
+      const sharedAccountUser = await User.getUserByPhoneNumber(sharedUser);
+      const sharedUserID = sharedAccountUser._id;
+      const userName = sharedAccountUser.name;
 
-    res.json({ account });
+      if (sharedAccountUser) {
+        await UserAccount.createUserAccount(sharedAccountUser, accountID, primary);
+        res.json({ result: true, sharedUserID, userName });
+      } else {
+        res.json({ result: false, message: 2 });
+      }
+    } else {
+      res.json({ result: true });
+    }
   } catch (error) {
     console.log(error);
     next(error);
@@ -84,13 +93,16 @@ router.post('/create-account-internal', async (req, res, next) => {
     currency
   } = req.body;
 
+  const balanceNumber = Number(balance);
+  const balanceDecimal = balanceNumber.toFixed(2);
+
   try {
     // GO TO ACCOUNT THAT YOU WANT TO TRANSFER
     const accountFrom = await Account.getAccountById(accountIDFrom);
     const balanceFrom = accountFrom.balance;
 
-    const minusBalance = Number(balanceFrom) - Number(balance);
-    const addBalance = Number(balance);
+    const minusBalance = Number(balanceFrom) - balanceDecimal;
+    const addBalance = balanceDecimal;
 
     if (minusBalance >= 0) {
       await Account.updateBalance(accountIDFrom, minusBalance);

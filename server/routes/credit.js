@@ -19,6 +19,17 @@ const RouteGuard = require('./../middleware/route-guard');
 //   }
 // });
 
+// Returning a credit from the ID
+router.get('/:id', RouteGuard, async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    const credit = await Credit.getCardById(id);
+    res.json({ credit });
+  } catch (error) {
+    next(error);
+  }
+});
+
 // Get all the credit accounts from the user logged in
 router.get('/:userID/credit', RouteGuard, async (req, res, next) => {
   const userID = req.params.userID;

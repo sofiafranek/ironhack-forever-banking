@@ -73,6 +73,12 @@ schema.statics.getCreditAccounts = async function(userID) {
   return userAccount;
 };
 
+schema.statics.getCardById = async function(id) {
+  const Model = this;
+  const card = await Model.findById(id).exec();
+  return card;
+};
+
 schema.statics.createCreditAccount = async function(accountNumber, type, balance, userID) {
   const Model = this;
   const account = await Model.create({

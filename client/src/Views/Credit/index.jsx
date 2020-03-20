@@ -37,6 +37,7 @@ class Credit extends Component {
       <Layout>
         <section className="relative">
           <h1 className="pb-4">Credit</h1>
+          <h2>Adding stuff here</h2>
           <div className="action-container">
             <Link to={'/credit/apply-for-credit'}>
               <Button variant="contained" className="primary">

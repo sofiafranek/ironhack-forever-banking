@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment } from './node_modules/react';
 import './style.scss';
 import {
   RadioGroup,
@@ -11,11 +11,11 @@ import {
   InputLabel,
   Radio,
   Container
-} from '@material-ui/core';
-import clsx from 'clsx';
-import { creatingAccountFromExternal } from './../../Services/account';
-import { creatingCard } from './../../Services/card';
-import { useStyles } from './../../Utilities/useStyles';
+} from './node_modules/@material-ui/core';
+import clsx from './node_modules/clsx';
+import { creatingAccountFromExternal } from '../../Services/account';
+import { creatingCard } from '../../Services/card';
+import { useStyles } from '../../Utilities/useStyles';
 
 function StyledRadio(props) {
   const classes = useStyles();
@@ -43,39 +43,41 @@ class CreateAccount extends Component {
       sharedUser: '',
       currency: 'CAD'
     };
-    this.currencies = ['CAD',
-    'HKD',
-    'ISK',
-    'PHP',
-    'DKK',
-    'HUF',
-    'CZK',
-    'GBP',
-    'RON',
-    'SEK',
-    'IDR',
-    'INR',
-    'BRL',
-    'RUB',
-    'HRK',
-    'JPY',
-    'THB',
-    'CHF',
-    'EUR',
-    'MYR',
-    'BGN',
-    'TRY',
-    'CNY',
-    'NOK',
-    'NZD',
-    'ZAR',
-    'USD',
-    'MXN',
-    'SGD',
-    'AUD',
-    'ILS',
-    'KRW',
-    'PLN'];
+    this.currencies = [
+      'CAD',
+      'HKD',
+      'ISK',
+      'PHP',
+      'DKK',
+      'HUF',
+      'CZK',
+      'GBP',
+      'RON',
+      'SEK',
+      'IDR',
+      'INR',
+      'BRL',
+      'RUB',
+      'HRK',
+      'JPY',
+      'THB',
+      'CHF',
+      'EUR',
+      'MYR',
+      'BGN',
+      'TRY',
+      'CNY',
+      'NOK',
+      'NZD',
+      'ZAR',
+      'USD',
+      'MXN',
+      'SGD',
+      'AUD',
+      'ILS',
+      'KRW',
+      'PLN'
+    ];
     this.handleInputChange = this.handleInputChange.bind(this);
     this.setData = this.setData.bind(this);
   }
@@ -160,11 +162,9 @@ class CreateAccount extends Component {
 
       await creatingCard(card);
       this.props.history.push('/summary');
-      
     } catch (error) {
       console.log(error);
     }
-
   }
 
   render() {

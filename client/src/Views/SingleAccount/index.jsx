@@ -85,13 +85,14 @@ class SingleAccount extends Component {
                 ))}
               </section>
               <div className="action-container">
-                <Link 
-                 to={{
-                  pathname:`/accounts/${accountID}/add-money`,
-                  state: {
-                    accountNumber: this.state.account.accountNumber
-                  }
-                }}>
+                <Link
+                  to={{
+                    pathname: `/accounts/${accountID}/add-money`,
+                    state: {
+                      accountNumber: this.state.account.accountNumber
+                    }
+                  }}
+                >
                   <Button variant="contained" className="primary">
                     <i className="fas fa-plus"></i>
                   </Button>

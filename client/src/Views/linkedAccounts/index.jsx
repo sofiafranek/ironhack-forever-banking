@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from './node_modules/react';
 
 import Layout from '../../Components/Layout';
 
-import Button from '@material-ui/core/Button';
+import Button from './node_modules/@material-ui/core/Button';
 //import { Link } from 'react-router-dom';
 
 class LinkedAccounts extends Component {

@@ -33,7 +33,6 @@ class Card extends Component {
 
   render() {
     const { accountID, cardNumber, CVV, expiryDate, type, userName } = this.props;
-
     return (
       <section className="card-container">
         <button

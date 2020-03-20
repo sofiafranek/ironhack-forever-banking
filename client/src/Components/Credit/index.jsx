@@ -7,22 +7,36 @@ import Card from 'react-bootstrap/Card';
 class Credit extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      account: null
+    };
+  }
+
+  componentDidMount() {
+    const single = this.props;
+
+    this.setState({
+      account: single
+    });
   }
 
   render() {
-    console.log(this.props, 'CREDIT PROPS');
     return (
       <section className="account-section">
-        <Card className="hvr-grow account">
-          <Card.Header>
-            <h4>{this.props.type} Account</h4>
-            <h5 className="pb-2 pt-2">IBAN Number: {this.props.accountNumber}</h5>
-            <h5>
-              Credit Allowance
-              {this.props.balance}€
-            </h5>
-          </Card.Header>
-        </Card>
+        <Link
+          to={{
+            pathname: `/credits/${this.props._id}`,
+            state: this.props.account
+          }}
+        >
+          <Card className="hvr-grow account">
+            <Card.Header>
+              <h4>{this.props.type} Account</h4>
+              <h5 className="pb-2 pt-2">IBAN Number: {this.props.accountNumber}</h5>
+              <h5>Credit Allowance : {this.props.balance}€</h5>
+            </Card.Header>
+          </Card>
+        </Link>
       </section>
     );
   }

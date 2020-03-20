@@ -13,11 +13,11 @@ import {
   InputLabel,
   Radio
 } from '@material-ui/core';
-import clsx from 'clsx';
+import clsx from '/clsx';
 import { creatingAccountFromInternal, userIDAccounts } from '../../Services/account';
 import { createNotification } from '../../Services/notification';
-import { useStyles } from './../../Utilities/useStyles';
-import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { useStyles } from '../../Utilities/useStyles';
+import Breadcrumb from '/react-bootstrap/Breadcrumb';
 import MuiAlert from '@material-ui/lab/Alert';
 
 function StyledRadio(props) {
@@ -34,7 +34,6 @@ function StyledRadio(props) {
     />
   );
 }
-
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -58,39 +57,41 @@ class AddAccount extends Component {
       message: '',
       currency: 'CAD'
     };
-    this.currencies = ['CAD',
-    'HKD',
-    'ISK',
-    'PHP',
-    'DKK',
-    'HUF',
-    'CZK',
-    'GBP',
-    'RON',
-    'SEK',
-    'IDR',
-    'INR',
-    'BRL',
-    'RUB',
-    'HRK',
-    'JPY',
-    'THB',
-    'CHF',
-    'EUR',
-    'MYR',
-    'BGN',
-    'TRY',
-    'CNY',
-    'NOK',
-    'NZD',
-    'ZAR',
-    'USD',
-    'MXN',
-    'SGD',
-    'AUD',
-    'ILS',
-    'KRW',
-    'PLN'];
+    this.currencies = [
+      'CAD',
+      'HKD',
+      'ISK',
+      'PHP',
+      'DKK',
+      'HUF',
+      'CZK',
+      'GBP',
+      'RON',
+      'SEK',
+      'IDR',
+      'INR',
+      'BRL',
+      'RUB',
+      'HRK',
+      'JPY',
+      'THB',
+      'CHF',
+      'EUR',
+      'MYR',
+      'BGN',
+      'TRY',
+      'CNY',
+      'NOK',
+      'NZD',
+      'ZAR',
+      'USD',
+      'MXN',
+      'SGD',
+      'AUD',
+      'ILS',
+      'KRW',
+      'PLN'
+    ];
     this.handleInputChange = this.handleInputChange.bind(this);
     this.setData = this.setData.bind(this);
     this.handleAccountFromChange = this.handleAccountFromChange.bind(this);
@@ -171,53 +172,50 @@ class AddAccount extends Component {
     account.accounts = null;
     account.primary = false;
 
-    const response = await creatingAccountFromInternal(account);        
+    const response = await creatingAccountFromInternal(account);
     const { result, message } = response;
     let insuccessMessage = '';
 
-    if(result) {
-      if(this.state.sharedAccount){
+    if (result) {
+      if (this.state.sharedAccount) {
+        const { userID, userName } = response;
+        const userIDFrom = this.props.user._id;
+        const userIDTo = userID;
+        const userNameFrom = this.props.user.name;
+        const userNameShared = userName;
+        const messageTo = `${userNameFrom} created an shared account with you`;
+        const messageFrom = `You just created an account with ${userNameShared}`;
 
-          const { userID, userName } = response;
-          const userIDFrom = this.props.user._id;
-          const userIDTo = userID;
-          const userNameFrom = this.props.user.name;
-          const userNameShared = userName;
-          const messageTo = `${userNameFrom} created an shared account with you`;
-          const messageFrom = `You just created an account with ${userNameShared}`;
+        const notification = {
+          userIDFrom,
+          userIDTo,
+          messageTo,
+          messageFrom
+        };
 
-          const notification = {
-            userIDFrom,
-            userIDTo,
-            messageTo,
-            messageFrom
-          };
-
-          try {
-            await createNotification(notification); 
-          } catch (error) {
-            console.log(error);
-          }
+        try {
+          await createNotification(notification);
+        } catch (error) {
+          console.log(error);
         }
-        this.props.history.push({
-          pathname: '/transactions'
-        });
+      }
+      this.props.history.push({
+        pathname: '/transactions'
+      });
       this.props.history.push({
         pathname: '/accounts'
       });
-    }
-    else {
-      if(message === 0){
+    } else {
+      if (message === 0) {
         insuccessMessage = 'Not enough money';
       } else {
         insuccessMessage = 'User doesnt exist';
-      } 
+      }
       this.setState({
         success: false,
         message: insuccessMessage
-      })
+      });
     }
-          
   }
 
   render() {
@@ -371,10 +369,7 @@ class AddAccount extends Component {
               )}
             </>
           </Grid>
-          {
-          (!this.state.success) && 
-            <Alert severity="error">{this.state.message}</Alert>
-          }
+          {!this.state.success && <Alert severity="error">{this.state.message}</Alert>}
           <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">
             Create New Account
           </Button>

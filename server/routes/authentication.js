@@ -77,6 +77,7 @@ router.post('/signin', (req, res, next) => {
     });
 });
 
+
 router.post('/signout', (req, res, next) => {
   req.session.destroy();
   res.json({});

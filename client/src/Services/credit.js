@@ -15,6 +15,16 @@ const account = async () => {
   }
 };
 
+const singleAccount = async id => {
+  try {
+    const result = await instance.get(`/${id}`);
+    const credit = result.data.credit;
+    return credit;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // only showing the accounts that belong to that user
 const userIDAccounts = async userID => {
   try {
@@ -37,4 +47,4 @@ const createAccount = async data => {
   }
 };
 
-export { account, userIDAccounts, createAccount };
+export { account, singleAccount, userIDAccounts, createAccount };

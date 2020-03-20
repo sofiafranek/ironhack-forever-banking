@@ -73,7 +73,7 @@ schema.statics.getCreditAccounts = async function(userID) {
   return userAccount;
 };
 
-schema.statics.getCardById = async function(id) {
+schema.statics.getCreditAccountById = async function(id) {
   const Model = this;
   const card = await Model.findById(id).exec();
   return card;

@@ -25,7 +25,7 @@ class Credit extends Component {
       <section className="account-section">
         <Link
           to={{
-            pathname: `/credits/${this.props._id}`,
+            pathname: `/credit/${this.props._id}`,
             state: this.props.account
           }}
         >

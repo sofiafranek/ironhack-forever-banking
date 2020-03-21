@@ -35,7 +35,8 @@ router.get('/:userID/credit', RouteGuard, async (req, res, next) => {
 router.post('/apply-for-credit', RouteGuard, async (req, res, next) => {
   const {
     accountNumber,
-    balance,
+    limit,
+    option,
     type,
     userID,
     outstanding,
@@ -47,16 +48,22 @@ router.post('/apply-for-credit', RouteGuard, async (req, res, next) => {
     occupation,
     reason
   } = req.body;
-  const balanceNumber = Number(balance).toFixed(2);
-  const minimumAmount = balance * 0.1;
-  console.log(req.body, 'REQUEST CREDIT BODY');
+  const limitNumber = Number(limit).toFixed(2);
+  const minimumAmount = limit * 0.1;
+  const optionSplitted = option.split(" ")[0];
+  const start = false;
+  const datePayment = new Date();
+  const month = datePayment.getMonth();
+  datePayment.setMonth(month + 1);
+  let optionDB = '';
+  (optionSplitted === 'Minimum') ? optionDB = 'minimum' : optionDB = 'total';
 
   try {
     const account = await Credit.createCreditAccount(
       accountNumber,
       type,
-      balanceNumber,
-      balanceNumber,
+      limitNumber,
+      limitNumber,
       minimumAmount,
       userID,
       outstanding,
@@ -66,7 +73,9 @@ router.post('/apply-for-credit', RouteGuard, async (req, res, next) => {
       maritalStatus,
       income,
       occupation,
-      reason
+      reason,
+      optionDB,
+      datePayment
     );
     res.json({ account });
   } catch (error) {

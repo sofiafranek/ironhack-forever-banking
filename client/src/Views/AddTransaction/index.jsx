@@ -218,10 +218,11 @@ class AddTransaction extends Component {
 
     try {
       const account = await userIDAccounts(userID);
+      const accounts = account.map(value => value.accountID)
       this.setState({
-        accounts: account.accountID,
-        type: account[0].accountID.type,
-        accountIDFrom: account[0].accountID._id
+        accounts,
+        type: accounts[0].type,
+        accountIDFrom: accounts[0]._id
       });
     } catch (error) {
       console.log(error);

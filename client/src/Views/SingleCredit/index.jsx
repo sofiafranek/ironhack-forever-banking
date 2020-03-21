@@ -62,7 +62,7 @@ class SingleCredit extends Component {
               <i className="fas fa-times"></i>
             </Button>
           </div>
-          <h1>{account.balance}€</h1>
+          <h1>{account.current}€</h1>
           <h5>Total Credit Limit</h5>
           <hr className="mb-4"></hr>
           <h5>IBAN Number : {account.accountNumber}</h5>

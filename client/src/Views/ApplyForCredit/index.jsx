@@ -41,7 +41,7 @@ class ApplyForCredit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      balance: 0,
+      limit: 0,
       occupation: '',
       income: 0,
       outstandingLoans: false,
@@ -140,8 +140,8 @@ class ApplyForCredit extends Component {
       ? (income = 30000)
       : (income = 0);
 
-    const balance = outstanding + otherCredit + finanacialSupport + children + status + income;
-    return balance;
+    const limit = outstanding + otherCredit + finanacialSupport + children + status + income;
+    return limit;
   }
 
   createCredit() {
@@ -153,22 +153,18 @@ class ApplyForCredit extends Component {
     account.type = 'Credit';
     account.accountNumber = accountNumber;
 
-    createAccount(account)
-      .then(account => {
-        this.props.history.push({
-          pathname: '/credit-acceptance',
-          state: { account: account }
-        });
-      })
-      .catch(error => console.log(error));
+    this.props.history.push({
+      pathname: '/credit-acceptance',
+      state: { account: account }
+    });
   }
 
   getData(event) {
     event.preventDefault();
-    const balance = this.dataCalc();
+    const limit = this.dataCalc();
     this.setState(
       {
-        balance: balance
+        limit: limit
       },
       () => this.createCredit()
     );

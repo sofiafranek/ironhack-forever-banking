@@ -3,16 +3,8 @@ import './style.scss';
 
 import { Link, NavLink } from 'react-router-dom';
 
-import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -39,6 +31,8 @@ const Navigation = props => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const usertype = props.user.usertype;
 
   return (
     <>
@@ -70,13 +64,21 @@ const Navigation = props => {
                 <MenuItem onClick={handleClose}>Accounts</MenuItem>
               </Link>
 
-              <Link to="/linked-accounts">
-                <MenuItem onClick={handleClose}>Shared Accounts</MenuItem>
-              </Link>
+              {usertype === 'Premium' ? (
+                <Link to="/linked-accounts">
+                  <MenuItem onClick={handleClose}>Shared Accounts</MenuItem>
+                </Link>
+              ) : (
+                ''
+              )}
 
-              <Link to="/credit">
-                <MenuItem onClick={handleClose}>Credit</MenuItem>
-              </Link>
+              {usertype === 'Premium' ? (
+                <Link to="/credit">
+                  <MenuItem onClick={handleClose}>Credit</MenuItem>
+                </Link>
+              ) : (
+                ''
+              )}
 
               <Link to="/cards">
                 <MenuItem onClick={handleClose}>Cards</MenuItem>
@@ -101,15 +103,19 @@ const Navigation = props => {
               </NavLink>
             ))}
           </List>
-          <List>
-            {['Exchange Rates'].map((text, index) => (
-              <NavLink to={'/exchange-rates'} key={text} exact>
-                <ListItem button>
-                  <i className="fas fa-globe-europe"></i>
-                </ListItem>
-              </NavLink>
-            ))}
-          </List>
+          {usertype === 'Premium' ? (
+            <List>
+              {['Exchange Rates'].map((text, index) => (
+                <NavLink to={'/exchange-rates'} key={text} exact>
+                  <ListItem button>
+                    <i className="fas fa-globe-europe"></i>
+                  </ListItem>
+                </NavLink>
+              ))}
+            </List>
+          ) : (
+            ''
+          )}
         </div>
         <div>
           <List>
@@ -132,7 +138,7 @@ const Navigation = props => {
           </List>
           <List>
             {['Log Out'].map((text, index) => (
-              <NavLink to={'/'} key={text} exact>
+              <NavLink to={''} key={text} exact onClick={handleSignOut}>
                 <ListItem button>
                   <i className="fas fa-sign-out-alt"></i>
                 </ListItem>

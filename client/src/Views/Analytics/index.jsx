@@ -4,7 +4,6 @@ import './style.scss';
 import Layout from '../../Components/Layout';
 import { transactions } from './../../Services/analytics';
 import { userAccounts } from './../../Services/account';
-import Chart from '../../Components/Chart';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
 class Analytics extends Component {

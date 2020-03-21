@@ -24,7 +24,7 @@ class CreditAcceptance extends Component {
           <h1>Credit Acceptance</h1>
           <hr></hr>
           <h4 className="pt-3 pb-4">
-            {user.name} you have been accepted for a Credit Amount of €{account.balance}
+            {user.name} you have been accepted for a Credit Amount of €{account.limit}
           </h4>
           <a href="/credit">
             <button>Go to Credit</button>

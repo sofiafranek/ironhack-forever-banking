@@ -3,6 +3,10 @@
 const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
+  usertype: {
+    type: String,
+    enum: ['Free', 'Premium']
+  },
   name: {
     type: String,
     required: true

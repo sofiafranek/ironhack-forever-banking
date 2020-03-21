@@ -35,7 +35,6 @@ import ExchangeRates from './Views/ExchangeRatesView/index';
 import Navigation from './Components/Navigation';
 import Mobilenavigation from './Components/Mobilenavigation';
 import CreateCard from './Views/CreateCard';
-import CurrencyConverter from './Components/CurrencyConverter';
 
 class App extends Component {
   constructor(props) {
@@ -115,226 +114,26 @@ class App extends Component {
       <div>
         {this.state.loaded && (
           <BrowserRouter>
-            {this.state.activeNav ? (
-              this.state.mobile === true ? (
-                <Mobilenavigation />
-              ) : (
-                <Navigation updateUserInformation={this.updateUserInformation} />
-              )
-            ) : (
-              true
+            {this.state.user && (
+              <>
+                {this.state.activeNav ? (
+                  this.state.mobile === true ? (
+                    <Mobilenavigation user={this.state.user} />
+                  ) : (
+                    <Navigation
+                      updateUserInformation={this.updateUserInformation}
+                      user={this.state.user}
+                    />
+                  )
+                ) : (
+                  true
+                )}
+              </>
             )}
             <Switch>
               <Route
                 path="/"
                 render={props => <Home {...props} changeActiveNav={this.disableNav} />}
-                exact
-              />
-
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/activity"
-                render={props => (
-                  <Activity {...props} changeActiveNav={this.activeNav} user={this.state.user} />
-                )}
-                exact
-              />
-
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/create-account"
-                render={props => <CreateAccount {...props} changeActiveNav={this.disableNav} />}
-                exact
-              />
-
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/accounts/edit-primary"
-                render={props => <EditPrimary {...props} changeActiveNav={this.activeNav} />}
-                exact
-              />
-
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/accounts/create-shared-account"
-                render={props => (
-                  <CreateSharedAccount {...props} changeActiveNav={this.activeNav} />
-                )}
-                exact
-              />
-
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/summary"
-                render={props => (
-                  <Summary {...props} changeActiveNav={this.disableNav} user={this.state.user} />
-                )}
-                exact
-              />
-
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/accounts"
-                render={props => <Accounts {...props} user={this.state.user} />}
-                exact
-              />
-
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/linked-accounts"
-                render={props => <LinkedAccounts {...props} user={this.state.user} />}
-                exact
-              />
-
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/credit"
-                render={props => (
-                  <Credit {...props} changeActiveNav={this.activeNav} user={this.state.user} />
-                )}
-                exact
-              />
-
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/credit/apply-for-credit"
-                render={props => (
-                  <ApplyForCredit
-                    {...props}
-                    changeActiveNav={this.activeNav}
-                    userID={this.state.user._id}
-                  />
-                )}
-                exact
-              />
-
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/credit/:id"
-                render={props => (
-                  <SingleCredit
-                    {...props}
-                    changeActiveNav={this.activeNav}
-                    userID={this.state.user._id}
-                  />
-                )}
-                exact
-              />
-
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/credit-acceptance"
-                render={props => (
-                  <CreditAcceptance
-                    {...props}
-                    changeActiveNav={this.activeNav}
-                    user={this.state.user}
-                  />
-                )}
-                exact
-              />
-
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/accounts/add-account"
-                render={props => (
-                  <AddAccount {...props} changeActiveNav={this.activeNav} user={this.state.user} />
-                )}
-                exact
-              />
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/accounts/:id/add-money"
-                render={props => (
-                  <AddMoney
-                    {...props}
-                    changeActiveNav={this.activeNav}
-                    userID={this.state.user._id}
-                  />
-                )}
-                exact
-              />
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/accounts/:id"
-                render={props => <SingleAccount {...props} changeActiveNav={this.activeNav} />}
-                exact
-              />
-
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/transactions"
-                render={props => <Transactions {...props} userID={this.state.user._id} />}
-                exact
-              />
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/transactions/addTransaction"
-                render={props => (
-                  <AddTransaction
-                    {...props}
-                    changeActiveNav={this.activeNav}
-                    user={this.state.user}
-                  />
-                )}
-                exact
-              />
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/analytics"
-                render={props => (
-                  <Analytics
-                    {...props}
-                    changeActiveNav={this.activeNav}
-                    userID={this.state.user._id}
-                  />
-                )}
-                exact
-              />
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/cards"
-                render={props => (
-                  <Cards
-                    {...props}
-                    changeActiveNav={this.activeNav}
-                    userID={this.state.user._id}
-                    user={this.state.user}
-                  />
-                )}
-                exact
-              />
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/cards/add-card"
-                render={props => <CreateCard {...props} userID={this.state.user._id} />}
-                exact
-              />
-
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/exchange-rates"
-                render={props => <ExchangeRates {...props} user={this.state.user} />}
                 exact
               />
 
@@ -360,21 +159,242 @@ class App extends Component {
                 )}
                 exact
               />
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/notifications"
-                render={() => <Notifications userID={this.state.user._id} />}
-                exact
-              />
-              <ProtectedRoute
-                authorized={this.state.user}
-                redirect={'/signin'}
-                path="/profile"
-                render={() => <Profile user={this.state.user} />}
-                exact
-              />
             </Switch>
+            {this.state.user && (
+              <Switch>
+                <ProtectedRoute
+                  authorized={this.state.user}
+                  redirect={'/signin'}
+                  path="/activity"
+                  render={props => (
+                    <Activity {...props} changeActiveNav={this.activeNav} user={this.state.user} />
+                  )}
+                  exact
+                />
+
+                <ProtectedRoute
+                  authorized={this.state.user}
+                  redirect={'/signin'}
+                  path="/create-account"
+                  render={props => (
+                    <CreateAccount
+                      {...props}
+                      changeActiveNav={this.disableNav}
+                      user={this.state.user}
+                    />
+                  )}
+                  exact
+                />
+
+                <ProtectedRoute
+                  authorized={this.state.user}
+                  redirect={'/signin'}
+                  path="/accounts/edit-primary"
+                  render={props => <EditPrimary {...props} changeActiveNav={this.activeNav} />}
+                  exact
+                />
+
+                <ProtectedRoute
+                  authorized={this.state.user}
+                  redirect={'/signin'}
+                  path="/accounts/create-shared-account"
+                  render={props => (
+                    <CreateSharedAccount {...props} changeActiveNav={this.activeNav} />
+                  )}
+                  exact
+                />
+
+                <ProtectedRoute
+                  authorized={this.state.user}
+                  redirect={'/signin'}
+                  path="/summary"
+                  render={props => (
+                    <Summary {...props} changeActiveNav={this.disableNav} user={this.state.user} />
+                  )}
+                  exact
+                />
+
+                <ProtectedRoute
+                  authorized={this.state.user}
+                  redirect={'/signin'}
+                  path="/accounts"
+                  render={props => <Accounts {...props} user={this.state.user} />}
+                  exact
+                />
+
+                <ProtectedRoute
+                  authorized={this.state.user.usertype === 'Premium'}
+                  redirect={this.state.user.usertype === 'Premium' ? '/signin' : '/activity'}
+                  path="/linked-accounts"
+                  render={props => <LinkedAccounts {...props} user={this.state.user} />}
+                  exact
+                />
+
+                <ProtectedRoute
+                  authorized={this.state.user.usertype === 'Premium'}
+                  redirect={this.state.user.usertype === 'Premium' ? '/signin' : '/activity'}
+                  path="/credit"
+                  render={props => (
+                    <Credit {...props} changeActiveNav={this.activeNav} user={this.state.user} />
+                  )}
+                  exact
+                />
+
+                <ProtectedRoute
+                  authorized={this.state.user.usertype === 'Premium'}
+                  redirect={this.state.user.usertype === 'Premium' ? '/signin' : '/activity'}
+                  path="/credit/apply-for-credit"
+                  render={props => (
+                    <ApplyForCredit
+                      {...props}
+                      changeActiveNav={this.activeNav}
+                      userID={this.state.user._id}
+                    />
+                  )}
+                  exact
+                />
+
+                <ProtectedRoute
+                  authorized={this.state.user.usertype === 'Premium'}
+                  redirect={this.state.user.usertype === 'Premium' ? '/signin' : '/activity'}
+                  path="/credit/:id"
+                  render={props => (
+                    <SingleCredit
+                      {...props}
+                      changeActiveNav={this.activeNav}
+                      userID={this.state.user._id}
+                    />
+                  )}
+                  exact
+                />
+
+                <ProtectedRoute
+                  authorized={this.state.user.usertype === 'Premium'}
+                  redirect={this.state.user.usertype === 'Premium' ? '/signin' : '/activity'}
+                  path="/credit-acceptance"
+                  render={props => (
+                    <CreditAcceptance
+                      {...props}
+                      changeActiveNav={this.activeNav}
+                      user={this.state.user}
+                    />
+                  )}
+                  exact
+                />
+
+                <ProtectedRoute
+                  authorized={this.state.user}
+                  redirect={'/signin'}
+                  path="/accounts/add-account"
+                  render={props => (
+                    <AddAccount
+                      {...props}
+                      changeActiveNav={this.activeNav}
+                      user={this.state.user}
+                    />
+                  )}
+                  exact
+                />
+                <ProtectedRoute
+                  authorized={this.state.user}
+                  redirect={'/signin'}
+                  path="/accounts/:id/add-money"
+                  render={props => (
+                    <AddMoney
+                      {...props}
+                      changeActiveNav={this.activeNav}
+                      userID={this.state.user._id}
+                    />
+                  )}
+                  exact
+                />
+                <ProtectedRoute
+                  authorized={this.state.user}
+                  redirect={'/signin'}
+                  path="/accounts/:id"
+                  render={props => <SingleAccount {...props} changeActiveNav={this.activeNav} />}
+                  exact
+                />
+
+                <ProtectedRoute
+                  authorized={this.state.user}
+                  redirect={'/signin'}
+                  path="/transactions"
+                  render={props => <Transactions {...props} userID={this.state.user._id} />}
+                  exact
+                />
+                <ProtectedRoute
+                  authorized={this.state.user}
+                  redirect={'/signin'}
+                  path="/transactions/addTransaction"
+                  render={props => (
+                    <AddTransaction
+                      {...props}
+                      changeActiveNav={this.activeNav}
+                      user={this.state.user}
+                    />
+                  )}
+                  exact
+                />
+                <ProtectedRoute
+                  authorized={this.state.user}
+                  redirect={'/signin'}
+                  path="/analytics"
+                  render={props => (
+                    <Analytics
+                      {...props}
+                      changeActiveNav={this.activeNav}
+                      userID={this.state.user._id}
+                    />
+                  )}
+                  exact
+                />
+                <ProtectedRoute
+                  authorized={this.state.user}
+                  redirect={'/signin'}
+                  path="/cards"
+                  render={props => (
+                    <Cards
+                      {...props}
+                      changeActiveNav={this.activeNav}
+                      userID={this.state.user._id}
+                      user={this.state.user}
+                    />
+                  )}
+                  exact
+                />
+                <ProtectedRoute
+                  authorized={this.state.user}
+                  redirect={'/signin'}
+                  path="/cards/add-card"
+                  render={props => <CreateCard {...props} userID={this.state.user._id} />}
+                  exact
+                />
+
+                <ProtectedRoute
+                  authorized={this.state.user.usertype === 'Premium'}
+                  redirect={this.state.user.usertype === 'Premium' ? '/signin' : '/activity'}
+                  path="/exchange-rates"
+                  render={props => <ExchangeRates {...props} user={this.state.user} />}
+                  exact
+                />
+
+                <ProtectedRoute
+                  authorized={this.state.user}
+                  redirect={'/signin'}
+                  path="/notifications"
+                  render={() => <Notifications userID={this.state.user._id} />}
+                  exact
+                />
+                <ProtectedRoute
+                  authorized={this.state.user}
+                  redirect={'/signin'}
+                  path="/profile"
+                  render={() => <Profile user={this.state.user} />}
+                  exact
+                />
+              </Switch>
+            )}
           </BrowserRouter>
         )}
       </div>

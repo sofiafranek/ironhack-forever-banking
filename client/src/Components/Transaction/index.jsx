@@ -5,19 +5,14 @@ import './style.scss';
 
 class Transaction extends Component {
   render() {
-    
     const {
       totalAmount,
       dateTransaction,
       reference,
-      endPoint,
       category,
       accountIDFrom,
-      accountIDTo,
-      colorCategory,
-      currency
+      colorCategory
     } = this.props;
-    
 
     return (
       <Accordion className="hvr-grow transaction pb-3">
@@ -25,7 +20,11 @@ class Transaction extends Component {
           <Card.Header>
             <Accordion.Toggle className="card-transaction" as={Button} variant="link" eventKey="0">
               {reference && <h6>{reference}</h6>}
-              <div>{totalAmount > 0 && <h6>{totalAmount + ' ' + getSymbolFromCurrency(accountIDFrom.currency)}</h6>}</div>
+              <div>
+                {totalAmount > 0 && (
+                  <h6>{totalAmount + ' ' + getSymbolFromCurrency(accountIDFrom.currency)}</h6>
+                )}
+              </div>
             </Accordion.Toggle>
           </Card.Header>
           <Accordion.Collapse eventKey="0">

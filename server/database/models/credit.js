@@ -11,20 +11,20 @@ const schema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  limit: {
+  current: {
     type: Number
   },
-  current: {
+  limit: {
     type: Number
   },
   income: {
     type: Number
   },
-  minimumPayment: {
-    type: Number
-  },
   type: {
     type: String
+  },
+  minimumPayment: {
+    type: Number
   },
   creditType: {
     type: String,
@@ -63,7 +63,7 @@ const schema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  currentDate: {
+  datePayment: {
     type: Date,
     default: Date.now
   },
@@ -79,15 +79,12 @@ const schema = new mongoose.Schema({
   option: {
     type: String,
     enum: ['minimum', 'total']
-
   }
 });
 
 schema.statics.getCreditAccounts = async function(userID) {
   const Model = this;
-  const userAccount = await Model.find({ $and: [{ userID }, { status: 'Active' }] })
-    // .populate('accountID')
-    .exec();
+  const userAccount = await Model.find({ $and: [{ userID }, { status: 'Active' }] }).exec();
 
   return userAccount;
 };
@@ -112,7 +109,9 @@ schema.statics.createCreditAccount = async function(
   maritalStatus,
   income,
   occupation,
-  reason
+  reason,
+  option,
+  datePayment
 ) {
   const Model = this;
   const account = await Model.create({
@@ -129,7 +128,9 @@ schema.statics.createCreditAccount = async function(
     maritalStatus,
     income,
     occupation,
-    reason
+    reason,
+    option,
+    datePayment
   });
   return account;
 };
@@ -145,15 +146,10 @@ schema.statics.removeCreditAccount = async function(id) {
   return account;
 };
 
-schema.statics.removeCreditAccount = async function(id) {
+schema.statics.updateCurrent = async function(id, current) {
   const Model = this;
-  const account = await Model.findByIdAndUpdate(id, {
-    accountNumber: '',
-    type: '',
-    createdAt: null,
-    status: 'NoActive'
-  }).exec();
-  return account;
+  await Model.findByIdAndUpdate(id, { current }).exec();
 };
+
 
 module.exports = mongoose.model('Credit', schema);

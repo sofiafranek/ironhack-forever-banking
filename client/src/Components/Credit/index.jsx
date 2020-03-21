@@ -34,7 +34,7 @@ class Credit extends Component {
             <Card.Header>
               <h4>{this.props.type} Account</h4>
               <h5 className="pb-2 pt-2">IBAN Number: {this.props.accountNumber}</h5>
-              <h5>Credit Allowance : {this.props.balance}€</h5>
+              <h5>Credit Allowance : {this.props.current}€</h5>
             </Card.Header>
           </Card>
         </Link>

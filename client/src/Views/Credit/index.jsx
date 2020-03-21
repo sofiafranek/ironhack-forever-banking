@@ -29,9 +29,8 @@ class Credit extends Component {
 
     userIDAccounts(userID)
       .then(account => {
-        const accountID = account.accountID;
         this.setState({
-          accountID
+          account
         });
       })
       .catch(error => console.log(error));

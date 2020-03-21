@@ -25,33 +25,37 @@ class Account extends Component {
   render() {
     return (
       <section className="account-section">
-        {this.state.account &&
-        <Card className="hvr-grow account">
-          <Link
-            to={{
-              pathname: `/accounts/${this.state.account._id}`,
-              state: this.state.account
-            }}
-          >
-            <Card.Header
-              className={
-                this.state.account.type === 'Current'
-                  ? 'current-color'
-                  : this.state.account.type === 'Credit'
-                  ? 'credit-color'
-                  : 'savings-color'
-              }
+        {this.state.account && (
+          <Card className="hvr-grow account">
+            <Link
+              to={{
+                pathname: `/accounts/${this.state.account._id}`,
+                state: this.state.account
+              }}
             >
-              <h4>{this.state.account.type} Account</h4>
-              <h5 className="pb-2 pt-2">IBAN Number: {this.state.account.accountNumber}</h5>
-              <h5>
-                {this.state.account.type === 'Credit' ? 'Credit Allowance' : 'Available Balance'} :{' '}
-                {this.state.account.balance}{getSymbolFromCurrency(this.state.account.currency)}
-              </h5>
-            </Card.Header>
-          </Link>
-        </Card>
-      }
+              <Card.Header
+                className={
+                  this.state.account.type === 'Current'
+                    ? 'current-color'
+                    : this.state.account.type === 'Credit'
+                    ? 'credit-color'
+                    : 'savings-color'
+                }
+              >
+                <h4>
+                  {this.state.account.type} Account{' '}
+                  {this.state.primary === true ? <span>- Primary</span> : ''}
+                </h4>
+                <h5 className="pb-2 pt-2">IBAN Number: {this.state.account.accountNumber}</h5>
+                <h5>
+                  {this.state.account.type === 'Credit' ? 'Credit Allowance' : 'Available Balance'}{' '}
+                  : {this.state.account.balance}
+                  {getSymbolFromCurrency(this.state.account.currency)}
+                </h5>
+              </Card.Header>
+            </Link>
+          </Card>
+        )}
       </section>
     );
   }

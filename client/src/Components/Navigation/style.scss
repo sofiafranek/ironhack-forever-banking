@@ -59,9 +59,22 @@ a {
 
 a:hover {
   text-decoration: none;
-  color: #007bff !important;
+  color: #50778b !important;
 }
 
 a div:hover {
   background-color: white !important;
+}
+
+.nav--logo-image {
+  background-image: url('../../Images/long-logo.png');
+  padding-left: 0;
+  width: 170px;
+  height: 30px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  right: 20px;
+  top: 10px;
 }

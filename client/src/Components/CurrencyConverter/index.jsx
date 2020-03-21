@@ -102,9 +102,9 @@ class CurrencyConverter extends Component {
             </div>
           </div>
         </form>
-        <h4 id="result-text" className="mt-3">
+        <h5 id="result-text" className="mt-3">
           {baseAmount} {baseCurrency} is equal to {result} {convertToCurrency}
-        </h4>
+        </h5>
       </div>
     );
   }

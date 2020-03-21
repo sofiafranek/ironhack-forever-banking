@@ -46,7 +46,7 @@ class Card extends Component {
         <section className="credit-card__section" onClick={event => this.flip(event)}>
           <div className="credit-card credit-card__front">
             <div className="credit-card__top">
-              <i className="fab fa-modx"></i>
+              <div className="logo-card"></div>
               <h6>{type}</h6>
             </div>
             <div className="credit-card__number">{cardNumber}</div>
@@ -66,7 +66,7 @@ class Card extends Component {
 
           <div className="credit-card credit-card__back">
             <div className="credit-card__top">
-              <i className="fab fa-modx"></i>
+              <div className="logo-card"></div>
               <h6>{type}</h6>
             </div>
 

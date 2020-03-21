@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import './style.scss';
 
 import Layout from '../../Components/Layout';
 import { transactions } from './../../Services/analytics';
 import { userAccounts } from './../../Services/account';
 import Chart from '../../Components/Chart';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 
 class Analytics extends Component {
   constructor(props) {
@@ -39,7 +41,7 @@ class Analytics extends Component {
     this.getData();
   }
 
-  calculatePercentageCategory(){
+  calculatePercentageCategory() {
     const transactions = this.state.transactions.map(value => {
       const transaction = new Object();
       transaction.amount = value.totalAmount;
@@ -69,7 +71,7 @@ class Analytics extends Component {
     this.setState({
       categories,
       totalAmount
-    })/*, () => {
+    }); /*, () => {
       console.log("HERERER")
       const eachCategories = this.state.categories;
       const total = this.state.totalAmount;
@@ -83,7 +85,6 @@ class Analytics extends Component {
         categories: eachCategories
       })
     });*/
-
   }
 
   splitDates() {
@@ -159,7 +160,23 @@ class Analytics extends Component {
       <div>
         <Layout>
           <h1>Analytics</h1>
-          <Chart dates={this.state.dates} categories={this.state.categories}/>
+          <hr></hr>
+          {/* <Chart dates={this.state.dates} categories={this.state.categories} /> */}
+          <h4 className="mt-4"></h4>
+          <h5 className="mb-4">Total amount spent this month : _____</h5>
+          <div>
+            {/* can put a variant name so the category and change in css the color to match the category colour */}
+            <ProgressBar variant="" now={40} label="catergory name %" />
+            <ProgressBar variant="" now={20} label="catergory name %" />
+            <ProgressBar variant="" now={60} label="catergory name %" />
+            <ProgressBar variant="" now={80} label="catergory name %" />
+            <ProgressBar variant="" now={15} label="catergory name %" />
+            <ProgressBar variant="" now={20} label="catergory name %" />
+            <ProgressBar variant="" now={30} label="catergory name %" />
+            <ProgressBar variant="" now={40} label="catergory name %" />
+            <ProgressBar variant="" now={50} label="catergory name %" />
+            <ProgressBar variant="" now={60} label="catergory name %" />
+          </div>
         </Layout>
       </div>
     );

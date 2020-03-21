@@ -38,10 +38,6 @@ const schema = new mongoose.Schema({
     type: String,
     required: true
   },
-  income: {
-    type: Number,
-    required: true
-  },
   passwordHash: {
     type: String
   }

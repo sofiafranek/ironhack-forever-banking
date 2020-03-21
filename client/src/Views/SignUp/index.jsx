@@ -18,8 +18,7 @@ class SignUp extends Component {
       password: '',
       dob: '',
       ID: '',
-      address: '',
-      income: ''
+      address: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.getData = this.getData.bind(this);
@@ -174,19 +173,6 @@ class SignUp extends Component {
                 label="Address"
                 type="string"
                 id="address"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="income"
-                value={this.state.income}
-                onChange={event => this.handleInputChange(event)}
-                label="Income"
-                type="number"
-                id="income"
               />
             </Grid>
           </Grid>

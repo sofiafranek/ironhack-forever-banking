@@ -32,7 +32,6 @@ function StyledRadio(props) {
   );
 }
 
-
 class CreateAccount extends Component {
   constructor(props) {
     super(props);
@@ -181,14 +180,16 @@ class CreateAccount extends Component {
         <form onSubmit={event => this.setData(event)}>
           <Grid>
             <Grid item xs={12} sm={12}>
-              <InputLabel htmlFor="age-native-simple">Type of Account</InputLabel>
-              <Select name="type" native onChange={event => this.handleInputChange(event)}>
-                {this.state.types.map(type => (
-                  <option value={type} key={type}>
-                    {type}
-                  </option>
-                ))}
-              </Select>
+              <FormControl className="mb-4">
+                <InputLabel htmlFor="age-native-simple">Type of Account</InputLabel>
+                <Select name="type" native onChange={event => this.handleInputChange(event)}>
+                  {this.state.types.map(type => (
+                    <option value={type} key={type}>
+                      {type}
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
               <FormControl>
                 <InputLabel htmlFor="age-native-simple">Currency</InputLabel>
                 <Select name="currency" native onChange={event => this.handleInputChange(event)}>

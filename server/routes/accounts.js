@@ -177,8 +177,7 @@ router.post('/add-user-to-account', RouteGuard, async (req, res, next) => {
 router.get('/:userID/accounts', RouteGuard, async (req, res, next) => {
   const userID = req.params.userID;
   try {
-    const accounts = await UserAccount.getUserActiveAccounts(userID);
-    const accountsUser = accounts.map(account => account.accountID);
+    const accountsUser = await UserAccount.getUserActiveAccounts(userID);
     res.json({ accountsUser });
   } catch (error) {
     next(error);

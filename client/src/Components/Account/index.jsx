@@ -8,7 +8,8 @@ class Account extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      account: null
+      account: null,
+      primary: false
     };
   }
 
@@ -16,38 +17,41 @@ class Account extends Component {
     const single = this.props;
 
     this.setState({
-      account: single
+      account: single.accountID,
+      primary: single.primary
     });
   }
 
   render() {
     return (
       <section className="account-section">
+        {this.state.account &&
         <Card className="hvr-grow account">
           <Link
             to={{
-              pathname: `/accounts/${this.props._id}`,
+              pathname: `/accounts/${this.state.account._id}`,
               state: this.state.account
             }}
           >
             <Card.Header
               className={
-                this.props.type === 'Current'
+                this.state.account.type === 'Current'
                   ? 'current-color'
-                  : this.props.type === 'Credit'
+                  : this.state.account.type === 'Credit'
                   ? 'credit-color'
                   : 'savings-color'
               }
             >
-              <h4>{this.props.type} Account</h4>
-              <h5 className="pb-2 pt-2">IBAN Number: {this.props.accountNumber}</h5>
+              <h4>{this.state.account.type} Account</h4>
+              <h5 className="pb-2 pt-2">IBAN Number: {this.state.account.accountNumber}</h5>
               <h5>
-                {this.props.type === 'Credit' ? 'Credit Allowance' : 'Available Balance'} :{' '}
-                {this.props.balance}{getSymbolFromCurrency(this.props.currency)}
+                {this.state.account.type === 'Credit' ? 'Credit Allowance' : 'Available Balance'} :{' '}
+                {this.state.account.balance}{getSymbolFromCurrency(this.state.account.currency)}
               </h5>
             </Card.Header>
           </Link>
         </Card>
+      }
       </section>
     );
   }

@@ -11,7 +11,7 @@ class Accounts extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      account: [],
+      accounts: [],
       search: '',
       filter: ''
     };
@@ -33,7 +33,7 @@ class Accounts extends Component {
   filterMethod(filtered) {
     this.setState(previousState => {
       return {
-        account: previousState.account.filter(acc => acc.type === filtered)
+        accounts: previousState.accounts.filter(acc => acc.type === filtered)
       };
     });
   }
@@ -52,9 +52,9 @@ class Accounts extends Component {
     });
 
     try {
-      const account = await userIDAccounts(userID)
+      const accounts = await userIDAccounts(userID)
       this.setState({
-        account
+        accounts
       });
 
       if (filter === 'Current') {
@@ -73,9 +73,9 @@ class Accounts extends Component {
     const userID = this.props.user._id;
 
     try {
-      const account = await userIDAccounts(userID);
+      const accounts = await userIDAccounts(userID);
       this.setState({
-        account
+        accounts
       });
 
     } catch (error) {
@@ -87,7 +87,7 @@ class Accounts extends Component {
   removeAccount(id) {
     this.setState(previousState => {
       return {
-        account: previousState.account.filter(acc => acc._id !== id)
+        accounts: previousState.accounts.filter(acc => acc._id !== id)
       };
     });
   }
@@ -115,9 +115,9 @@ class Accounts extends Component {
               <option value="Savings">Savings</option>
             </select>
           </div>
-          {this.state.account.length > 0 ? (
-            this.state.account.map(single => {
-              if (single.type.toLowerCase().includes(this.state.search.toLowerCase())) {
+          {this.state.accounts.length > 0 ? (
+            this.state.accounts.map(single => {
+              if (single.accountID.type.toLowerCase().includes(this.state.search.toLowerCase())) {
                 return <Account key={single._id} {...single} />;
               }
             })

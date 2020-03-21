@@ -147,9 +147,9 @@ class AddAccount extends Component {
     userIDAccounts(userID)
       .then(account => {
         this.setState({
-          accounts: account,
-          type: account[0].type,
-          accountIDFrom: account[0]._id
+          accounts: account.accountID,
+          type: account[0].accountID.type,
+          accountIDFrom: account[0].accountID._id
         });
       })
       .catch(error => console.log(error));

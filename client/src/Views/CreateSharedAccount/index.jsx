@@ -63,13 +63,13 @@ class CreateSharedAccount extends Component {
             <FormControlLabel
               value="AccountNumber"
               control={<StyledRadio />}
-              label="AccountNumber"
+              label="Account Number"
               onChange={event => this.handleInputChange(event)}
             />
             <FormControlLabel
               value="PhoneNumber"
               control={<StyledRadio />}
-              label="PhoneNumber"
+              label="Phone Number"
               onChange={event => this.handleInputChange(event)}
             />
           </RadioGroup>

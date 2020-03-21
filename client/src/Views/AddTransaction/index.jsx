@@ -219,9 +219,9 @@ class AddTransaction extends Component {
     try {
       const account = await userIDAccounts(userID);
       this.setState({
-        accounts: account,
-        type: account[0].type,
-        accountIDFrom: account[0]._id
+        accounts: account.accountID,
+        type: account[0].accountID.type,
+        accountIDFrom: account[0].accountID._id
       });
     } catch (error) {
       console.log(error);
@@ -473,13 +473,13 @@ class AddTransaction extends Component {
                 <FormControlLabel
                   value="AccountNumber"
                   control={<StyledRadio />}
-                  label="AccountNumber"
+                  label="Account Number"
                   onChange={event => this.handleInputChange(event)}
                 />
                 <FormControlLabel
                   value="PhoneNumber"
                   control={<StyledRadio />}
-                  label="PhoneNumber"
+                  label="Phone Number"
                   onChange={event => this.handleInputChange(event)}
                 />
               </RadioGroup>

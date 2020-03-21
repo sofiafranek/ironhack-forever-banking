@@ -66,8 +66,8 @@ const deleteAccount = async accountID => {
 const userIDAccounts = async userID => {
   try {
     const result = await instance.get(`/${userID}/accounts`);
-    const account = result.data.accountsUser;
-    return account;
+    const accounts = result.data.accountsUser;
+    return accounts;
   } catch (error) {
     throw error;
   }

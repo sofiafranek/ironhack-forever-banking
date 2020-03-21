@@ -51,36 +51,39 @@ class Analytics extends Component {
     const categories = [];
     let totalAmount = 0;
     for (const transaction of transactions) {
-      const color = transaction.color;
-      const category = transaction.category;
-      const amount = transaction.amount;
-      totalAmount += amount;
-      if (categories.some(value => value.category === transaction.category)) {
-        const indexCategory = categories.findIndex(value => value.category === transaction.category);
-        categories[indexCategory].amount += amount;
+      //const color = transaction.color;
+      const name = transaction.category;
+      const value = transaction.amount;
+      totalAmount += value;
+      if (categories.some(value => value.name === transaction.category)) {
+        const indexCategory = categories.findIndex(value => value.name === transaction.category);
+        categories[indexCategory].value += value;
       } else {
         categories.push({
-          color,
-          category,
-          amount
+          //color,
+          name,
+          value
         });
       }
     }
     this.setState({
       categories,
       totalAmount
-    }, () => {
-      console.log(this.state)
-    });
+    })/*, () => {
+      console.log("HERERER")
+      const eachCategories = this.state.categories;
+      const total = this.state.totalAmount;
+      for(const category of eachCategories) {
+        const amount = category.value;
+        const percentage = amount/total * 100;
+        category.value = percentage.toFixed(2);
+        console.log(category.value);
+      }
+      this.setState({
+        categories: eachCategories
+      })
+    });*/
 
-    const eachCategories = this.state.categories;
-    const total = this.state.totalAmount;
-    for(const category of eachCategories) {
-      const amount = category.amount;
-      const percentage = amount/total * 100;
-      category.percentage = percentage;
-    }
-    console.log(eachCategories, "EACJHHHHHH");
   }
 
   splitDates() {
@@ -156,7 +159,7 @@ class Analytics extends Component {
       <div>
         <Layout>
           <h1>Analytics</h1>
-          <Chart dates={this.state.dates} />
+          <Chart dates={this.state.dates} categories={this.state.categories}/>
         </Layout>
       </div>
     );

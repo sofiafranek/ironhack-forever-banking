@@ -28,7 +28,11 @@ const schema = new mongoose.Schema({
   },
   creditType: {
     type: String,
-    enum: ['Investment', 'Mortgage', 'Car', 'Buying Goods']
+    enum: 'Regular Credit'
+  },
+  reason: {
+    type: String,
+    enum: ['Increase Credit Score', 'Better Protection for Payments']
   },
   apr: {
     type: Number
@@ -96,7 +100,8 @@ schema.statics.createCreditAccount = async function(
   children,
   maritalStatus,
   income,
-  occupation
+  occupation,
+  reason
 ) {
   const Model = this;
   const account = await Model.create({
@@ -110,7 +115,8 @@ schema.statics.createCreditAccount = async function(
     children,
     maritalStatus,
     income,
-    occupation
+    occupation,
+    reason
   });
   return account;
 };

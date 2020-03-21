@@ -150,6 +150,29 @@ router.get('/:userID/user-accounts', RouteGuard, async (req, res, next) => {
   }
 });
 
+router.post('/update-primary-account', RouteGuard, async (req, res, next) => {
+  const { oldAccount, newAccount } = req.body;
+
+  try {
+    await UserAccount.updatePrimaryAccount(oldAccount, false);
+    await UserAccount.updatePrimaryAccount(newAccount, true);
+
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/add-user-to-account', RouteGuard, async (req, res, next) => {
+  const { accountID, userID } = req.body;
+
+  try {
+    await Account.updateShared(accountID);
+    await UserAccount.createUserAccount(userID, accountID, false);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // Get all the accounts from the user logged in
 router.get('/:userID/accounts', RouteGuard, async (req, res, next) => {
   const userID = req.params.userID;

@@ -11,7 +11,10 @@ const schema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  balance: {
+  current: {
+    type: Number
+  },
+  limit: {
     type: Number
   },
   income: {
@@ -20,7 +23,10 @@ const schema = new mongoose.Schema({
   type: {
     type: String
   },
-  Credittype: {
+  minimumPayment: {
+    type: Number
+  },
+  creditType: {
     type: String,
     enum: ['Investment', 'Mortgage', 'Car', 'Buying Goods']
   },

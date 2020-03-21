@@ -11,20 +11,20 @@ const schema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  current: {
+  limit: {
     type: Number
   },
-  limit: {
+  current: {
     type: Number
   },
   income: {
     type: Number
   },
-  type: {
-    type: String
-  },
   minimumPayment: {
     type: Number
+  },
+  type: {
+    type: String
   },
   creditType: {
     type: String,

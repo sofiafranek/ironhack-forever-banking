@@ -48,7 +48,7 @@ router.post('/apply-for-credit', RouteGuard, async (req, res, next) => {
     reason
   } = req.body;
   const balanceNumber = Number(balance).toFixed(2);
-
+  const minimumAmount = balance * 0.1;
   console.log(req.body, 'REQUEST CREDIT BODY');
 
   try {
@@ -56,6 +56,8 @@ router.post('/apply-for-credit', RouteGuard, async (req, res, next) => {
       accountNumber,
       type,
       balanceNumber,
+      balanceNumber,
+      minimumAmount,
       userID,
       outstanding,
       otherCredit,

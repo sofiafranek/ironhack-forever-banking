@@ -63,6 +63,10 @@ const schema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
+  currentDate: {
+    type: Date,
+    default: Date.now
+  },
   maritalStatus: {
     type: String,
     enum: ['Single', 'In a relationship', 'Married', 'Divorced', 'Widowed']
@@ -71,6 +75,11 @@ const schema = new mongoose.Schema({
     type: String,
     enum: ['Active', 'NoActive'],
     default: 'Active'
+  },
+  option: {
+    type: String,
+    enum: ['minimum', 'total']
+
   }
 });
 
@@ -92,7 +101,9 @@ schema.statics.getCreditAccountById = async function(id) {
 schema.statics.createCreditAccount = async function(
   accountNumber,
   type,
-  balance,
+  current,
+  limit,
+  minimumPayment,
   userID,
   outstanding,
   otherCredit,
@@ -107,7 +118,9 @@ schema.statics.createCreditAccount = async function(
   const account = await Model.create({
     accountNumber,
     type,
-    balance,
+    current,
+    limit,
+    minimumPayment,
     userID,
     outstanding,
     otherCredit,
@@ -118,6 +131,17 @@ schema.statics.createCreditAccount = async function(
     occupation,
     reason
   });
+  return account;
+};
+
+schema.statics.removeCreditAccount = async function(id) {
+  const Model = this;
+  const account = await Model.findByIdAndUpdate(id, {
+    accountNumber: '',
+    type: '',
+    createdAt: null,
+    status: 'NoActive'
+  }).exec();
   return account;
 };
 

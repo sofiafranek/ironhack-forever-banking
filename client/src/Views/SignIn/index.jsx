@@ -43,18 +43,17 @@ class SignInSide extends Component {
 
     signIn(user)
       .then(data => {
-        if(data.user) {
+        if (data.user) {
           this.props.updateUserInformation(data.user);
           this.props.history.push('/activity');
-        }
-        else {
+        } else {
           const error = true;
           const errorMessage = data.error;
           this.setState({
             error,
             errorMessage
           });
-        } 
+        }
       })
       .catch(error => console.log(error));
   }

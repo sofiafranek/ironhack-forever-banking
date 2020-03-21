@@ -93,4 +93,12 @@ schema.statics.getUserPrimaryAccount = async function(userID) {
   return account.accountID;
 };
 
+schema.statics.updatePrimaryAccount = async function(accountID, primary) {
+  const Model = this;
+  const filter = { accountID };
+  const update = { primary };
+  const account = await Model.updateOne(filter, update).exec();
+  return account;
+};
+
 module.exports = mongoose.model('userAccount', schema);

@@ -14,7 +14,7 @@ import {
   Radio
 } from '@material-ui/core';
 import clsx from 'clsx';
-import { creatingAccountFromInternal, userIDAccounts } from '../../Services/account';
+import { creatingAccountFromInternal, creatingAccountFromExternal, userIDAccounts } from '../../Services/account';
 import { createNotification } from '../../Services/notification';
 import { useStyles } from '../../Utilities/useStyles';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
@@ -173,8 +173,15 @@ class AddAccount extends Component {
     account.accounts = null;
     account.primary = false;
 
-    const response = await creatingAccountFromInternal(account);
-    const { result, message } = response;
+    let response = null;
+
+    if(this.state.option === 'Existing')
+      response = await creatingAccountFromInternal(account);
+    else {
+      response = await creatingAccountFromExternal(account);
+    }
+
+    const { result } = response;
     let insuccessMessage = '';
 
     if (result) {
@@ -207,6 +214,7 @@ class AddAccount extends Component {
         pathname: '/accounts'
       });
     } else {
+      const { message } = response;
       if (message === 0) {
         insuccessMessage = 'Not enough money';
       } else {

@@ -111,4 +111,12 @@ schema.statics.removeAccount = async function(id) {
   return account;
 };
 
+schema.statics.updateShared = async function(id) {
+  const Model = this;
+  const account = await Model.findByIdAndUpdate(id, {
+    shared: true
+  }).exec();
+  return account;
+};
+
 module.exports = mongoose.model('Account', schema);

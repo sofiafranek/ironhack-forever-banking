@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
+import './style.scss';
 
 import Layout from '../../Components/Layout';
 import { transactions } from './../../Services/analytics';
 import { userAccounts } from './../../Services/account';
 import Chart from '../../Components/Chart';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 
 class Analytics extends Component {
   constructor(props) {
     super(props);
     this.state = {
       transactions: [],
-      dates: []
+      dates: [],
+      categories: [],
+      totalAmount: 0
     };
   }
 
@@ -35,6 +39,52 @@ class Analytics extends Component {
 
   componentDidMount() {
     this.getData();
+  }
+
+  calculatePercentageCategory() {
+    const transactions = this.state.transactions.map(value => {
+      const transaction = new Object();
+      transaction.amount = value.totalAmount;
+      transaction.category = value.category;
+      transaction.color = value.colorCategory;
+      return transaction;
+    });
+
+    const categories = [];
+    let totalAmount = 0;
+    for (const transaction of transactions) {
+      //const color = transaction.color;
+      const name = transaction.category;
+      const value = transaction.amount;
+      totalAmount += value;
+      if (categories.some(value => value.name === transaction.category)) {
+        const indexCategory = categories.findIndex(value => value.name === transaction.category);
+        categories[indexCategory].value += value;
+      } else {
+        categories.push({
+          //color,
+          name,
+          value
+        });
+      }
+    }
+    this.setState({
+      categories,
+      totalAmount
+    }); /*, () => {
+      console.log("HERERER")
+      const eachCategories = this.state.categories;
+      const total = this.state.totalAmount;
+      for(const category of eachCategories) {
+        const amount = category.value;
+        const percentage = amount/total * 100;
+        category.value = percentage.toFixed(2);
+        console.log(category.value);
+      }
+      this.setState({
+        categories: eachCategories
+      })
+    });*/
   }
 
   splitDates() {
@@ -101,14 +151,37 @@ class Analytics extends Component {
     this.setState({
       dates
     });
+
+    this.calculatePercentageCategory();
   }
 
   render() {
     return (
       <div>
         <Layout>
+<<<<<<< HEAD
           <h1>Monthly expenses tracker</h1>
           <Chart dates={this.state.dates} />
+=======
+          <h1>Analytics</h1>
+          <hr></hr>
+          {/* <Chart dates={this.state.dates} categories={this.state.categories} /> */}
+          <h4 className="mt-4"></h4>
+          <h5 className="mb-4">Total amount spent this month : _____</h5>
+          <div>
+            {/* can put a variant name so the category and change in css the color to match the category colour */}
+            <ProgressBar variant="" now={40} label="catergory name %" />
+            <ProgressBar variant="" now={20} label="catergory name %" />
+            <ProgressBar variant="" now={60} label="catergory name %" />
+            <ProgressBar variant="" now={80} label="catergory name %" />
+            <ProgressBar variant="" now={15} label="catergory name %" />
+            <ProgressBar variant="" now={20} label="catergory name %" />
+            <ProgressBar variant="" now={30} label="catergory name %" />
+            <ProgressBar variant="" now={40} label="catergory name %" />
+            <ProgressBar variant="" now={50} label="catergory name %" />
+            <ProgressBar variant="" now={60} label="catergory name %" />
+          </div>
+>>>>>>> ee280d8b19561e9c8ac486dedc4c00a020ae365d
         </Layout>
       </div>
     );

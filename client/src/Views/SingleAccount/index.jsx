@@ -64,7 +64,9 @@ class SingleAccount extends Component {
               </Breadcrumb.Item>
             </Breadcrumb>
             <section className="single-account">
-              <h1>{this.state.account.balance} {getSymbolFromCurrency(this.state.account.currency)}</h1>
+              <h1>
+                {this.state.account.balance} {getSymbolFromCurrency(this.state.account.currency)}
+              </h1>
               <h5>
                 {this.state.account.type === 'Current'
                   ? 'Available Balance'
@@ -97,9 +99,11 @@ class SingleAccount extends Component {
                     <i className="fas fa-plus"></i>
                   </Button>
                 </Link>
-                <Button variant="contained" className="secondary">
-                  <i className="fas fa-link"></i>
-                </Button>
+                <a href="/accounts/create-shared-account">
+                  <Button variant="contained" className="secondary">
+                    <i className="fas fa-link"></i>
+                  </Button>
+                </a>
                 <Button
                   variant="contained"
                   className="third"

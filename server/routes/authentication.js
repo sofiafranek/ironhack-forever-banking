@@ -19,7 +19,6 @@ const accountSid = process.env.ACCOUNT_SID;
 const authToken = process.env.AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken);
 
-
 router.post('/signup', (req, res, next) => {
   const {
     firstName,
@@ -30,8 +29,7 @@ router.post('/signup', (req, res, next) => {
     nationality,
     dob,
     ID,
-    address,
-    income
+    address
   } = req.body;
 
   bcryptjs
@@ -45,19 +43,18 @@ router.post('/signup', (req, res, next) => {
         nationality,
         dob,
         ID,
-        address,
-        income
+        address
       });
     })
     .then(user => {
       req.session.user = user._id;
       client.messages
-      .create({
-         from: 'whatsapp:+351916275555',
-         body: 'TRAABAALHA CARALHOOO',
-         to: 'whatsapp:+351919057319'
-       })
-      .then(message => console.log(message.sid));
+        .create({
+          from: 'whatsapp:+351916275555',
+          body: 'TRAABAALHA CARALHOOO',
+          to: 'whatsapp:+351919057319'
+        })
+        .then(message => console.log(message.sid));
       res.json({ user });
     })
     .catch(error => {
@@ -93,7 +90,6 @@ router.post('/signin', (req, res, next) => {
       next(error);
     });
 });
-
 
 router.post('/signout', (req, res, next) => {
   req.session.destroy();

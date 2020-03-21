@@ -123,7 +123,7 @@ router.post('/add-transaction-phone', async (req, res, next) => {
         const results = await fetch(api);
         const resultsJSON = await results.json();
         const rates = resultsJSON.rates;
-        const exchange = Number.parseFloat(totalAmount * rates[accountTo.currency]).toFixed(3);
+        const exchange = Number.parseFloat(totalAmount * rates[accountTo.currency]).toFixed(2);
         addBalance = Number(balanceTo) + Number(exchange);
       }
 

@@ -26,7 +26,7 @@ const schema = new mongoose.Schema({
   type: {
     type: String
   },
-  Credittype: {
+  creditType: {
     type: String,
     enum: 'Regular Credit'
   },

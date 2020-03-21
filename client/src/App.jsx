@@ -16,6 +16,7 @@ import CreditAcceptance from './Views/CreditAcceptance';
 import CreateAccount from './Views/CreateAccount';
 import SingleAccount from './Views/SingleAccount';
 import AddAccount from './Views/AddAccount';
+import EditPrimary from './Views/EditPrimary';
 import CreateSharedAccount from './Views/CreateSharedAccount';
 import SingleCredit from './Views/SingleCredit';
 import AddMoney from './Views/AddMoney';
@@ -145,6 +146,14 @@ class App extends Component {
                 redirect={'/signin'}
                 path="/create-account"
                 render={props => <CreateAccount {...props} changeActiveNav={this.disableNav} />}
+                exact
+              />
+
+              <ProtectedRoute
+                authorized={this.state.user}
+                redirect={'/signin'}
+                path="/accounts/edit-primary"
+                render={props => <EditPrimary {...props} changeActiveNav={this.activeNav} />}
                 exact
               />
 

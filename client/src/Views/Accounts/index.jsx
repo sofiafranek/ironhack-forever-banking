@@ -51,8 +51,8 @@ class Accounts extends Component {
       filter
     });
 
-    try {
-      const accounts = await userIDAccounts(userID)
+    try {
+      const accounts = await userIDAccounts(userID);
       this.setState({
         accounts
       });
@@ -62,12 +62,10 @@ class Accounts extends Component {
       } else if (filter === 'Savings') {
         this.filterMethod('Savings');
       }
-
     } catch (error) {
       console.log(error);
     }
   }
-
 
   async getData() {
     const userID = this.props.user._id;
@@ -77,11 +75,9 @@ class Accounts extends Component {
       this.setState({
         accounts
       });
-
     } catch (error) {
       console.log(error);
     }
-
   }
 
   removeAccount(id) {
@@ -106,6 +102,16 @@ class Accounts extends Component {
             <Button variant="contained" className="secondary" onClick={this.refresh}>
               <i className="fas fa-sync-alt"></i>
             </Button>
+            <Link
+              to={{
+                pathname: '/accounts/edit-primary',
+                state: this.state.accounts
+              }}
+            >
+              <Button variant="contained" className="third">
+                <i className="fas fa-pencil-alt"></i>
+              </Button>
+            </Link>
           </div>
           <div className="search-filter mobile-filter">
             <Search search={this.searchData} />

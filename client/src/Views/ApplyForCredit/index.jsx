@@ -15,6 +15,7 @@ import {
 
 import clsx from 'clsx';
 import { useStyles } from '../../Utilities/useStyles';
+import Form from 'react-bootstrap/Form';
 
 import Button from '@material-ui/core/Button';
 
@@ -202,6 +203,18 @@ class ApplyForCredit extends Component {
                   ))}
                 </Select>
               </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={12} className="pb-2 pt-2">
+              <Form className="credit-estimate">
+                <Form.Group controlId="formBasicRangeCustom" className="mb-4">
+                  <Form.Label>Amount you would like to borrow?</Form.Label>
+                  <Form.Control type="range" custom />
+                </Form.Group>
+                <Form.Group controlId="formBasicRangeCustom">
+                  <Form.Label>How long would you like the loan for?</Form.Label>
+                  <Form.Control type="range" custom />
+                </Form.Group>
+              </Form>
             </Grid>
             <Grid item xs={12} sm={12} className="pb-4">
               <FormControl>

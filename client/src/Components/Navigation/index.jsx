@@ -76,6 +76,10 @@ const Navigation = props => {
               <MenuItem onClick={handleClose}>Credit</MenuItem>
             </Link>
 
+            <Link to="/credit/credit-estimate">
+              <MenuItem onClick={handleClose}>Credit Estimate</MenuItem>
+            </Link>
+
             <Link to="/cards">
               <MenuItem onClick={handleClose}>Cards</MenuItem>
             </Link>

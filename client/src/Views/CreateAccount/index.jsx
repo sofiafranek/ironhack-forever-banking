@@ -175,6 +175,7 @@ class CreateAccount extends Component {
   }
 
   render() {
+    const usertype = this.props.user.usertype;
     return (
       <Container className="layout-width centered-page">
         <h1 className="mb-4">Create an Account</h1>

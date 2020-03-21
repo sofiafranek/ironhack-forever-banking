@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import './style.scss';
 
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  Grid
-} from '@material-ui/core';
+import { FormControl, InputLabel, Select, Grid } from '@material-ui/core';
 import { createAccount } from '../../Services/credit';
 import Layout from '../../Components/Layout';
 
@@ -30,7 +25,7 @@ class CreditAcceptance extends Component {
     });
   }
 
-  componentDidMount(){
+  componentDidMount() {
     const account = this.props.location.state.account;
     const minimum = account.limit * 0.05;
     this.options[0] += ` - ${minimum}$`;
@@ -38,7 +33,7 @@ class CreditAcceptance extends Component {
     this.setState({
       account,
       minimum
-    })
+    });
   }
 
   async setData(event) {
@@ -58,18 +53,14 @@ class CreditAcceptance extends Component {
     const user = this.props.user;
     return (
       <Layout>
-        {this.state.account &&
-        <section className="apply-for-credit-page">
-          <h1>Credit Acceptance</h1>
-          <hr></hr>
-          <h4 className="pt-3 pb-4">
-<<<<<<< HEAD
-            {user.name} you have been accepted for a Credit Amount of €{account.limit}
-=======
-            {user.name} you have been accepted for a Credit Amount of {this.state.account.limit}$
->>>>>>> b89e9388d3406ab637aff142a2f016355d4bb703
-          </h4>
-          <Grid item xs={12} sm={12} className="pb-4">
+        {this.state.account && (
+          <section className="apply-for-credit-page">
+            <h1>Credit Acceptance</h1>
+            <hr></hr>
+            <h4 className="pt-3 pb-4">
+              {user.name} you have been accepted for a Credit Amount of {this.state.account.limit}$
+            </h4>
+            <Grid item xs={12} sm={12} className="pb-4">
               <FormControl>
                 <InputLabel htmlFor="age-native-simple">How would you prefer to pay?</InputLabel>
                 <Select name="option" native onChange={event => this.handleInputChange(event)}>
@@ -81,9 +72,9 @@ class CreditAcceptance extends Component {
                 </Select>
               </FormControl>
             </Grid>
-            <button onClick={(event) => this.setData(event)}>Go to Credit</button>
-        </section>
-        }
+            <button onClick={event => this.setData(event)}>Go to Credit</button>
+          </section>
+        )}
       </Layout>
     );
   }

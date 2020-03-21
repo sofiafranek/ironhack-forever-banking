@@ -107,7 +107,7 @@ class Analytics extends Component {
     return (
       <div>
         <Layout>
-          <h1>Analytics</h1>
+          <h1>Monthly expenses tracker</h1>
           <Chart dates={this.state.dates} />
         </Layout>
       </div>

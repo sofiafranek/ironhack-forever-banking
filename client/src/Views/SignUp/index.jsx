@@ -53,7 +53,7 @@ class SignUp extends Component {
 
   render() {
     return (
-      <Container className="layout-width">
+      <Container className="layout-width sign-up">
         <h1>Sign Up</h1>
         <form onSubmit={event => this.getData(event)}>
           <Grid container spacing={2}>

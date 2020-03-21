@@ -16,7 +16,8 @@ const Profile = props => {
         </Breadcrumb>
         <section>
           <h1 className="pb-3">Profile</h1>
-          <h5 className="pb-3">User Name: {user.name}</h5>
+          <hr></hr>
+          <h5 className="pb-3 pt-3">User Name: {user.name}</h5>
           <h5 className="pb-3">Email: {user.email}</h5>
           <h5 className="pb-3">Phone Number: {user.phoneNumber}</h5>
           <h5 className="pb-3">Nationality: {user.nationality}</h5>

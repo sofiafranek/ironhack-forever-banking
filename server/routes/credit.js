@@ -44,7 +44,8 @@ router.post('/apply-for-credit', RouteGuard, async (req, res, next) => {
     children,
     maritalStatus,
     income,
-    occupation
+    occupation,
+    reason
   } = req.body;
   const balanceNumber = Number(balance).toFixed(2);
 
@@ -62,7 +63,8 @@ router.post('/apply-for-credit', RouteGuard, async (req, res, next) => {
       children,
       maritalStatus,
       income,
-      occupation
+      occupation,
+      reason
     );
     res.json({ account });
   } catch (error) {

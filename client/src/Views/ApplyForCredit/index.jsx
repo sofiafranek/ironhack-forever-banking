@@ -46,8 +46,9 @@ class ApplyForCredit extends Component {
       income: 0,
       outstandingLoans: false,
       otherCredit: false,
-      types: ['Buying Goods', 'Investment', 'Mortgage', 'Car'],
-      type: 'Buying Goods',
+      type: 'Regular Credit',
+      reason: 'Increase Credit Score',
+      reasons: ['Increase Credit Score', 'Better Protection for Payments'],
       occupations: [
         'Computers & Technology',
         'Health Care & Allied Health',
@@ -195,9 +196,9 @@ class ApplyForCredit extends Component {
               <FormControl>
                 <InputLabel htmlFor="age-native-simple">What is the credit for?</InputLabel>
                 <Select name="reasons" native onChange={event => this.handleInputChange(event)}>
-                  {this.state.types.map(type => (
-                    <option value={type} key={type}>
-                      {type}
+                  {this.state.reasons.map(reason => (
+                    <option value={reason} key={reason}>
+                      {reason}
                     </option>
                   ))}
                 </Select>

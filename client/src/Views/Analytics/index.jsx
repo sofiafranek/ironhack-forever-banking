@@ -159,10 +159,6 @@ class Analytics extends Component {
     return (
       <div>
         <Layout>
-<<<<<<< HEAD
-          <h1>Monthly expenses tracker</h1>
-          <Chart dates={this.state.dates} />
-=======
           <h1>Analytics</h1>
           <hr></hr>
           {/* <Chart dates={this.state.dates} categories={this.state.categories} /> */}
@@ -181,7 +177,6 @@ class Analytics extends Component {
             <ProgressBar variant="" now={50} label="catergory name %" />
             <ProgressBar variant="" now={60} label="catergory name %" />
           </div>
->>>>>>> ee280d8b19561e9c8ac486dedc4c00a020ae365d
         </Layout>
       </div>
     );

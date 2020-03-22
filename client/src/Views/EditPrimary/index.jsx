@@ -4,7 +4,7 @@ import Layout from '../../Components/Layout';
 import { RadioGroup, FormControl, FormControlLabel, Radio, Button } from '@material-ui/core';
 import { useStyles } from '../../Utilities/useStyles';
 import clsx from 'clsx';
-
+import { updatePrimaryAccount } from '../../Services/account';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 function StyledRadio(props) {
@@ -22,31 +22,55 @@ function StyledRadio(props) {
   );
 }
 
+
 class EditPrimary extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      account: null,
-      primaryAccount: ''
+      accounts: [],
+      oldAccount: '',
+      newAccount: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   handleInputChange(event) {
     const inputName = event.target.name;
-    let value = event.target.value;
+    const value = event.target.value;
 
+    console.log(inputName + ' ' + value);
     this.setState({
       [inputName]: value
     });
   }
 
   componentDidMount() {
-    const account = this.props.location.state;
+    const allAccounts = this.props.location.state;
+    console.log(allAccounts);
+    const oldAcc = allAccounts.filter((value) => value.primary);
+    console.log(oldAcc);
+    const oldAccount = oldAcc[0]._id;
+    const accounts = allAccounts.filter((value) => !value.primary);
 
     this.setState({
-      account: account
+      oldAccount,
+      accounts
     });
+  }
+
+  async setData(event){
+    event.preventDefault();
+    const data = Object.assign({}, this.state);
+    delete data.accounts;
+    try {
+      console.log("IIIIIMMWMWMMWMMWM")
+      await updatePrimaryAccount(data);
+      this.props.history.push({
+        pathname: '/accounts'
+      });
+    } catch(error) {
+      console.log(error);
+    }
   }
 
   render() {
@@ -57,20 +81,19 @@ class EditPrimary extends Component {
           <Breadcrumb.Item className="disable-breadcrumb">Change Primary Account</Breadcrumb.Item>
         </Breadcrumb>
         <h4 className="pl-2 pb-4">Change your primary account</h4>
+        <form onSubmit={event => this.setData(event)}>
         <FormControl component="fieldset">
-          {this.state.account &&
-            (this.state.account.length > 0 ? (
-              this.state.account.map(single => {
+          {this.state.accounts.length > 0 ? (
+              this.state.accounts.map(single => {
                 return (
                   <RadioGroup
-                    name="primaryAccount"
-                    className="scheduled-transaction"
-                    key={single.accountID._id}
+                    name="newAccount"
+                    key={single._id}
                   >
                     <FormControlLabel
-                      value="Yes"
+                      value={single._id}
                       control={<StyledRadio />}
-                      label={single.accountID.accountNumber}
+                      label={single.accountID.accountNumber + ' - ' + single.accountID.type}
                       onChange={event => this.handleInputChange(event)}
                     />
                   </RadioGroup>
@@ -78,11 +101,12 @@ class EditPrimary extends Component {
               })
             ) : (
               <p>There are no accounts to change to primary</p>
-            ))}
+            )}
         </FormControl>
         <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">
           Change Primary Account
         </Button>
+        </form>
       </Layout>
     );
   }

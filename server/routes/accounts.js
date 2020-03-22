@@ -152,6 +152,8 @@ router.get('/:userID/user-accounts', RouteGuard, async (req, res, next) => {
 
 router.post('/update-primary-account', RouteGuard, async (req, res, next) => {
   const { oldAccount, newAccount } = req.body;
+  console.log(oldAccount);
+  console.log(newAccount);
 
   try {
     await UserAccount.updatePrimaryAccount(oldAccount, false);

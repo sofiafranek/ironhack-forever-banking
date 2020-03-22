@@ -17,7 +17,9 @@ const account = async () => {
 
 const updatePrimaryAccount = async (data) => {
   try {
-    await instance.post('/update-primary-account', data);
+    console.log("333333333333333")
+    const result = await instance.post('/update-primary-account', data);
+    return result.data;
   } catch(error) {
     throw error;
   }

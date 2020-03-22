@@ -96,11 +96,10 @@ schema.statics.getUserPrimaryAccount = async function(userID) {
   return account.accountID;
 };
 
-schema.statics.updatePrimaryAccount = async function(accountID, primary) {
+schema.statics.updatePrimaryAccount = async function(_id, primary) {
   const Model = this;
-  const filter = { accountID };
   const update = { primary };
-  const account = await Model.updateOne(filter, update).exec();
+  const account = await Model.findByIdAndUpdate(_id, update).exec();
   return account;
 };
 

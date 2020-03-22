@@ -69,21 +69,24 @@ class Analytics extends Component {
       }
     }
 
-    this.setState({
-      categories,
-      totalAmount
-    }, () => {
-      const eachCategories = this.state.categories;
-      const total = this.state.totalAmount;
-      for(const category of eachCategories) {
-        const amount = category.value;
-        const percentage = amount/total * 100;
-        category.value = percentage.toFixed(0);
+    this.setState(
+      {
+        categories,
+        totalAmount
+      },
+      () => {
+        const eachCategories = this.state.categories;
+        const total = this.state.totalAmount;
+        for (const category of eachCategories) {
+          const amount = category.value;
+          const percentage = (amount / total) * 100;
+          category.value = percentage.toFixed(0);
+        }
+        this.setState({
+          eachCategories
+        });
       }
-      this.setState({
-        eachCategories
-      })
-    });
+    );
   }
 
   splitDates() {
@@ -166,9 +169,12 @@ class Analytics extends Component {
           <div>
             {/* can put a variant name so the category and change in css the color to match the category colour */}
             {this.state.eachCategories.map(category => (
-              <ProgressBar variant="" now={category.value} label={category.name + ' ' + category.value + '%'} />
-            ))
-            }
+              <ProgressBar
+                variant={category.name}
+                now={category.value}
+                label={category.name + ' ' + category.value + '%'}
+              />
+            ))}
           </div>
         </Layout>
       </div>

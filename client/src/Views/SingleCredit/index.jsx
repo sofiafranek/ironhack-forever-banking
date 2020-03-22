@@ -46,6 +46,7 @@ class SingleCredit extends Component {
 
   render() {
     const account = this.props.location.state;
+    console.log(account, 'ACCOUNT');
     return (
       <Layout>
         <Breadcrumb>
@@ -62,7 +63,10 @@ class SingleCredit extends Component {
               <i className="fas fa-times"></i>
             </Button>
           </div>
-          <h1>{account.current}{getSymbolFromCurrency(account.currency)}</h1>
+          <h1>
+            {account.current}
+            {getSymbolFromCurrency(account.currency)}
+          </h1>
           <h5>Total Credit Limit</h5>
           <hr className="mb-4"></hr>
           <h5>IBAN Number : {account.accountNumber}</h5>

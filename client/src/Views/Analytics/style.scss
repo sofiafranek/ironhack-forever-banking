@@ -2,12 +2,87 @@
   background-color: white;
   height: 35px;
   margin: 15px 0;
-  // .bg-hello {
-  //   background-color: black !important;
-  // }
-  border: 1px solid #91a9b6 !important;
+  // border: 1px solid #91a9b6 !important;
 }
 
 .progress-bar {
   background-color: #91a9b6 !important;
+  overflow: initial !important;
+  color: black !important;
+}
+
+.progress-bar.bg-Housing {
+  background-color: #faf8c0 !important;
+}
+
+.progress-bar.bg-Transport {
+  background-color: #f0bb8d !important;
+}
+
+.progress-bar.bg-Food.and.Dining {
+  background-color: #e67b77 !important;
+}
+
+.progress-bar.bg-Utility.Bills {
+  background-color: #b9de9b !important;
+}
+
+.progress-bar.bg-Cell.Phone {
+  background-color: #64b56a !important;
+}
+
+.progress-bar.bg-Childcare.and.School.Costs {
+  background-color: #6fd9c7 !important;
+}
+
+.progress-bar.bg-Pet.Food {
+  background-color: #42aab8 !important;
+}
+
+.progress-bar.bg-Pet.Insurance {
+  background-color: #286fad !important;
+}
+
+.progress-bar.bg-Clothing {
+  background-color: #cacaeb !important;
+}
+
+.progress-bar.bg-Health.Insurance {
+  background-color: #b5a5c7 !important;
+}
+
+.progress-bar.bg-Fitness {
+  background-color: #ebd0f2 !important;
+}
+
+.progress-bar.bg-Auto.Insurance {
+  background-color: #f0bde5 !important;
+}
+
+.progress-bar.bg-Life.Insurance {
+  background-color: #9e5d7c !important;
+}
+
+.progress-bar.bg-Fun.Stuff {
+  background-color: #bd7228 !important;
+}
+
+.progress-bar.bg-Travel {
+  background-color: #e6e6e6 !important;
+}
+
+.progress-bar.bg-Student.Loans {
+  background-color: #7f7691 !important;
+}
+
+.progress-bar.bg-Credit.Card.Debt {
+  background-color: #0aa687 !important;
+}
+
+.progress-bar.bg-Retirement {
+  background-color: #b0cf9b !important;
+}
+
+.progress-bar.bg-Emergency.Fund {
+  background-color: #dbc2b4 !important;
 }

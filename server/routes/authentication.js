@@ -29,7 +29,8 @@ router.post('/signup', (req, res, next) => {
     nationality,
     dob,
     ID,
-    address
+    address,
+    usertype
   } = req.body;
 
   bcryptjs
@@ -43,7 +44,8 @@ router.post('/signup', (req, res, next) => {
         nationality,
         dob,
         ID,
-        address
+        address,
+        usertype
       });
     })
     .then(user => {

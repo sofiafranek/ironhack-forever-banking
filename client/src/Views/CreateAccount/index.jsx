@@ -36,7 +36,7 @@ class CreateAccount extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      type: 'Savings',
+      type: 'Current',
       types: ['Current', 'Savings'],
       balance: '',
       sharedAccount: false,
@@ -143,28 +143,29 @@ class CreateAccount extends Component {
     account.userID = userID;
     account.primary = true;
     account.balance = Number(this.state.balance);
+    console.log(account, 'ACCOUNT');
 
     try {
       const response = await creatingAccountFromExternal(account);
       const { result } = response;
 
-      if(result){
-      const { accountID, type } = response;
-      const cardNumber = this.generateCardNumber();
-      const CVV = this.generateCVV();
-      const expiryDate = this.generateExpiryDate();
+      if (result) {
+        const { accountID, type } = response;
+        const cardNumber = this.generateCardNumber();
+        const CVV = this.generateCVV();
+        const expiryDate = this.generateExpiryDate();
 
-      const card = {
-        cardNumber,
-        CVV,
-        accountID,
-        type,
-        expiryDate,
-        userID
-      };
+        const card = {
+          cardNumber,
+          CVV,
+          accountID,
+          type,
+          expiryDate,
+          userID
+        };
 
-      await creatingCard(card);
-      this.props.history.push('/summary');
+        await creatingCard(card);
+        this.props.history.push('/summary');
       } else {
         //TODO --> CHECK WHEN IS SHARED ACCOUNT AND THE USER DOESNT EXIST
       }
@@ -174,6 +175,7 @@ class CreateAccount extends Component {
   }
 
   render() {
+    const usertype = this.props.user.usertype;
     return (
       <Container className="layout-width centered-page">
         <h1 className="mb-4">Create an Account</h1>

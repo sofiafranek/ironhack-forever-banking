@@ -156,7 +156,6 @@ router.post('/update-primary-account', RouteGuard, async (req, res, next) => {
   try {
     await UserAccount.updatePrimaryAccount(oldAccount, false);
     await UserAccount.updatePrimaryAccount(newAccount, true);
-
   } catch (error) {
     next(error);
   }

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
+
+import { Button, TextField, FormControl, Select, Grid, InputLabel } from '@material-ui/core';
 
 import { signUp } from './../../Services/authentication';
 
@@ -18,7 +17,9 @@ class SignUp extends Component {
       password: '',
       dob: '',
       ID: '',
-      address: ''
+      address: '',
+      usertypes: ['Free', 'Premium'],
+      usertype: 'Free'
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.getData = this.getData.bind(this);
@@ -57,12 +58,24 @@ class SignUp extends Component {
         <h1>Sign Up</h1>
         <form onSubmit={event => this.getData(event)}>
           <Grid container spacing={2}>
+            <Grid item xs={12} className="pt-3 pb-3">
+              <FormControl>
+                <InputLabel htmlFor="age-native-simple">What account would you like?</InputLabel>
+                <Select name="usertype" native onChange={event => this.handleInputChange(event)}>
+                  {this.state.usertypes.map(usertype => (
+                    <option value={usertype} key={usertype}>
+                      {usertype}
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
                 name="firstName"
                 value={this.state.firstName}
-                onChange={this.handleInputChange}
+                onChange={event => this.handleInputChange(event)}
                 variant="outlined"
                 required
                 fullWidth

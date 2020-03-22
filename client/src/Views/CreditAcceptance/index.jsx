@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import './style.scss';
 
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  Grid
-} from '@material-ui/core';
+import { FormControl, InputLabel, Select, Grid } from '@material-ui/core';
 import { createAccount } from '../../Services/credit';
 import Layout from '../../Components/Layout';
 import getSymbolFromCurrency from 'currency-symbol-map';
@@ -31,7 +26,7 @@ class CreditAcceptance extends Component {
     });
   }
 
-  componentDidMount(){
+  componentDidMount() {
     const account = this.props.location.state.account;
     const minimum = account.limit * 0.05;
     this.options[0] += ` - ${minimum}`;
@@ -39,7 +34,7 @@ class CreditAcceptance extends Component {
     this.setState({
       account,
       minimum
-    })
+    });
   }
 
   async setData(event) {
@@ -78,9 +73,9 @@ class CreditAcceptance extends Component {
                 </Select>
               </FormControl>
             </Grid>
-            <button onClick={(event) => this.setData(event)}>Go to Credit</button>
-        </section>
-        }
+            <button onClick={event => this.setData(event)}>Go to Credit</button>
+          </section>
+        )}
       </Layout>
     );
   }

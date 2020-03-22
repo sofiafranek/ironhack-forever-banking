@@ -12,15 +12,15 @@ class Transaction extends Component {
       category,
       accountIDFrom,
       accountIDTo,
-      colorCategory,
       currency,
       creditFrom,
       type
     } = this.props;
 
-    let accFrom = null, symbol = '';
+    let accFrom = null,
+      symbol = '';
     creditFrom ? (accFrom = creditFrom) : (accFrom = accountIDFrom);
-    (type === 'minus') ? symbol = '-' : symbol = '+';
+    type === 'minus' ? (symbol = '-') : (symbol = '+');
 
     const toggle = this.props.toggle;
     let toggleKey = '';
@@ -39,7 +39,9 @@ class Transaction extends Component {
               {reference && <h6>{reference}</h6>}
               <div>
                 {totalAmount > 0 && (
-                  <h6>{symbol + ' ' + totalAmount + ' ' + getSymbolFromCurrency(accFrom.currency)}</h6>
+                  <h6>
+                    {symbol + ' ' + totalAmount + ' ' + getSymbolFromCurrency(accFrom.currency)}
+                  </h6>
                 )}
               </div>
             </Accordion.Toggle>
@@ -53,7 +55,7 @@ class Transaction extends Component {
                     Account From: {accountIDFrom} = Account To: {accountIDTo}
                   </div> */}
                 </div>
-                <Badge variant={colorCategory}>{category}</Badge>
+                <Badge variant={category}>{category}</Badge>
               </div>
             </Card.Body>
           </Accordion.Collapse>

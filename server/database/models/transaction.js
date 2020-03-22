@@ -7,6 +7,10 @@ const schema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Account'
   },
+  creditFrom: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Credit'
+  },
   accountIDFrom: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Account'
@@ -90,10 +94,25 @@ schema.statics.createTransaction = async function(
   schedule,
   status,
   dateTransaction,
-  colorCategory
+  colorCategory,
+  type
 ) {
   const Model = this;
-  const transaction = await Model.create({
+  let transaction = null;
+  (type === 'Credit') ?
+  transaction = await Model.create({
+    creditFrom: accountIDFrom,
+    accountIDTo,
+    totalAmount,
+    reference,
+    endPoint,
+    category,
+    schedule,
+    status,
+    dateTransaction,
+    colorCategory
+  }) :
+  transaction = await Model.create({
     accountIDFrom,
     accountIDTo,
     totalAmount,
@@ -117,6 +136,7 @@ schema.statics.getReceivedTransactions = async function(accounts) {
   })
     .populate('accountIDTo')
     .populate('accountIDFrom')
+    .populate('creditFrom')
     .exec();
 
   return transactionsTo;
@@ -130,6 +150,7 @@ schema.statics.getSentTransactions = async function(accounts) {
   })
     .populate('accountIDTo')
     .populate('accountIDFrom')
+    .populate('creditFrom')
     .exec();
 
   return transactionsFrom;
@@ -153,6 +174,7 @@ schema.statics.getAllTransactions = async function(accounts) {
   })
     .populate('accountIDTo')
     .populate('accountIDFrom')
+    .populate('creditFrom')
     .exec();
   return allTransactions;
 };
@@ -165,23 +187,10 @@ schema.statics.getAllTransactionsAccount = async function(idAccount) {
   })
     .populate('accountIDTo')
     .populate('accountIDFrom')
+    .populate('creditFrom')
     .exec();
 
   return allTransactions;
 };
-
-/*
-schema.statics.getSentTransactionsMonth = async function(accounts) {
-  const Model = this;
-  console.log(accounts);
-  const transactionsFrom = await Model.aggregate([
-    {$addFields: {  "month" : {$month: '$dateTransaction'}}},
-    {$match: { month: 8}}
-  ]).exec();
-
-  console.log(transactionsFrom);
-
-  return transactionsFrom;
-};*/
 
 module.exports = mongoose.model('Transaction', schema);

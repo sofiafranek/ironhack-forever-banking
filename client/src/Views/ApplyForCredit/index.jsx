@@ -15,12 +15,9 @@ import {
 
 import clsx from 'clsx';
 import { useStyles } from '../../Utilities/useStyles';
-
 import Button from '@material-ui/core/Button';
-
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
-import { createAccount } from '../../Services/credit';
 
 function StyledRadio(props) {
   const classes = useStyles();
@@ -66,8 +63,44 @@ class ApplyForCredit extends Component {
       statues: ['Single', 'In a relationship', 'Married', 'Divorced', 'Widowed'],
       maritalStatus: 'Single',
       finanacialSupport: false,
-      children: false
+      children: false,
+      currency: 'CAD'
     };
+    this.currencies = [
+      'CAD',
+      'HKD',
+      'ISK',
+      'PHP',
+      'DKK',
+      'HUF',
+      'CZK',
+      'GBP',
+      'RON',
+      'SEK',
+      'IDR',
+      'INR',
+      'BRL',
+      'RUB',
+      'HRK',
+      'JPY',
+      'THB',
+      'CHF',
+      'EUR',
+      'MYR',
+      'BGN',
+      'TRY',
+      'CNY',
+      'NOK',
+      'NZD',
+      'ZAR',
+      'USD',
+      'MXN',
+      'SGD',
+      'AUD',
+      'ILS',
+      'KRW',
+      'PLN'
+    ];
     this.handleInputChange = this.handleInputChange.bind(this);
     this.getData = this.getData.bind(this);
     this.dataCalc = this.dataCalc.bind(this);
@@ -315,6 +348,18 @@ class ApplyForCredit extends Component {
                     onChange={event => this.handleInputChange(event)}
                   />
                 </RadioGroup>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={12} className="pb-4">
+              <FormControl>
+                <InputLabel htmlFor="age-native-simple">Currency</InputLabel>
+                <Select name="currency" native onChange={event => this.handleInputChange(event)}>
+                  {this.currencies.map(currency => (
+                    <option value={currency} key={currency}>
+                      {currency}
+                    </option>
+                  ))}
+                </Select>
               </FormControl>
             </Grid>
           </Grid>

@@ -14,6 +14,7 @@ class Analytics extends Component {
       transactions: [],
       dates: [],
       categories: [],
+      eachCategories: [],
       totalAmount: 0
     };
   }
@@ -68,23 +69,22 @@ class Analytics extends Component {
         });
       }
     }
+
     this.setState({
       categories,
       totalAmount
-    }); /*, () => {
-      console.log("HERERER")
+    }, () => {
       const eachCategories = this.state.categories;
       const total = this.state.totalAmount;
       for(const category of eachCategories) {
         const amount = category.value;
         const percentage = amount/total * 100;
-        category.value = percentage.toFixed(2);
-        console.log(category.value);
+        category.value = percentage.toFixed(0);
       }
       this.setState({
-        categories: eachCategories
+        eachCategories
       })
-    });*/
+    });
   }
 
   splitDates() {
@@ -163,19 +163,13 @@ class Analytics extends Component {
           <hr></hr>
           {/* <Chart dates={this.state.dates} categories={this.state.categories} /> */}
           <h4 className="mt-4"></h4>
-          <h5 className="mb-4">Total amount spent this month : _____</h5>
+          <h5 className="mb-4">Total amount spent this month : {this.state.totalAmount}</h5>
           <div>
             {/* can put a variant name so the category and change in css the color to match the category colour */}
-            <ProgressBar variant="" now={40} label="catergory name %" />
-            <ProgressBar variant="" now={20} label="catergory name %" />
-            <ProgressBar variant="" now={60} label="catergory name %" />
-            <ProgressBar variant="" now={80} label="catergory name %" />
-            <ProgressBar variant="" now={15} label="catergory name %" />
-            <ProgressBar variant="" now={20} label="catergory name %" />
-            <ProgressBar variant="" now={30} label="catergory name %" />
-            <ProgressBar variant="" now={40} label="catergory name %" />
-            <ProgressBar variant="" now={50} label="catergory name %" />
-            <ProgressBar variant="" now={60} label="catergory name %" />
+            {this.state.eachCategories.map(category => (
+              <ProgressBar variant="" now={category.value} label={category.name + ' ' + category.value + '%'} />
+            ))
+            }
           </div>
         </Layout>
       </div>

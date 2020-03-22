@@ -6,6 +6,7 @@ const Transaction = require('./../database/models/transaction');
 const Account = require('./../database/models/account');
 const UserAccount = require('./../database/models/userAccount');
 const User = require('./../database/models/user');
+const Credit = require('./../database/models/credit');
 const router = new Router();
 
 // User can add a transaction
@@ -20,12 +21,21 @@ router.post('/add-transaction', async (req, res, next) => {
     schedule,
     status,
     dateTransaction,
-    colorCategory
+    colorCategory,
+    type
   } = req.body;
 
   try {
-    const accountFrom = await Account.getAccountById(accountIDFrom);
-    const balanceFrom = accountFrom.balance;
+    let balanceFrom = 0, accountFrom = null;
+    if (type === 'Credit') {
+      accountFrom = await Credit.getCreditAccountById(accountIDFrom);
+      balanceFrom = accountFrom.current;
+    }
+    else {
+      accountFrom = await Account.getAccountById(accountIDFrom);
+      balanceFrom = accountFrom.balance;
+    }
+    
     const accountTo = await Account.getAccountByNumber(accountNumber);
 
     if (accountTo) {
@@ -46,8 +56,8 @@ router.post('/add-transaction', async (req, res, next) => {
       }
 
       const user = await UserAccount.getAccountUser(accountIDTo);
-      const userID = user._id;
-      const userName = user.name;
+      const userID = user.userID._id;
+      const userName = user.userID.name;
 
       if (minusBalance >= 0) {
 
@@ -61,10 +71,11 @@ router.post('/add-transaction', async (req, res, next) => {
           schedule,
           status,
           dateTransaction,
-          colorCategory
+          colorCategory,
+          type
         );
 
-        await Account.updateBalance(accountIDFrom, minusBalance);
+        (type === 'Credit') ? await Credit.updateCurrent(accountIDFrom, minusBalance) : await Account.updateBalance(accountIDFrom, minusBalance);
         await Account.updateBalance(accountIDTo, addBalance);
   
         // Success message
@@ -87,7 +98,6 @@ router.post('/add-transaction', async (req, res, next) => {
 
 // User can add a transaction
 router.post('/add-transaction-phone', async (req, res, next) => {
-  console.log(req.body);
   const {
     accountIDFrom,
     totalAmount,
@@ -98,12 +108,20 @@ router.post('/add-transaction-phone', async (req, res, next) => {
     status,
     dateTransaction,
     colorCategory,
-    phoneNumber
+    phoneNumber,
+    type
   } = req.body;
 
   try {
-    const accountFrom = await Account.getAccountById(accountIDFrom);
-    const balanceFrom = accountFrom.balance;
+    let balanceFrom = 0, accountFrom = null;
+    if (type === 'Credit') {
+      accountFrom = await Credit.getCreditAccountById(accountIDFrom);
+      balanceFrom = accountFrom.current;
+    }
+    else {
+      accountFrom = await Account.getAccountById(accountIDFrom);
+      balanceFrom = accountFrom.balance;
+    }
     
     const user = await User.getUserByPhoneNumber(phoneNumber);
     if (user) {
@@ -139,10 +157,12 @@ router.post('/add-transaction-phone', async (req, res, next) => {
           schedule,
           status,
           dateTransaction,
-          colorCategory
+          colorCategory,
+          type
         );
 
-        await Account.updateBalance(accountIDFrom, minusBalance);
+        (type === 'Credit') ? await Credit.updateCurrent(accountIDFrom, minusBalance) : await Account.updateBalance(accountIDFrom, minusBalance);
+
         await Account.updateBalance(accountIDTo, addBalance);
   
         // Success message

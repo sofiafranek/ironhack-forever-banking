@@ -4,16 +4,6 @@ const instance = axios.create({
   baseURL: '/api/credit'
 });
 
-// shows all the credit accounts that exist in the database
-const account = async () => {
-  try {
-    const result = await instance.get('/');
-    const accounts = result.data.accounts;
-    return accounts;
-  } catch (error) {
-    throw error;
-  }
-};
 
 const singleAccount = async id => {
   try {
@@ -26,7 +16,7 @@ const singleAccount = async id => {
 };
 
 // only showing the accounts that belong to that user
-const userIDAccounts = async userID => {
+const creditAccounts = async userID => {
   try {
     const result = await instance.get(`/${userID}/credit`);
     const account = result.data.accounts;
@@ -56,4 +46,4 @@ const deleteAccount = async idAccount => {
   }
 };
 
-export { account, singleAccount, userIDAccounts, createAccount, deleteAccount };
+export { singleAccount, creditAccounts, createAccount, deleteAccount };

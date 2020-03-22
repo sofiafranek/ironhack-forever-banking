@@ -21,6 +21,7 @@ import {
 } from '../../Services/transaction';
 import { userIDAccounts } from '../../Services/account';
 import { createNotification } from '../../Services/notification';
+import { creditAccounts } from './../../Services/credit';
 import { useStyles } from '../../Utilities/useStyles';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
@@ -87,7 +88,8 @@ class AddTransaction extends Component {
       success: true,
       message: '',
       optionTransfer: '',
-      phoneNumber: ''
+      phoneNumber: '',
+      type: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleAccountFromChange = this.handleAccountFromChange.bind(this);
@@ -192,9 +194,11 @@ class AddTransaction extends Component {
 
     const accountSplitted = value.split(' ');
     const accountIDFrom = accountSplitted[0];
+    const type = accountSplitted[1];
 
     this.setState({
-      accountIDFrom
+      accountIDFrom,
+      type
     });
   }
 
@@ -218,9 +222,11 @@ class AddTransaction extends Component {
 
     try {
       const account = await userIDAccounts(userID);
-      const accounts = account.map(value => value.accountID)
+      const accounts = account.map(value => value.accountID);
+      const credits = await creditAccounts(userID);
+      const allAccounts = accounts.concat(credits);
       this.setState({
-        accounts,
+        accounts: allAccounts,
         type: accounts[0].type,
         accountIDFrom: accounts[0]._id
       });
@@ -294,7 +300,7 @@ class AddTransaction extends Component {
         const userIDTo = userID;
         const userNameFrom = this.props.user.name;
         const userNameTo = userName;
-        const messageTo = `The ${userNameFrom} sent you ${this.state.totalAmount}`;
+        const messageTo = `${userNameFrom} sent you ${this.state.totalAmount}`;
         const messageFrom = `You just sent ${this.state.totalAmount} to ${userNameTo}`;
 
         const notification = {

@@ -57,7 +57,6 @@ schema.statics.createCard = async function(accountID, cardNumber, CVV, type, exp
     userID
   });
 
-  console.log('model card', card);
   return card;
 };
 

@@ -46,15 +46,15 @@ router.post('/apply-for-credit', RouteGuard, async (req, res, next) => {
     maritalStatus,
     income,
     occupation,
-    reason
+    reason,
+    currency
   } = req.body;
   const limitNumber = Number(limit).toFixed(2);
   const minimumAmount = limit * 0.1;
   const optionSplitted = option.split(" ")[0];
-  const start = false;
   const datePayment = new Date();
   const month = datePayment.getMonth();
-  datePayment.setMonth(month + 1);
+  //datePayment.setMonth(month + 1);
   let optionDB = '';
   (optionSplitted === 'Minimum') ? optionDB = 'minimum' : optionDB = 'total';
 
@@ -75,7 +75,8 @@ router.post('/apply-for-credit', RouteGuard, async (req, res, next) => {
       occupation,
       reason,
       optionDB,
-      datePayment
+      datePayment,
+      currency
     );
     res.json({ account });
   } catch (error) {

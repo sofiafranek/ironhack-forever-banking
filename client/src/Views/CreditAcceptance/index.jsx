@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import { createAccount } from '../../Services/credit';
 import Layout from '../../Components/Layout';
+import getSymbolFromCurrency from 'currency-symbol-map';
 
 class CreditAcceptance extends Component {
   constructor(props) {
@@ -33,7 +34,7 @@ class CreditAcceptance extends Component {
   componentDidMount(){
     const account = this.props.location.state.account;
     const minimum = account.limit * 0.05;
-    this.options[0] += ` - ${minimum}$`;
+    this.options[0] += ` - ${minimum}`;
 
     this.setState({
       account,
@@ -63,7 +64,7 @@ class CreditAcceptance extends Component {
           <h1>Credit Acceptance</h1>
           <hr></hr>
           <h4 className="pt-3 pb-4">
-            {user.name} you have been accepted for a Credit Amount of {this.state.account.limit}$
+            {user.name} you have been accepted for a Credit Amount of {this.state.account.limit}{getSymbolFromCurrency(this.state.account.currency)}
           </h4>
           <Grid item xs={12} sm={12} className="pb-4">
               <FormControl>
@@ -71,7 +72,7 @@ class CreditAcceptance extends Component {
                 <Select name="option" native onChange={event => this.handleInputChange(event)}>
                   {this.options.map(option => (
                     <option value={option} key={option}>
-                      {option}
+                      {option}{getSymbolFromCurrency(this.state.account.currency)}
                     </option>
                   ))}
                 </Select>

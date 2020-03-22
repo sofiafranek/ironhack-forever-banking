@@ -35,7 +35,12 @@ const schema = new mongoose.Schema({
     enum: ['Increase Credit Score', 'Better Protection for Payments']
   },
   apr: {
-    type: Number
+    type: Number,
+    default: 0.03
+  },
+  debt:{
+    type: Number,
+    default: 0
   },
   occupation: {
     type: String,
@@ -64,8 +69,7 @@ const schema = new mongoose.Schema({
     default: Date.now
   },
   datePayment: {
-    type: Date,
-    default: Date.now
+    type: Date
   },
   maritalStatus: {
     type: String,
@@ -79,6 +83,43 @@ const schema = new mongoose.Schema({
   option: {
     type: String,
     enum: ['minimum', 'total']
+  },
+  currency: {
+    type: String,
+    enum: ['CAD',
+    'HKD',
+    'ISK',
+    'PHP',
+    'DKK',
+    'HUF',
+    'CZK',
+    'GBP',
+    'RON',
+    'SEK',
+    'IDR',
+    'INR',
+    'BRL',
+    'RUB',
+    'HRK',
+    'JPY',
+    'THB',
+    'CHF',
+    'EUR',
+    'MYR',
+    'BGN',
+    'TRY',
+    'CNY',
+    'NOK',
+    'NZD',
+    'ZAR',
+    'USD',
+    'MXN',
+    'SGD',
+    'AUD',
+    'ILS',
+    'KRW',
+    'PLN'],
+    required: true
   }
 });
 
@@ -111,7 +152,8 @@ schema.statics.createCreditAccount = async function(
   occupation,
   reason,
   option,
-  datePayment
+  datePayment,
+  currency
 ) {
   const Model = this;
   const account = await Model.create({
@@ -130,7 +172,8 @@ schema.statics.createCreditAccount = async function(
     occupation,
     reason,
     option,
-    datePayment
+    datePayment,
+    currency
   });
   return account;
 };
@@ -150,6 +193,12 @@ schema.statics.updateCurrent = async function(id, current) {
   const Model = this;
   await Model.findByIdAndUpdate(id, { current }).exec();
 };
+
+schema.statics.updateCredit = async function(id, datePayment, current, debt) {
+  const Model = this;
+  await Model.findByIdAndUpdate(id, { datePayment, current, debt }).exec();
+};
+
 
 
 module.exports = mongoose.model('Credit', schema);

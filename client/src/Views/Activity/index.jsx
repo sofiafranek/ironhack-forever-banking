@@ -22,9 +22,13 @@ class Dashboard extends Component {
 
     try { 
       const information = await activity(userID);
+      const userAccs = information.accountsUser;
+      const accs = userAccs.map( value => value.accountID);
+      const accountsUser = accs.concat(information.credits);
+      
       this.setState({
-        accountsUser: information.accountsUser,
-        transactions: information.transactions
+        accountsUser,
+        transactions: information.transactions,
       });
 
     } catch (error) {
@@ -90,8 +94,7 @@ class Dashboard extends Component {
           <hr className="pb-1 pt-1"></hr>
           <h4 className="pb-2">Accounts Listed Here</h4>
           {this.state.accountsUser.length > 0 ? (
-            this.state.accountsUser.map(account => {
-              const single = account.accountID;
+            this.state.accountsUser.map(single => {
               return <ActivityAccount key={single._id} {...single} />;
             })
           ) : (

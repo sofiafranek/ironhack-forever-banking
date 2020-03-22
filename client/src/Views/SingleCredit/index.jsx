@@ -4,7 +4,7 @@ import Layout from '../../Components/Layout';
 import Button from '@material-ui/core/Button';
 
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-
+import getSymbolFromCurrency from 'currency-symbol-map';
 import { deleteAccount } from './../../Services/credit';
 
 let children = '';
@@ -62,7 +62,7 @@ class SingleCredit extends Component {
               <i className="fas fa-times"></i>
             </Button>
           </div>
-          <h1>{account.current}€</h1>
+          <h1>{account.current}{getSymbolFromCurrency(account.currency)}</h1>
           <h5>Total Credit Limit</h5>
           <hr className="mb-4"></hr>
           <h5>IBAN Number : {account.accountNumber}</h5>

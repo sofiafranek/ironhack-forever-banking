@@ -5,8 +5,7 @@ import SingleCredit from '../../Components/Credit';
 
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-
-import { userIDAccounts } from './../../Services/credit';
+import { creditAccounts } from './../../Services/credit';
 
 class Credit extends Component {
   constructor(props) {
@@ -27,7 +26,7 @@ class Credit extends Component {
   getData() {
     const userID = this.props.user._id;
 
-    userIDAccounts(userID)
+    creditAccounts(userID)
       .then(account => {
         this.setState({
           account

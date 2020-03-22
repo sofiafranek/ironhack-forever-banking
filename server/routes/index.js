@@ -5,6 +5,7 @@ const router = new Router();
 const UserAccount = require('./../database/models/userAccount');
 const Card = require('./../database/models/card');
 const Transaction = require('./../database/models/transaction');
+const Credit = require('./../database/models/credit');
 
 const RouteGuard = require('./../middleware/route-guard');
 
@@ -17,10 +18,12 @@ router.get('/:userID/activity', RouteGuard, async (req, res, next) => {
     const accounts = await UserAccount.getUserActiveAccounts(userID);
     activity.accountsUser = accounts;
 
+    const credits = await Credit.getCreditAccounts(userID);
     const allAccounts = await UserAccount.getUserAllAccounts(userID);
     const allAccountsIDs = allAccounts.map(account => account.accountID);
     const transactions = await Transaction.getAllTransactions(allAccountsIDs);
     activity.transactions = transactions;
+    activity.credits = credits;
     
     res.json({ activity });
   } catch (error) {

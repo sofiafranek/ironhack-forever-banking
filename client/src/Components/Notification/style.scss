@@ -2,6 +2,19 @@
   display: none !important;
 }
 
+.fade.toast {
+  margin-bottom: 30px;
+}
+
 .toast {
   max-width: 100%;
+  strong {
+    font-size: 1.2em;
+  }
+  small {
+    font-size: 1em;
+  }
+  .notification-text {
+    font-size: 1.2em;
+  }
 }

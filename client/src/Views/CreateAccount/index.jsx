@@ -226,6 +226,7 @@ class CreateAccount extends Component {
                   <h4 className="pl-2 pt-4 pb-2">User Phone Number</h4>
                   <Grid item xs={12} sm={12}>
                     <TextField
+                      type="number"
                       variant="outlined"
                       required
                       fullWidth
@@ -262,13 +263,13 @@ class CreateAccount extends Component {
               </Grid>
               <Grid item xs={12} sm={12}>
                 <TextField
+                  type="number"
                   variant="outlined"
                   required
                   fullWidth
                   id="balance"
                   label="Balance"
                   name="balance"
-                  type="number"
                   className="pb-3"
                   value={this.state.balance}
                   onChange={event => this.handleInputChange(event)}

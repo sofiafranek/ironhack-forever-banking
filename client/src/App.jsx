@@ -43,7 +43,8 @@ class App extends Component {
       mobile: false,
       activeNav: true,
       user: null,
-      loaded: false
+      loaded: false,
+      isToggleOn: true
     };
     this.activeNav = this.activeNav.bind(this);
     this.disableNav = this.disableNav.bind(this);
@@ -112,6 +113,16 @@ class App extends Component {
   render() {
     return (
       <div>
+        <div className="nav-top-container">
+          <div className="nav--logo-image"></div>
+          {/* <button onClick={this.handleClick} className="light-dark-mode-button">
+            {this.state.isToggleOn ? (
+              <i className="far fa-moon"></i>
+            ) : (
+              <i className="fas fa-moon"></i>
+            )}
+          </button> */}
+        </div>
         {this.state.loaded && (
           <BrowserRouter>
             {this.state.user && (

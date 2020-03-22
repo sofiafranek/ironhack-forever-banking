@@ -64,6 +64,7 @@ class SignInSide extends Component {
         <h1>Sign In</h1>
         <form onSubmit={event => this.getData(event)}>
           <TextField
+            type="number"
             variant="outlined"
             margin="normal"
             required

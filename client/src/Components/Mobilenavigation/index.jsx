@@ -27,19 +27,26 @@ const Mobilenavigation = () => {
       className={`${classes.root} bottomNavigation`}
     >
       <Link to="/activity">
-        <BottomNavigationAction icon={<i className="fas fa-chart-line"></i>} />
+        <BottomNavigationAction label="Activity" icon={<i className="fas fa-chart-line"></i>} />
       </Link>
       <Link to="/accounts">
-        <BottomNavigationAction icon={<i className="fas fa-wallet"></i>} />
+        <BottomNavigationAction label="Accounts" icon={<i className="fas fa-wallet"></i>} />
       </Link>
       <Link to="/transactions">
-        <BottomNavigationAction icon={<i className="fas fa-arrows-alt-h"></i>} />
+        <BottomNavigationAction label="Transactions" icon={<i class="fas fa-exchange-alt"></i>} />
       </Link>
       <Link to="/cards">
-        <BottomNavigationAction icon={<i className="far fa-credit-card"></i>} />
+        <BottomNavigationAction label="Cards" icon={<i className="far fa-credit-card"></i>} />
       </Link>
       <Link to="/notifications">
-        <BottomNavigationAction icon={<i className="far fa-bell"></i>} />
+        <BottomNavigationAction
+          label="Notifications"
+          icon={
+            <i className="far fa-bell">
+              <div className="notification-alert-mobile"></div>
+            </i>
+          }
+        />
       </Link>
     </BottomNavigation>
   );

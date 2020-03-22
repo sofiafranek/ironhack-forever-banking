@@ -334,13 +334,13 @@ class AddAccount extends Component {
                     </Select>
                   </FormControl>
                   <TextField
+                    type="number"
                     variant="outlined"
                     required
                     fullWidth
                     id="balance"
                     label="Balance"
                     name="balance"
-                    type="number"
                     value={this.state.balance}
                     onChange={event => this.handleInputChange(event)}
                   />
@@ -350,13 +350,13 @@ class AddAccount extends Component {
                   <h4 className="pl-2 pt-3 pb-2">Add money to your new account</h4>
                   <Grid item xs={12} sm={12}>
                     <TextField
+                      type="number"
                       variant="outlined"
                       required
                       fullWidth
                       id="iban"
                       label="IBAN"
                       name="iabn"
-                      type="number"
                     />
                   </Grid>
                   <Grid item xs={12} sm={12}>
@@ -371,13 +371,13 @@ class AddAccount extends Component {
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
+                      type="number"
                       variant="outlined"
                       required
                       fullWidth
                       id="balance"
                       label="Balance"
                       name="balance"
-                      type="number"
                       value={this.state.balance}
                       onChange={event => this.handleInputChange(event)}
                     />

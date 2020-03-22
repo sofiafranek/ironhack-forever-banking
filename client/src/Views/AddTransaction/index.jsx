@@ -510,6 +510,7 @@ class AddTransaction extends Component {
                 <Grid item xs={12} sm={12}>
                   <h4 className="pt-3 pb-2">Phone Number that you want to transfer</h4>
                   <TextField
+                    type="number"
                     variant="outlined"
                     required
                     fullWidth
@@ -523,13 +524,13 @@ class AddTransaction extends Component {
             <h4 className="pl-2 pt-3 pb-2">Amount</h4>
             <Grid item xs={12} sm={12}>
               <TextField
+                type="number"
                 variant="outlined"
                 required
                 fullWidth
                 id="totalAmount"
                 label="Total Amount"
                 name="totalAmount"
-                type="number"
                 onChange={event => this.handleInputChange(event)}
               />
             </Grid>

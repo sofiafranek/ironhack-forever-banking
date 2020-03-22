@@ -21,16 +21,19 @@ class Transaction extends Component {
     creditFrom ? (accFrom = creditFrom) : (accFrom = accountIDFrom);
 
     const toggle = this.props.toggle;
-    console.log(this.props.toggle, 'PROPS');
     let toggleKey = '';
     toggle === true ? (toggleKey = '0') : (toggleKey = '1');
-    console.log(toggleKey, 'TOGGLE KEY');
 
     return (
       <Accordion className="hvr-grow transaction pb-3" defaultActiveKey={toggleKey}>
         <Card>
           <Card.Header>
-            <Accordion.Toggle className="card-transaction" as={Button} variant="link" eventKey="0">
+            <Accordion.Toggle
+              className="card-transaction"
+              as={Button}
+              variant="link"
+              eventKey={toggleKey}
+            >
               {reference && <h6>{reference}</h6>}
               <div>
                 {totalAmount > 0 && (
@@ -39,7 +42,7 @@ class Transaction extends Component {
               </div>
             </Accordion.Toggle>
           </Card.Header>
-          <Accordion.Collapse eventKey="0">
+          <Accordion.Collapse eventKey={toggleKey}>
             <Card.Body>
               <div className="transaction-toggle">
                 <div>

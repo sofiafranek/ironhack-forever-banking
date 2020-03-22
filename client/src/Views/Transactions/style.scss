@@ -5,6 +5,10 @@
 .toggle-transactions {
   display: flex;
   margin-left: auto;
+  border: none;
+  i {
+    font-size: 1em;
+  }
 }
 
 .transactions-page {
@@ -17,6 +21,7 @@
 .transactions-page h1 {
   margin-top: 60px;
 }
+
 // needs to be 800px for people for longer names to not overlap on the icons
 @media (min-width: 800px) {
   .transactions-page {

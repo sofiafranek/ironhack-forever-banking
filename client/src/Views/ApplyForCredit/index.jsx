@@ -18,7 +18,6 @@ import { useStyles } from '../../Utilities/useStyles';
 import Button from '@material-ui/core/Button';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
-
 function StyledRadio(props) {
   const classes = useStyles();
 
@@ -247,6 +246,7 @@ class ApplyForCredit extends Component {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                type="number"
                 variant="outlined"
                 required
                 fullWidth
@@ -254,7 +254,6 @@ class ApplyForCredit extends Component {
                 value={this.state.income}
                 onChange={event => this.handleInputChange(event)}
                 label="Income"
-                type="number"
                 id="income"
               />
             </Grid>

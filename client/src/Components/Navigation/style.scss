@@ -4,7 +4,7 @@
   overflow: hidden;
   height: auto;
   padding: 20px;
-  width: 100px;
+  width: 118px;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -19,7 +19,7 @@
   }
   button {
     min-width: 60px !important;
-    padding-left: 0;
+    padding-left: 12px;
   }
   button:hover {
     background-color: none !important;
@@ -42,9 +42,52 @@
   right: 17px;
 }
 
+.navigation-top .MuiList-padding {
+  padding: 8px 0px !important;
+}
+
+.extra-nav-link {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.navigation {
+  .MuiListItem-button {
+    .special-nav-link {
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.6em;
+    }
+  }
+  span.MuiButton-label {
+    display: flex;
+    flex-direction: column;
+    small {
+      text-transform: capitalize !important;
+      padding-top: 10px;
+      font-size: 0.9em;
+    }
+  }
+}
+
+.navigation {
+  .MuiList-padding {
+    padding-top: 0;
+  }
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  small {
+    padding-top: 10px;
+    text-align: center;
+  }
+}
+
 .menu-hover {
   top: 0px !important;
-  left: 100px !important;
+  left: 110px !important;
   .MuiPaper-rounded {
     border-radius: 15px !important;
   }
@@ -84,7 +127,4 @@ a div:hover {
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  position: absolute;
-  right: 20px;
-  top: 10px;
 }

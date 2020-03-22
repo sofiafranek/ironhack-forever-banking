@@ -45,8 +45,6 @@ class CreateSharedAccount extends Component {
     this.setState({
       [inputName]: value
     });
-
-    console.log(inputName, value, 'INPUT');
   }
 
   componentDidMount() {
@@ -92,6 +90,7 @@ class CreateSharedAccount extends Component {
             <Grid item xs={12} sm={12}>
               <h4 className="pt-3 pb-2">Phone Number that you would like to share</h4>
               <TextField
+                type="number"
                 variant="outlined"
                 required
                 fullWidth

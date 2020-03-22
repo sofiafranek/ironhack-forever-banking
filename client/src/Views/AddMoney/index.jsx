@@ -141,13 +141,13 @@ class addMoney extends Component {
                   </Select>
                 </FormControl>
                 <TextField
+                  type="number"
                   variant="outlined"
                   required
                   fullWidth
                   id="balance"
                   label="Balance"
                   name="balance"
-                  type="number"
                   value={this.state.balance}
                   onChange={event => this.handleInputChange(event)}
                 />
@@ -157,6 +157,7 @@ class addMoney extends Component {
                 <h4 className="pt-4 pb-2">Add money to your new account</h4>
                 <Grid item xs={12} sm={12}>
                   <TextField
+                    type="number"
                     className="pb-3"
                     variant="outlined"
                     required
@@ -164,7 +165,6 @@ class addMoney extends Component {
                     id="iban"
                     label="IBAN"
                     name="iabn"
-                    type="number"
                   />
                 </Grid>
                 <Grid item xs={12} sm={12}>
@@ -180,6 +180,7 @@ class addMoney extends Component {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                    type="number"
                     className="pb-3"
                     variant="outlined"
                     required
@@ -187,7 +188,6 @@ class addMoney extends Component {
                     id="balance"
                     label="Balance"
                     name="balance"
-                    type="number"
                     value={this.state.balance}
                     onChange={event => this.handleInputChange(event)}
                   />

@@ -1,7 +1,19 @@
-// red color #f12a40
-
 h1 {
   font-weight: bold;
+}
+
+.light-dark-mode-button {
+  border: none;
+}
+
+.nav-top-container {
+  display: flex;
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  div i {
+    font-size: 1.6em;
+  }
 }
 
 /* Grow Animation */
@@ -99,4 +111,10 @@ button {
 .MuiAlert-filledError {
   margin: 15px 0 10px;
   background-color: #c23025 !important;
+}
+
+@media (max-width: 980px) {
+  .nav-top-container {
+    display: none;
+  }
 }

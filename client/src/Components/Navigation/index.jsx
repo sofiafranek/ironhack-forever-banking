@@ -10,6 +10,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import { signOut } from './../../Services/authentication';
+import { ToggleButton } from 'react-bootstrap';
 
 const Navigation = props => {
   const handleSignOut = () => {
@@ -36,14 +37,14 @@ const Navigation = props => {
 
   return (
     <>
-      <div className="nav--logo-image"></div>
       <div className="navigation">
         <div className="navigation-top">
           <List>
             {['Activity'].map((text, index) => (
               <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
-                <ListItem button>
+                <ListItem button className="nav-links">
                   <i className="fas fa-chart-line"></i>
+                  <small>Activity</small>
                 </ListItem>
               </NavLink>
             ))}
@@ -51,6 +52,7 @@ const Navigation = props => {
           <List>
             <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
               <i className="fas fa-wallet"></i>
+              <small>Accounts</small>
             </Button>
             <Menu
               id="simple-menu"
@@ -88,8 +90,9 @@ const Navigation = props => {
           <List>
             {['Transactions'].map((text, index) => (
               <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
-                <ListItem button>
-                  <i className="fas fa-arrows-alt-h"></i>
+                <ListItem button className="nav-links">
+                  <i className="fas fa-exchange-alt"></i>
+                  <small>Transactions</small>
                 </ListItem>
               </NavLink>
             ))}
@@ -97,8 +100,9 @@ const Navigation = props => {
           <List>
             {['Analytics'].map((text, index) => (
               <NavLink to={`/${text.toLowerCase()}`} key={text} exact>
-                <ListItem button>
+                <ListItem button className="nav-links">
                   <i className="fas fa-chart-pie"></i>
+                  <small>Analytics</small>
                 </ListItem>
               </NavLink>
             ))}
@@ -107,8 +111,9 @@ const Navigation = props => {
             <List>
               {['Exchange Rates'].map((text, index) => (
                 <NavLink to={'/exchange-rates'} key={text} exact>
-                  <ListItem button>
-                    <i className="fas fa-globe-europe"></i>
+                  <ListItem button className="nav-links">
+                    <i className="fas fa-coins"></i>
+                    <small>Exchange Rates</small>
                   </ListItem>
                 </NavLink>
               ))}
@@ -121,9 +126,10 @@ const Navigation = props => {
           <List>
             {['Notifications'].map((text, index) => (
               <NavLink to={'/notifications'} key={text} exact>
-                <ListItem button>
-                  <i className="far fa-bell">
+                <ListItem button className="nav-links">
+                  <i className="far fa-bell extra-nav-link">
                     <div className="notification-alert"></div>
+                    <small className="special-nav-link">Notifications</small>
                   </i>
                 </ListItem>
               </NavLink>
@@ -132,8 +138,9 @@ const Navigation = props => {
           <List>
             {['Profile'].map((text, index) => (
               <NavLink to={'/profile'} key={text} exact>
-                <ListItem button>
+                <ListItem button className="nav-links">
                   <i className="far fa-user"></i>
+                  <small>Profile</small>
                 </ListItem>
               </NavLink>
             ))}
@@ -141,8 +148,9 @@ const Navigation = props => {
           <List>
             {['Log Out'].map((text, index) => (
               <NavLink to={''} key={text} exact onClick={handleSignOut}>
-                <ListItem button>
+                <ListItem button className="nav-links">
                   <i className="fas fa-sign-out-alt"></i>
+                  <small>Log Out</small>
                 </ListItem>
               </NavLink>
             ))}

@@ -132,7 +132,19 @@ schema.statics.getCreditAccounts = async function(userID) {
 
 schema.statics.getCreditAccountById = async function(id) {
   const Model = this;
-  const card = await Model.findById(id).exec();
+  const credit = await Model.findById(id).exec();
+  return credit;
+};
+
+schema.statics.getAccountById = async function(id) {
+  const Model = this;
+  const account = await Model.findById(id).exec();
+  return account;
+};
+
+schema.statics.getUser = async function(id) {
+  const Model = this;
+  const card = await Model.findById(id).populate('userID').select({ userID: 1}).exec();
   return card;
 };
 
@@ -199,6 +211,11 @@ schema.statics.updateCredit = async function(id, datePayment, current, debt) {
   await Model.findByIdAndUpdate(id, { datePayment, current, debt }).exec();
 };
 
+schema.statics.getAccountByNumber = async function(accountNumber) {
+  const Model = this;
+  const account = await Model.findOne({ accountNumber }).exec();
+  return account;
+};
 
 
 module.exports = mongoose.model('Credit', schema);

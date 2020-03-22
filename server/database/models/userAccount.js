@@ -73,12 +73,13 @@ schema.statics.getUserAccount = async function(userID) {
   return account;
 };
 
-schema.statics.getAccountUser = async function(accountID) {
+schema.statics.getUser = async function(accountID) {
   const Model = this;
   const user = await Model.findOne({
     accountID
   })
     .populate('userID')
+    .select({ userID: 1})
     .exec();
 
   return user;

@@ -3,15 +3,15 @@ const schedule = require('node-schedule');
 const UserAccount = require('./database/models/userAccount');
 const Account = require('./database/models/account');
 const Credit = require('./database/models/credit');
+const Notification = require('./database/models/notification');
+const getSymbolFromCurrency = require('currency-symbol-map');
 
 module.exports = schedule.scheduleJob('53 * * * *', async () => {
   try {
     const currentDate = new Date();
     const day = currentDate.getDate();
-    console.log(day);
     const month = currentDate.getMonth() + 1;
     const year = currentDate.getFullYear();
-    console.log(month);
 
     const credits = await Credit.aggregate([
         {$addFields: 
@@ -35,21 +35,27 @@ module.exports = schedule.scheduleJob('53 * * * *', async () => {
         const account = await UserAccount.getUserPrimaryAccount(userID);
         const accountID = account._id;
         const balance = account.balance;
+        const currency = account.currency;
         const datePayment = currentDate;
-        let minusBalance = 0, debt = 0;
+        let minusBalance = 0, debt = 0, messageFrom = '', messageTo = '';
+        const accountIDBank = '111111111111111111';
+        const userFrom = await Credit.getUser(accountID);
+        const userTo = await Credit.getUser(accountIDBank);
+        const userIDFrom = userFrom.userID._id;
+        const userIDTo = userTo.userID._id;
+        const userNameFrom = userFrom.userID.name;
 
-        // WE HAVE TO CREATE OUR BANK ACCOUNT AND TRANSFER THE CREDIT TO OUR ACCOUNT
-        //f (current !== limit) {
+
+        if (current !== limit) {
             if (option === 'minimum') {
                 debt = current - minimumPayment;
-                console.log(debt);
-                console.log(balance, "BALANCE");
                 minusBalance = balance - (minimumPayment + debt * apr);
-                console.log(minimumPayment, "BALANCE");
-                console.log(apr, "apr");
-                console.log(minusBalance);
+                messageFrom = `${userNameFrom} paied the minimum credit ${minusBalance + getSymbolFromCurrency(currency)}. The debt is now ${debt}${minusBalance + getSymbolFromCurrency(currency)}`;
+                messageTo = `The bank took you the minimum credit ${minusBalance + getSymbolFromCurrency(currency)}. Your debt is now ${debt}${minusBalance + getSymbolFromCurrency(currency)}`;
             } else {
                 minusBalance = balance - current;
+                messageFrom = `${userNameFrom} paied the minimum credit ${minusBalance + getSymbolFromCurrency(currency)}`;
+                messageTo = `The bank took you the minimum credit ${minusBalance + getSymbolFromCurrency(currency)}`;
             }
 
             await Account.updateBalance(accountID, minusBalance);
@@ -60,12 +66,15 @@ module.exports = schedule.scheduleJob('53 * * * *', async () => {
                 datePayment.setMonth(month + 1);
             }
 
-        //}
+        }      
 
         await Credit.updateCredit(_id, datePayment, limit, debt);
-    }
+        await Notification.createNotification(
+            userIDFrom, userIDTo, messageFrom, messageTo
+        );
 
+    }
     } catch (error) {
         console.log('There was an error processing the transaction', error);
-  }
+    }
 });

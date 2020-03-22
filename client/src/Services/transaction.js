@@ -26,7 +26,15 @@ const createTransactionPhone = async (data) => {
 
 const createListTransactions = async (data) => {
   try {
-    await instance.post('/add-list-transactions', data);
+    await instance.post('/add-list-transactions-account', data);
+  } catch (error) {
+    throw error;
+  }
+};
+
+const createListTransactionsPhone = async (data) => {
+  try {
+    await instance.post('/add-list-transactions-phone', data);
   } catch (error) {
     throw error;
   }
@@ -84,6 +92,7 @@ const singleTransaction = async (id) => {
 
 export {
   createTransactionAccount,
+  createListTransactionsPhone,
   createTransactionPhone,
   receivedTransactions,
   sentTransactions,

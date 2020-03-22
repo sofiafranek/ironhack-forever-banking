@@ -36,11 +36,28 @@ router.post('/add-transaction', async (req, res, next) => {
       balanceFrom = accountFrom.balance;
     }
     
-    const accountTo = await Account.getAccountByNumber(accountNumber);
+    let accountTo = null, typeAccTo = 'Account', user = null;
+    accountTo = await Account.getAccountByNumber(accountNumber);
+
+    if (!accountTo) {
+      accountTo = await Credit.getAccountByNumber(accountNumber);
+      typeAccTo = 'Credit';
+    }
+    const accountIDTo = accountTo._id;
 
     if (accountTo) {
-      const balanceTo = accountTo.balance;
-      const accountIDTo = accountTo._id;
+      let balanceTo = 0;
+      if (typeAccTo === 'Credit') {
+        balanceTo = accountTo.current;
+        user = await Credit.getUser(accountIDTo);
+      }
+      else {
+        balanceTo = accountTo.balance;
+        user = await UserAccount.getUser(accountIDTo);
+      }
+
+      const userID = user.userID._id;
+      const userName = user.userID.name;
       const minusBalance = Number(balanceFrom) - Number(totalAmount);
       let addBalance = 0;
 
@@ -55,10 +72,6 @@ router.post('/add-transaction', async (req, res, next) => {
         addBalance = Number(balanceTo) + Number(exchange);
       }
 
-      const user = await UserAccount.getAccountUser(accountIDTo);
-      const userID = user.userID._id;
-      const userName = user.userID.name;
-
       if (minusBalance >= 0) {
 
         await Transaction.createTransaction(
@@ -72,11 +85,13 @@ router.post('/add-transaction', async (req, res, next) => {
           status,
           dateTransaction,
           colorCategory,
-          type
+          type,
+          typeAccTo,
+          'None'
         );
 
         (type === 'Credit') ? await Credit.updateCurrent(accountIDFrom, minusBalance) : await Account.updateBalance(accountIDFrom, minusBalance);
-        await Account.updateBalance(accountIDTo, addBalance);
+        (typeAccTo === 'Credit') ? await Credit.updateCurrent(accountIDTo, addBalance) : await Account.updateBalance(accountIDTo, addBalance);
   
         // Success message
         res.json({ result: true,  userID, userName});
@@ -128,7 +143,7 @@ router.post('/add-transaction-phone', async (req, res, next) => {
       const userID = user._id;
       const userName = user.name;
       const accountTo = await UserAccount.getUserPrimaryAccount(userID);
-
+      
       const balanceTo = accountTo.balance;
       const accountIDTo = accountTo._id;
       const minusBalance = Number(balanceFrom) - Number(totalAmount);
@@ -158,7 +173,9 @@ router.post('/add-transaction-phone', async (req, res, next) => {
           status,
           dateTransaction,
           colorCategory,
-          type
+          type,
+          'Current',
+          'None'
         );
 
         (type === 'Credit') ? await Credit.updateCurrent(accountIDFrom, minusBalance) : await Account.updateBalance(accountIDFrom, minusBalance);
@@ -222,7 +239,7 @@ router.post('/all', async (req, res, next) => {
   }
 });
 
-router.post('/add-list-transactions', async (req, res, next) => {
+router.post('/add-list-transactions-account', async (req, res, next) => {
   const all = req.body;
   try {
     for (const transaction of all) {
@@ -235,22 +252,98 @@ router.post('/add-list-transactions', async (req, res, next) => {
         category,
         schedule,
         status,
-        dateTransaction
+        dateTransaction,
+        colorCategory,
+        type,
+        schedulePeriod
       } = transaction;
 
-      const accountTo = await Account.getAccountByNumber(accountNumber);
-      const accountIDTo = accountTo._id;
+      let accountFrom = null, accountTo = null, typeAccTo = 'Account';
+
+      if (type === 'Credit') {
+        accountFrom = await Credit.getCreditAccountById(accountIDFrom);
+      }
+      else {
+        accountFrom = await Account.getAccountById(accountIDFrom);
+      }
+
+      accountTo = await Account.getAccountByNumber(accountNumber);
+
+      if (!accountTo) {
+        accountTo = await Credit.getAccountByNumber(accountNumber);
+        typeAccTo = 'Credit';
+      }
+
 
       await Transaction.createTransaction(
-        accountIDFrom,
-        accountIDTo,
+        accountFrom,
+        accountTo,
         totalAmount,
         reference,
         endPoint,
         category,
         schedule,
         status,
-        dateTransaction
+        dateTransaction,
+        colorCategory,
+        type,
+        typeAccTo,
+        schedulePeriod
+      );
+    }
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+router.post('/add-list-transactions-phone', async (req, res, next) => {
+  const all = req.body;
+  try {
+    for (const transaction of all) {
+      const {
+        accountIDFrom,
+        phoneNumber,
+        totalAmount,
+        reference,
+        endPoint,
+        category,
+        schedule,
+        status,
+        dateTransaction,
+        colorCategory,
+        type,
+        schedulePeriod
+      } = transaction;
+
+      let accountFrom = null;
+      const typeAccTo = 'Account';
+
+      if (type === 'Credit') {
+        accountFrom = await Credit.getCreditAccountById(accountIDFrom);
+      }
+      else {
+        accountFrom = await Account.getAccountById(accountIDFrom);
+      }
+
+      const user = await User.getUserByPhoneNumber(phoneNumber);
+      const userID = user._id;
+      const accountTo = await UserAccount.getUserPrimaryAccount(userID);
+
+      await Transaction.createTransaction(
+        accountFrom,
+        accountTo,
+        totalAmount,
+        reference,
+        endPoint,
+        category,
+        schedule,
+        status,
+        dateTransaction,
+        colorCategory,
+        type,
+        typeAccTo,
+        schedulePeriod
       );
     }
   } catch (error) {

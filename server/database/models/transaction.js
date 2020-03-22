@@ -7,13 +7,17 @@ const schema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Account'
   },
+  accountIDFrom: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Account'
+  },
   creditFrom: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Credit'
   },
-  accountIDFrom: {
+  creditTo: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Account'
+    ref: 'Credit'
   },
   totalAmount: {
     type: Number
@@ -32,7 +36,7 @@ const schema = new mongoose.Schema({
       'Food & Dining',
       'Utility Bills',
       'Cell Phone',
-      'Childcare and School costs',
+      'Childcare and School Costs',
       'Pet Food',
       'Pet Insurance',
       'Clothing',
@@ -60,7 +64,7 @@ const schema = new mongoose.Schema({
   },
   schedulePeriod: {
     type: String,
-    enum: ['Hour', 'Week', 'Month', 'Year']
+    enum: ['Week', 'Month', 'Year', 'None']
   },
   status: {
     type: String,
@@ -85,8 +89,8 @@ schema.statics.getTransactionById = async function(id) {
 };
 
 schema.statics.createTransaction = async function(
-  accountIDFrom,
-  accountIDTo,
+  accFrom,
+  accTo,
   totalAmount,
   reference,
   endPoint,
@@ -95,24 +99,20 @@ schema.statics.createTransaction = async function(
   status,
   dateTransaction,
   colorCategory,
-  type
+  typeAccFrom,
+  typeAccTo,
+  schedulePeriod
 ) {
   const Model = this;
-  let transaction = null;
-  (type === 'Credit') ?
-  transaction = await Model.create({
-    creditFrom: accountIDFrom,
-    accountIDTo,
-    totalAmount,
-    reference,
-    endPoint,
-    category,
-    schedule,
-    status,
-    dateTransaction,
-    colorCategory
-  }) :
-  transaction = await Model.create({
+
+
+  let creditFrom = null, creditTo = null, accountIDFrom = null, accountIDTo = null;
+  (typeAccFrom === 'Credit') ? creditFrom = accFrom : accountIDFrom = accFrom;
+  (typeAccTo === 'Credit') ? creditTo = accTo : accountIDTo = accTo;
+
+  const transaction = await Model.create({
+    creditTo,
+    creditFrom,
     accountIDFrom,
     accountIDTo,
     totalAmount,
@@ -122,7 +122,8 @@ schema.statics.createTransaction = async function(
     schedule,
     status,
     dateTransaction,
-    colorCategory
+    colorCategory,
+    schedulePeriod
   });
 
   return transaction;

@@ -17,7 +17,8 @@ import clsx from 'clsx';
 import {
   createTransactionAccount,
   createTransactionPhone,
-  createListTransactions
+  createListTransactions,
+  createListTransactionsPhone
 } from '../../Services/transaction';
 import { userIDAccounts } from '../../Services/account';
 import { createNotification } from '../../Services/notification';
@@ -411,19 +412,20 @@ class AddTransaction extends Component {
         {
           success: false,
           message: insuccessMessage
-        },
-        async () => {
-          try {
+        })
+    } else {
+        try {
+          if (this.state.optionTransfer === 'AccountNumber') {
             await createListTransactions(allT);
-            this.props.history.push({
-              pathname: '/transactions'
-            });
-          } catch (error) {
-            console.log(error);
+          } else {
+            console.log("hereJOAAJNANNAANANANANANNANAN");
+            await createListTransactionsPhone(allT);
           }
+        } catch (error) {
+          console.log(error);
         }
-      );
     }
+    
   }
 
   setData(event) {

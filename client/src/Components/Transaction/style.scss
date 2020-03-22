@@ -56,6 +56,65 @@ h6 {
   .badge {
     padding: 8px 20px;
   }
+  .badge-transport {
+    background-color: green !important;
+  }
+
+  .badge-auto {
+    background-color: blue !important;
+  }
+
+  .badge-foodDining {
+    background-color: purple !important;
+  }
+
+  .badge-utilityBills {
+    background-color: orange !important;
+  }
+
+  .badge-cellPhone {
+    background-color: lightcoral !important;
+  }
+
+  .badge-fun {
+    background-color: pink !important;
+  }
+
+  .badge-childcare {
+    background-color: lightseagreen !important;
+  }
+
+  .badge-petFood {
+    background-color: lightgoldenrodyellow !important;
+  }
+
+  .badge-lifeInsurance {
+    background-color: lightblue !important;
+  }
+
+  .badge-travel {
+    background-color: cyan !important;
+  }
+
+  .badge-studentLoans {
+    background-color: yellow !important;
+  }
+
+  .badge-credit {
+    background-color: yellowgreen !important;
+  }
+
+  .badge-retirement {
+    background-color: paleturquoise !important;
+  }
+
+  .badge-largePurchases {
+    background-color: peru !important;
+  }
+
+  .badge-other {
+    background-color: palevioletred !important;
+  }
 }
 
 .card-transaction:hover {

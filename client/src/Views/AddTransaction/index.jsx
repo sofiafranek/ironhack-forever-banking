@@ -240,41 +240,39 @@ class AddTransaction extends Component {
     let colorCategory = 'info';
 
     if (category === 'Transport') {
-      colorCategory = 'success';
+      colorCategory = 'transport';
     } else if (category === 'Auto insurance') {
-      colorCategory = 'primary';
+      colorCategory = 'auto';
     } else if (category === 'Food & Dining') {
-      colorCategory = 'primary';
+      colorCategory = 'foodDining';
     } else if (category === 'Utility bills') {
-      colorCategory = 'secondary';
+      colorCategory = 'utilityBills';
     } else if (category === 'Cell phone') {
-      colorCategory = 'danger';
+      colorCategory = 'cellPhone';
     } else if (category === 'Fun stuff') {
-      colorCategory = 'danger';
+      colorCategory = 'fun';
     } else if (category === 'Childcare and school costs') {
-      colorCategory = 'warning';
+      colorCategory = 'childcare';
     } else if (category === 'Pet food') {
-      colorCategory = 'light';
+      colorCategory = 'petFood';
     } else if (category === 'Pet insurance') {
-      colorCategory = 'dark';
+      colorCategory = 'petInsurance';
     } else if (category === 'Life insurance') {
-      colorCategory = 'light';
-    } else if (category === 'Fun stuff') {
-      colorCategory = 'danger';
+      colorCategory = 'lifeInsurance';
     } else if (category === 'Travel') {
-      colorCategory = 'warning';
+      colorCategory = 'travel';
     } else if (category === 'Student loans') {
-      colorCategory = 'success';
+      colorCategory = 'studentLoans';
     } else if (category === 'Credit-card debt') {
-      colorCategory = 'info';
+      colorCategory = 'credit';
     } else if (category === 'Retirement') {
-      colorCategory = 'success';
+      colorCategory = 'retirement';
     } else if (category === 'Emergency fund') {
       colorCategory = 'warning';
     } else if (category === 'Large purchases') {
-      colorCategory = 'success';
+      colorCategory = 'largePurchases';
     } else if (category === 'Other') {
-      colorCategory = 'info';
+      colorCategory = 'other';
     }
 
     return colorCategory;

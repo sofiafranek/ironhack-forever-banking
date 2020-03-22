@@ -44,10 +44,11 @@ class Transaction extends Component {
               <div className="transaction-toggle">
                 <div>
                   Executed on: {dateTransaction && <h6>{dateTransaction.split('T')[0]}</h6>}
+                  {/* <div>
+                    Account From: {accountIDFrom} = Account To: {accountIDTo}
+                  </div> */}
                 </div>
-                <Badge pill variant={colorCategory}>
-                  {category}
-                </Badge>
+                <Badge variant={colorCategory}>{category}</Badge>
               </div>
             </Card.Body>
           </Accordion.Collapse>

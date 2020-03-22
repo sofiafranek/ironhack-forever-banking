@@ -8,8 +8,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
-import { userActiveAccounts } from '../../Services/account';
-import { createTransactionAccount } from '../../Services/transaction';
+import { topUpAccount } from '../../Services/account';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import MuiAlert from '@material-ui/lab/Alert';
 
@@ -17,17 +16,12 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-class addMoney extends Component {
+class AddMoney extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      accounts: [],
-      accountIDFrom: '',
-      balance: '',
-      options: ['Existing', 'External'],
-      option: 'Existing',
-      success: true,
-      message: ''
+      account: null,      
+      balance: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.getData = this.getData.bind(this);
@@ -43,62 +37,36 @@ class addMoney extends Component {
 
   componentDidMount() {
     this.props.changeActiveNav();
-    this.getInfo();
+    this.getData();
   }
 
-  getInfo() {
-    const userID = this.props.userID;
-    const account = Object.assign({}, this.state);
-    account.userID = userID;
+  getData() {
+    
+    const { account } = this.props.history.location.state;
 
-    userActiveAccounts(userID)
-      .then(account => {
-        const accounts = account.map(acc => acc.accountID);
-        this.setState({
-          accounts,
-          type: accounts[0].type,
-          accountIDFrom: accounts[0]._id
-        });
-      })
-      .catch(error => console.log(error));
+    console.log(account);
+
+    this.setState({
+      account
+    });
   }
 
-  getData(event) {
+  async setData(event) {
     event.preventDefault();
-    const accountNumber = this.props.history.location.state.accountNumber;
-    const totalAmount = this.state.balance;
-    const schedule = false;
-    const status = 'Executed';
-    // TODO see reference and category
-    const reference = 'Transfer money';
-    const category = 'Other';
-    const accountIDFrom = this.state.accountIDFrom;
-    const info = {
-      accountNumber,
-      accountIDFrom,
-      totalAmount,
-      schedule,
-      status,
-      reference,
-      category
+    const { account } = this.state;
+    const accountID = account._id;
+    const balance = this.state.balance;
+    const data = {
+      accountID,
+      balance
     };
 
-    createTransactionAccount(info)
-      .then(response => {
-        const { result } = response;
-        let message = 'Not enough money';
-        if (result) {
-          this.props.history.push({
-            pathname: '/accounts'
-          });
-        } else {
-          this.setState({
-            success: false,
-            message
-          });
-        }
-      })
-      .catch(error => console.log(error));
+    try {
+      await topUpAccount(data);
+      this.props.history.push('/accounts');
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   render() {
@@ -109,8 +77,8 @@ class addMoney extends Component {
           <Breadcrumb.Item className="disable-breadcrumb">Adding Money to Account</Breadcrumb.Item>
         </Breadcrumb>
         <h1 className="mb-4">Add Money to Account</h1>
-        <form onSubmit={event => this.getData(event)} className="add-account-form">
-          <>
+        <form onSubmit={event => this.setData(event)} className="add-account-form">
+          {/* <>
             <Grid item xs={12} sm={12}>
               <h4 className="pt-3 pb-2">Add money to your account</h4>
               <FormControl>
@@ -123,8 +91,8 @@ class addMoney extends Component {
                   ))}
                 </Select>
               </FormControl>
-            </Grid>
-            {this.state.option === 'Existing' ? (
+            </Grid> */}
+            {/*this.state.option === 'Existing' ? (
               <Grid item xs={12} sm={12}>
                 <h4 className="pt-4 pb-2">Amount of money you would like to add</h4>
                 <FormControl>
@@ -153,7 +121,7 @@ class addMoney extends Component {
                   onChange={event => this.handleInputChange(event)}
                 />
               </Grid>
-            ) : (
+            ) : (*/
               <>
                 <h4 className="pt-4 pb-2">Add money to your new account</h4>
                 <Grid item xs={12} sm={12}>
@@ -194,10 +162,8 @@ class addMoney extends Component {
                   />
                 </Grid>
               </>
-            )}
-          </>
-          {!this.state.success && <Alert severity="error">{this.state.message}</Alert>}
-          <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">
+            }
+            <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">
             Add Money to Account
           </Button>
         </form>
@@ -206,4 +172,4 @@ class addMoney extends Component {
   }
 }
 
-export default addMoney;
+export default AddMoney;

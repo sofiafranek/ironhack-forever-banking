@@ -153,7 +153,7 @@ schema.statics.getSentTransactions = async function(accounts) {
     .populate('accountIDTo')
     .populate('accountIDFrom')
     .populate('creditFrom')
-    .sort({'dateTransaction': 1})
+    .sort({'dateTransaction': -1})
     .exec();
 
   return transactionsFrom;
@@ -178,7 +178,7 @@ schema.statics.getAllTransactions = async function(accounts) {
     .populate('accountIDTo')
     .populate('accountIDFrom')
     .populate('creditFrom')
-    .sort({'dateTransaction': 1})
+    .sort({'dateTransaction': -1})
     .exec();
   return allTransactions;
 };
@@ -192,7 +192,7 @@ schema.statics.getAllTransactionsAccount = async function(idAccount) {
     .populate('accountIDTo')
     .populate('accountIDFrom')
     .populate('creditFrom')
-    .sort({'dateTransaction': 1})
+    .sort({'dateTransaction': -1})
     .exec();
 
   return allTransactions;

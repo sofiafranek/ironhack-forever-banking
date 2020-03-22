@@ -33,6 +33,22 @@ router.get('/:id', RouteGuard, async (req, res, next) => {
   }
 });
 
+router.post('/topUpAccount', RouteGuard, async (req, res, next) => {
+  const { balance, accountID } = req.body;
+  const numberBalance = Number(balance);
+
+  try {
+    const account = await Account.getAccountById(accountID);
+    const currentBalance = account.balance;
+    const newBalance = currentBalance + numberBalance;
+    await Account.updateBalance(accountID, newBalance);
+    res.json({ result: true });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
 // When user is signing up this creates their first account
 router.post('/create-account-external', async (req, res, next) => {
   const {

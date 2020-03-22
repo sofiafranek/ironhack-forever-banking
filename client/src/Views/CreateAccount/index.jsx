@@ -202,23 +202,25 @@ class CreateAccount extends Component {
                   ))}
                 </Select>
               </FormControl>
-              <FormControl component="fieldset">
-                <h4 className="pl-2 pt-4 pb-2">Shared Account</h4>
-                <RadioGroup name="sharedAccount" className="scheduled-transaction">
-                  <FormControlLabel
-                    value="Yes"
-                    control={<StyledRadio />}
-                    label="Yes"
-                    onChange={event => this.handleInputChange(event)}
-                  />
-                  <FormControlLabel
-                    value="No"
-                    control={<StyledRadio />}
-                    label="No"
-                    onChange={event => this.handleInputChange(event)}
-                  />
-                </RadioGroup>
-              </FormControl>
+              {usertype === 'Premium' && (
+                <FormControl component="fieldset">
+                  <h4 className="pl-2 pt-4 pb-2">Shared Account</h4>
+                  <RadioGroup name="sharedAccount" className="scheduled-transaction">
+                    <FormControlLabel
+                      value="Yes"
+                      control={<StyledRadio />}
+                      label="Yes"
+                      onChange={event => this.handleInputChange(event)}
+                    />
+                    <FormControlLabel
+                      value="No"
+                      control={<StyledRadio />}
+                      label="No"
+                      onChange={event => this.handleInputChange(event)}
+                    />
+                  </RadioGroup>
+                </FormControl>
+              )}
               {this.state.sharedAccount && (
                 <Fragment>
                   <h4 className="pl-2 pt-4 pb-2">User Phone Number</h4>

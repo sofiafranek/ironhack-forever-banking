@@ -312,7 +312,13 @@ class App extends Component {
                   authorized={this.state.user}
                   redirect={'/signin'}
                   path="/accounts/:id"
-                  render={props => <SingleAccount {...props} changeActiveNav={this.activeNav} />}
+                  render={props => (
+                    <SingleAccount
+                      {...props}
+                      changeActiveNav={this.activeNav}
+                      user={this.state.user}
+                    />
+                  )}
                   exact
                 />
 

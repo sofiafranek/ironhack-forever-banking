@@ -54,20 +54,22 @@ class CreditAcceptance extends Component {
     const user = this.props.user;
     return (
       <Layout>
-        {this.state.account &&
-        <section className="apply-for-credit-page">
-          <h1>Credit Acceptance</h1>
-          <hr></hr>
-          <h4 className="pt-3 pb-4">
-            {user.name} you have been accepted for a Credit Amount of {this.state.account.limit}{getSymbolFromCurrency(this.state.account.currency)}
-          </h4>
-          <Grid item xs={12} sm={12} className="pb-4">
+        {this.state.account && (
+          <section className="apply-for-credit-page">
+            <h1>Credit Acceptance</h1>
+            <hr></hr>
+            <h4 className="pt-3 pb-4">
+              {user.name} you have been accepted for a Credit Amount of {this.state.account.limit}
+              {getSymbolFromCurrency(this.state.account.currency)}
+            </h4>
+            <Grid item xs={12} sm={12} className="pb-4">
               <FormControl>
                 <InputLabel htmlFor="age-native-simple">How would you prefer to pay?</InputLabel>
                 <Select name="option" native onChange={event => this.handleInputChange(event)}>
                   {this.options.map(option => (
                     <option value={option} key={option}>
-                      {option}{getSymbolFromCurrency(this.state.account.currency)}
+                      {option}
+                      {getSymbolFromCurrency(this.state.account.currency)}
                     </option>
                   ))}
                 </Select>

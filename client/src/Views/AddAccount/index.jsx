@@ -14,7 +14,11 @@ import {
   Radio
 } from '@material-ui/core';
 import clsx from 'clsx';
-import { creatingAccountFromInternal, creatingAccountFromExternal, userIDAccounts } from '../../Services/account';
+import {
+  creatingAccountFromInternal,
+  creatingAccountFromExternal,
+  userIDAccounts
+} from '../../Services/account';
 import { createNotification } from '../../Services/notification';
 import { useStyles } from '../../Utilities/useStyles';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
@@ -147,7 +151,7 @@ class AddAccount extends Component {
     userIDAccounts(userID)
       .then(account => {
         console.log(account);
-        const accounts = account.map(value => value.accountID)
+        const accounts = account.map(value => value.accountID);
         this.setState({
           accounts,
           type: accounts[0].type,
@@ -177,8 +181,7 @@ class AddAccount extends Component {
 
     let response = null;
 
-    if(this.state.option === 'Existing')
-      response = await creatingAccountFromInternal(account);
+    if (this.state.option === 'Existing') response = await creatingAccountFromInternal(account);
     else {
       response = await creatingAccountFromExternal(account);
     }
@@ -230,6 +233,7 @@ class AddAccount extends Component {
   }
 
   render() {
+    const usertype = this.props.user.usertype;
     return (
       <Layout>
         <Breadcrumb>
@@ -263,23 +267,25 @@ class AddAccount extends Component {
                 </Select>
               </FormControl>
             </Grid>
-            <FormControl component="fieldset">
-              <h4 className="pl-2 pt-4 pb-2">Shared Account</h4>
-              <RadioGroup name="sharedAccount" className="scheduled-transaction">
-                <FormControlLabel
-                  value="Yes"
-                  control={<StyledRadio />}
-                  label="Yes"
-                  onChange={event => this.handleInputChange(event)}
-                />
-                <FormControlLabel
-                  value="No"
-                  control={<StyledRadio />}
-                  label="No"
-                  onChange={event => this.handleInputChange(event)}
-                />
-              </RadioGroup>
-            </FormControl>
+            {usertype === 'Premium' && (
+              <FormControl component="fieldset">
+                <h4 className="pl-2 pt-4 pb-2">Shared Account</h4>
+                <RadioGroup name="sharedAccount" className="scheduled-transaction">
+                  <FormControlLabel
+                    value="Yes"
+                    control={<StyledRadio />}
+                    label="Yes"
+                    onChange={event => this.handleInputChange(event)}
+                  />
+                  <FormControlLabel
+                    value="No"
+                    control={<StyledRadio />}
+                    label="No"
+                    onChange={event => this.handleInputChange(event)}
+                  />
+                </RadioGroup>
+              </FormControl>
+            )}
             {this.state.sharedAccount && (
               <Fragment>
                 <h4 className="pl-2 pt-4 pb-2">User Phone Number</h4>

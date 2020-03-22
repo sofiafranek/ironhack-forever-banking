@@ -98,6 +98,7 @@ class CreateCard extends Component {
   }
 
   render() {
+    console.log(this.state.accounts, 'ACCOUNTS');
     return (
       <Layout>
         <Breadcrumb>
@@ -105,7 +106,7 @@ class CreateCard extends Component {
           <Breadcrumb.Item className="disable-breadcrumb">Create a New Card</Breadcrumb.Item>
         </Breadcrumb>
         <h1 className="mb-4">Create a New Card</h1>
-        {this.state.accounts.length > 0 && (
+        {this.state.accounts && this.state.accounts.length > 0 && (
           <form onSubmit={event => this.setData(event)}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>

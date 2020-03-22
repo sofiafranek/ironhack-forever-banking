@@ -19,9 +19,17 @@ class Transactions extends Component {
       allTransactions: [],
       filter: 'All',
       search: '',
-      renderTransactions: []
+      renderTransactions: [],
+      isToggleOn: true
     };
     this.searchData = this.searchData.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    this.setState(state => ({
+      isToggleOn: !state.isToggleOn
+    }));
   }
 
   refresh() {
@@ -124,12 +132,21 @@ class Transactions extends Component {
               <option value="Outcome">Outcome</option>
             </select>
           </div>
+          <button onClick={this.handleClick} className="mb-4 toggle-transactions">
+            {this.state.isToggleOn ? 'Close Accordions' : 'Open Accordions'}
+          </button>
           {this.state.renderTransactions.map(transaction => {
             if (
               transaction.reference.toLowerCase().includes(this.state.search.toLowerCase()) ||
               transaction.category.toLowerCase().includes(this.state.search.toLowerCase())
             )
-              return <Transaction key={transaction._id} {...transaction}></Transaction>;
+              return (
+                <Transaction
+                  key={transaction._id}
+                  {...transaction}
+                  toggle={this.state.isToggleOn}
+                ></Transaction>
+              );
           })}
         </div>
       </Layout>

@@ -53,6 +53,7 @@ class SingleAccount extends Component {
 
   render() {
     const accountID = this.props.match.params.id;
+    const usertype = this.props.user.usertype;
     return (
       <Layout>
         {this.state.account && (
@@ -99,11 +100,13 @@ class SingleAccount extends Component {
                     <i className="fas fa-plus"></i>
                   </Button>
                 </Link>
-                <a href="/accounts/create-shared-account">
-                  <Button variant="contained" className="secondary">
-                    <i className="fas fa-link"></i>
-                  </Button>
-                </a>
+                {usertype === 'Premium' && (
+                  <a href="/accounts/create-shared-account">
+                    <Button variant="contained" className="secondary">
+                      <i className="fas fa-link"></i>
+                    </Button>
+                  </a>
+                )}
                 <Button
                   variant="contained"
                   className="third"

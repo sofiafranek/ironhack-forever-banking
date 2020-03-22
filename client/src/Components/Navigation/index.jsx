@@ -122,7 +122,9 @@ const Navigation = props => {
             {['Notifications'].map((text, index) => (
               <NavLink to={'/notifications'} key={text} exact>
                 <ListItem button>
-                  <i className="far fa-bell"></i>
+                  <i className="far fa-bell">
+                    <div className="notification-alert"></div>
+                  </i>
                 </ListItem>
               </NavLink>
             ))}

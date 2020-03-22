@@ -447,6 +447,7 @@ class AddTransaction extends Component {
   }
 
   render() {
+    const usertype = this.props.user.usertype;
     return (
       <Layout>
         <Breadcrumb>
@@ -554,23 +555,25 @@ class AddTransaction extends Component {
                 onChange={event => this.handleInputChange(event)}
               />
             </Grid>
-            <FormControl component="fieldset">
-              <h4 className="pl-2 pt-4 pb-2">Scheduled</h4>
-              <RadioGroup name="schedule" className="scheduled-transaction">
-                <FormControlLabel
-                  value="Yes"
-                  control={<StyledRadio />}
-                  label="Yes"
-                  onChange={event => this.handleInputChange(event)}
-                />
-                <FormControlLabel
-                  value="No"
-                  control={<StyledRadio />}
-                  label="No"
-                  onChange={event => this.handleInputChange(event)}
-                />
-              </RadioGroup>
-            </FormControl>
+            {usertype === 'Premium' && (
+              <FormControl component="fieldset">
+                <h4 className="pl-2 pt-4 pb-2">Scheduled</h4>
+                <RadioGroup name="schedule" className="scheduled-transaction">
+                  <FormControlLabel
+                    value="Yes"
+                    control={<StyledRadio />}
+                    label="Yes"
+                    onChange={event => this.handleInputChange(event)}
+                  />
+                  <FormControlLabel
+                    value="No"
+                    control={<StyledRadio />}
+                    label="No"
+                    onChange={event => this.handleInputChange(event)}
+                  />
+                </RadioGroup>
+              </FormControl>
+            )}
           </Grid>
           {this.state.schedule && (
             <Fragment>

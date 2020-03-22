@@ -58,51 +58,46 @@ class Transactions extends Component {
   }
 
   componentDidMount() {
+    this.getData();
+  }
+
+  async getData(){
     const userID = this.props.userID;
-
-    userAccounts(userID)
-      .then(accounts => {
-        this.setState({
-          accounts
-        });
-
-        transactionService
-          .receivedTransactions(accounts)
-          .then(transactions => {
-            this.setState({
-              transactionsReceived: transactions
-            });
-
-            transactionService
-              .sentTransactions(accounts)
-              .then(transactions => {
-                this.setState({
-                  transactionsSent: transactions
-                });
-
-                transactionService
-                  .allTransactions(accounts)
-                  .then(transactions => {
-                    this.setState({
-                      allTransactions: transactions,
-                      renderTransactions: transactions
-                    });
-                  })
-                  .catch(error => {
-                    console.log(error);
-                  });
-              })
-              .catch(error => {
-                console.log(error);
-              });
-          })
-          .catch(error => {
-            console.log(error);
-          });
+    try {
+      const accounts = await userAccounts(userID);
+      const transactionsRec = await transactionService.receivedTransactions(accounts);
+      const transactionsReceived = transactionsRec.map(transaction => {
+        return {  
+          transaction,
+          type: 'minus'
+      }});
+      const transactionsS = await transactionService.sentTransactions(accounts);
+      const transactionsSent = transactionsS.map(transaction => {
+        return {  
+          transaction,
+          type: 'add'
+      }});
+      const all = transactionsReceived.concat(transactionsSent);
+      const sortedTransactions = all.sort((val1, val2) => {
+        return new Date(val2.transaction.dateTransaction) - new Date(val1.transaction.dateTransaction);
       })
-      .catch(error => {
-        console.log(error);
+      const allTran = await transactionService.allTransactions(accounts);
+      const allTransactions = allTran.map(transaction => {
+        return {  
+          transaction,
+          type: 'add'
+      }});
+      this.setState({
+        accounts,
+        transactionsReceived,
+        transactionsSent,
+        allTransactions,
+        renderTransactions: sortedTransactions
       });
+      console.log(allTransactions);
+    } catch(error) {
+      console.log(error);
+    } 
   }
 
   render() {
@@ -148,13 +143,14 @@ class Transactions extends Component {
           </button> */}
           {this.state.renderTransactions.map(transaction => {
             if (
-              transaction.reference.toLowerCase().includes(this.state.search.toLowerCase()) ||
-              transaction.category.toLowerCase().includes(this.state.search.toLowerCase())
+              transaction.transaction.reference.toLowerCase().includes(this.state.search.toLowerCase()) ||
+              transaction.transaction.category.toLowerCase().includes(this.state.search.toLowerCase())
             )
               return (
                 <Transaction
-                  key={transaction._id}
-                  {...transaction}
+                  key={transaction.transaction._id}
+                  type={transaction.type}
+                  {...transaction.transaction}
                   toggle={this.state.isToggleOn}
                 ></Transaction>
               );

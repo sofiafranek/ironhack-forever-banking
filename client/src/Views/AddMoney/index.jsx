@@ -8,7 +8,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
-import { userIDAccounts } from '../../Services/account';
+import { userActiveAccounts } from '../../Services/account';
 import { createTransactionAccount } from '../../Services/transaction';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import MuiAlert from '@material-ui/lab/Alert';
@@ -51,12 +51,13 @@ class addMoney extends Component {
     const account = Object.assign({}, this.state);
     account.userID = userID;
 
-    userIDAccounts(userID)
+    userActiveAccounts(userID)
       .then(account => {
+        const accounts = account.map(acc => acc.accountID);
         this.setState({
-          accounts: account.accountID,
-          type: account[0].accountID.type,
-          accountIDFrom: account[0].accountID._id
+          accounts,
+          type: accounts[0].type,
+          accountIDFrom: accounts[0]._id
         });
       })
       .catch(error => console.log(error));

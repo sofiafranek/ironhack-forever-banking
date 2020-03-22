@@ -6,6 +6,7 @@ const Account = require('./../database/models/account');
 const UserAccount = require('./../database/models/userAccount');
 const Card = require('./../database/models/card');
 const User = require('./../database/models/user');
+const Notification = require('./../database/models/notification');
 
 const router = new Router();
 
@@ -79,7 +80,6 @@ router.post('/create-account-external', async (req, res, next) => {
 });
 
 router.post('/create-account-internal', async (req, res, next) => {
-  console.log(req.body);
   const {
     accountIDFrom,
     balance,
@@ -152,23 +152,45 @@ router.get('/:userID/user-accounts', RouteGuard, async (req, res, next) => {
 
 router.post('/update-primary-account', RouteGuard, async (req, res, next) => {
   const { oldAccount, newAccount } = req.body;
-  console.log(oldAccount);
-  console.log(newAccount);
 
   try {
     await UserAccount.updatePrimaryAccount(oldAccount, false);
     await UserAccount.updatePrimaryAccount(newAccount, true);
+    res.json({ result : true });
   } catch (error) {
     next(error);
   }
 });
 
 router.post('/add-user-to-account', RouteGuard, async (req, res, next) => {
-  const { accountID, userID } = req.body;
-
+  const { phoneNumber, account } = req.body;
   try {
-    await Account.updateShared(accountID);
-    await UserAccount.createUserAccount(userID, accountID, false);
+
+    const user = await User.getUserByPhoneNumber(phoneNumber);
+    if (user) {
+      const userID = user._id;
+      const accountID = account._id;
+
+      await Account.updateShared(accountID);
+      await UserAccount.createUserAccount(userID, accountID, false);
+
+      const userIDTo = user._id;
+      const userNameTo = user.name;
+      const userIDFrom = req.user._id;
+      const userNameFrom = req.user.name;
+
+      const messageTo = `${userNameFrom} started to share an account with you`;
+      const messageFrom = `You just stated to share an account with ${userNameTo}`;
+
+      await Notification.createNotification(
+        userIDFrom, userIDTo, messageFrom, messageTo
+      );
+
+      res.json({ result : true });
+    } else {
+      res.json({ result : false });
+    }
+
   } catch (error) {
     next(error);
   }
@@ -180,6 +202,22 @@ router.get('/:userID/accounts', RouteGuard, async (req, res, next) => {
   try {
     const accountsUser = await UserAccount.getUserActiveAccounts(userID);
     res.json({ accountsUser });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Get all the accounts from the user logged in
+router.get('/:userID/linked-accounts', RouteGuard, async (req, res, next) => {
+  const userID = req.params.userID;
+  try {
+    const accountsUser = await UserAccount.getUserActiveAccounts(userID);
+    const sharedAccounts = [];
+
+    for (const account of accountsUser) {
+      if (account.accountID.shared) sharedAccounts.push(account);
+    }
+    res.json({ sharedAccounts });
   } catch (error) {
     next(error);
   }

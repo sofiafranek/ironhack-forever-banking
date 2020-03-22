@@ -15,9 +15,18 @@ const account = async () => {
   }
 };
 
+const userLinkedAccounts = async userID => {
+  try {
+    const result = await instance.get(`/${userID}/linked-accounts`);
+    const sharedAccounts = result.data.sharedAccounts;
+    return sharedAccounts;
+  } catch (error) {
+    throw error;
+  }
+}
+
 const updatePrimaryAccount = async (data) => {
   try {
-    console.log("333333333333333")
     const result = await instance.post('/update-primary-account', data);
     return result.data;
   } catch(error) {
@@ -65,7 +74,7 @@ const deleteAccount = async accountID => {
 };
 
 // only showing the accounts that belong to that user
-const userIDAccounts = async userID => {
+const userActiveAccounts = async userID => {
   try {
     const result = await instance.get(`/${userID}/accounts`);
     const accounts = result.data.accountsUser;
@@ -89,9 +98,11 @@ const userAccounts = async userID => {
 const addUserToAccount = async data => {
   try {
     const result = await instance.post('/add-user-to-account', data);
+    return result.data.result;
   } catch (error) {
     throw error;
   }
+
 };
 
 export {
@@ -100,8 +111,9 @@ export {
   creatingAccountFromExternal,
   deleteAccount,
   singleAccount,
-  userIDAccounts,
+  userActiveAccounts,
   userAccounts,
   updatePrimaryAccount,
-  addUserToAccount
+  addUserToAccount,
+  userLinkedAccounts
 };

@@ -7,6 +7,8 @@ const Account = require('./../database/models/account');
 const UserAccount = require('./../database/models/userAccount');
 const User = require('./../database/models/user');
 const Credit = require('./../database/models/credit');
+const Notification = require('./../database/models/notification');
+const getSymbolFromCurrency = require('currency-symbol-map');
 const router = new Router();
 
 // User can add a transaction
@@ -36,7 +38,7 @@ router.post('/add-transaction', async (req, res, next) => {
       balanceFrom = accountFrom.balance;
     }
     
-    let accountTo = null, typeAccTo = 'Account', user = null;
+    let accountTo = null, typeAccTo = 'Account', userTo = null;
     accountTo = await Account.getAccountByNumber(accountNumber);
 
     if (!accountTo) {
@@ -49,15 +51,19 @@ router.post('/add-transaction', async (req, res, next) => {
       let balanceTo = 0;
       if (typeAccTo === 'Credit') {
         balanceTo = accountTo.current;
-        user = await Credit.getUser(accountIDTo);
+        userTo = await Credit.getUser(accountIDTo);
       }
       else {
         balanceTo = accountTo.balance;
-        user = await UserAccount.getUser(accountIDTo);
+        userTo = await UserAccount.getUser(accountIDTo);
       }
 
-      const userID = user.userID._id;
-      const userName = user.userID.name;
+      const userIDTo = userTo.userID._id;
+      const userNameTo = userTo.userID.name;
+      const userIDFrom = req.user._id;
+      const userNameFrom = req.user.name;
+      const currencyFrom = accountFrom.currency; 
+      const currencyTo = accountTo.currency;
       const minusBalance = Number(balanceFrom) - Number(totalAmount);
       let addBalance = 0;
 
@@ -94,7 +100,15 @@ router.post('/add-transaction', async (req, res, next) => {
         (typeAccTo === 'Credit') ? await Credit.updateCurrent(accountIDTo, addBalance) : await Account.updateBalance(accountIDTo, addBalance);
   
         // Success message
-        res.json({ result: true,  userID, userName});
+
+        const messageTo = `${userNameFrom} sent you ${totalAmount}${getSymbolFromCurrency(currencyTo)} for ${category}`;
+        const messageFrom = `You just sent ${totalAmount}${getSymbolFromCurrency(currencyFrom)} to ${userNameTo} for ${category}`;
+
+        await Notification.createNotification(
+          userIDFrom, userIDTo, messageFrom, messageTo
+        );
+
+        res.json({ result: true });
       }
       else {
         res.json({ result : false, message: 0});
@@ -138,12 +152,15 @@ router.post('/add-transaction-phone', async (req, res, next) => {
       balanceFrom = accountFrom.balance;
     }
     
-    const user = await User.getUserByPhoneNumber(phoneNumber);
-    if (user) {
-      const userID = user._id;
-      const userName = user.name;
-      const accountTo = await UserAccount.getUserPrimaryAccount(userID);
-      
+    const userTo = await User.getUserByPhoneNumber(phoneNumber);
+    if (userTo) {
+      const userIDTo = userTo._id;
+      const userNameTo = userTo.name;
+      const userIDFrom = req.user._id;
+      const userNameFrom = req.user.name;
+      const accountTo = await UserAccount.getUserPrimaryAccount(userIDTo);
+      const currencyFrom = accountFrom.currency; 
+      const currencyTo = accountTo.currency;
       const balanceTo = accountTo.balance;
       const accountIDTo = accountTo._id;
       const minusBalance = Number(balanceFrom) - Number(totalAmount);
@@ -181,9 +198,16 @@ router.post('/add-transaction-phone', async (req, res, next) => {
         (type === 'Credit') ? await Credit.updateCurrent(accountIDFrom, minusBalance) : await Account.updateBalance(accountIDFrom, minusBalance);
 
         await Account.updateBalance(accountIDTo, addBalance);
+
+        const messageTo = `${userNameFrom} sent you ${totalAmount}${getSymbolFromCurrency(currencyTo)} for ${category}`;
+        const messageFrom = `You just sent ${totalAmount}${getSymbolFromCurrency(currencyFrom)} to ${userNameTo} for ${category}`;
+
+        await Notification.createNotification(
+          userIDFrom, userIDTo, messageFrom, messageTo
+        );
   
         // Success message
-        res.json({ result: true , userID, userName});
+        res.json({ result: true });
       } else {
         res.json({ result : false, message: 0});
       }

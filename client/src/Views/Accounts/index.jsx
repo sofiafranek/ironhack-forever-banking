@@ -4,7 +4,7 @@ import Layout from '../../Components/Layout';
 import Account from '../../Components/Account';
 import Search from '../../Components/Search';
 import Button from '@material-ui/core/Button';
-import { userIDAccounts } from './../../Services/account';
+import { userActiveAccounts } from './../../Services/account';
 import './style.scss';
 
 class Accounts extends Component {
@@ -52,7 +52,7 @@ class Accounts extends Component {
     });
 
     try {
-      const accounts = await userIDAccounts(userID);
+      const accounts = await userActiveAccounts(userID);
       this.setState({
         accounts
       });
@@ -71,7 +71,7 @@ class Accounts extends Component {
     const userID = this.props.user._id;
 
     try {
-      const accounts = await userIDAccounts(userID);
+      const accounts = await userActiveAccounts(userID);
       this.setState({
         accounts
       });

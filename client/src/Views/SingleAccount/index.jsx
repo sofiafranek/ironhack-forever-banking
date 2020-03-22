@@ -101,11 +101,15 @@ class SingleAccount extends Component {
                   </Button>
                 </Link>
                 {usertype === 'Premium' && (
-                  <a href="/accounts/create-shared-account">
-                    <Button variant="contained" className="secondary">
+                  <Link
+                  to={{
+                    pathname: "/accounts/create-shared-account",
+                    state: this.state.account
+                  }}>
+                  <Button variant="contained" className="secondary">
                       <i className="fas fa-link"></i>
-                    </Button>
-                  </a>
+                  </Button>
+                </Link>
                 )}
                 <Button
                   variant="contained"

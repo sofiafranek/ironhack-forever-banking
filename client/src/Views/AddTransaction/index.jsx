@@ -20,8 +20,7 @@ import {
   createListTransactions,
   createListTransactionsPhone
 } from '../../Services/transaction';
-import { userIDAccounts } from '../../Services/account';
-import { createNotification } from '../../Services/notification';
+import { userActiveAccounts } from '../../Services/account';
 import { creditAccounts } from './../../Services/credit';
 import { useStyles } from '../../Utilities/useStyles';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
@@ -222,7 +221,7 @@ class AddTransaction extends Component {
     const userID = this.props.user._id;
 
     try {
-      const account = await userIDAccounts(userID);
+      const account = await userActiveAccounts(userID);
       const accounts = account.map(value => value.accountID);
       const credits = await creditAccounts(userID);
       const allAccounts = accounts.concat(credits);
@@ -279,14 +278,6 @@ class AddTransaction extends Component {
     return colorCategory;
   }
 
-  async createNotificationUser(notification) {
-    try {
-      await createNotification(notification);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   async createTransactionAccount(transaction) {
     let insuccessMessage = '';
     try {
@@ -294,22 +285,6 @@ class AddTransaction extends Component {
       const { result, message } = response;
 
       if (result) {
-        const { userID, userName } = response;
-        const userIDFrom = this.props.user._id;
-        const userIDTo = userID;
-        const userNameFrom = this.props.user.name;
-        const userNameTo = userName;
-        const messageTo = `${userNameFrom} sent you ${this.state.totalAmount}`;
-        const messageFrom = `You just sent ${this.state.totalAmount} to ${userNameTo}`;
-
-        const notification = {
-          userIDFrom,
-          userIDTo,
-          messageTo,
-          messageFrom
-        };
-
-        await this.createNotificationUser(notification);
         this.props.history.push({
           pathname: '/transactions'
         });
@@ -334,24 +309,6 @@ class AddTransaction extends Component {
       const { result, message } = response;
 
       if (result) {
-        const { userID, userName } = response;
-        const userIDFrom = this.props.user._id;
-        const userIDTo = userID;
-        const userNameFrom = this.props.user.name;
-        const userNameTo = userName;
-        const messageTo = `The ${userNameFrom} sent you ${this.state.totalAmount}`;
-        const messageFrom = `You just sent ${this.state.totalAmount} to ${userNameTo}`;
-
-        const notification = {
-          userIDFrom,
-          userIDTo,
-          messageTo,
-          messageFrom
-        };
-
-        console.log(notification);
-
-        await this.createNotificationUser(notification);
         this.props.history.push({
           pathname: '/transactions'
         });
@@ -418,7 +375,6 @@ class AddTransaction extends Component {
           if (this.state.optionTransfer === 'AccountNumber') {
             await createListTransactions(allT);
           } else {
-            console.log("hereJOAAJNANNAANANANANANNANAN");
             await createListTransactionsPhone(allT);
           }
         } catch (error) {

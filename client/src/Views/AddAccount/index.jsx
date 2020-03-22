@@ -17,7 +17,7 @@ import clsx from 'clsx';
 import {
   creatingAccountFromInternal,
   creatingAccountFromExternal,
-  userIDAccounts
+  userActiveAccounts
 } from '../../Services/account';
 import { createNotification } from '../../Services/notification';
 import { useStyles } from '../../Utilities/useStyles';
@@ -148,7 +148,7 @@ class AddAccount extends Component {
     const account = Object.assign({}, this.state);
     account.userID = userID;
 
-    userIDAccounts(userID)
+    userActiveAccounts(userID)
       .then(account => {
         console.log(account);
         const accounts = account.map(value => value.accountID);

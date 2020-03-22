@@ -122,7 +122,7 @@ class CreateAccount extends Component {
   }
 
   generateCardNumber() {
-    return Math.floor(Math.random() * 9000000000) + 1000000000;
+    return Math.floor(Math.random() * 9000000000000000) + 1000000000000000;
   }
 
   generateCVV() {
@@ -130,9 +130,9 @@ class CreateAccount extends Component {
   }
 
   generateExpiryDate() {
-    return Math.floor(Math.random() * 900) + 100;
+    return 21;
   }
-
+  
   async setData(event) {
     event.preventDefault();
     const userID = this.props.location.state.idUser;

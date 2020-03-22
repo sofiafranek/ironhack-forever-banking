@@ -10,7 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import Layout from '../../Components/Layout';
 
 import { creatingCard } from '../../Services/card';
-import { userIDAccounts } from '../../Services/account';
+import { userActiveAccounts } from '../../Services/account';
 
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
@@ -62,12 +62,14 @@ class CreateCard extends Component {
 
   getData() {
     const userID = this.props.userID;
-    userIDAccounts(userID)
+    userActiveAccounts(userID)
       .then(account => {
+        console.log("INSIDE CARD", account);
+        const accounts = account.map(acc => acc.accountID);
         this.setState({
-          accounts: account.accountID,
-          type: account[0].accountID.type,
-          accountID: account[0].accountID._id
+          accounts,
+          type: accounts[0].type,
+          accountID: accounts[0]._id
         });
       })
       .catch(error => console.log(error));
@@ -91,7 +93,6 @@ class CreateCard extends Component {
 
     creatingCard(card)
       .then(card => {
-        console.log(card);
         this.props.history.push('/cards');
       })
       .catch(error => console.log(error));

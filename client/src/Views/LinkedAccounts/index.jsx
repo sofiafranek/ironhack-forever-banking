@@ -1,11 +1,36 @@
 import React, { Component } from 'react';
 
 import Layout from '../../Components/Layout';
-
+import Account from '../../Components/Account';
+import { userLinkedAccounts } from '../../Services/account';
 import Button from '@material-ui/core/Button';
 //import { Link } from 'react-router-dom';
 
 class LinkedAccounts extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      linkedAccounts: []
+    }
+  }
+
+  componentDidMount(){
+    this.getData();
+  }
+
+  async getData () {
+    const userID = this.props.user._id;
+    try {
+      const linkedAccounts = await userLinkedAccounts(userID);
+
+      console.log(linkedAccounts);
+      this.setState({
+        linkedAccounts
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
   render() {
     return (
       <Layout>
@@ -21,15 +46,13 @@ class LinkedAccounts extends Component {
               <i className="fas fa-sync-alt"></i>
             </Button>
           </div>
-          {/* {this.state.account.length > 0 ? (
-            this.state.account.map(single => {
-              if (single.type.toLowerCase().includes(this.state.search.toLowerCase())) {
-                return <Account key={single._id} {...single} />;
-              }
-            })
-          ) : (
+          {this.state.linkedAccounts.length > 0 ? (
+            this.state.linkedAccounts.map(single => (
+              <Account key={single._id} {...single} />
+            )
+          )) : (
             <p className="pt-3">No Accounts Listed</p>
-          )} */}
+          )}
         </div>
       </Layout>
     );

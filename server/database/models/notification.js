@@ -43,7 +43,7 @@ schema.statics.listNotifications = async function(userID) {
 
     const listNotifications = await Model.find({
         $or: [ { userIDTo: userID } , { userIDFrom: userID }]
-    }).exec();
+    }).sort({'createdAt': -1}).exec();
 
     return listNotifications;
 };

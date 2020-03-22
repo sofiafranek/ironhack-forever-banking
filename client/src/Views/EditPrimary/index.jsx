@@ -60,14 +60,18 @@ class EditPrimary extends Component {
 
   async setData(event){
     event.preventDefault();
+    let result = true;  
     const data = Object.assign({}, this.state);
     delete data.accounts;
     try {
-      console.log("IIIIIMMWMWMMWMMWM")
-      await updatePrimaryAccount(data);
-      this.props.history.push({
-        pathname: '/accounts'
-      });
+      if(this.state.newAccount != ''){
+        result = await updatePrimaryAccount(data);
+      }
+      if(result) {
+        this.props.history.push({
+          pathname: '/accounts'
+        });
+      }
     } catch(error) {
       console.log(error);
     }
@@ -89,6 +93,7 @@ class EditPrimary extends Component {
                   <RadioGroup
                     name="newAccount"
                     key={single._id}
+                    required
                   >
                     <FormControlLabel
                       value={single._id}

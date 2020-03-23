@@ -227,13 +227,25 @@ router.get('/:userID/linked-accounts', RouteGuard, async (req, res, next) => {
   const userID = req.params.userID;
   try {
     const accountsUser = await UserAccount.getUserActiveAccounts(userID);
-    const sharedAccounts = [];
+    const sharedAccounts = [], allUsers = [];
 
     for (const account of accountsUser) {
-      if (account.accountID.shared) sharedAccounts.push(account);
+      const user = await UserAccount.getSharedUser(account.accountID._id, userID);
+      const information = {
+        user: user[0]
+      };     
+      if (account.accountID.shared) {
+        information.account = account;
+        sharedAccounts.push(information);
+      }
+    }
+
+    for (const acc of sharedAccounts) {
+      console.log(acc);
     }
     res.json({ sharedAccounts });
   } catch (error) {
+    console.log(error);
     next(error);
   }
 });

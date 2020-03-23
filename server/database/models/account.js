@@ -28,9 +28,6 @@ const schema = new mongoose.Schema({
   shared: {
     type: Boolean
   },
-  sharedName: {
-    type: String
-  },
   currency: {
     type: String,
     enum: ['CAD',

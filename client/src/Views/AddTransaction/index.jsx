@@ -24,6 +24,8 @@ import { userActiveAccounts } from '../../Services/account';
 import { creditAccounts } from './../../Services/credit';
 import { useStyles } from '../../Utilities/useStyles';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import CurrencyTextField from '@unicef/material-ui-currency-textfield'
+import getSymbolFromCurrency from 'currency-symbol-map';
 
 function StyledRadio(props) {
   const classes = useStyles();
@@ -53,6 +55,7 @@ class AddTransaction extends Component {
       reference: '',
       accountIDFrom: '',
       accountInfo: '',
+      accountCurrency: '',
       accounts: [],
       categories: [
         'Housing',
@@ -194,10 +197,12 @@ class AddTransaction extends Component {
     const accountSplitted = value.split(' ');
     const accountIDFrom = accountSplitted[0];
     const type = accountSplitted[1];
+    const accountCurrency = getSymbolFromCurrency(accountSplitted[2]);
 
     this.setState({
       accountIDFrom,
-      type
+      type,
+      accountCurrency
     });
   }
 
@@ -205,7 +210,7 @@ class AddTransaction extends Component {
     const inputName = event.target.name;
     let value = event.target.value;
     if (inputName === 'schedule') value === 'No' ? (value = false) : (value = true);
-
+    console.log(inputName + ' ' + value);
     this.setState({
       [inputName]: value
     });
@@ -227,7 +232,8 @@ class AddTransaction extends Component {
       this.setState({
         accounts: allAccounts,
         type: accounts[0].type,
-        accountIDFrom: accounts[0]._id
+        accountIDFrom: accounts[0]._id,
+        accountCurrency: getSymbolFromCurrency(accounts[0].currency)
       });
     } catch (error) {
       console.log(error);
@@ -370,7 +376,7 @@ class AddTransaction extends Component {
                   onChange={event => this.handleAccountFromChange(event)}
                 >
                   {this.state.accounts.map(acc => (
-                    <option value={acc._id + ' ' + acc.type} key={acc.accountNumber}>
+                    <option value={acc._id + ' ' + acc.type + ' ' + acc.currency} key={acc.accountNumber}>
                       {acc.accountNumber + ' ' + acc.type}
                     </option>
                   ))}
@@ -425,16 +431,17 @@ class AddTransaction extends Component {
               ))}
             <h4 className="pl-2 pt-3 pb-2">Amount</h4>
             <Grid item xs={12} sm={12}>
-              <TextField
-                type="number"
-                variant="outlined"
-                required
-                fullWidth
+            <CurrencyTextField
                 id="totalAmount"
-                label="Total Amount"
                 name="totalAmount"
                 onChange={event => this.handleInputChange(event)}
-              />
+                variant="standard"
+                required
+                decimalCharacter="."
+                digitGroupSeparator=","
+                currencySymbol={this.state.accountCurrency}
+                outputFormat="string"
+            />
             </Grid>
             <Grid item xs={12} sm={12}>
               <h4 className="pt-3 pb-2">Category</h4>

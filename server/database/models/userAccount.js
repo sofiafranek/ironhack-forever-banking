@@ -65,7 +65,7 @@ schema.statics.getUserAccount = async function(userID) {
   const account = await Model.findOne({
     userID
   })
-    .populate('accountID');
+    .populate('accountID').exec();
 
   return account;
 };
@@ -77,6 +77,17 @@ schema.statics.getUser = async function(accountID) {
   })
     .populate('userID')
     .select({ userID: 1});
+
+  return user;
+};
+
+schema.statics.getSharedUser = async function(accountID, _id) {
+  const Model = this;
+  const user = await Model.find({
+    accountID,
+    userID: { $ne: _id }
+  })
+    .populate('userID');
 
   return user;
 };

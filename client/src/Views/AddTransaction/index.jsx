@@ -57,7 +57,7 @@ class AddTransaction extends Component {
       categories: [
         'Housing',
         'Transport',
-        'Food & Dining',
+        'Food and Dining',
         'Utility Bills',
         'Cell Phone',
         'Childcare and School Costs',
@@ -84,7 +84,6 @@ class AddTransaction extends Component {
       time: 'Month',
       times: ['Month', 'Trimester', 'Semester'],
       dateTransaction: new Date(),
-      colorCategory: '',
       success: true,
       message: '',
       optionTransfer: '',
@@ -235,49 +234,6 @@ class AddTransaction extends Component {
     }
   }
 
-  chooseColor() {
-    const category = this.state.category;
-    let colorCategory = 'info';
-
-    if (category === 'Transport') {
-      colorCategory = 'transport';
-    } else if (category === 'Auto insurance') {
-      colorCategory = 'auto';
-    } else if (category === 'Food & Dining') {
-      colorCategory = 'foodDining';
-    } else if (category === 'Utility bills') {
-      colorCategory = 'utilityBills';
-    } else if (category === 'Cell phone') {
-      colorCategory = 'cellPhone';
-    } else if (category === 'Fun stuff') {
-      colorCategory = 'fun';
-    } else if (category === 'Childcare and school costs') {
-      colorCategory = 'childcare';
-    } else if (category === 'Pet food') {
-      colorCategory = 'petFood';
-    } else if (category === 'Pet insurance') {
-      colorCategory = 'petInsurance';
-    } else if (category === 'Life insurance') {
-      colorCategory = 'lifeInsurance';
-    } else if (category === 'Travel') {
-      colorCategory = 'travel';
-    } else if (category === 'Student loans') {
-      colorCategory = 'studentLoans';
-    } else if (category === 'Credit-card debt') {
-      colorCategory = 'credit';
-    } else if (category === 'Retirement') {
-      colorCategory = 'retirement';
-    } else if (category === 'Emergency fund') {
-      colorCategory = 'warning';
-    } else if (category === 'Large purchases') {
-      colorCategory = 'largePurchases';
-    } else if (category === 'Other') {
-      colorCategory = 'other';
-    }
-
-    return colorCategory;
-  }
-
   async createTransactionAccount(transaction) {
     let insuccessMessage = '';
     try {
@@ -365,41 +321,31 @@ class AddTransaction extends Component {
     }
 
     if (insuccessMessage !== '') {
-      this.setState(
-        {
-          success: false,
-          message: insuccessMessage
-        })
+      this.setState({
+        success: false,
+        message: insuccessMessage
+      });
     } else {
-        try {
-          if (this.state.optionTransfer === 'AccountNumber') {
-            await createListTransactions(allT);
-          } else {
-            await createListTransactionsPhone(allT);
-          }
-        } catch (error) {
-          console.log(error);
+      try {
+        if (this.state.optionTransfer === 'AccountNumber') {
+          await createListTransactions(allT);
+        } else {
+          await createListTransactionsPhone(allT);
         }
+      } catch (error) {
+        console.log(error);
+      }
     }
-    
   }
 
   setData(event) {
     event.preventDefault();
-    const colorCategory = this.chooseColor();
 
-    this.setState(
-      {
-        colorCategory
-      },
-      () => {
-        if (this.state.schedule) {
-          this.createListTransactions();
-        } else {
-          this.createOneTransaction();
-        }
-      }
-    );
+    if (this.state.schedule) {
+      this.createListTransactions();
+    } else {
+      this.createOneTransaction();
+    }
   }
 
   render() {

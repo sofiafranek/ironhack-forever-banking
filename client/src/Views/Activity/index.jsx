@@ -20,17 +20,16 @@ class Dashboard extends Component {
   async getData() {
     const userID = this.props.user._id;
 
-    try { 
+    try {
       const information = await activity(userID);
       const userAccs = information.accountsUser;
-      const accs = userAccs.map( value => value.accountID);
+      const accs = userAccs.map(value => value.accountID);
       const accountsUser = accs.concat(information.credits);
-      
+
       this.setState({
         accountsUser,
-        transactions: information.transactions,
+        transactions: information.transactions
       });
-
     } catch (error) {
       console.log(error);
     }
@@ -92,7 +91,7 @@ class Dashboard extends Component {
           )}
           <h1 className="pb-3">Your Activity - {user.name}</h1>
           <hr className="pb-1 pt-1"></hr>
-          <h4 className="pb-2">Accounts Listed Here</h4>
+          <h4 className="pb-2">All Accounts</h4>
           {this.state.accountsUser.length > 0 ? (
             this.state.accountsUser.map(single => {
               return <ActivityAccount key={single._id} {...single} />;
@@ -101,7 +100,7 @@ class Dashboard extends Component {
             <p className="pt-3">No Accounts Listed</p>
           )}
 
-          <h4 className="pb-3 pt-4">Transactions Listed Here</h4>
+          <h4 className="pb-3 pt-4">All Transactions</h4>
           {this.state.transactions.length > 0 ? (
             this.state.transactions.map(single => {
               return <Transaction key={single._id} {...single} />;

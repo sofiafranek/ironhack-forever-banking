@@ -18,11 +18,13 @@ class Home extends Component {
               </a>
             </div>
           </nav>
-          <h5 className="mt-3">Forever. Banking.</h5>
-          <h1>
-            Banking <br></br>has never been <br></br>so rewarding.
-          </h1>
-          <h2>A banking experience consisting of an app with limitless capabilities.</h2>
+          <div className="homepage-content">
+            <h5 className="mt-3">Forever. Banking.</h5>
+            <h1>
+              Banking <br></br>has never been <br></br>so rewarding.
+            </h1>
+            <h2>A banking experience consisting of an app with limitless capabilities.</h2>
+          </div>
         </div>
         <div className="homepage--image"></div>
       </section>

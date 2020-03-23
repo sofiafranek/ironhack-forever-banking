@@ -12,11 +12,11 @@ class Transaction extends Component {
       category,
       accountIDFrom,
       accountIDTo,
-      colorCategory,
       currency,
       creditFrom,
       creditTo,
-      type
+      type,
+      colorCategory
     } = this.props;
 
 
@@ -42,7 +42,9 @@ class Transaction extends Component {
               {reference && <h6>{reference}</h6>}
               <div>
                 {totalAmount > 0 && (
-                  <h6>{symbol + ' ' + totalAmount + ' ' + getSymbolFromCurrency(accFrom.currency)}</h6>
+                  <h6>
+                    {symbol + ' ' + totalAmount + ' ' + getSymbolFromCurrency(accFrom.currency)}
+                  </h6>
                 )}
               </div>
             </Accordion.Toggle>

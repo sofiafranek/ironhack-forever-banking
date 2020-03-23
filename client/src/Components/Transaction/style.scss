@@ -56,64 +56,89 @@ h6 {
   .badge {
     padding: 8px 20px;
   }
-  .badge-transport {
-    background-color: green !important;
+
+  .badge-Housing {
+    background-color: #faf8c0 !important;
   }
 
-  .badge-auto {
-    background-color: blue !important;
+  .badge-Transport {
+    background-color: #f0bb8d !important;
   }
 
-  .badge-foodDining {
-    background-color: purple !important;
+  .badge-Food.and.Dining {
+    background-color: #e67b77 !important;
   }
 
-  .badge-utilityBills {
-    background-color: orange !important;
+  .badge-Utility.Bills {
+    background-color: #b9de9b !important;
   }
 
-  .badge-cellPhone {
-    background-color: lightcoral !important;
+  .badge-Cell.Phone {
+    background-color: #64b56a !important;
   }
 
-  .badge-fun {
-    background-color: pink !important;
+  .badge-Childcare.and.School.Costs {
+    background-color: #6fd9c7 !important;
   }
 
-  .badge-childcare {
-    background-color: lightseagreen !important;
+  .badge-Pet.Food {
+    background-color: #42aab8 !important;
   }
 
-  .badge-petFood {
-    background-color: lightgoldenrodyellow !important;
+  .badge-Pet.Insurance {
+    background-color: #286fad !important;
   }
 
-  .badge-lifeInsurance {
-    background-color: lightblue !important;
+  .badge-Clothing {
+    background-color: #cacaeb !important;
   }
 
-  .badge-travel {
-    background-color: cyan !important;
+  .badge-Health.Insurance {
+    background-color: #b5a5c7 !important;
   }
 
-  .badge-studentLoans {
-    background-color: yellow !important;
+  .badge-Fitness {
+    background-color: #ebd0f2 !important;
   }
 
-  .badge-credit {
-    background-color: yellowgreen !important;
+  .badge-Auto.Insurance {
+    background-color: #f0bde5 !important;
   }
 
-  .badge-retirement {
-    background-color: paleturquoise !important;
+  .badge-Life.Insurance {
+    background-color: #9e5d7c !important;
   }
 
-  .badge-largePurchases {
-    background-color: peru !important;
+  .badge-Fun.Stuff {
+    background-color: #bd7228 !important;
   }
 
-  .badge-other {
-    background-color: palevioletred !important;
+  .badge-Travel {
+    background-color: #e6e6e6 !important;
+  }
+
+  .badge-Student.Loans {
+    background-color: #7f7691 !important;
+  }
+
+  .badge-Credit.Card.Debt {
+    background-color: #0aa687 !important;
+  }
+
+  .badge-Retirement {
+    background-color: #b0cf9b !important;
+  }
+
+  .badge-Emergency.Fund {
+    background-color: #dbc2b4 !important;
+  }
+
+  .badge-Large.Purchases {
+    background-color: #757575 !important;
+  }
+
+  .badge-Other {
+    background-color: #e2cfff !important;
   }
 }
 

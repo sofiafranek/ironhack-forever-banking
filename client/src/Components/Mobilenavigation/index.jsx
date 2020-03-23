@@ -33,7 +33,10 @@ const Mobilenavigation = () => {
         <BottomNavigationAction label="Accounts" icon={<i className="fas fa-wallet"></i>} />
       </Link>
       <Link to="/transactions">
-        <BottomNavigationAction label="Transactions" icon={<i class="fas fa-exchange-alt"></i>} />
+        <BottomNavigationAction
+          label="Transactions"
+          icon={<i className="fas fa-exchange-alt"></i>}
+        />
       </Link>
       <Link to="/cards">
         <BottomNavigationAction label="Cards" icon={<i className="far fa-credit-card"></i>} />

@@ -13,35 +13,18 @@ import {
   InputLabel,
   Radio
 } from '@material-ui/core';
-import clsx from 'clsx';
 import {
   creatingAccountFromInternal,
   creatingAccountFromExternal,
   userActiveAccounts
 } from '../../Services/account';
 import { createNotification } from '../../Services/notification';
-import { useStyles } from '../../Utilities/useStyles';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-import MuiAlert from '@material-ui/lab/Alert';
-
-function StyledRadio(props) {
-  const classes = useStyles();
-
-  return (
-    <Radio
-      className={classes.root}
-      disableRipple
-      color="default"
-      checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-      icon={<span className={classes.icon} />}
-      {...props}
-    />
-  );
-}
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+import CurrencyTextField from '@unicef/material-ui-currency-textfield'
+import getSymbolFromCurrency from 'currency-symbol-map';
+import { StyledRadio } from '../../Utilities/styledRadio';
+import { Alert } from '../../Utilities/alert';
+import { replaceAll } from '../../Utilities/replaceAll';
 
 class AddAccount extends Component {
   constructor(props) {
@@ -59,7 +42,8 @@ class AddAccount extends Component {
       sharedUser: '',
       success: true,
       message: '',
-      currency: 'CAD'
+      currency: 'CAD',
+      currencySymbol: '$'
     };
     this.currencies = [
       'CAD',
@@ -124,9 +108,21 @@ class AddAccount extends Component {
     const inputName = event.target.name;
     let value = event.target.value;
     if (inputName === 'sharedAccount') value === 'No' ? (value = false) : (value = true);
+    if (inputName === 'balance') value = replaceAll(value, ',', '');
 
     this.setState({
       [inputName]: value
+    });
+  }
+
+  handleInputCurrencyChange(event) {
+    const inputName = event.target.name;
+    let value = event.target.value;
+    const currencySymbol = getSymbolFromCurrency(value);
+
+    this.setState({
+      [inputName]: value,
+      currencySymbol
     });
   }
 
@@ -135,10 +131,13 @@ class AddAccount extends Component {
 
     const accountSplitted = value.split(' ');
     const accountIDFrom = accountSplitted[0];
+    const currencySymbol = getSymbolFromCurrency(accountSplitted[2]);
 
     this.setState({
-      accountIDFrom
+      accountIDFrom,
+      currencySymbol
     });
+
   }
 
   getInfo() {
@@ -257,7 +256,7 @@ class AddAccount extends Component {
             <Grid item xs={12} sm={12}>
               <FormControl>
                 <InputLabel htmlFor="age-native-simple">Currency</InputLabel>
-                <Select name="currency" native onChange={event => this.handleInputChange(event)}>
+                <Select name="currency" native onChange={event => this.handleInputCurrencyChange(event)}>
                   {this.currencies.map(currency => (
                     <option value={currency} key={currency}>
                       {currency}
@@ -332,17 +331,20 @@ class AddAccount extends Component {
                       ))}
                     </Select>
                   </FormControl>
-                  <TextField
-                    type="number"
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="balance"
-                    label="Balance"
-                    name="balance"
-                    value={this.state.balance}
-                    onChange={event => this.handleInputChange(event)}
-                  />
+                  <Grid item xs={12}>
+                    <CurrencyTextField
+                      id="balance"
+                      name="balance"
+                      label="Balance"
+                      onChange={event => this.handleInputChange(event)}
+                      variant="standard"
+                      required
+                      decimalCharacter="."
+                      digitGroupSeparator=","
+                      currencySymbol={this.state.currencySymbol}
+                      outputFormat="string"
+                    />
+                  </Grid>
                 </Grid>
               ) : (
                 <>
@@ -369,16 +371,17 @@ class AddAccount extends Component {
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField
-                      type="number"
-                      variant="outlined"
-                      required
-                      fullWidth
+                    <CurrencyTextField
                       id="balance"
-                      label="Balance"
                       name="balance"
-                      value={this.state.balance}
+                      label="Balance"
                       onChange={event => this.handleInputChange(event)}
+                      variant="standard"
+                      required
+                      decimalCharacter="."
+                      digitGroupSeparator=","
+                      currencySymbol={this.state.currencySymbol}
+                      outputFormat="string"
                     />
                   </Grid>
                 </>

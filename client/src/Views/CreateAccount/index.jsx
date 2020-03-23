@@ -9,33 +9,16 @@ import {
   Grid,
   FormControlLabel,
   InputLabel,
-  Radio,
   Container
 } from '@material-ui/core';
-import clsx from 'clsx';
-import MuiAlert from '@material-ui/lab/Alert';
 import { creatingAccountFromExternal } from '../../Services/account';
 import { creatingCard } from '../../Services/card';
-import { useStyles } from '../../Utilities/useStyles';
+import { StyledRadio } from '../../Utilities/styledRadio';
+import { Alert } from '../../Utilities/alert';
+import { replaceAll } from '../../Utilities/replaceAll';
+import CurrencyTextField from '@unicef/material-ui-currency-textfield'
+import getSymbolFromCurrency from 'currency-symbol-map';
 
-function StyledRadio(props) {
-  const classes = useStyles();
-
-  return (
-    <Radio
-      className={classes.root}
-      disableRipple
-      color="default"
-      checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-      icon={<span className={classes.icon} />}
-      {...props}
-    />
-  );
-}
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
 
 class CreateAccount extends Component {
   constructor(props) {
@@ -49,6 +32,7 @@ class CreateAccount extends Component {
       currency: 'CAD',
       result: true,
       message: '',
+      currencySymbol: '$'
     };
     this.currencies = [
       'CAD',
@@ -91,8 +75,10 @@ class CreateAccount extends Component {
 
   handleInputChange(event) {
     const inputName = event.target.name;
-    let value = event.target.value;
+    let value = event.target.value, currencySymbol = '$';
+
     if (inputName === 'sharedAccount') value === 'No' ? (value = false) : (value = true);
+    if (inputName === 'balance') value = replaceAll(value, ',', '');
 
     this.setState({
       [inputName]: value
@@ -104,6 +90,18 @@ class CreateAccount extends Component {
       });
     }
   }
+
+  handleInputCurrencyChange(event) {
+    const inputName = event.target.name;
+    let value = event.target.value;
+    const currencySymbol = getSymbolFromCurrency(value);
+
+    this.setState({
+      [inputName]: value,
+      currencySymbol
+    });
+  }
+
 
   componentDidMount() {
     this.props.changeActiveNav();
@@ -173,9 +171,6 @@ class CreateAccount extends Component {
           expiryDate,
           userID
         };
-
-        console.log(card);
-
         await creatingCard(card);
         this.props.history.push('/summary');
       } else {
@@ -210,7 +205,7 @@ class CreateAccount extends Component {
               </FormControl>
               <FormControl>
                 <InputLabel htmlFor="age-native-simple">Currency</InputLabel>
-                <Select name="currency" native onChange={event => this.handleInputChange(event)}>
+                <Select name="currency" native onChange={event => this.handleInputCurrencyChange(event)}>
                   {this.currencies.map(currency => (
                     <option value={currency} key={currency}>
                       {currency}
@@ -278,18 +273,18 @@ class CreateAccount extends Component {
                 />
               </Grid>
               <Grid item xs={12} sm={12}>
-                <TextField
-                  type="number"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="balance"
-                  label="Balance"
-                  name="balance"
-                  className="pb-3"
-                  value={this.state.balance}
-                  onChange={event => this.handleInputChange(event)}
-                />
+              <CurrencyTextField
+                label="Balance"
+                id="balance"
+                name="balance"
+                onChange={event => this.handleInputChange(event)}
+                variant="standard"
+                required
+                decimalCharacter="."
+                digitGroupSeparator=","
+                currencySymbol={this.state.currencySymbol}
+                outputFormat="string"
+              />
               </Grid>
             </Grid>
           </Grid>

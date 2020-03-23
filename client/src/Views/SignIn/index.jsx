@@ -7,11 +7,7 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import { signIn } from './../../Services/authentication';
 import Container from '@material-ui/core/Container';
-import MuiAlert from '@material-ui/lab/Alert';
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+import { Alert } from '../../Utilities/alert';
 
 class SignInSide extends Component {
   constructor(props) {

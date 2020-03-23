@@ -33,8 +33,6 @@ class Card extends Component {
 
   render() {
     const { accountID, creditID, cardNumber, CVV, expiryDate, type, userName } = this.props;
-    console.log(accountID);
-    console.log(creditID);
 
     return (
       <section className="card-container">

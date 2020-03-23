@@ -62,7 +62,7 @@ router.post('/create-account-external', async (req, res, next) => {
     currency
   } = req.body;
   const balanceNumber = Number(balance);
-  const balanceDecimal = balanceNumber.toFixed(2);
+  const balanceDecimal = balanceNumber;
 
   try {
     const account = await Account.createAccount(
@@ -108,7 +108,7 @@ router.post('/create-account-internal', async (req, res, next) => {
   } = req.body;
 
   const balanceNumber = Number(balance);
-  const balanceDecimal = balanceNumber.toFixed(2);
+  const balanceDecimal = balanceNumber;
 
   try {
     // GO TO ACCOUNT THAT YOU WANT TO TRANSFER

@@ -3,35 +3,16 @@ import Layout from '../../Components/Layout';
 
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-
 import {
   RadioGroup,
   FormControl,
   InputLabel,
   Select,
   FormControlLabel,
-  Radio
 } from '@material-ui/core';
-
-import clsx from 'clsx';
-import { useStyles } from '../../Utilities/useStyles';
 import Button from '@material-ui/core/Button';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-
-function StyledRadio(props) {
-  const classes = useStyles();
-
-  return (
-    <Radio
-      className={classes.root}
-      disableRipple
-      color="default"
-      checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-      icon={<span className={classes.icon} />}
-      {...props}
-    />
-  );
-}
+import { StyledRadio } from '../../Utilities/styledRadio';
 
 class ApplyForCredit extends Component {
   constructor(props) {

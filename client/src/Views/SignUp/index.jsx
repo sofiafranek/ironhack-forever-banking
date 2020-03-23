@@ -2,14 +2,8 @@ import React, { Component } from 'react';
 import Container from '@material-ui/core/Container';
 
 import { Button, TextField, FormControl, Select, Grid, InputLabel } from '@material-ui/core';
-
 import { signUp } from './../../Services/authentication';
-
-import MuiAlert from '@material-ui/lab/Alert';
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+import { Alert } from '../../Utilities/alert';
 
 class SignUp extends Component {
   constructor(props) {
@@ -41,29 +35,9 @@ class SignUp extends Component {
     const inputName = event.target.name;
     const value = event.target.value;
 
-    // if (inputName === 'age' && value <= 16) {
-    //   const error = true;
-    //   const errorMessage = 'You have to be 16 or over';
-    //   this.setState({
-    //     error,
-    //     errorMessage
-    //   });
-    //   console.log('person is too young');
-    // } else {
-    //   const error = false;
-    //   const errorMessage = '';
-    //   this.setState({
-    //     error,
-    //     errorMessage
-    //   });
-    //   console.log('person is of age');
-    // }
-
     this.setState({
       [inputName]: value
     });
-
-    console.log(value, 'VALUE');
   }
 
   getData(event) {

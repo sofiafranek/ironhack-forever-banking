@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import './style.scss';
 
 import Card from '../../Components/Card';
-
 import Layout from '../../Components/Layout';
 import { Usercards } from './../../Services/card';
-
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 

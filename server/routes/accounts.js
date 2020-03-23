@@ -222,6 +222,25 @@ router.get('/:userID/accounts', RouteGuard, async (req, res, next) => {
   }
 });
 
+router.get('/:userID/accountsAndCards', RouteGuard, async (req, res, next) => {
+  const userID = req.params.userID;
+  try {
+    const accountsUser = await UserAccount.getUserActiveAccounts(userID);
+    const accounts = [];
+    for (const acc of accountsUser) {
+      const card = await Card.getCardByAccountID(acc.accountID._id);
+      const information = {
+        acc,
+        card
+      };
+      accounts.push(information);
+    }
+    res.json({ accounts });
+  } catch (error) {
+    next(error);
+  }
+});
+
 // Get all the accounts from the user logged in
 router.get('/:userID/linked-accounts', RouteGuard, async (req, res, next) => {
   const userID = req.params.userID;

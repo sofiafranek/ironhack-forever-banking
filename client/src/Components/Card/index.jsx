@@ -32,7 +32,10 @@ class Card extends Component {
   }
 
   render() {
-    const { accountID, cardNumber, CVV, expiryDate, type, userName } = this.props;
+    const { accountID, creditID, cardNumber, CVV, expiryDate, type, userName } = this.props;
+    console.log(accountID);
+    console.log(creditID);
+
     return (
       <section className="card-container">
         <button
@@ -76,7 +79,7 @@ class Card extends Component {
 
             <div className="credit-card__info">
               <div className="credit-card__info_name_back">
-                <p>{accountID.accountNumber}</p>
+                <p>{ (accountID) ? accountID.accountNumber : creditID.accountNumber}</p>
               </div>
             </div>
           </div>

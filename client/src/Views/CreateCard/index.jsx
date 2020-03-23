@@ -11,7 +11,7 @@ import Layout from '../../Components/Layout';
 
 import { creatingCard } from '../../Services/card';
 import { userActiveAccounts } from '../../Services/account';
-
+import { creditAccounts } from '../../Services/credit';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 class CreateCard extends Component {
@@ -65,19 +65,21 @@ class CreateCard extends Component {
     this.getData();
   }
 
-  getData() {
+  async getData() {
     const userID = this.props.userID;
-    userActiveAccounts(userID)
-      .then(account => {
-        console.log("INSIDE CARD", account);
-        const accounts = account.map(acc => acc.accountID);
-        this.setState({
-          accounts,
-          type: accounts[0].type,
-          accountID: accounts[0]._id
-        });
-      })
-      .catch(error => console.log(error));
+    try {
+    const account = await userActiveAccounts(userID);
+      const accounts = account.map(value => value.accountID);
+      const credits = await creditAccounts(userID);
+      const allAccounts = accounts.concat(credits);
+      this.setState({
+        accounts: allAccounts,
+        type: accounts[0].type,
+        accountID: accounts[0]._id
+      });
+    } catch(error) {
+      console.log(error);
+    }
   }
 
   setData(event) {

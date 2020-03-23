@@ -94,6 +94,16 @@ const userActiveAccounts = async userID => {
   }
 };
 
+const userActiveAccountsCards = async userID => {
+  try {
+    const result = await instance.get(`/${userID}/accountsAndCards`);
+    const accounts = result.data.accounts;
+    return accounts;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // all the accounts, incluing the non active
 const userAccounts = async userID => {
   try {

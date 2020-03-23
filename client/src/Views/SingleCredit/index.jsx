@@ -71,8 +71,8 @@ class SingleCredit extends Component {
           <hr className="mb-4"></hr>
           <h5>IBAN Number : {account.accountNumber}</h5>
           <h5>Account Type : {account.type}</h5>
-          <h5>Card Number : 1234 1234 1234 1234 </h5>
-          <h5>Card Expirty : 12 / 04</h5>
+          {/* <h5>Card Number : 1234 1234 1234 1234 </h5> */}
+          {/* <h5>Card Expirty : 12 / 04</h5> */}
           <hr className="mt-4"></hr>
           <h4 className="mb-4 mt-4">Credit Application Review</h4>
           <h5>Martial Status : {account.maritalStatus}</h5>

@@ -163,11 +163,16 @@ class Analytics extends Component {
         <Layout>
           <h1>Analytics</h1>
           <hr></hr>
-          {/* <Chart dates={this.state.dates} categories={this.state.categories} /> */}
-          <h4 className="mt-4"></h4>
-          <h5 className="mb-4">Total amount spent this month : {this.state.totalAmount}</h5>
+          {/* title below only shows if there are categories */}
+          {this.state.eachCategories.length === 0 && (
+            <h5 className="mb-4">
+              Start spending! We can only show analytics when you start spending your money!
+            </h5>
+          )}
+          {this.state.eachCategories && (
+            <h5 className="mb-4">Total amount spent this month : {this.state.totalAmount}</h5>
+          )}
           <div>
-            {/* can put a variant name so the category and change in css the color to match the category colour */}
             {this.state.eachCategories.map(category => (
               <ProgressBar
                 variant={category.name}

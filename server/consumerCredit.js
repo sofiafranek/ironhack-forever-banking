@@ -6,7 +6,7 @@ const Credit = require('./database/models/credit');
 const Notification = require('./database/models/notification');
 const getSymbolFromCurrency = require('currency-symbol-map');
 
-module.exports = schedule.scheduleJob('53 * * * *', async () => {
+module.exports = schedule.scheduleJob('0 * * *', async () => {
   try {
     const currentDate = new Date();
     const day = currentDate.getDate();
@@ -34,13 +34,16 @@ module.exports = schedule.scheduleJob('53 * * * *', async () => {
         const { userID, option, minimumPayment, current, _id, apr, limit } = credit;
         const account = await UserAccount.getUserPrimaryAccount(userID);
         const accountID = account._id;
-        const balance = account.balance;
-        const currency = account.currency;
+        const balanceFrom = account.balance;
+        const currencyFrom = account.currency;
         const datePayment = currentDate;
-        let minusBalance = 0, debt = 0, messageFrom = '', messageTo = '';
+        let minusBalance = 0, debt = 0, messageFrom = '', messageTo = '', addBalance = 0;
         const accountIDBank = '111111111111111111';
+        const accountBank = await Account.getAccountById(accountIDBank);
+        const currencyTo = accountBank.currency;
+        const balanceBank = accountBank.balance;
         const userFrom = await Credit.getUser(accountID);
-        const userTo = await Credit.getUser(accountIDBank);
+        const userTo = await UserAccount.getUser(accountIDBank);
         const userIDFrom = userFrom.userID._id;
         const userIDTo = userTo.userID._id;
         const userNameFrom = userFrom.userID.name;
@@ -49,15 +52,18 @@ module.exports = schedule.scheduleJob('53 * * * *', async () => {
         if (current !== limit) {
             if (option === 'minimum') {
                 debt = current - minimumPayment;
-                minusBalance = balance - (minimumPayment + debt * apr);
-                messageTo = `${userNameFrom} paied the minimum credit ${minusBalance + getSymbolFromCurrency(currency)}. The debt is now ${debt}${minusBalance + getSymbolFromCurrency(currency)}`;
-                messageFrom = `The bank took you the minimum credit ${minusBalance + getSymbolFromCurrency(currency)}. Your debt is now ${debt}${minusBalance + getSymbolFromCurrency(currency)}`;
+                minusBalance = balanceFrom - (minimumPayment + debt * apr);
+                addBalance = balanceBank + (minimumPayment + debt * apr);
+                messageTo = `${userNameFrom} paied the minimum credit ${minusBalance + getSymbolFromCurrency(currencyTo)}. The debt is now ${debt}${minusBalance + getSymbolFromCurrency(currencyTo)}`;
+                messageFrom = `The bank took you the minimum credit ${minusBalance + getSymbolFromCurrency(currencyFrom)}. Your debt is now ${debt}${minusBalance + getSymbolFromCurrency(currencyFrom)}`;
             } else {
-                minusBalance = balance - current;
-                messageTo = `${userNameFrom} paied the minimum credit ${minusBalance + getSymbolFromCurrency(currency)}`;
-                messageFrom = `The bank took you the minimum credit ${minusBalance + getSymbolFromCurrency(currency)}`;
+                minusBalance = balanceFrom - current;
+                minusBalance = balanceBank - current;
+                messageTo = `${userNameFrom} paied the minimum credit ${minusBalance + getSymbolFromCurrency(currencyTo)}`;
+                messageFrom = `The bank took you the minimum credit ${minusBalance + getSymbolFromCurrency(currencyFrom)}`;
             }
 
+            await Account.updateBalance(accountIDBank, addBalance);
             await Account.updateBalance(accountID, minusBalance);
             if (month === 12) {
                 datePayment.setMonth(month + 1);

@@ -74,7 +74,7 @@ class SingleAccount extends Component {
             </Breadcrumb>
             <section className="single-account">
               <h1>
-                {this.state.account.balance} {getSymbolFromCurrency(this.state.account.currency)}
+                {this.state.account.balance.toFixed(2)} {getSymbolFromCurrency(this.state.account.currency)}
               </h1>
               <h5>
                 {this.state.account.type === 'Current'

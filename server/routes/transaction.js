@@ -220,11 +220,9 @@ router.post('/add-transaction-phone', async (req, res, next) => {
 
 
 router.post('/received', async (req, res, next) => {
-  try {
-    const { accountsID, creditsID } = req.body;
+  const { accountsID, creditsID } = req.body;
 
-    console.log(accountsID);
-    console.log(creditsID);
+  try {
     const transactionsAcc = await Transaction.getReceivedTransactions(accountsID);
     const transactionsCredit = await Transaction.getReceivedTransactionsCredit(creditsID);
     const transactionsTo = transactionsAcc.concat(transactionsCredit);
@@ -235,11 +233,9 @@ router.post('/received', async (req, res, next) => {
 });
 
 router.post('/sent', async (req, res, next) => {
-  try {
-    const { accountsID, creditsID } = req.body;
+  const { accountsID, creditsID } = req.body;
 
-    console.log(accountsID);
-    console.log(creditsID);
+  try {
     const transactionsAcc = await Transaction.getSentTransactions(accountsID);
     const transactionsCredit = await Transaction.getSentTransactionsCredit(creditsID);
     const transactionsFrom = transactionsAcc.concat(transactionsCredit);

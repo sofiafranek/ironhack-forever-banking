@@ -21,7 +21,7 @@ const Profile = props => {
           <h5 className="pb-3">Phone Number: {user.phoneNumber}</h5>
           <h5 className="pb-3">Nationality: {user.nationality}</h5>
           <h5 className="pb-3">Address: {user.address}</h5>
-          <h5>Joined Date: {user.createdAt}</h5>
+          <h5>Joined Date: {user.createdAt.split("T")[0]}</h5>
         </section>
       </Layout>
     </div>

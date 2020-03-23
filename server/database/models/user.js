@@ -55,4 +55,12 @@ schema.statics.getUserByPhoneNumber = async function(phoneNumber) {
 
   return user;
 };
+
+schema.statics.getPremiumUsers = async function() {
+  const Model = this;
+  const usertype = 'Premium';
+  const user = await Model.find({ usertype });
+  return user;
+};
+
 module.exports = mongoose.model('User', schema);

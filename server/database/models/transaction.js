@@ -218,10 +218,40 @@ schema.statics.getAllTransactionsAccount = async function(idAccount) {
   return allTransactions;
 };
 
+schema.statics.getOutcomesAccount = async function(idAccount) {
+  const Model = this;
+  const allTransactions = await Model.find({
+    accountIDFrom: idAccount,
+    status: 'Executed'
+  })
+    .populate('accountIDTo')
+    .populate('accountIDFrom')
+    .populate('creditTo')
+    .populate('creditFrom')
+    .sort({'dateTransaction': -1});
+
+  return allTransactions;
+};
+
 schema.statics.getAllTransactionsCredit = async function(idAccount) {
   const Model = this;
   const allTransactions = await Model.find({
     $or: [{ creditFrom: idAccount }, { creditTo: idAccount }],
+    status: 'Executed'
+  })
+    .populate('accountIDTo')
+    .populate('accountIDFrom')
+    .populate('creditTo')
+    .populate('creditFrom')
+    .sort({'dateTransaction': -1});
+
+  return allTransactions;
+};
+
+schema.statics.getOutcomesCredit = async function(idAccount) {
+  const Model = this;
+  const allTransactions = await Model.find({
+    creditFrom: idAccount,
     status: 'Executed'
   })
     .populate('accountIDTo')

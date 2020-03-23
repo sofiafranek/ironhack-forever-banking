@@ -7,7 +7,7 @@ const Notification = require('./database/models/notification');
 const UserAccount = require('./database/models/userAccount');
 const getSymbolFromCurrency = require('currency-symbol-map');
 
-module.exports = schedule.scheduleJob('21 * * * *', async () => {
+module.exports = schedule.scheduleJob('0 * * *', async () => {
   try {
     const currentDate = new Date();
     const day = currentDate.getDate();

@@ -34,11 +34,11 @@ class Credit extends Component {
               <h4>{this.props.type} Account</h4>
               <h5 className="pb-2 pt-2">IBAN Number: {this.props.accountNumber}</h5>
               <h5 className="pb-2 pt-2">
-                Credit Allowance : {this.props.limit}
+                Credit Allowance : {this.props.limit.toFixed(2)}
                 {getSymbolFromCurrency(this.props.currency)}
               </h5>
               <h5 className="pb-2 pt-2">
-                Credit Current : {this.props.current}
+                Credit Current : {this.props.current.toFixed(2)}
                 {getSymbolFromCurrency(this.props.currency)}
               </h5>
             </Card.Header>

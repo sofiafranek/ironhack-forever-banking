@@ -46,7 +46,7 @@ class SingleCredit extends Component {
 
   render() {
     const account = this.props.location.state;
-    console.log(account, 'ACCOUNT');
+
     return (
       <Layout>
         <Breadcrumb>
@@ -64,7 +64,7 @@ class SingleCredit extends Component {
             </Button>
           </div>
           <h1>
-            {account.current}
+            {account.current.toFixed(2)}
             {getSymbolFromCurrency(account.currency)}
           </h1>
           <h5>Total Credit Limit</h5>
@@ -76,7 +76,7 @@ class SingleCredit extends Component {
           <hr className="mt-4"></hr>
           <h4 className="mb-4 mt-4">Credit Application Review</h4>
           <h5>Martial Status : {account.maritalStatus}</h5>
-          <h5>Income : {account.income}</h5>
+          <h5>Income : {account.income.toFixed(2)}</h5>
           <h5>Occupation : {account.occupation}</h5>
           <h5>Any Outstanding Loans : {outstanding}</h5>
           <h5>Any Credit with other Banks : {otherCredit}</h5>

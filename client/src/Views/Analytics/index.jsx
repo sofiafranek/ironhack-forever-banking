@@ -3,19 +3,28 @@ import './style.scss';
 
 import Layout from '../../Components/Layout';
 import { transactions } from './../../Services/analytics';
-import { userAccounts } from './../../Services/account';
+import { userActiveAccounts } from './../../Services/account';
 import { creditAccounts } from './../../Services/credit';
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import getSymbolFromCurrency from 'currency-symbol-map';
+import {
+  FormControl,
+  Select,
+  Grid
+} from '@material-ui/core';
 
 class Analytics extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      transactions: [],
-      dates: [],
+      transactionsPerAccount: [],
       categories: [],
+      allAccounts: [],
       eachCategories: [],
-      totalAmount: 0
+      totalAmount: 0,
+      accountNumber: '',
+      accountCurrency: '',
+      index: 0
     };
   }
 
@@ -23,24 +32,28 @@ class Analytics extends Component {
     const userID = this.props.userID;
 
     try {
-      const accounts = await userAccounts(userID);
+      const accounts = await userActiveAccounts(userID);
       const credits = await creditAccounts(userID);
       const creditsID = credits.map(value => value._id);
       const accountsID = accounts.map(value => value.accountID);
+      const allAccounts = accountsID.concat(credits);
 
       const info = {
         accountsID,
         creditsID
       };
 
-      const transactionsUser = await transactions(info);
+      const transactionsPerAccount = await transactions(info);
 
       this.setState(
         {
-          transactions: transactionsUser
+          transactionsPerAccount,
+          accountNumber: allAccounts[0].accountNumber,
+          accountCurrency: allAccounts[0].currency,
+          allAccounts
         },
         () => {
-          this.splitDates();
+          this.calculatePercentageCategory();
         }
       );
     } catch (error) {
@@ -52,60 +65,73 @@ class Analytics extends Component {
     this.getData();
   }
 
+
   calculatePercentageCategory() {
-    const transactions = this.state.transactions.map(value => {
-      const transaction = new Object();
-      transaction.amount = value.totalAmount;
-      transaction.category = value.category;
-      transaction.color = value.colorCategory;
-      return transaction;
-    });
+    const transactionsPerAccount = this.state.transactionsPerAccount;
+    const index = this.state.index;
 
-    const categories = [];
-    let totalAmount = 0;
-    for (const transaction of transactions) {
-      //const color = transaction.color;
-      const name = transaction.category;
-      const value = transaction.amount;
-      totalAmount += value;
-      if (categories.some(value => value.name === transaction.category)) {
-        const indexCategory = categories.findIndex(value => value.name === transaction.category);
-        categories[indexCategory].value += value;
-      } else {
-        categories.push({
-          //color,
-          name,
-          value
-        });
-      }
-    }
+    if(transactionsPerAccount[index]){
+      const transactions = transactionsPerAccount[index].map(value => {
+        const transaction = new Object();
+        transaction.amount = value.totalAmount;
+        transaction.category = value.category;
+        transaction.color = value.colorCategory;
 
-    this.setState(
-      {
-        categories,
-        totalAmount
-      },
-      () => {
-        const eachCategories = this.state.categories;
-        const total = this.state.totalAmount;
-        for (const category of eachCategories) {
-          const amount = category.value;
-          const percentage = (amount / total) * 100;
-          category.value = percentage.toFixed(0);
+        return transaction;
+      });
+
+
+      const categories = [];
+      let totalAmount = 0;
+      for (const transaction of transactions) {
+        const name = transaction.category;
+        const value = transaction.amount;
+        totalAmount += value;
+        if (categories.some(value => value.name === transaction.category)) {
+          const indexCategory = categories.findIndex(value => value.name === transaction.category);
+          categories[indexCategory].value += value;
+        } else {
+          categories.push({
+            name,
+            value
+          });
         }
-        this.setState({
-          eachCategories
-        });
       }
-    );
+
+      this.setState(
+        {
+          categories,
+          totalAmount
+        },
+        () => {
+          const eachCategories = this.state.categories;
+          const total = this.state.totalAmount;
+          for (const category of eachCategories) {
+            const amount = category.value;
+            const percentage = (amount / total) * 100;
+            category.value = percentage.toFixed(0);
+          }
+          this.setState({
+            eachCategories
+          });
+        }
+      );
+    } else {
+      this.setState({
+        eachCategories: []
+      });
+    }
+    
   }
 
-  splitDates() {
-    const transactions = this.state.transactions.map(value => {
-      const transaction = new Object();
-      transaction.date = value.dateTransaction.split('-')[1];
-      transaction.amount = value.totalAmount;
-      return transaction;
+  /*splitDates() {
+    const transactions = this.state.transactionsPerAccount[this.state.index].map(value => {
+        const transaction = new Object();
+        transaction.amount = value.totalAmount;
+        transaction.category = value.category;
+        transaction.color = value.colorCategory;
+
+        return transaction;
     });
 
     let month = '';
@@ -166,6 +192,22 @@ class Analytics extends Component {
     });
 
     this.calculatePercentageCategory();
+  }*/
+
+  handleAccountChange(event) {
+    const inputName = event.target.name;
+    const value = event.target.value;
+    const index = value;
+    const allAccounts = this.state.allAccounts;
+
+    this.setState({
+      index,
+      accountNumber: allAccounts[index].accountNumber,
+      accountCurrency: allAccounts[index].currency,
+    }, () => {
+      this.calculatePercentageCategory();
+    })
+
   }
 
   render() {
@@ -173,7 +215,26 @@ class Analytics extends Component {
       <div>
         <Layout>
           <h1 className="pb-3">Analytics</h1>
-          <hr></hr>
+            <Grid item xs={12} sm={12}>
+              <h4 className="pt-3 pb-2">Choose the account</h4>
+              <FormControl>
+                <Select
+                  name="index"
+                  native
+                  onChange={event => this.handleAccountChange(event)}
+                >
+                  {this.state.allAccounts.map((acc, index) => (
+                    <option
+                      value={index}
+                      key={acc.accountNumber}
+                    >
+                      {acc.accountNumber + ' ' + acc.type}
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <br></br>
           {/* title below only shows if there are categories */}
           {this.state.eachCategories.length === 0 && (
             <h5 className="pt-3">
@@ -181,7 +242,7 @@ class Analytics extends Component {
             </h5>
           )}
           {this.state.eachCategories.length >= 1 && (
-            <h5 className="mb-4">Total amount spent this month : {this.state.totalAmount}</h5>
+            <h5 className="mb-4">Total amount spent this account this month is {this.state.totalAmount} {getSymbolFromCurrency(this.state.accountCurrency)}</h5>
           )}
           <div>
             {this.state.eachCategories.map(category => (

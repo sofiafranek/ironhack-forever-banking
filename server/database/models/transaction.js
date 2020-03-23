@@ -103,10 +103,12 @@ schema.statics.createTransaction = async function(
 ) {
   const Model = this;
 
-
-  let creditFrom = null, creditTo = null, accountIDFrom = null, accountIDTo = null;
-  (typeAccFrom === 'Credit') ? creditFrom = accFrom : accountIDFrom = accFrom;
-  (typeAccTo === 'Credit') ? creditTo = accTo : accountIDTo = accTo;
+  let creditFrom = null,
+    creditTo = null,
+    accountIDFrom = null,
+    accountIDTo = null;
+  typeAccFrom === 'Credit' ? (creditFrom = accFrom) : (accountIDFrom = accFrom);
+  typeAccTo === 'Credit' ? (creditTo = accTo) : (accountIDTo = accTo);
 
   const transaction = await Model.create({
     creditTo,
@@ -173,8 +175,7 @@ schema.statics.getAllTransactions = async function(accounts) {
     .populate('accountIDTo')
     .populate('accountIDFrom')
     .populate('creditFrom')
-    .sort({'dateTransaction': -1})
-    ;
+    .sort({'dateTransaction': -1});
   return allTransactions;
 };
 

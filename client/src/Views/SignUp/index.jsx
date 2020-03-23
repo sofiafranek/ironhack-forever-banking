@@ -32,9 +32,14 @@ class SignUp extends Component {
   handleInputChange(event) {
     const inputName = event.target.name;
     const value = event.target.value;
+
+    // inputName === 'dob' && value <= '2004-01-01' ? 'too young' : 'okay';
+
     this.setState({
       [inputName]: value
     });
+
+    console.log(value, 'VALUE');
   }
 
   getData(event) {
@@ -126,13 +131,15 @@ class SignUp extends Component {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                type="date"
+                min="2004-01-01"
+                step="1"
                 variant="outlined"
                 required
                 fullWidth
                 name="dob"
                 value={this.state.dob}
                 onChange={event => this.handleInputChange(event)}
-                type="date"
                 id="dob"
               />
             </Grid>
@@ -146,7 +153,6 @@ class SignUp extends Component {
                 value={this.state.phoneNumber}
                 onChange={event => this.handleInputChange(event)}
                 label="Phone Number"
-                type="string"
                 id="phoneNumber"
               />
             </Grid>

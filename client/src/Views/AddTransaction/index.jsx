@@ -46,6 +46,10 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
+function replaceAll(str, find, replace) {
+  return str.replace(new RegExp(find, 'g'), replace);
+}
+
 class AddTransaction extends Component {
   constructor(props) {
     super(props);
@@ -210,7 +214,9 @@ class AddTransaction extends Component {
     const inputName = event.target.name;
     let value = event.target.value;
     if (inputName === 'schedule') value === 'No' ? (value = false) : (value = true);
-    console.log(inputName + ' ' + value);
+    if (inputName === 'totalAmount') value = replaceAll(value, ',', '');
+
+    console.log(value);
     this.setState({
       [inputName]: value
     });

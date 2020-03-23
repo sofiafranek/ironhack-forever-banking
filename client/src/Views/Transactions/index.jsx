@@ -79,14 +79,14 @@ class Transactions extends Component {
       const transactionsReceived = transactionsRec.map(transaction => {
         return {
           transaction,
-          type: 'minus'
+          type: 'add'
         };
       });
       const transactionsS = await transactionService.sentTransactions(accounts);
       const transactionsSent = transactionsS.map(transaction => {
         return {
           transaction,
-          type: 'add'
+          type: 'minus'
         };
       });
       const all = transactionsReceived.concat(transactionsSent);
@@ -95,19 +95,13 @@ class Transactions extends Component {
           new Date(val2.transaction.dateTransaction) - new Date(val1.transaction.dateTransaction)
         );
       });
-      const allTran = await transactionService.allTransactions(accounts);
-      const allTransactions = allTran.map(transaction => {
-        return {
-          transaction,
-          type: 'add'
-        };
-      });
+
       this.setState({
         accounts,
         transactionsReceived,
         transactionsSent,
-        allTransactions,
-        renderTransactions: sortedTransactions
+        renderTransactions: sortedTransactions,
+        allTransactions: sortedTransactions
       });
     } catch (error) {
       console.log(error);

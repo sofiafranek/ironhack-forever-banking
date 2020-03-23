@@ -54,6 +54,16 @@ class Dashboard extends Component {
     this.renderView();
   };
 
+  randomKey(length) {
+    let result = '';
+    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+
   renderView() {
     const windowWidth = window.innerWidth;
     if (windowWidth >= 980) {
@@ -94,7 +104,7 @@ class Dashboard extends Component {
           <h4 className="pb-2">All Accounts</h4>
           {this.state.accountsUser.length > 0 ? (
             this.state.accountsUser.map(single => {
-              return <ActivityAccount key={single._id} {...single} />;
+              return <ActivityAccount key={this.randomKey(50)} {...single} />;
             })
           ) : (
             <p className="pt-3">No Accounts Listed</p>
@@ -103,7 +113,7 @@ class Dashboard extends Component {
           <h4 className="pb-3 pt-4">All Transactions</h4>
           {this.state.transactions.length > 0 ? (
             this.state.transactions.map(single => {
-              return <Transaction key={single._id} {...single} />;
+              return <Transaction key={this.randomKey(50)} {...single} />;
             })
           ) : (
             <p className="pt-3">No Transactions Listed</p>

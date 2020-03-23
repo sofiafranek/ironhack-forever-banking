@@ -34,6 +34,16 @@ class SingleAccount extends Component {
       .catch(error => console.log(error));
   }
 
+  randomKey(length) {
+    let result = '';
+    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+
   componentDidMount() {
     const accountID = this.props.match.params.id;
     const account = this.props.location.state;
@@ -52,6 +62,7 @@ class SingleAccount extends Component {
   x;
 
   render() {
+    console.log(this.state.account, 'STATE ACCOUNT');
     const accountID = this.props.match.params.id;
     const usertype = this.props.user.usertype;
     return (
@@ -84,7 +95,7 @@ class SingleAccount extends Component {
               <section className="pt-2">
                 {/* <h4 className="pb-3">Transactions for this Account</h4> */}
                 {this.state.transactions.map(transaction => (
-                  <Transaction {...transaction} />
+                  <Transaction key={this.randomKey(50)} {...transaction} />
                 ))}
               </section>
               <div className="action-container">
@@ -103,14 +114,15 @@ class SingleAccount extends Component {
                 </Link>
                 {usertype === 'Premium' && (
                   <Link
-                  to={{
-                    pathname: "/accounts/create-shared-account",
-                    state: this.state.account
-                  }}>
-                  <Button variant="contained" className="secondary">
+                    to={{
+                      pathname: '/accounts/create-shared-account',
+                      state: this.state.account
+                    }}
+                  >
+                    <Button variant="contained" className="secondary">
                       <i className="fas fa-link"></i>
-                  </Button>
-                </Link>
+                    </Button>
+                  </Link>
                 )}
                 <Button
                   variant="contained"

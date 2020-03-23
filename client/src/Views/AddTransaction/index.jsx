@@ -24,7 +24,7 @@ import { userActiveAccounts } from '../../Services/account';
 import { creditAccounts } from './../../Services/credit';
 import { useStyles } from '../../Utilities/useStyles';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-import CurrencyTextField from '@unicef/material-ui-currency-textfield'
+// import CurrencyTextField from '@unicef/material-ui-currency-textfield'
 import getSymbolFromCurrency from 'currency-symbol-map';
 
 function StyledRadio(props) {
@@ -376,7 +376,10 @@ class AddTransaction extends Component {
                   onChange={event => this.handleAccountFromChange(event)}
                 >
                   {this.state.accounts.map(acc => (
-                    <option value={acc._id + ' ' + acc.type + ' ' + acc.currency} key={acc.accountNumber}>
+                    <option
+                      value={acc._id + ' ' + acc.type + ' ' + acc.currency}
+                      key={acc.accountNumber}
+                    >
                       {acc.accountNumber + ' ' + acc.type}
                     </option>
                   ))}
@@ -431,7 +434,7 @@ class AddTransaction extends Component {
               ))}
             <h4 className="pl-2 pt-3 pb-2">Amount</h4>
             <Grid item xs={12} sm={12}>
-            <CurrencyTextField
+              {/* <CurrencyTextField
                 id="totalAmount"
                 name="totalAmount"
                 onChange={event => this.handleInputChange(event)}
@@ -441,7 +444,7 @@ class AddTransaction extends Component {
                 digitGroupSeparator=","
                 currencySymbol={this.state.accountCurrency}
                 outputFormat="string"
-            />
+              /> */}
             </Grid>
             <Grid item xs={12} sm={12}>
               <h4 className="pt-3 pb-2">Category</h4>

@@ -3,36 +3,12 @@ import Layout from '../../Components/Layout';
 import { Component } from 'react';
 import { addUserToAccount } from '../../Services/account';
 import {
-  RadioGroup,
   TextField,
-  Radio,
-  FormControl,
   Grid,
-  Button,
-  FormControlLabel
+  Button
 } from '@material-ui/core';
-import { useStyles } from '../../Utilities/useStyles';
 import MuiAlert from '@material-ui/lab/Alert';
-import clsx from 'clsx';
-
-function StyledRadio(props) {
-  const classes = useStyles();
-
-  return (
-    <Radio
-      className={classes.root}
-      disableRipple
-      color="default"
-      checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-      icon={<span className={classes.icon} />}
-      {...props}
-    />
-  );
-}
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+import { Alert } from '../../Utilities/alert';
 
 class CreateSharedAccount extends Component {
   constructor() {

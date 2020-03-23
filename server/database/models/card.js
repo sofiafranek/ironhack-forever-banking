@@ -11,6 +11,10 @@ const schema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Account'
   },
+  creditID: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Credit'
+  },
   cardNumber: {
     type: Number,
     required: true
@@ -46,10 +50,19 @@ schema.statics.getCardById = async function(id) {
   return card;
 };
 
-schema.statics.createCard = async function(accountID, cardNumber, CVV, type, expiryDate, userID) {
+schema.statics.getCardByAccountID = async function(accountID) {
   const Model = this;
+  const card = await Model.findOne({ accountID });
+  return card;
+};
+
+schema.statics.createCard = async function(accID, cardNumber, CVV, type, expiryDate, userID) {
+  const Model = this;
+  let accountID = null, creditID = null;
+  (type === 'Credit') ? creditID = accID : accountID = accID;
   const card = await Model.create({
     accountID,
+    creditID,
     cardNumber,
     CVV,
     type,
@@ -65,7 +78,8 @@ schema.statics.getUserCards = async function(userID) {
   const card = await Model.find({
     userID
   })
-    .populate('accountID');
+    .populate('accountID')
+    .populate('creditID');
 
   return card;
 };

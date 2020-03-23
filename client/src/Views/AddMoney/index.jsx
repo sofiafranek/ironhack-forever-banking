@@ -4,17 +4,12 @@ import './style.scss';
 import Layout from '../../Components/Layout';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
 import { topUpAccount } from '../../Services/account';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-import MuiAlert from '@material-ui/lab/Alert';
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+import CurrencyTextField from '@unicef/material-ui-currency-textfield'
+import getSymbolFromCurrency from 'currency-symbol-map';
+import { replaceAll } from '../../Utilities/replaceAll';
 
 class AddMoney extends Component {
   constructor(props) {
@@ -30,6 +25,8 @@ class AddMoney extends Component {
   handleInputChange(event) {
     const inputName = event.target.name;
     const value = event.target.value;
+    if (inputName === 'balance') value = replaceAll(value, ',', '');
+
     this.setState({
       [inputName]: value
     });
@@ -43,11 +40,11 @@ class AddMoney extends Component {
   getData() {
     
     const { account } = this.props.history.location.state;
-
-    console.log(account);
+    const currencySymbol = getSymbolFromCurrency(account.currency);
 
     this.setState({
-      account
+      account,
+      currencySymbol 
     });
   }
 
@@ -147,20 +144,19 @@ class AddMoney extends Component {
                     name="reference"
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    type="number"
-                    className="pb-3"
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="balance"
+                <Grid item xs={12} sm={12}>
+                  <CurrencyTextField
                     label="Balance"
+                    id="balance"
                     name="balance"
-                    value={this.state.balance}
-                    onChange={event => this.handleInputChange(event)}
+                    variant="standard"
+                    required
+                    decimalCharacter="."
+                    digitGroupSeparator=","
+                    currencySymbol={this.state.currencySymbol}
+                    outputFormat="string"
                   />
-                </Grid>
+              </Grid>
               </>
             }
             <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">

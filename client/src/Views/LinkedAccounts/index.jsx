@@ -4,7 +4,6 @@ import Layout from '../../Components/Layout';
 import SharedAccount from '../../Components/SharedAccount';
 import { userLinkedAccounts } from '../../Services/account';
 import Button from '@material-ui/core/Button';
-//import { Link } from 'react-router-dom';
 
 class LinkedAccounts extends Component {
   constructor(props) {

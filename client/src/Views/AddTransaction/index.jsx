@@ -12,8 +12,6 @@ import {
   FormControlLabel,
   Radio
 } from '@material-ui/core';
-import MuiAlert from '@material-ui/lab/Alert';
-import clsx from 'clsx';
 import {
   createTransactionAccount,
   createTransactionPhone,
@@ -22,33 +20,12 @@ import {
 } from '../../Services/transaction';
 import { userActiveAccounts } from '../../Services/account';
 import { creditAccounts } from './../../Services/credit';
-import { useStyles } from '../../Utilities/useStyles';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-// import CurrencyTextField from '@unicef/material-ui-currency-textfield'
+import CurrencyTextField from '@unicef/material-ui-currency-textfield'
 import getSymbolFromCurrency from 'currency-symbol-map';
-
-function StyledRadio(props) {
-  const classes = useStyles();
-
-  return (
-    <Radio
-      className={classes.root}
-      disableRipple
-      color="default"
-      checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-      icon={<span className={classes.icon} />}
-      {...props}
-    />
-  );
-}
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
-
-function replaceAll(str, find, replace) {
-  return str.replace(new RegExp(find, 'g'), replace);
-}
+import { StyledRadio } from '../../Utilities/styledRadio';
+import { Alert } from '../../Utilities/alert';
+import { replaceAll } from '../../Utilities/replaceAll';
 
 class AddTransaction extends Component {
   constructor(props) {
@@ -103,7 +80,7 @@ class AddTransaction extends Component {
   }
 
   weeklyTransaction(weeks, currentMonth, currentDay) {
-    let i = 1;
+    let i = 0;
     let newDate = null;
     let day = currentDay;
     let month = currentMonth;
@@ -216,7 +193,6 @@ class AddTransaction extends Component {
     if (inputName === 'schedule') value === 'No' ? (value = false) : (value = true);
     if (inputName === 'totalAmount') value = replaceAll(value, ',', '');
 
-    console.log(value);
     this.setState({
       [inputName]: value
     });
@@ -440,17 +416,17 @@ class AddTransaction extends Component {
               ))}
             <h4 className="pl-2 pt-3 pb-2">Amount</h4>
             <Grid item xs={12} sm={12}>
-              {/* <CurrencyTextField
-                id="totalAmount"
-                name="totalAmount"
-                onChange={event => this.handleInputChange(event)}
-                variant="standard"
-                required
-                decimalCharacter="."
-                digitGroupSeparator=","
-                currencySymbol={this.state.accountCurrency}
-                outputFormat="string"
-              /> */}
+            <CurrencyTextField
+              id="totalAmount"
+              name="totalAmount"
+              onChange={event => this.handleInputChange(event)}
+              variant="standard"
+              required
+              decimalCharacter="."
+              digitGroupSeparator=","
+              currencySymbol={this.state.accountCurrency}
+              outputFormat="string"
+            />
             </Grid>
             <Grid item xs={12} sm={12}>
               <h4 className="pt-3 pb-2">Category</h4>

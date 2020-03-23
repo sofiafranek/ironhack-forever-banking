@@ -4,11 +4,9 @@ import { Link } from 'react-router-dom';
 
 import Layout from '../../Components/Layout';
 import Transaction from '../../Components/Transaction';
-
 import Button from '@material-ui/core/Button';
 import getSymbolFromCurrency from 'currency-symbol-map';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-
 import { deleteAccount } from './../../Services/account';
 import { allTransactionsAccount } from './../../Services/transaction';
 

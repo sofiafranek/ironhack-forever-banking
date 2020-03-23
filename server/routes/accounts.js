@@ -62,7 +62,7 @@ router.post('/create-account-external', async (req, res, next) => {
     currency
   } = req.body;
   const balanceNumber = Number(balance);
-  const balanceDecimal = balanceNumber.toFixed(2);
+  const balanceDecimal = balanceNumber;
 
   try {
     const account = await Account.createAccount(
@@ -108,7 +108,7 @@ router.post('/create-account-internal', async (req, res, next) => {
   } = req.body;
 
   const balanceNumber = Number(balance);
-  const balanceDecimal = balanceNumber.toFixed(2);
+  const balanceDecimal = balanceNumber;
 
   try {
     // GO TO ACCOUNT THAT YOU WANT TO TRANSFER
@@ -217,6 +217,25 @@ router.get('/:userID/accounts', RouteGuard, async (req, res, next) => {
   try {
     const accountsUser = await UserAccount.getUserActiveAccounts(userID);
     res.json({ accountsUser });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/:userID/accountsAndCards', RouteGuard, async (req, res, next) => {
+  const userID = req.params.userID;
+  try {
+    const accountsUser = await UserAccount.getUserActiveAccounts(userID);
+    const accounts = [];
+    for (const acc of accountsUser) {
+      const card = await Card.getCardByAccountID(acc.accountID._id);
+      const information = {
+        acc,
+        card
+      };
+      accounts.push(information);
+    }
+    res.json({ accounts });
   } catch (error) {
     next(error);
   }

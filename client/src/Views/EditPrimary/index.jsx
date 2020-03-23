@@ -6,22 +6,7 @@ import { useStyles } from '../../Utilities/useStyles';
 import clsx from 'clsx';
 import { updatePrimaryAccount } from '../../Services/account';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-
-function StyledRadio(props) {
-  const classes = useStyles();
-
-  return (
-    <Radio
-      className={classes.root}
-      disableRipple
-      color="default"
-      checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-      icon={<span className={classes.icon} />}
-      {...props}
-    />
-  );
-}
-
+import { StyledRadio } from '../../Utilities/styledRadio';
 
 class EditPrimary extends Component {
   constructor(props) {

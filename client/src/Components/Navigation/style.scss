@@ -14,6 +14,10 @@
   -webkit-box-shadow: 14px 28px 59px -31px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 14px 28px 59px -31px rgba(0, 0, 0, 0.75);
   box-shadow: 14px 28px 59px -31px rgba(0, 0, 0, 0.75);
+  // .MuiListItem-root {
+  //   padding-top: 4px !important;
+  //   padding-bottom: 4px !important;
+  // }
   ul a:hover {
     background-color: none !important;
   }
@@ -28,7 +32,7 @@
     background-color: white !important;
   }
   .navigation-top .MuiList-padding {
-    padding: 20px 0;
+    padding: 6px 0;
   }
 }
 
@@ -40,10 +44,6 @@
   position: absolute;
   top: 2px;
   right: 17px;
-}
-
-.navigation-top .MuiList-padding {
-  padding: 8px 0px !important;
 }
 
 .extra-nav-link {

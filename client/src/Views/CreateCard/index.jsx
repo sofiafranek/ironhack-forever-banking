@@ -39,7 +39,12 @@ class CreateCard extends Component {
   }
 
   generateExpiryDate() {
-    return 21;
+    const currentDate = new Date();
+    let month = currentDate.getMonth() + 1;
+    if(month < 10) month = '0' + month;
+    const year = currentDate.getFullYear() + 2;
+    const expiryYear = year.toString().substring(2, 4);
+    return month + '/' + expiryYear;
   }
 
   handleInputChange(event) {

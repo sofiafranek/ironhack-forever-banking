@@ -59,7 +59,7 @@ class Card extends Component {
 
               <div className="credit-card__info_expiry">
                 <div className="credit-card__info_label">VALID UP TO</div>
-                <p>01/{expiryDate}</p>
+                <p>{expiryDate}</p>
               </div>
             </div>
           </div>

@@ -94,7 +94,6 @@ class Transactions extends Component {
         allTransactions,
         renderTransactions: sortedTransactions
       });
-      console.log(allTransactions);
     } catch(error) {
       console.log(error);
     } 
@@ -116,9 +115,9 @@ class Transactions extends Component {
             </Button>
             <Button onClick={this.handleClick} className="toggle-transactions third">
               {this.state.isToggleOn ? (
-                <i class="fas fa-toggle-off"></i>
+                <i className="fas fa-toggle-off"></i>
               ) : (
-                <i class="fas fa-toggle-on"></i>
+                <i className="fas fa-toggle-on"></i>
               )}
             </Button>
           </div>

@@ -11,7 +11,8 @@ class Summary extends Component {
     this.state = {
       information: null,
       card: null,
-      account: null
+      account: null,
+      user: null
     };
   }
   componentDidMount() {
@@ -20,7 +21,13 @@ class Summary extends Component {
   }
 
   getData() {
-    const userID = this.props.user._id;
+    const { user } = this.props;
+    this.setState({
+      user
+    })
+
+    const userID = user._id;
+    
     summary(userID)
       .then(information => {
         this.setState({
@@ -38,6 +45,7 @@ class Summary extends Component {
         {this.state.information && this.state.card && this.state.account ? (
           <>
             <h1>Summary</h1>
+            <h4>{this.state.user.usertype} Account</h4>
             <h4>Your New Account</h4>
             <h5>IBAN Number: {this.state.account.accountID.accountNumber}</h5>
             <h5>Account Type: {this.state.account.accountID.type}</h5>

@@ -19,11 +19,12 @@ class Transaction extends Component {
       colorCategory
     } = this.props;
 
-
-    let accFrom = null, accTo = null, symbol = '';
+    let accFrom = null,
+      accTo = null,
+      symbol = '';
     creditFrom ? (accFrom = creditFrom) : (accFrom = accountIDFrom);
     creditTo ? (accTo = creditTo) : (accTo = accountIDTo);
-    (type === 'minus') ? symbol = '-' : symbol = '+';
+    type === 'minus' ? (symbol = '-') : (symbol = '+');
 
     const toggle = this.props.toggle;
     let toggleKey = '';
@@ -52,15 +53,15 @@ class Transaction extends Component {
           <Accordion.Collapse eventKey={toggleKey}>
             <Card.Body>
               <div className="transaction-toggle">
-                <div>
-                  Executed on: {dateTransaction && <h6>{dateTransaction.split('T')[0]}</h6>}
+                <div className="transaction-info-left">
+                  <div className="transaction-top-info">
+                    Executed on: {dateTransaction && <h6>{dateTransaction.split('T')[0]}</h6>}
+                  </div>
+                  <div>Account From: {accFrom.accountNumber}</div>
+                  <div>Account To: {accTo.accountNumber}</div>
                 </div>
-                <Badge variant={colorCategory}>{category}</Badge>
-                <div>
-                    Account From: {accFrom.accountNumber}
-                </div>
-                <div>
-                    Account To: {accTo.accountNumber}
+                <div className="transaction-right-info">
+                  <Badge variant={colorCategory}>{category}</Badge>
                 </div>
               </div>
             </Card.Body>

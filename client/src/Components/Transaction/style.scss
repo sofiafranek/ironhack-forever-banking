@@ -42,12 +42,22 @@ h6 {
   }
 }
 
+.transaction-top-info {
+  display: flex;
+  flex-direction: row !important;
+}
+
+.transaction-right-info {
+  height: fit-content;
+}
+
 .transaction-toggle {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   div {
     display: flex;
+    flex-direction: column;
   }
   h6 {
     padding-left: 5px;

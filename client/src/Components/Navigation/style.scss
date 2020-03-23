@@ -14,10 +14,6 @@
   -webkit-box-shadow: 14px 28px 59px -31px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 14px 28px 59px -31px rgba(0, 0, 0, 0.75);
   box-shadow: 14px 28px 59px -31px rgba(0, 0, 0, 0.75);
-  // .MuiListItem-root {
-  //   padding-top: 4px !important;
-  //   padding-bottom: 4px !important;
-  // }
   ul a:hover {
     background-color: none !important;
   }
@@ -32,7 +28,7 @@
     background-color: white !important;
   }
   .navigation-top .MuiList-padding {
-    padding: 0 !important;
+    padding: 2.5px 0 !important;
   }
 }
 

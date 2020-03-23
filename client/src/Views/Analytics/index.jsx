@@ -4,6 +4,7 @@ import './style.scss';
 import Layout from '../../Components/Layout';
 import { transactions } from './../../Services/analytics';
 import { userAccounts } from './../../Services/account';
+import { creditAccounts } from './../../Services/credit';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
 class Analytics extends Component {
@@ -23,7 +24,17 @@ class Analytics extends Component {
 
     try {
       const accounts = await userAccounts(userID);
-      const transactionsUser = await transactions(accounts);
+      const credits = await creditAccounts(userID);
+      const creditsID = credits.map(value => value._id);
+      const accountsID = accounts.map(value => value.accountID);
+
+      const info = {
+        accountsID,
+        creditsID
+      };
+
+      const transactionsUser = await transactions(info);
+
       this.setState(
         {
           transactions: transactionsUser

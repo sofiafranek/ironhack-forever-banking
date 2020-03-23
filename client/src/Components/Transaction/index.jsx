@@ -12,7 +12,6 @@ class Transaction extends Component {
       category,
       accountIDFrom,
       accountIDTo,
-      currency,
       creditFrom,
       creditTo,
       type
@@ -20,13 +19,13 @@ class Transaction extends Component {
 
     let accFrom = null,
       accTo = null,
-      symbol = '';
+      symbol = '', currency = '';
     creditFrom ? (accFrom = creditFrom) : (accFrom = accountIDFrom);
     creditTo ? (accTo = creditTo) : (accTo = accountIDTo);
     type === 'minus' ? (symbol = '-') : (symbol = '+');
+    type === 'minus' ? (currency = accFrom.currency) : (currency = accTo.currency);
 
     const toggle = this.props.toggle;
-    console.log("TRANSACTION", toggle);
     let toggleKey = '';
     toggle === true ? (toggleKey = '0') : (toggleKey = '1');
 
@@ -44,7 +43,7 @@ class Transaction extends Component {
               <div>
                 {totalAmount > 0 && (
                   <h6>
-                    {symbol + ' ' + totalAmount + ' ' + getSymbolFromCurrency(accFrom.currency)}
+                    {symbol + ' ' + totalAmount + ' ' + getSymbolFromCurrency(currency)}
                   </h6>
                 )}
               </div>

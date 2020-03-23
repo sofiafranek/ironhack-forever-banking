@@ -80,11 +80,13 @@ class AddTransaction extends Component {
   }
 
   weeklyTransaction(weeks, currentMonth, currentDay) {
-    let i = 0;
+    let i = 1;
     let newDate = null;
     let day = currentDay;
     let month = currentMonth;
     const allDates = [];
+
+    allDates.push(new Date(2020, month, day));
 
     while (i < weeks) {
       if (day > 23) {
@@ -104,9 +106,11 @@ class AddTransaction extends Component {
   }
 
   monthlyTransaction(months, currentMonth, currentDay) {
-    let i = 0;
+    let i = 1;
     let newDate = null;
     const allDates = [];
+
+    allDates.push(new Date(2020, currentMonth, currentDay));
 
     while (i < months) {
       newDate = new Date(2020, currentMonth + i, currentDay);

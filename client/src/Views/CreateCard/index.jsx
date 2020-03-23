@@ -66,7 +66,7 @@ class CreateCard extends Component {
   async getData() {
     const userID = this.props.userID;
     try {
-    const account = await userActiveAccounts(userID);
+      const account = await userActiveAccounts(userID);
       const accounts = account.map(value => value.accountID);
       const credits = await creditAccounts(userID);
       const allAccounts = accounts.concat(credits);

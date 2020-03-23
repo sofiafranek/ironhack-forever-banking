@@ -26,8 +26,10 @@ class Transaction extends Component {
     type === 'minus' ? (symbol = '-') : (symbol = '+');
 
     const toggle = this.props.toggle;
+    console.log(toggle, 'TOGGLE');
     let toggleKey = '';
     toggle === true ? (toggleKey = '0') : (toggleKey = '1');
+    console.log(toggleKey, 'TOGGLE KEY');
 
     return (
       <Accordion className="hvr-grow transaction pb-3" defaultActiveKey={toggleKey}>

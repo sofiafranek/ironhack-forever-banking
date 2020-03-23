@@ -18,7 +18,7 @@
     min-height: 100vh;
   }
   .homepage--info {
-    padding: 50px;
+    padding: 30px;
     h1 {
       font-weight: bold;
       max-width: 400px;
@@ -45,7 +45,7 @@
 }
 
 .homepage-nav {
-  padding: 0px 20px 50px;
+  padding: 0px 30px 50px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -79,5 +79,8 @@
       text-align: justify;
       max-width: 410px;
     }
+  }
+  .homepage .homepage--info {
+    padding: 50px;
   }
 }

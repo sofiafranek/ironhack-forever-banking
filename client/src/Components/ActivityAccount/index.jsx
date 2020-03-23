@@ -24,33 +24,35 @@ class ActivityAccount extends Component {
     return (
       <section className="account-section">
         <Card className="hvr-grow account">
-          {this.state.type === 'Credit' && 
+          {(this.state.type === 'Credit' && (
             <Fragment>
-            <Link
-            to={{
-              pathname: `/credit/${this.props._id}`,
-              state: this.state.account
-            }}>
-            <Card.Header>
-              <h4 className="mb-2">{this.props.type} Account</h4>
-              <h5 className="mb-0">IBAN Number: {this.props.accountNumber}</h5>
-            </Card.Header>
-            </Link>
+              <Link
+                to={{
+                  pathname: `/credit/${this.props._id}`,
+                  state: this.state.account
+                }}
+              >
+                <Card.Header>
+                  <h5 className="mb-2">{this.props.type} Account</h5>
+                  <h6 className="mb-0">IBAN Number: {this.props.accountNumber}</h6>
+                </Card.Header>
+              </Link>
             </Fragment>
-          ||
-          <Fragment>
-          <Link
-            to={{
-              pathname: `/accounts/${this.props._id}`,
-              state: this.state.account
-            }}>
-            <Card.Header>
-              <h5 className="mb-2">{this.props.type} Account</h5>
-              <h6 className="mb-0">IBAN Number: {this.props.accountNumber}</h6>
-            </Card.Header>
-          </Link>
-          </Fragment>
-          }
+          )) || (
+            <Fragment>
+              <Link
+                to={{
+                  pathname: `/accounts/${this.props._id}`,
+                  state: this.state.account
+                }}
+              >
+                <Card.Header>
+                  <h5 className="mb-2">{this.props.type} Account</h5>
+                  <h6 className="mb-0">IBAN Number: {this.props.accountNumber}</h6>
+                </Card.Header>
+              </Link>
+            </Fragment>
+          )}
         </Card>
       </section>
     );

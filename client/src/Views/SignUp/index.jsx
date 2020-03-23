@@ -84,6 +84,9 @@ class SignUp extends Component {
                     </option>
                   ))}
                 </Select>
+                <small className="pt-2 pb-2">
+                  Premium is 7.99 and includes extra features you can see here
+                </small>
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>

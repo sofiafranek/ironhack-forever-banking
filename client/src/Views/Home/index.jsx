@@ -10,7 +10,10 @@ class Home extends Component {
       <section className="homepage">
         <div className="homepage--info">
           <nav className="homepage-nav">
-            <div className="homepage--logo-image"></div>
+            <div className="homepage-nav--left">
+              <div className="homepage--logo-image"></div>
+              <a href="/features">Features</a>
+            </div>
             <div>
               <a href="/signin">Login</a>
               <a href="/signup">

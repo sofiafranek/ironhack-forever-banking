@@ -24,7 +24,6 @@ class Account extends Component {
   }
 
   render() {
-    console.log(this.props.account, 'ACCOUNT');
     return (
       <section className="account-section">
         {this.state.account && (

@@ -204,7 +204,7 @@ class ApplyForCredit extends Component {
             <Grid item xs={12} sm={12} className="pb-4">
               <FormControl>
                 <InputLabel htmlFor="age-native-simple">What is the credit for?</InputLabel>
-                <Select name="reasons" native onChange={event => this.handleInputChange(event)}>
+                <Select name="reason" native onChange={event => this.handleInputChange(event)}>
                   {this.state.reasons.map(reason => (
                     <option value={reason} key={reason}>
                       {reason}

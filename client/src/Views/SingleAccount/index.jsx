@@ -87,8 +87,8 @@ class SingleAccount extends Component {
               <hr className="mb-4"></hr>
               <h5>IBAN Number : {this.state.account.accountNumber}</h5>
               <h5>Account Type : {this.state.account.type}</h5>
-              <h5>Card Number : 1234 1234 1234 1234</h5>
-              <h5>Card Expirty : 12 / 04</h5>
+              {/* <h5>Card Number : 1234 1234 1234 1234</h5> */}
+              {/* <h5>Card Expirty : 12 / 04</h5> */}
               <hr className="mt-4"></hr>
               <section className="pt-2">
                 {/* <h4 className="pb-3">Transactions for this Account</h4> */}

@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import * as transactionService from './../../Services/transaction';
 import { userAccounts } from './../../Services/account';
+import { creditAccounts } from './../../Services/credit';
 import Search from '../../Components/Search';
 
 class Transactions extends Component {
@@ -78,14 +79,23 @@ class Transactions extends Component {
     const userID = this.props.userID;
     try {
       const accounts = await userAccounts(userID);
-      const transactionsRec = await transactionService.receivedTransactions(accounts);
+      const credits = await creditAccounts(userID);
+      const creditsID = credits.map(value => value._id);
+      const accountsID = accounts.map(value => value.accountID);
+
+      const info = {
+        accountsID,
+        creditsID
+      };
+      
+      const transactionsRec = await transactionService.receivedTransactions(info);
       const transactionsReceived = transactionsRec.map(transaction => {
         return {
           transaction,
           type: 'add'
         };
       });
-      const transactionsS = await transactionService.sentTransactions(accounts);
+      const transactionsS = await transactionService.sentTransactions(info);
       const transactionsSent = transactionsS.map(transaction => {
         return {
           transaction,

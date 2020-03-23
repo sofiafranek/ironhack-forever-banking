@@ -221,8 +221,13 @@ router.post('/add-transaction-phone', async (req, res, next) => {
 
 router.post('/received', async (req, res, next) => {
   try {
-    const transactions = req.body.map(value => value.accountID);
-    const transactionsTo = await Transaction.getReceivedTransactions(transactions);
+    const { accountsID, creditsID } = req.body;
+
+    console.log(accountsID);
+    console.log(creditsID);
+    const transactionsAcc = await Transaction.getReceivedTransactions(accountsID);
+    const transactionsCredit = await Transaction.getReceivedTransactionsCredit(creditsID);
+    const transactionsTo = transactionsAcc.concat(transactionsCredit);
     res.json({ transactionsTo });
   } catch (error) {
     next(error);
@@ -231,8 +236,13 @@ router.post('/received', async (req, res, next) => {
 
 router.post('/sent', async (req, res, next) => {
   try {
-    const transactions = req.body.map(value => value.accountID);
-    const transactionsFrom = await Transaction.getSentTransactions(transactions);
+    const { accountsID, creditsID } = req.body;
+
+    console.log(accountsID);
+    console.log(creditsID);
+    const transactionsAcc = await Transaction.getSentTransactions(accountsID);
+    const transactionsCredit = await Transaction.getSentTransactionsCredit(creditsID);
+    const transactionsFrom = transactionsAcc.concat(transactionsCredit);
     res.json({ transactionsFrom });
   } catch (error) {
     next(error);
@@ -245,6 +255,18 @@ router.get('/:idAccount/allTransactionsAccount', async (req, res, next) => {
     const allTransactions = await Transaction.getAllTransactionsAccount(idAccount);
     res.json({ allTransactions });
   } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+router.get('/:idAccount/allTransactionsCredit', async (req, res, next) => {
+  const idAccount = req.params.idAccount;
+  try {
+    const allTransactions = await Transaction.getAllTransactionsCredit(idAccount);
+    res.json({ allTransactions });
+  } catch (error) {
+    console.log(error);
     next(error);
   }
 });

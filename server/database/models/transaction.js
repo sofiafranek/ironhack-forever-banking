@@ -136,6 +136,22 @@ schema.statics.getReceivedTransactions = async function(accounts) {
   })
     .populate('accountIDTo')
     .populate('accountIDFrom')
+    .populate('creditTo')
+    .populate('creditFrom')
+    .sort({'dateTransaction': -1});
+
+  return transactionsTo;
+};
+
+schema.statics.getReceivedTransactionsCredit = async function(accounts) {
+  const Model = this;
+  const transactionsTo = await Model.find({
+    creditTo: { $in: accounts },
+    status: 'Executed'
+  })
+    .populate('accountIDTo')
+    .populate('accountIDFrom')
+    .populate('creditTo')
     .populate('creditFrom')
     .sort({'dateTransaction': -1});
 
@@ -150,18 +166,24 @@ schema.statics.getSentTransactions = async function(accounts) {
   })
     .populate('accountIDTo')
     .populate('accountIDFrom')
+    .populate('creditTo')
     .populate('creditFrom')
     .sort({'dateTransaction': -1});
 
   return transactionsFrom;
 };
 
-schema.statics.getOutcomes = async function(accounts) {
+schema.statics.getSentTransactionsCredit = async function(accounts) {
   const Model = this;
   const transactionsFrom = await Model.find({
-    accountIDFrom: { $in: accounts },
+    creditFrom: { $in: accounts },
     status: 'Executed'
-  });
+  })
+    .populate('accountIDTo')
+    .populate('accountIDFrom')
+    .populate('creditTo')
+    .populate('creditFrom')
+    .sort({'dateTransaction': -1});
 
   return transactionsFrom;
 };
@@ -174,10 +196,12 @@ schema.statics.getAllTransactions = async function(accounts) {
   })
     .populate('accountIDTo')
     .populate('accountIDFrom')
+    .populate('creditTo')
     .populate('creditFrom')
     .sort({'dateTransaction': -1});
   return allTransactions;
 };
+
 
 schema.statics.getAllTransactionsAccount = async function(idAccount) {
   const Model = this;
@@ -187,6 +211,22 @@ schema.statics.getAllTransactionsAccount = async function(idAccount) {
   })
     .populate('accountIDTo')
     .populate('accountIDFrom')
+    .populate('creditTo')
+    .populate('creditFrom')
+    .sort({'dateTransaction': -1});
+
+  return allTransactions;
+};
+
+schema.statics.getAllTransactionsCredit = async function(idAccount) {
+  const Model = this;
+  const allTransactions = await Model.find({
+    $or: [{ creditFrom: idAccount }, { creditTo: idAccount }],
+    status: 'Executed'
+  })
+    .populate('accountIDTo')
+    .populate('accountIDFrom')
+    .populate('creditTo')
     .populate('creditFrom')
     .sort({'dateTransaction': -1});
 

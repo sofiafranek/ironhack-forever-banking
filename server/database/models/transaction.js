@@ -33,7 +33,7 @@ const schema = new mongoose.Schema({
     enum: [
       'Housing',
       'Transport',
-      'Food & Dining',
+      'Food and Dining',
       'Utility Bills',
       'Cell Phone',
       'Childcare and School Costs',
@@ -105,10 +105,12 @@ schema.statics.createTransaction = async function(
 ) {
   const Model = this;
 
-
-  let creditFrom = null, creditTo = null, accountIDFrom = null, accountIDTo = null;
-  (typeAccFrom === 'Credit') ? creditFrom = accFrom : accountIDFrom = accFrom;
-  (typeAccTo === 'Credit') ? creditTo = accTo : accountIDTo = accTo;
+  let creditFrom = null,
+    creditTo = null,
+    accountIDFrom = null,
+    accountIDTo = null;
+  typeAccFrom === 'Credit' ? (creditFrom = accFrom) : (accountIDFrom = accFrom);
+  typeAccTo === 'Credit' ? (creditTo = accTo) : (accountIDTo = accTo);
 
   const transaction = await Model.create({
     creditTo,
@@ -138,7 +140,7 @@ schema.statics.getReceivedTransactions = async function(accounts) {
     .populate('accountIDTo')
     .populate('accountIDFrom')
     .populate('creditFrom')
-    .sort({'dateTransaction': -1})
+    .sort({ dateTransaction: -1 })
     .exec();
 
   return transactionsTo;
@@ -153,7 +155,7 @@ schema.statics.getSentTransactions = async function(accounts) {
     .populate('accountIDTo')
     .populate('accountIDFrom')
     .populate('creditFrom')
-    .sort({'dateTransaction': 1})
+    .sort({ dateTransaction: 1 })
     .exec();
 
   return transactionsFrom;
@@ -178,7 +180,7 @@ schema.statics.getAllTransactions = async function(accounts) {
     .populate('accountIDTo')
     .populate('accountIDFrom')
     .populate('creditFrom')
-    .sort({'dateTransaction': 1})
+    .sort({ dateTransaction: 1 })
     .exec();
   return allTransactions;
 };
@@ -192,7 +194,7 @@ schema.statics.getAllTransactionsAccount = async function(idAccount) {
     .populate('accountIDTo')
     .populate('accountIDFrom')
     .populate('creditFrom')
-    .sort({'dateTransaction': 1})
+    .sort({ dateTransaction: 1 })
     .exec();
 
   return allTransactions;

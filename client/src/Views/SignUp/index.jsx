@@ -70,25 +70,28 @@ class SignUp extends Component {
     event.preventDefault();
     const user = Object.assign({}, this.state);
 
-    signUp(user)
-      .then(user => {
-        if (user) {
-          const idUser = user._id;
-          this.props.updateUserInformation(user);
-          this.props.history.push({
-            pathname: '/create-account',
-            state: { idUser: idUser }
-          });
-        } else {
-          const error = true;
-          const errorMessage = 'You have to be 16 or over';
-          this.setState({
-            error,
-            errorMessage
-          });
-        }
-      })
-      .catch(error => console.log(error));
+    if (this.state.age > 15) {
+      signUp(user)
+        .then(user => {
+          if (user) {
+            const idUser = user._id;
+            this.props.updateUserInformation(user);
+            this.props.history.push({
+              pathname: '/create-account',
+              state: { idUser: idUser }
+            });
+          }
+        })
+
+        .catch(error => console.log(error));
+    } else {
+      const error = true;
+      const errorMessage = 'You have to be 16 or over';
+      this.setState({
+        error,
+        errorMessage
+      });
+    }
   }
 
   render() {

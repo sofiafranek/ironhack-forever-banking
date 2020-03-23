@@ -32,8 +32,13 @@
     background-color: white !important;
   }
   .navigation-top .MuiList-padding {
-    padding: 6px 0;
+    padding: 0 !important;
   }
+}
+
+.MuiListItem-button {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
 }
 
 .notification-alert {

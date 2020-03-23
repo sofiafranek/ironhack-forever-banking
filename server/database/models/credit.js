@@ -12,13 +12,16 @@ const schema = new mongoose.Schema({
     trim: true
   },
   current: {
-    type: Number
+    type: Number,
+    required: true
   },
   limit: {
-    type: Number
+    type: Number,
+    required: true
   },
   income: {
-    type: Number
+    type: Number,
+    required: true
   },
   type: {
     type: String
@@ -27,12 +30,12 @@ const schema = new mongoose.Schema({
     type: Number
   },
   creditType: {
-    type: String,
-    enum: 'Regular Credit'
+    type: String
   },
   reason: {
     type: String,
-    enum: ['Increase Credit Score', 'Better Protection for Payments']
+    enum: ['Increase Credit Score', 'Better Protection for Payments'],
+    required: true
   },
   apr: {
     type: Number,
@@ -69,11 +72,13 @@ const schema = new mongoose.Schema({
     default: Date.now
   },
   datePayment: {
-    type: Date
+    type: Date,
+    required: true
   },
   maritalStatus: {
     type: String,
-    enum: ['Single', 'In a relationship', 'Married', 'Divorced', 'Widowed']
+    enum: ['Single', 'In a relationship', 'Married', 'Divorced', 'Widowed'],
+    required: true
   },
   status: {
     type: String,
@@ -82,7 +87,8 @@ const schema = new mongoose.Schema({
   },
   option: {
     type: String,
-    enum: ['minimum', 'total']
+    enum: ['minimum', 'total'],
+    required: true
   },
   currency: {
     type: String,

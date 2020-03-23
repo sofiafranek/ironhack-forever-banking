@@ -9,10 +9,12 @@ const schema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['Savings', 'Current']
+    enum: ['Savings', 'Current'],
+    require: true
   },
   balance: {
-    type: Number
+    type: Number,
+    required: true
   },
   createdAt: {
     type: Date,
@@ -25,6 +27,9 @@ const schema = new mongoose.Schema({
   },
   shared: {
     type: Boolean
+  },
+  sharedName: {
+    type: String
   },
   currency: {
     type: String,
@@ -88,14 +93,15 @@ schema.statics.getAccountByNumber = async function(accountNumber) {
   return account;
 };
 
-schema.statics.createAccount = async function(accountNumber, type, balance, shared, currency) {
+schema.statics.createAccount = async function(accountNumber, type, balance, shared, currency, sharedName) {
   const Model = this;
   const account = await Model.create({
     accountNumber,
     type,
     balance,
     shared,
-    currency
+    currency,
+    sharedName
   });
   return account;
 };
@@ -111,10 +117,11 @@ schema.statics.removeAccount = async function(id) {
   return account;
 };
 
-schema.statics.updateShared = async function(id) {
+schema.statics.updateShared = async function(id, sharedName) {
   const Model = this;
   const account = await Model.findByIdAndUpdate(id, {
-    shared: true
+    shared: true,
+    sharedName
   }).exec();
   return account;
 };

@@ -18,7 +18,8 @@ const schema = new mongoose.Schema({
   phoneNumber: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
+    unique: true
   },
   email: {
     type: String,
@@ -43,7 +44,8 @@ const schema = new mongoose.Schema({
     required: true
   },
   passwordHash: {
-    type: String
+    type: String,
+    required: true
   }
 });
 

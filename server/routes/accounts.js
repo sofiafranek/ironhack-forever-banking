@@ -76,13 +76,12 @@ router.post('/create-account-external', async (req, res, next) => {
     await UserAccount.createUserAccount(userID, accountID, primary);
 
     if (sharedAccount) {
-      const sharedAccountUser = await User.getUserByPhoneNumber(sharedUser);
-      const sharedUserID = sharedAccountUser._id;
-      const userName = sharedAccountUser.name;
-
-      if (sharedAccountUser) {
-        await UserAccount.createUserAccount(sharedAccountUser, accountID, primary);
-        res.json({ result: true, sharedUserID, userName });
+      const existUser = await User.getUserByPhoneNumber(sharedUser);
+      if (existUser) {
+        const sharedUserID = existUser._id;
+        const userName = existUser.name;
+        await UserAccount.createUserAccount(sharedUserID, accountID, false);
+        res.json({ result: true, type, accountID });
       } else {
         res.json({ result: false, message: 2 });
       }

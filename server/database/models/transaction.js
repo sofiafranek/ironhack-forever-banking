@@ -20,10 +20,12 @@ const schema = new mongoose.Schema({
     ref: 'Credit'
   },
   totalAmount: {
-    type: Number
+    type: Number,
+    required: true
   },
   reference: {
-    type: String
+    type: String,
+    required: true
   },
   endPoint: {
     type: String
@@ -64,7 +66,8 @@ const schema = new mongoose.Schema({
   },
   schedulePeriod: {
     type: String,
-    enum: ['Week', 'Month', 'Year', 'None']
+    enum: ['Week', 'Month', 'Year', 'None'],
+    required: true
   },
   status: {
     type: String,

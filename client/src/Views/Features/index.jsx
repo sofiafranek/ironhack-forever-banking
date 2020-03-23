@@ -10,7 +10,7 @@ class Features extends Component {
       <section className="features">
         <nav className="features-nav">
           <div className="homepage-nav--left">
-            <a href="/">
+            <a href="/" className="pl-0">
               <div className="homepage--logo-image"></div>
             </a>
             <a href="/features">Features</a>

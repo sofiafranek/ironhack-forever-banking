@@ -56,10 +56,6 @@ const schema = new mongoose.Schema({
       'Other'
     ]
   },
-  colorCategory: {
-    type: String,
-    enum: ['info', 'success', 'primary', 'secondary', 'danger', 'warning', 'light', 'dark']
-  },
   schedule: {
     type: Boolean,
     required: true
@@ -101,7 +97,6 @@ schema.statics.createTransaction = async function(
   schedule,
   status,
   dateTransaction,
-  colorCategory,
   typeAccFrom,
   typeAccTo,
   schedulePeriod
@@ -125,7 +120,6 @@ schema.statics.createTransaction = async function(
     schedule,
     status,
     dateTransaction,
-    colorCategory,
     schedulePeriod
   });
 

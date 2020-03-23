@@ -23,7 +23,6 @@ router.post('/add-transaction', async (req, res, next) => {
     schedule,
     status,
     dateTransaction,
-    colorCategory,
     type
   } = req.body;
 
@@ -90,7 +89,6 @@ router.post('/add-transaction', async (req, res, next) => {
           schedule,
           status,
           dateTransaction,
-          colorCategory,
           type,
           typeAccTo,
           'None'
@@ -136,7 +134,6 @@ router.post('/add-transaction-phone', async (req, res, next) => {
     schedule,
     status,
     dateTransaction,
-    colorCategory,
     phoneNumber,
     type
   } = req.body;
@@ -189,7 +186,6 @@ router.post('/add-transaction-phone', async (req, res, next) => {
           schedule,
           status,
           dateTransaction,
-          colorCategory,
           type,
           'Current',
           'None'
@@ -277,7 +273,6 @@ router.post('/add-list-transactions-account', async (req, res, next) => {
         schedule,
         status,
         dateTransaction,
-        colorCategory,
         type,
         schedulePeriod
       } = transaction;
@@ -309,7 +304,6 @@ router.post('/add-list-transactions-account', async (req, res, next) => {
         schedule,
         status,
         dateTransaction,
-        colorCategory,
         type,
         typeAccTo,
         schedulePeriod
@@ -335,7 +329,6 @@ router.post('/add-list-transactions-phone', async (req, res, next) => {
         schedule,
         status,
         dateTransaction,
-        colorCategory,
         type,
         schedulePeriod
       } = transaction;
@@ -364,7 +357,6 @@ router.post('/add-list-transactions-phone', async (req, res, next) => {
         schedule,
         status,
         dateTransaction,
-        colorCategory,
         type,
         typeAccTo,
         schedulePeriod

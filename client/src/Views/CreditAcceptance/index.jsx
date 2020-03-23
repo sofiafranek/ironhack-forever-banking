@@ -20,7 +20,7 @@ class CreditAcceptance extends Component {
   handleInputChange(event) {
     let inputName = event.target.name;
     let value = event.target.value;
-    console.log(inputName + ' ' + value);
+
     this.setState({
       [inputName]: value
     });

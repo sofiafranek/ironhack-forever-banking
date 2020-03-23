@@ -39,7 +39,7 @@ class CreateCard extends Component {
   generateExpiryDate() {
     const currentDate = new Date();
     let month = currentDate.getMonth() + 1;
-    if(month < 10) month = '0' + month;
+    if (month < 10) month = '0' + month;
     const year = currentDate.getFullYear() + 2;
     const expiryYear = year.toString().substring(2, 4);
     return month + '/' + expiryYear;
@@ -75,7 +75,7 @@ class CreateCard extends Component {
         type: accounts[0].type,
         accountID: accounts[0]._id
       });
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   }
@@ -104,7 +104,6 @@ class CreateCard extends Component {
   }
 
   render() {
-    console.log(this.state.accounts, 'ACCOUNTS');
     return (
       <Layout>
         <Breadcrumb>

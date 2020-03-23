@@ -14,13 +14,19 @@ class Home extends Component {
               <div className="homepage--logo-image"></div>
               <a href="/features">Features</a>
             </div>
-            <div>
+            <div className="sign-in-desktop">
               <a href="/signin">Login</a>
               <a href="/signup">
                 <button>Sign Up Now</button>
               </a>
             </div>
           </nav>
+          <div className="sign-in-mobile">
+            <a href="/signin">Login</a>
+            <a href="/signup">
+              <button>Sign Up Now</button>
+            </a>
+          </div>
           <div className="homepage-content">
             <h5 className="mt-3">Forever. Banking.</h5>
             <h1>

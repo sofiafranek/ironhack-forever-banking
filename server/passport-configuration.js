@@ -32,7 +32,6 @@ passport.use(
       bcryptjs
         .hash(password, 10)
         .then(hash => {
-          console.log('ola');
           return User.create({
             name,
             email,

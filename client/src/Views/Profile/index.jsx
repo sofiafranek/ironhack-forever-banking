@@ -5,7 +5,6 @@ import Layout from '../../Components/Layout';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 const Profile = props => {
-  console.log(props.user, 'PROPS');
   const user = props.user;
   return (
     <div className="profile-page">

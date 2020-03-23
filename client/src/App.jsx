@@ -8,6 +8,7 @@ import ProtectedRoute from './Components/ProtectedRoute';
 import Home from './Views/Home';
 
 import Activity from './Views/Activity';
+import Features from './Views/Features';
 import Accounts from './Views/Accounts';
 import LinkedAccounts from './Views/LinkedAccounts';
 import Credit from './Views/Credit';
@@ -159,6 +160,13 @@ class App extends Component {
                 )}
                 exact
               />
+
+              <Route
+                path="/features"
+                render={props => <Features {...props} changeActiveNav={this.disableNav} />}
+                exact
+              />
+
               <Route
                 path="/signup"
                 render={props => (

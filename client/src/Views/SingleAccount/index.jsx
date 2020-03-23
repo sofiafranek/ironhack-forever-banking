@@ -60,7 +60,6 @@ class SingleAccount extends Component {
   x;
 
   render() {
-    console.log(this.state.account, 'STATE ACCOUNT');
     const accountID = this.props.match.params.id;
     const usertype = this.props.user.usertype;
     return (

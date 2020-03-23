@@ -37,7 +37,7 @@ class Notifications extends Component {
           <h1 className="pb-3">Notifications</h1>
           <hr className="pb-3"></hr>
           {this.state.notifications.map(notification => (
-            <Notification {...notification} userID={userID} />
+            <Notification key={notification._id} {...notification} userID={userID}/>
           ))}
         </Layout>
       </div>

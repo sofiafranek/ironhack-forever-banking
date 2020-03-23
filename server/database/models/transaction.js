@@ -35,7 +35,7 @@ const schema = new mongoose.Schema({
     enum: [
       'Housing',
       'Transport',
-      'Food & Dining',
+      'Food and Dining',
       'Utility Bills',
       'Cell Phone',
       'Childcare and School Costs',
@@ -49,7 +49,7 @@ const schema = new mongoose.Schema({
       'Fun Stuff',
       'Travel',
       'Student Loans',
-      'Credit-card Debt',
+      'Credit Card Debt',
       'Retirement',
       'Emergency Fund',
       'Large Purchases',

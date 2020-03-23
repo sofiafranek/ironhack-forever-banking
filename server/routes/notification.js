@@ -34,4 +34,30 @@ router.get('/:userID/list', RouteGuard, async (req, res, next) => {
       }
 });
 
+router.post('/:id', RouteGuard, async (req, res, next) => {
+
+    const { id } = req.params;
+
+    try {
+        const notification = await Notification.updateNotification(id);
+        res.json({ notification });
+      } catch (error) {
+        next(error);
+      }
+});
+
+router.get('/:userID/unreadNotifications', RouteGuard, async (req, res, next) => {
+
+    const { userID } = req.params;
+
+    try {
+        let result = false;
+        const notifications = await Notification.hasUnreadNotifications(userID);
+        if (notifications.length > 0) result = true;
+        res.json( { result } );
+      } catch (error) {
+        next(error);
+      }
+});
+
 module.exports = router;

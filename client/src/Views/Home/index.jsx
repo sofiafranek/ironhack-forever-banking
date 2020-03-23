@@ -11,7 +11,9 @@ class Home extends Component {
         <div className="homepage--info">
           <nav className="homepage-nav">
             <div className="homepage-nav--left">
-              <div className="homepage--logo-image"></div>
+              <a href="/" className="pl-0">
+                <div className="homepage--logo-image"></div>
+              </a>
               <a href="/features">Features</a>
             </div>
             <div className="sign-in-desktop">

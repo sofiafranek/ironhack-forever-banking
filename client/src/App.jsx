@@ -115,7 +115,9 @@ class App extends Component {
     return (
       <div>
         <div className="nav-top-container">
-          <div className="nav--logo-image"></div>
+          <a href="/">
+            <div className="nav--logo-image"></div>
+          </a>
           {/* <button onClick={this.handleClick} className="light-dark-mode-button">
             {this.state.isToggleOn ? (
               <i className="far fa-moon"></i>

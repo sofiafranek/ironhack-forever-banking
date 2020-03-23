@@ -77,13 +77,13 @@ const schema = new mongoose.Schema({
 
 schema.statics.getTransactions = async function() {
   const Model = this;
-  const transactions = await Model.find().exec();
+  const transactions = await Model.find();
   return transactions;
 };
 
 schema.statics.getTransactionById = async function(id) {
   const Model = this;
-  const transaction = await Model.findById(id).exec();
+  const transaction = await Model.findById(id);
   return transaction;
 };
 
@@ -137,8 +137,7 @@ schema.statics.getReceivedTransactions = async function(accounts) {
     .populate('accountIDTo')
     .populate('accountIDFrom')
     .populate('creditFrom')
-    .sort({ dateTransaction: -1 })
-    .exec();
+    .sort({'dateTransaction': -1});
 
   return transactionsTo;
 };
@@ -152,8 +151,7 @@ schema.statics.getSentTransactions = async function(accounts) {
     .populate('accountIDTo')
     .populate('accountIDFrom')
     .populate('creditFrom')
-    .sort({ dateTransaction: -1 })
-    .exec();
+    .sort({'dateTransaction': -1});
 
   return transactionsFrom;
 };
@@ -163,7 +161,7 @@ schema.statics.getOutcomes = async function(accounts) {
   const transactionsFrom = await Model.find({
     accountIDFrom: { $in: accounts },
     status: 'Executed'
-  }).exec();
+  });
 
   return transactionsFrom;
 };
@@ -177,8 +175,7 @@ schema.statics.getAllTransactions = async function(accounts) {
     .populate('accountIDTo')
     .populate('accountIDFrom')
     .populate('creditFrom')
-    .sort({ dateTransaction: -1 })
-    .exec();
+    .sort({'dateTransaction': -1});
   return allTransactions;
 };
 
@@ -191,8 +188,7 @@ schema.statics.getAllTransactionsAccount = async function(idAccount) {
     .populate('accountIDTo')
     .populate('accountIDFrom')
     .populate('creditFrom')
-    .sort({ dateTransaction: -1 })
-    .exec();
+    .sort({'dateTransaction': -1});
 
   return allTransactions;
 };

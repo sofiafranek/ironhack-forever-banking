@@ -131,26 +131,26 @@ const schema = new mongoose.Schema({
 
 schema.statics.getCreditAccounts = async function(userID) {
   const Model = this;
-  const userAccount = await Model.find({ $and: [{ userID }, { status: 'Active' }] }).exec();
+  const userAccount = await Model.find({ $and: [{ userID }, { status: 'Active' }] });
 
   return userAccount;
 };
 
 schema.statics.getCreditAccountById = async function(id) {
   const Model = this;
-  const credit = await Model.findById(id).exec();
+  const credit = await Model.findById(id);
   return credit;
 };
 
 schema.statics.getAccountById = async function(id) {
   const Model = this;
-  const account = await Model.findById(id).exec();
+  const account = await Model.findById(id);
   return account;
 };
 
 schema.statics.getUser = async function(id) {
   const Model = this;
-  const card = await Model.findById(id).populate('userID').select({ userID: 1}).exec();
+  const card = await Model.findById(id).populate('userID').select({ userID: 1});
   return card;
 };
 
@@ -203,23 +203,23 @@ schema.statics.removeCreditAccount = async function(id) {
     type: '',
     createdAt: null,
     status: 'NoActive'
-  }).exec();
+  });
   return account;
 };
 
 schema.statics.updateCurrent = async function(id, current) {
   const Model = this;
-  await Model.findByIdAndUpdate(id, { current }).exec();
+  await Model.findByIdAndUpdate(id, { current });
 };
 
 schema.statics.updateCredit = async function(id, datePayment, current, debt) {
   const Model = this;
-  await Model.findByIdAndUpdate(id, { datePayment, current, debt }).exec();
+  await Model.findByIdAndUpdate(id, { datePayment, current, debt });
 };
 
 schema.statics.getAccountByNumber = async function(accountNumber) {
   const Model = this;
-  const account = await Model.findOne({ accountNumber }).exec();
+  const account = await Model.findOne({ accountNumber });
   return account;
 };
 

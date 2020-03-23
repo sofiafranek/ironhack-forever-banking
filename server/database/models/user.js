@@ -51,7 +51,7 @@ const schema = new mongoose.Schema({
 
 schema.statics.getUserByPhoneNumber = async function(phoneNumber) {
   const Model = this;
-  const user = await Model.findOne({ phoneNumber }).exec();
+  const user = await Model.findOne({ phoneNumber });
 
   return user;
 };

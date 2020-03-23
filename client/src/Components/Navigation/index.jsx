@@ -10,20 +10,21 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import { signOut } from './../../Services/authentication';
+import { listUnreadNotifications } from './../../Services/notification';
 import { ToggleButton } from 'react-bootstrap';
 
 const Navigation = props => {
-  const handleSignOut = () => {
-    signOut()
-      .then(() => {
-        props.updateUserInformation(null);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      props.updateUserInformation(null);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [result, setResult] = React.useState(false);
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
@@ -33,7 +34,21 @@ const Navigation = props => {
     setAnchorEl(null);
   };
 
+  function handleNotifications() {
+    const userID = props.user._id;
+  
+      listUnreadNotifications(userID)
+      .then(result => {
+        setResult(result)
+      }
+      ).catch(error => {
+        console.log(error);
+      });
+      
+  }
+
   const usertype = props.user.usertype;
+  handleNotifications();
 
   return (
     <>
@@ -128,7 +143,9 @@ const Navigation = props => {
               <NavLink to={'/notifications'} key={text} exact>
                 <ListItem button className="nav-links">
                   <i className="far fa-bell extra-nav-link">
-                    <div className="notification-alert"></div>
+                    {
+                      result && <div className="notification-alert"></div>
+                    }
                     <small className="special-nav-link">Notifications</small>
                   </i>
                 </ListItem>

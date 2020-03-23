@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import Toast from 'react-bootstrap/Toast';
 import './style.scss';
-import { updateNotification } from './../../Services/notification';
+import { updateNotification } from './../../Services/notification';
 import Card from 'react-bootstrap/Card';
 
 const Notification = props => {
@@ -40,20 +40,18 @@ const Notification = props => {
   } else {
     messageTime = `${diffDays} days ago`;
   }
-  
+
   async function handleClick(event) {
     event.preventDefault();
     try {
       const notification = await updateNotification(_id);
-      console.log(notification);
     } catch (error) {
       console.log(error);
     }
-    console.log('hello');
   }
 
   return (
-    <Toast className="hvr-grow notification" onClick={(event) => handleClick(event)}>
+    <Toast className="hvr-grow notification" onClick={event => handleClick(event)}>
       <Toast.Header>
         <strong className="mr-auto pl-0">{type}</strong>
         <small>{messageTime}</small>

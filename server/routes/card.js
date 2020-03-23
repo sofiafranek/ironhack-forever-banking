@@ -47,7 +47,6 @@ router.post('/create-card', RouteGuard, async (req, res, next) => {
     const card = await Card.createCard(accountID, cardNumber, CVV, type, expiryDate, userID);
     res.json({ card });
   } catch (error) {
-    console.log(error, 'ERROR');
     next(error);
   }
 });

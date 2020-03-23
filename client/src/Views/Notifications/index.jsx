@@ -14,7 +14,6 @@ class Notifications extends Component {
 
   async getData() {
     const { userID } = this.props;
-    console.log(userID);
     try {
       const notifications = await listNotifications(userID);
       this.setState({
@@ -37,7 +36,7 @@ class Notifications extends Component {
           <h1 className="pb-3">Notifications</h1>
           <hr className="pb-3"></hr>
           {this.state.notifications.map(notification => (
-            <Notification key={notification._id} {...notification} userID={userID}/>
+            <Notification key={notification._id} {...notification} userID={userID} />
           ))}
         </Layout>
       </div>

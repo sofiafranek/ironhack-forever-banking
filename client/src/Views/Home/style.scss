@@ -45,7 +45,7 @@
 }
 
 .homepage-nav {
-  padding: 0px 30px 50px;
+  padding-bottom: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -61,10 +61,42 @@
   }
 }
 
+.sign-in-mobile {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 20px;
+  button {
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    margin-left: 40px;
+    border: none;
+    border-radius: 10px;
+  }
+}
+
+.sign-in-desktop {
+  display: none;
+}
+
+@media (min-width: 600px) {
+  .sign-in-mobile {
+    display: none;
+  }
+  .sign-in-desktop {
+    display: flex;
+    align-items: center;
+  }
+  .homepage-nav {
+    padding: 0px 30px 50px;
+  }
+}
+
 @media (min-width: 980px) {
   .homepage {
     .homepage-content {
-      margin-top: 50px;
+      margin-top: 70px;
     }
     flex-direction: row;
     .homepage--image {

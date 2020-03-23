@@ -28,7 +28,6 @@ class Transactions extends Component {
 
   handleClick(event) {
     event.preventDefault();
-    console.log(this.state.isToggleOn);
 
     this.setState(previouState => ({
       isToggleOn: !previouState.isToggleOn
@@ -113,7 +112,6 @@ class Transactions extends Component {
   }
 
   render() {
-    console.log(this.state.renderTransactions, 'TRANSACTION');
     return (
       <Layout>
         <div className="relative transactions-page">
@@ -127,7 +125,10 @@ class Transactions extends Component {
             <Button variant="contained" className="secondary" onClick={this.refresh}>
               <i className="fas fa-sync-alt"></i>
             </Button>
-            <Button onClick={(event) => this.handleClick(event)} className="toggle-transactions third">
+            <Button
+              onClick={event => this.handleClick(event)}
+              className="toggle-transactions third"
+            >
               {this.state.isToggleOn ? (
                 <i className="fas fa-toggle-off"></i>
               ) : (

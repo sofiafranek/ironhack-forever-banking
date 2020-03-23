@@ -15,13 +15,19 @@ class Features extends Component {
             </a>
             <a href="/features">Features</a>
           </div>
-          <div>
+          <div className="sign-in-desktop">
             <a href="/signin">Login</a>
             <a href="/signup">
               <button>Sign Up Now</button>
             </a>
           </div>
         </nav>
+        <div className="sign-in-mobile">
+          <a href="/signin">Login</a>
+          <a href="/signup">
+            <button>Sign Up Now</button>
+          </a>
+        </div>
         <section className="features-info">
           <div className="feature-box">
             <h3>Free Account</h3>

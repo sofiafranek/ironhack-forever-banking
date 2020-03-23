@@ -5,7 +5,6 @@ import './style.scss';
 class Card extends Component {
   flip(event) {
     event.preventDefault();
-    console.log('FLIP');
     let element = event.currentTarget;
     if (element.className === 'credit-card__section') {
       if (element.style.transform === 'rotateY(180deg)') {

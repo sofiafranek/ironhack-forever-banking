@@ -23,7 +23,6 @@ class EditPrimary extends Component {
     const inputName = event.target.name;
     const value = event.target.value;
 
-    console.log(inputName + ' ' + value);
     this.setState({
       [inputName]: value
     });
@@ -31,11 +30,9 @@ class EditPrimary extends Component {
 
   componentDidMount() {
     const allAccounts = this.props.location.state;
-    console.log(allAccounts);
-    const oldAcc = allAccounts.filter((value) => value.primary);
-    console.log(oldAcc);
+    const oldAcc = allAccounts.filter(value => value.primary);
     const oldAccount = oldAcc[0]._id;
-    const accounts = allAccounts.filter((value) => !value.primary);
+    const accounts = allAccounts.filter(value => !value.primary);
 
     this.setState({
       oldAccount,
@@ -43,21 +40,21 @@ class EditPrimary extends Component {
     });
   }
 
-  async setData(event){
+  async setData(event) {
     event.preventDefault();
-    let result = true;  
+    let result = true;
     const data = Object.assign({}, this.state);
     delete data.accounts;
     try {
-      if(this.state.newAccount != ''){
+      if (this.state.newAccount != '') {
         result = await updatePrimaryAccount(data);
       }
-      if(result) {
+      if (result) {
         this.props.history.push({
           pathname: '/accounts'
         });
       }
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   }
@@ -71,15 +68,11 @@ class EditPrimary extends Component {
         </Breadcrumb>
         <h4 className="pl-2 pb-4">Change your primary account</h4>
         <form onSubmit={event => this.setData(event)}>
-        <FormControl component="fieldset">
-          {this.state.accounts.length > 0 ? (
+          <FormControl component="fieldset">
+            {this.state.accounts.length > 0 ? (
               this.state.accounts.map(single => {
                 return (
-                  <RadioGroup
-                    name="newAccount"
-                    key={single._id}
-                    required
-                  >
+                  <RadioGroup name="newAccount" key={single._id} required>
                     <FormControlLabel
                       value={single._id}
                       control={<StyledRadio />}
@@ -92,10 +85,10 @@ class EditPrimary extends Component {
             ) : (
               <p>There are no accounts to change to primary</p>
             )}
-        </FormControl>
-        <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">
-          Change Primary Account
-        </Button>
+          </FormControl>
+          <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">
+            Change Primary Account
+          </Button>
         </form>
       </Layout>
     );

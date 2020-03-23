@@ -27,7 +27,7 @@ router.post('/signup', (req, res, next) => {
     password,
     phoneNumber,
     nationality,
-    dob,
+    age,
     ID,
     address,
     usertype
@@ -42,7 +42,7 @@ router.post('/signup', (req, res, next) => {
         passwordHash: hash,
         phoneNumber,
         nationality,
-        dob,
+        age,
         ID,
         address,
         usertype

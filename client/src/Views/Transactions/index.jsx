@@ -61,6 +61,16 @@ class Transactions extends Component {
     this.getData();
   }
 
+  randomKey(length) {
+    let result = '';
+    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+
   async getData() {
     const userID = this.props.userID;
     try {
@@ -99,7 +109,7 @@ class Transactions extends Component {
         allTransactions,
         renderTransactions: sortedTransactions
       });
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   }
@@ -139,13 +149,6 @@ class Transactions extends Component {
               <option value="Outcome">Outcome</option>
             </select>
           </div>
-          {/* <button onClick={this.handleClick} className="mb-4 toggle-transactions">
-            {this.state.isToggleOn ? (
-              <i class="fas fa-toggle-off"></i>
-            ) : (
-              <i class="fas fa-toggle-on"></i>
-            )}
-          </button> */}
           {this.state.renderTransactions.map(transaction => {
             if (
               transaction.transaction.reference
@@ -157,7 +160,7 @@ class Transactions extends Component {
             )
               return (
                 <Transaction
-                  // key={transaction.transaction._id}
+                  key={this.randomKey(20)}
                   type={transaction.type}
                   {...transaction.transaction}
                   toggle={this.state.isToggleOn}

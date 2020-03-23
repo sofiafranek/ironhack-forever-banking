@@ -16,6 +16,12 @@
   transform: scale(1.01);
 }
 
+.transaction {
+  .card-body {
+    padding: 20px 30px;
+  }
+}
+
 h6 {
   margin: 0;
 }
@@ -96,7 +102,7 @@ h6 {
   }
 
   .badge-Pet.Insurance {
-    background-color: #286fad !important;
+    background-color: #549ddc !important;
   }
 
   .badge-Clothing {
@@ -116,7 +122,7 @@ h6 {
   }
 
   .badge-Life.Insurance {
-    background-color: #9e5d7c !important;
+    background-color: #cc91ad !important;
   }
 
   .badge-Fun.Stuff {

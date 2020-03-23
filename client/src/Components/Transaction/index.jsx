@@ -15,8 +15,7 @@ class Transaction extends Component {
       currency,
       creditFrom,
       creditTo,
-      type,
-      colorCategory
+      type
     } = this.props;
 
     let accFrom = null,
@@ -61,7 +60,7 @@ class Transaction extends Component {
                   <div>Account To: {accTo.accountNumber}</div>
                 </div>
                 <div className="transaction-right-info">
-                  <Badge variant={colorCategory}>{category}</Badge>
+                  <Badge variant={category}>{category}</Badge>
                 </div>
               </div>
             </Card.Body>

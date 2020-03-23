@@ -27,7 +27,7 @@ const schema = new mongoose.Schema({
     lowercase: true,
     trim: true
   },
-  dob: {
+  age: {
     type: String,
     required: true
   },

@@ -5,6 +5,12 @@ import { Button, TextField, FormControl, Select, Grid, InputLabel } from '@mater
 
 import { signUp } from './../../Services/authentication';
 
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -15,11 +21,13 @@ class SignUp extends Component {
       email: '',
       nationality: '',
       password: '',
-      dob: '',
+      age: '',
       ID: '',
       address: '',
       usertypes: ['Free', 'Premium'],
-      usertype: 'Free'
+      usertype: 'Free',
+      error: false,
+      errorMessage: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.getData = this.getData.bind(this);
@@ -33,7 +41,23 @@ class SignUp extends Component {
     const inputName = event.target.name;
     const value = event.target.value;
 
-    // inputName === 'dob' && value <= '2004-01-01' ? 'too young' : 'okay';
+    // if (inputName === 'age' && value <= 16) {
+    //   const error = true;
+    //   const errorMessage = 'You have to be 16 or over';
+    //   this.setState({
+    //     error,
+    //     errorMessage
+    //   });
+    //   console.log('person is too young');
+    // } else {
+    //   const error = false;
+    //   const errorMessage = '';
+    //   this.setState({
+    //     error,
+    //     errorMessage
+    //   });
+    //   console.log('person is of age');
+    // }
 
     this.setState({
       [inputName]: value
@@ -45,14 +69,24 @@ class SignUp extends Component {
   getData(event) {
     event.preventDefault();
     const user = Object.assign({}, this.state);
+
     signUp(user)
       .then(user => {
-        const idUser = user._id;
-        this.props.updateUserInformation(user);
-        this.props.history.push({
-          pathname: '/create-account',
-          state: { idUser: idUser }
-        });
+        if (user) {
+          const idUser = user._id;
+          this.props.updateUserInformation(user);
+          this.props.history.push({
+            pathname: '/create-account',
+            state: { idUser: idUser }
+          });
+        } else {
+          const error = true;
+          const errorMessage = 'You have to be 16 or over';
+          this.setState({
+            error,
+            errorMessage
+          });
+        }
       })
       .catch(error => console.log(error));
   }
@@ -131,16 +165,15 @@ class SignUp extends Component {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                type="date"
-                min="2004-01-01"
-                step="1"
+                type="number"
                 variant="outlined"
                 required
                 fullWidth
-                name="dob"
-                value={this.state.dob}
+                name="age"
+                label="Age"
+                value={this.state.age}
                 onChange={event => this.handleInputChange(event)}
-                id="dob"
+                id="age"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -196,6 +229,7 @@ class SignUp extends Component {
               />
             </Grid>
           </Grid>
+          {this.state.error && <Alert severity="error">{this.state.errorMessage}</Alert>}
           <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">
             Sign Up
           </Button>

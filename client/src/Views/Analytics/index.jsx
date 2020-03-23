@@ -161,11 +161,11 @@ class Analytics extends Component {
     return (
       <div>
         <Layout>
-          <h1>Analytics</h1>
+          <h1 className="pb-3">Analytics</h1>
           <hr></hr>
           {/* title below only shows if there are categories */}
           {this.state.eachCategories.length === 0 && (
-            <h5 className="mb-4">
+            <h5 className="pt-3">
               Start spending! We can only show analytics when you start spending your money!
             </h5>
           )}

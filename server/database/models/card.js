@@ -36,13 +36,13 @@ const schema = new mongoose.Schema({
 
 schema.statics.getCards = async function() {
   const Model = this;
-  const cards = await Model.find().exec();
+  const cards = await Model.find();
   return cards;
 };
 
 schema.statics.getCardById = async function(id) {
   const Model = this;
-  const card = await Model.findById(id).exec();
+  const card = await Model.findById(id);
   return card;
 };
 
@@ -65,8 +65,7 @@ schema.statics.getUserCards = async function(userID) {
   const card = await Model.find({
     userID
   })
-    .populate('accountID')
-    .exec();
+    .populate('accountID');
 
   return card;
 };
@@ -75,7 +74,7 @@ schema.statics.getUserCard = async function(userID) {
   const Model = this;
   const card = await Model.findOne({
     userID
-  }).exec();
+  });
 
   return card;
 };
@@ -84,7 +83,7 @@ schema.statics.removeCard = async function(cardNumber) {
   const Model = this;
   const removedCard = await Model.findOneAndRemove({
     cardNumber
-  }).exec();
+  });
 
   return removedCard;
 };

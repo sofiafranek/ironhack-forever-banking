@@ -72,24 +72,24 @@ const schema = new mongoose.Schema({
 
 schema.statics.updateBalance = async function(id, balance) {
   const Model = this;
-  await Model.findByIdAndUpdate(id, { balance }).exec();
+  await Model.findByIdAndUpdate(id, { balance });
 };
 
 schema.statics.getAccounts = async function() {
   const Model = this;
-  const accounts = await Model.find({ status: 'Active' }).exec();
+  const accounts = await Model.find({ status: 'Active' });
   return accounts;
 };
 
 schema.statics.getAccountById = async function(id) {
   const Model = this;
-  const account = await Model.findById(id).exec();
+  const account = await Model.findById(id);
   return account;
 };
 
 schema.statics.getAccountByNumber = async function(accountNumber) {
   const Model = this;
-  const account = await Model.findOne({ accountNumber }).exec();
+  const account = await Model.findOne({ accountNumber });
   return account;
 };
 
@@ -113,7 +113,7 @@ schema.statics.removeAccount = async function(id) {
     type: '',
     createdAt: null,
     status: 'NoActive'
-  }).exec();
+  });
   return account;
 };
 
@@ -122,7 +122,7 @@ schema.statics.updateShared = async function(id, sharedName) {
   const account = await Model.findByIdAndUpdate(id, {
     shared: true,
     sharedName
-  }).exec();
+  });
   return account;
 };
 

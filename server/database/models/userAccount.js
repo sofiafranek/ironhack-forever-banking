@@ -36,8 +36,7 @@ schema.statics.createUserAccount = async function(userID, accountID, primary) {
 schema.statics.getUserActiveAccounts = async function(userID) {
   const Model = this;
   const userAccount = await Model.find({ $and: [{ userID }, { status: 'Active' }] })
-    .populate('accountID')
-    .exec();
+    .populate('accountID');
 
   return userAccount;
 };
@@ -47,8 +46,7 @@ schema.statics.getUserAllAccounts = async function(userID) {
   const userAccount = await Model.find({
     userID
   })
-    .select({ accountID: 1, _id: 0 })
-    .exec();
+    .select({ accountID: 1, _id: 0 });
 
   return userAccount;
 };
@@ -57,7 +55,7 @@ schema.statics.removeAccount = async function(accountID) {
   const Model = this;
   const filter = { accountID };
   const update = { status: 'NoActive' };
-  const removedAccount = await Model.updateOne(filter, update).exec();
+  const removedAccount = await Model.updateOne(filter, update);
 
   return removedAccount;
 };
@@ -67,8 +65,7 @@ schema.statics.getUserAccount = async function(userID) {
   const account = await Model.findOne({
     userID
   })
-    .populate('accountID')
-    .exec();
+    .populate('accountID');
 
   return account;
 };
@@ -79,8 +76,7 @@ schema.statics.getUser = async function(accountID) {
     accountID
   })
     .populate('userID')
-    .select({ userID: 1})
-    .exec();
+    .select({ userID: 1});
 
   return user;
 };
@@ -90,8 +86,7 @@ schema.statics.getUserPrimaryAccount = async function(userID) {
   const account = await Model.findOne({
     $and: [{ userID }, { primary: true }]
   })
-    .populate('accountID')
-    .exec();
+    .populate('accountID');
 
   return account.accountID;
 };
@@ -99,7 +94,7 @@ schema.statics.getUserPrimaryAccount = async function(userID) {
 schema.statics.updatePrimaryAccount = async function(_id, primary) {
   const Model = this;
   const update = { primary };
-  const account = await Model.findByIdAndUpdate(_id, update).exec();
+  const account = await Model.findByIdAndUpdate(_id, update);
   return account;
 };
 

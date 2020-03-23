@@ -48,7 +48,7 @@ schema.statics.listNotifications = async function(userID) {
 
     const listNotifications = await Model.find({
         $or: [ { userIDTo: userID } , { userIDFrom: userID }]
-    }).sort({'createdAt': -1}).exec();
+    }).sort({'createdAt': -1});
 
     return listNotifications;
 };
@@ -58,15 +58,15 @@ schema.statics.hasUnreadNotifications = async function(userID) {
     const read = false;
     const listNotifications = await Model.find({
         $or: [ { userIDTo: userID } , { userIDFrom: userID }], read
-    }).exec();
+    });
 
     return listNotifications;
 };
 
-schema.statics.updateNotification = async function(_id) {
+schema.statics.updateNotification = async function(id) {
     const Model = this;
     const read = true;
-    const notification = await Model.findByIdAndUpdate(_id, read).exec();
+    const notification = await Model.findByIdAndUpdate(id, { read });
 
     return notification;
 };

@@ -5,7 +5,7 @@ import { updateNotification } from './../../Services/notification';
 import Card from 'react-bootstrap/Card';
 
 const Notification = props => {
-  const { userID, userIDFrom, messageFrom, messageTo, createdAt } = props;
+  const { userID, userIDFrom, messageFrom, messageTo, createdAt, _id } = props;
   let message = '',
     type = '';
 
@@ -40,23 +40,26 @@ const Notification = props => {
   } else {
     messageTime = `${diffDays} days ago`;
   }
+  
+  async function handleClick(event) {
+    event.preventDefault();
+    try {
+      const notification = await updateNotification(_id);
+      console.log(notification);
+    } catch (error) {
+      console.log(error);
+    }
+    console.log('hello');
+  }
 
   return (
-    <Fragment>
-    <section className="account-section">
-          <Card className="hvr-grow account">
-            
-          </Card>
-      </section>
-    <Toast>
+    <Toast className="hvr-grow notification" onClick={(event) => handleClick(event)}>
       <Toast.Header>
         <strong className="mr-auto pl-0">{type}</strong>
         <small>{messageTime}</small>
       </Toast.Header>
       <Toast.Body className="notification-text">{message}</Toast.Body>
     </Toast>
-    </Fragment>
-
   );
 };
 

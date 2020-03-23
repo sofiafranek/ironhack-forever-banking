@@ -40,6 +40,7 @@ router.post('/:id', RouteGuard, async (req, res, next) => {
 
     try {
         const notification = await Notification.updateNotification(id);
+        console.log(notification);
         res.json({ notification });
       } catch (error) {
         next(error);
@@ -54,6 +55,7 @@ router.get('/:userID/unreadNotifications', RouteGuard, async (req, res, next) =>
         let result = false;
         const notifications = await Notification.hasUnreadNotifications(userID);
         if (notifications.length > 0) result = true;
+        console.log("Notifications", notifications);
         res.json( { result } );
       } catch (error) {
         next(error);

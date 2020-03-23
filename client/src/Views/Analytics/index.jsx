@@ -169,7 +169,7 @@ class Analytics extends Component {
               Start spending! We can only show analytics when you start spending your money!
             </h5>
           )}
-          {this.state.eachCategories && (
+          {this.state.eachCategories.length >= 1 && (
             <h5 className="mb-4">Total amount spent this month : {this.state.totalAmount}</h5>
           )}
           <div>

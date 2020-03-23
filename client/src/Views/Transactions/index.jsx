@@ -43,6 +43,7 @@ class Transactions extends Component {
   }
 
   handleInputChange(event) {
+    event.preventDefault();
     const value = event.target.value;
     let trans = [];
 

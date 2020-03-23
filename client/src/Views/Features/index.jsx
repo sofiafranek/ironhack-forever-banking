@@ -27,17 +27,18 @@ class Features extends Component {
             <h3>Free Account</h3>
             <ul>
               <li>
-                <strong>Accounts</strong> - Unlimited Accounts in Wordlwide Currencies
+                <strong>Accounts</strong> - Unlimited accounts in wordlwide currencies
               </li>
               <li>
-                <strong>Transactions</strong> - Send and Recieve Money From Fellow Forever Bankers
-                or Other Banks*
+                <strong>Transactions</strong> - Send and recieve money from fellow forever fankers
+                or other banks*
               </li>
               <li>
-                <strong>Cards</strong> - Create Multiple Virtual Cards for your Accounts
+                <strong>Cards</strong> - Create multiple virtual cards for your accounts
               </li>
               <li>
-                <strong>Analytics</strong> -{' '}
+                <strong>Analytics</strong> - See all your expenses divided by your categories and
+                see where you spend your money.
               </li>
             </ul>
             <small>
@@ -51,33 +52,28 @@ class Features extends Component {
                 Everything from <strong>Free</strong> and more...
               </li>
               <li>
-                <strong>Shared Accounts</strong> - Share an Account with Another User from Forever
-                Banking
+                <strong>Shared Accounts</strong> - Share an account with another user from forever
+                banking
               </li>
               <li>
-                <strong>Credit</strong> - Apply for Regular Credit and Pay Minimum Payments Per
-                Month or Full Amount
+                <strong>Credit</strong> - Apply for regular credit and pay minimum payments per
+                month or full amount
               </li>
               <li>
-                <strong>Exchange Money</strong> - Able to Transfer Money and Recieve Money that can
-                be converted to your Accounts Currency
+                <strong>Exchange Money</strong> - Able to transfer money and recieve money that can
+                be converted to your accounts currency
               </li>
               <li>
                 <strong>Exchange Rates</strong> - See how much money you can get from exchanging
                 with us
               </li>
               <li>
-                <strong>Scheduled Payments</strong> - Organise regular payments with our Schedule
-                Payments, never miss a payment deadline.
+                <strong>Scheduled Payments</strong> - Organise regular payments with our schedule
+                payments, never miss a payment deadline.
               </li>
             </ul>
           </div>
         </section>
-        {/* <h1>
-              Banking <br></br>has never been <br></br>so rewarding.
-            </h1>
-            <h2>A banking experience consisting of an app with limitless capabilities.</h2> */}
-        {/* <div className="homepage--image"></div> */}
       </section>
     );
   }

@@ -33,6 +33,22 @@ router.get('/:id', RouteGuard, async (req, res, next) => {
   }
 });
 
+router.post('/topUpAccount', RouteGuard, async (req, res, next) => {
+  const { balance, accountID } = req.body;
+  const numberBalance = Number(balance);
+
+  try {
+    const account = await Account.getAccountById(accountID);
+    const currentBalance = account.balance;
+    const newBalance = currentBalance + numberBalance;
+    await Account.updateBalance(accountID, newBalance);
+    res.json({ result: true });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
 // When user is signing up this creates their first account
 router.post('/create-account-external', async (req, res, next) => {
   const {
@@ -60,13 +76,12 @@ router.post('/create-account-external', async (req, res, next) => {
     await UserAccount.createUserAccount(userID, accountID, primary);
 
     if (sharedAccount) {
-      const sharedAccountUser = await User.getUserByPhoneNumber(sharedUser);
-      const sharedUserID = sharedAccountUser._id;
-      const userName = sharedAccountUser.name;
-
-      if (sharedAccountUser) {
-        await UserAccount.createUserAccount(sharedAccountUser, accountID, primary);
-        res.json({ result: true, sharedUserID, userName });
+      const existUser = await User.getUserByPhoneNumber(sharedUser);
+      if (existUser) {
+        const sharedUserID = existUser._id;
+        const userName = existUser.name;
+        await UserAccount.createUserAccount(sharedUserID, accountID, false);
+        res.json({ result: true, type, accountID });
       } else {
         res.json({ result: false, message: 2 });
       }

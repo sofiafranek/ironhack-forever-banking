@@ -20,10 +20,12 @@ const schema = new mongoose.Schema({
     ref: 'Credit'
   },
   totalAmount: {
-    type: Number
+    type: Number,
+    required: true
   },
   reference: {
-    type: String
+    type: String,
+    required: true
   },
   endPoint: {
     type: String
@@ -47,16 +49,12 @@ const schema = new mongoose.Schema({
       'Fun Stuff',
       'Travel',
       'Student Loans',
-      'Credit-card Debt',
+      'Credit Card Debt',
       'Retirement',
       'Emergency Fund',
       'Large Purchases',
       'Other'
     ]
-  },
-  colorCategory: {
-    type: String,
-    enum: ['info', 'success', 'primary', 'secondary', 'danger', 'warning', 'light', 'dark']
   },
   schedule: {
     type: Boolean,
@@ -64,7 +62,8 @@ const schema = new mongoose.Schema({
   },
   schedulePeriod: {
     type: String,
-    enum: ['Week', 'Month', 'Year', 'None']
+    enum: ['Week', 'Month', 'Year', 'None'],
+    required: true
   },
   status: {
     type: String,
@@ -98,7 +97,6 @@ schema.statics.createTransaction = async function(
   schedule,
   status,
   dateTransaction,
-  colorCategory,
   typeAccFrom,
   typeAccTo,
   schedulePeriod
@@ -124,7 +122,6 @@ schema.statics.createTransaction = async function(
     schedule,
     status,
     dateTransaction,
-    colorCategory,
     schedulePeriod
   });
 
@@ -155,7 +152,7 @@ schema.statics.getSentTransactions = async function(accounts) {
     .populate('accountIDTo')
     .populate('accountIDFrom')
     .populate('creditFrom')
-    .sort({ dateTransaction: 1 })
+    .sort({ dateTransaction: -1 })
     .exec();
 
   return transactionsFrom;
@@ -180,7 +177,7 @@ schema.statics.getAllTransactions = async function(accounts) {
     .populate('accountIDTo')
     .populate('accountIDFrom')
     .populate('creditFrom')
-    .sort({ dateTransaction: 1 })
+    .sort({ dateTransaction: -1 })
     .exec();
   return allTransactions;
 };
@@ -194,7 +191,7 @@ schema.statics.getAllTransactionsAccount = async function(idAccount) {
     .populate('accountIDTo')
     .populate('accountIDFrom')
     .populate('creditFrom')
-    .sort({ dateTransaction: 1 })
+    .sort({ dateTransaction: -1 })
     .exec();
 
   return allTransactions;

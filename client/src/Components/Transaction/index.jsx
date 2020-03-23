@@ -14,13 +14,16 @@ class Transaction extends Component {
       accountIDTo,
       currency,
       creditFrom,
-      type
+      creditTo,
+      type,
+      colorCategory
     } = this.props;
 
-    let accFrom = null,
-      symbol = '';
+
+    let accFrom = null, accTo = null, symbol = '';
     creditFrom ? (accFrom = creditFrom) : (accFrom = accountIDFrom);
-    type === 'minus' ? (symbol = '-') : (symbol = '+');
+    creditTo ? (accTo = creditTo) : (accTo = accountIDTo);
+    (type === 'minus') ? symbol = '-' : symbol = '+';
 
     const toggle = this.props.toggle;
     let toggleKey = '';
@@ -51,11 +54,14 @@ class Transaction extends Component {
               <div className="transaction-toggle">
                 <div>
                   Executed on: {dateTransaction && <h6>{dateTransaction.split('T')[0]}</h6>}
-                  {/* <div>
-                    Account From: {accountIDFrom} = Account To: {accountIDTo}
-                  </div> */}
                 </div>
-                <Badge variant={category}>{category}</Badge>
+                <Badge variant={colorCategory}>{category}</Badge>
+                <div>
+                    Account From: {accFrom.accountNumber}
+                </div>
+                <div>
+                    Account To: {accTo.accountNumber}
+                </div>
               </div>
             </Card.Body>
           </Accordion.Collapse>

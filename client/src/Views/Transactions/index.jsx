@@ -99,8 +99,7 @@ class Transactions extends Component {
         allTransactions,
         renderTransactions: sortedTransactions
       });
-      console.log(allTransactions);
-    } catch (error) {
+    } catch(error) {
       console.log(error);
     }
   }

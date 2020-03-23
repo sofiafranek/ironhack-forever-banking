@@ -13,6 +13,7 @@ import {
   Container
 } from '@material-ui/core';
 import clsx from 'clsx';
+import MuiAlert from '@material-ui/lab/Alert';
 import { creatingAccountFromExternal } from '../../Services/account';
 import { creatingCard } from '../../Services/card';
 import { useStyles } from '../../Utilities/useStyles';
@@ -32,6 +33,10 @@ function StyledRadio(props) {
   );
 }
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 class CreateAccount extends Component {
   constructor(props) {
     super(props);
@@ -41,7 +46,9 @@ class CreateAccount extends Component {
       balance: '',
       sharedAccount: false,
       sharedUser: '',
-      currency: 'CAD'
+      currency: 'CAD',
+      result: true,
+      message: '',
     };
     this.currencies = [
       'CAD',
@@ -130,7 +137,12 @@ class CreateAccount extends Component {
   }
 
   generateExpiryDate() {
-    return 21;
+    const currentDate = new Date();
+    let month = currentDate.getMonth() + 1;
+    if(month < 10) month = '0' + month;
+    const year = currentDate.getFullYear() + 2;
+    const expiryYear = year.toString().substring(2, 4);
+    return month + '/' + expiryYear;
   }
   
   async setData(event) {
@@ -143,12 +155,10 @@ class CreateAccount extends Component {
     account.userID = userID;
     account.primary = true;
     account.balance = Number(this.state.balance);
-    console.log(account, 'ACCOUNT');
 
     try {
       const response = await creatingAccountFromExternal(account);
       const { result } = response;
-
       if (result) {
         const { accountID, type } = response;
         const cardNumber = this.generateCardNumber();
@@ -164,10 +174,16 @@ class CreateAccount extends Component {
           userID
         };
 
+        console.log(card);
+
         await creatingCard(card);
         this.props.history.push('/summary');
       } else {
-        //TODO --> CHECK WHEN IS SHARED ACCOUNT AND THE USER DOESNT EXIST
+        this.setState({
+          result,
+          message: 'Not valid phone Number. User isnt registered'
+        })
+        
       }
     } catch (error) {
       console.log(error);
@@ -277,6 +293,7 @@ class CreateAccount extends Component {
               </Grid>
             </Grid>
           </Grid>
+          {!this.state.result && <Alert severity="error">{this.state.message}</Alert>}
           <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">
             Create Account
           </Button>

@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Toast from 'react-bootstrap/Toast';
 import './style.scss';
+import { updateNotification } from './../../Services/notification';
+import Card from 'react-bootstrap/Card';
 
 const Notification = props => {
   const { userID, userIDFrom, messageFrom, messageTo, createdAt } = props;
@@ -40,6 +42,12 @@ const Notification = props => {
   }
 
   return (
+    <Fragment>
+    <section className="account-section">
+          <Card className="hvr-grow account">
+            
+          </Card>
+      </section>
     <Toast>
       <Toast.Header>
         <strong className="mr-auto pl-0">{type}</strong>
@@ -47,6 +55,8 @@ const Notification = props => {
       </Toast.Header>
       <Toast.Body className="notification-text">{message}</Toast.Body>
     </Toast>
+    </Fragment>
+
   );
 };
 

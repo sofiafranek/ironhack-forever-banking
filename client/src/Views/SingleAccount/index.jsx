@@ -92,6 +92,7 @@ class SingleAccount extends Component {
                   to={{
                     pathname: `/accounts/${accountID}/add-money`,
                     state: {
+                      account: this.state.account,
                       accountNumber: this.state.account.accountNumber
                     }
                   }}

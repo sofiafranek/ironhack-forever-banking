@@ -50,12 +50,12 @@ module.exports = schedule.scheduleJob('53 * * * *', async () => {
             if (option === 'minimum') {
                 debt = current - minimumPayment;
                 minusBalance = balance - (minimumPayment + debt * apr);
-                messageFrom = `${userNameFrom} paied the minimum credit ${minusBalance + getSymbolFromCurrency(currency)}. The debt is now ${debt}${minusBalance + getSymbolFromCurrency(currency)}`;
-                messageTo = `The bank took you the minimum credit ${minusBalance + getSymbolFromCurrency(currency)}. Your debt is now ${debt}${minusBalance + getSymbolFromCurrency(currency)}`;
+                messageTo = `${userNameFrom} paied the minimum credit ${minusBalance + getSymbolFromCurrency(currency)}. The debt is now ${debt}${minusBalance + getSymbolFromCurrency(currency)}`;
+                messageFrom = `The bank took you the minimum credit ${minusBalance + getSymbolFromCurrency(currency)}. Your debt is now ${debt}${minusBalance + getSymbolFromCurrency(currency)}`;
             } else {
                 minusBalance = balance - current;
-                messageFrom = `${userNameFrom} paied the minimum credit ${minusBalance + getSymbolFromCurrency(currency)}`;
-                messageTo = `The bank took you the minimum credit ${minusBalance + getSymbolFromCurrency(currency)}`;
+                messageTo = `${userNameFrom} paied the minimum credit ${minusBalance + getSymbolFromCurrency(currency)}`;
+                messageFrom = `The bank took you the minimum credit ${minusBalance + getSymbolFromCurrency(currency)}`;
             }
 
             await Account.updateBalance(accountID, minusBalance);

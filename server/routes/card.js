@@ -33,7 +33,6 @@ router.get('/:id/user-cards', RouteGuard, async (req, res, next) => {
 
   try {
     const card = await Card.getUserCards(id);
-    console.log(card);
     res.json({ card });
   } catch (error) {
     next(error);
@@ -44,11 +43,8 @@ router.get('/:id/user-cards', RouteGuard, async (req, res, next) => {
 router.post('/create-card', RouteGuard, async (req, res, next) => {
   const { accountID, cardNumber, CVV, expiryDate, type, userID } = req.body;
 
-  console.log(req.body, 'REQ BODY');
-
   try {
     const card = await Card.createCard(accountID, cardNumber, CVV, type, expiryDate, userID);
-    console.log('addd', card);
     res.json({ card });
   } catch (error) {
     console.log(error, 'ERROR');

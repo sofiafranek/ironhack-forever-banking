@@ -64,6 +64,16 @@ const singleAccount = async id => {
   }
 };
 
+const topUpAccount = async data => {
+  try {
+    const result = await instance.post('/topUpAccount', data);
+    const account = result.data.account;
+    return account;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // deleting an account from users account
 const deleteAccount = async accountID => {
   try {
@@ -115,5 +125,6 @@ export {
   userAccounts,
   updatePrimaryAccount,
   addUserToAccount,
-  userLinkedAccounts
+  userLinkedAccounts,
+  topUpAccount
 };

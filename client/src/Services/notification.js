@@ -4,7 +4,7 @@ const instance = axios.create({
   baseURL: '/api/notification'
 });
 
-const listNotifications = async (userID) => {
+const listNotifications = async userID => {
     try {
       const result = await instance.get(`/${userID}/list`);
       const notifications = result.data.notifications;
@@ -14,7 +14,16 @@ const listNotifications = async (userID) => {
     }
   };
 
-const createNotification = async (data) => {
+const listUnreadNotifications = async userID => {
+  try {
+    const result = await instance.get(`/${userID}/unreadNotifications`);
+    return result.data.result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const createNotification = async data => {
     try {
         const result = await instance.post('/create-notification', data)
         const notification = result.data.notification;
@@ -24,6 +33,14 @@ const createNotification = async (data) => {
     }
 };
 
+const updateNotification = async idNot  => {
+  try {
+      const result = await instance.post(`${idNot}`);
+      const notification = result.data.notification;
+      return notification;
+  } catch (error) {
+      throw error;
+  }
+};
 
-
-export { listNotifications, createNotification };
+export { listNotifications, createNotification , updateNotification , listUnreadNotifications};

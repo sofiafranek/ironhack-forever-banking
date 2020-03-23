@@ -14,16 +14,13 @@ class Account extends Component {
   }
 
   componentDidMount() {
-    // const single = this.props;
-    const { account, user, primary } = this.props;
+    const { account, user } = this.props;
 
     this.setState({
       account: account.accountID,
-      user: user,
-      primary: primary
+      user: user.userID,
+      primary: account.primary
     });
-    console.log(this.props, 'ALL PROPS');
-    console.log(user, 'USER');
   }
 
   render() {

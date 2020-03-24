@@ -25,10 +25,31 @@ class Dashboard extends Component {
       const userAccs = information.accountsUser;
       const accs = userAccs.map(value => value.accountID);
       const accountsUser = accs.concat(information.credits);
+      const transactionsRec = information.transactionsTo;
+      const transactionsS = information.transactionsFrom;
+    
+      const transactionsReceived = transactionsRec.map(transaction => {
+        return {
+          transaction,
+          type: 'add'
+        };
+      });
+      const transactionsSent = transactionsS.map(transaction => {
+        return {
+          transaction,
+          type: 'minus'
+        };
+      });
+      const all = transactionsReceived.concat(transactionsSent);
+      const sortedTransactions = all.sort((val1, val2) => {
+        return (
+          new Date(val2.transaction.dateTransaction) - new Date(val1.transaction.dateTransaction)
+        );
+      });
 
       this.setState({
         accountsUser,
-        transactions: information.transactions
+        transactions: sortedTransactions
       });
     } catch (error) {
       console.log(error);
@@ -115,7 +136,7 @@ class Dashboard extends Component {
           <h4 className="pb-3 pt-4">All Transactions</h4>
           {this.state.transactions.length > 0 ? (
             this.state.transactions.map(single => {
-              return <Transaction key={this.randomKey(50)} {...single} />;
+              return <Transaction key={this.randomKey(50)} {...single.transaction} type={single.type}/>;
             })
           ) : (
             <p className="pt-3">No Transactions Listed</p>

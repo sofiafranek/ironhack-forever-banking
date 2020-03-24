@@ -16,13 +16,22 @@ router.get('/:userID/activity', RouteGuard, async (req, res, next) => {
 
   try {
     const accounts = await UserAccount.getUserActiveAccounts(userID);
-    activity.accountsUser = accounts;
 
     const credits = await Credit.getCreditAccounts(userID);
     const allAccounts = await UserAccount.getUserAllAccounts(userID);
     const allAccountsIDs = allAccounts.map(account => account.accountID);
-    const transactions = await Transaction.getAllTransactions(allAccountsIDs);
-    activity.transactions = transactions;
+    const creditsID = credits.map(credit => credit._id);
+
+    const transactionsAccF = await Transaction.getReceivedTransactions(allAccountsIDs);
+    const transactionsCreditF = await Transaction.getReceivedTransactionsCredit(creditsID);
+    const transactionsTo = transactionsAccF.concat(transactionsCreditF);
+    const transactionsAccT = await Transaction.getSentTransactions(allAccountsIDs);
+    const transactionsCreditT = await Transaction.getSentTransactionsCredit(creditsID);
+    const transactionsFrom = transactionsAccT.concat(transactionsCreditT);
+
+    activity.accountsUser = accounts;
+    activity.transactionsTo = transactionsTo;
+    activity.transactionsFrom = transactionsFrom;
     activity.credits = credits;
     
     res.json({ activity });

@@ -235,6 +235,7 @@ router.post('/received', async (req, res, next) => {
 router.post('/sent', async (req, res, next) => {
   const { accountsID, creditsID } = req.body;
 
+
   try {
     const transactionsAcc = await Transaction.getSentTransactions(accountsID);
     const transactionsCredit = await Transaction.getSentTransactionsCredit(creditsID);
@@ -248,8 +249,15 @@ router.post('/sent', async (req, res, next) => {
 router.get('/:idAccount/allTransactionsAccount', async (req, res, next) => {
   const idAccount = req.params.idAccount;
   try {
-    const allTransactions = await Transaction.getAllTransactionsAccount(idAccount);
-    res.json({ allTransactions });
+    const idAccounts = [idAccount];
+    const transactionsFrom = await Transaction.getReceivedTransactions(idAccounts);
+    const transactionsTo = await Transaction.getSentTransactions(idAccounts);
+    const information = {
+      transactionsTo,
+      transactionsFrom
+    };
+
+    res.json({ information });
   } catch (error) {
     console.log(error);
     next(error);

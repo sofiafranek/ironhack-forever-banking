@@ -33,7 +33,7 @@ class Accounts extends Component {
   filterMethod(filtered) {
     this.setState(previousState => {
       return {
-        accounts: previousState.accounts.filter(acc => acc.type === filtered)
+        accounts: previousState.accounts.filter(acc => acc.accountID.type === filtered)
       };
     });
   }

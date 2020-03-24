@@ -43,21 +43,45 @@ class SingleAccount extends Component {
   }
 
   componentDidMount() {
+    this.getData();
+  }
+  
+  async getData(){
     const accountID = this.props.match.params.id;
     const account = this.props.location.state;
-
-    allTransactionsAccount(accountID)
-      .then(transactions => {
-        this.setState({
-          transactions,
-          account
-        });
-      })
-      .catch(error => {
-        console.log(error);
+    try {
+      const information = await allTransactionsAccount(accountID);
+      const transactionsRec = information.transactionsFrom;
+      const transactionsS = information.transactionsTo;
+    
+      const transactionsReceived = transactionsRec.map(transaction => {
+        return {
+          transaction,
+          type: 'add'
+        };
       });
+      const transactionsSent = transactionsS.map(transaction => {
+        return {
+          transaction,
+          type: 'minus'
+        };
+      });
+
+      const all = transactionsReceived.concat(transactionsSent);
+      const sortedTransactions = all.sort((val1, val2) => {
+        return (
+          new Date(val2.transaction.dateTransaction) - new Date(val1.transaction.dateTransaction)
+        );
+      });
+
+      this.setState({
+        transactions: sortedTransactions,
+        account
+      });
+    } catch(error) {
+
+    }
   }
-  x;
 
   render() {
     const accountID = this.props.match.params.id;
@@ -92,7 +116,7 @@ class SingleAccount extends Component {
               <section className="pt-2">
                 {/* <h4 className="pb-3">Transactions for this Account</h4> */}
                 {this.state.transactions.map(transaction => (
-                  <Transaction key={this.randomKey(50)} {...transaction} />
+                  <Transaction key={this.randomKey(50)} {...transaction.transaction} type={transaction.type} />
                 ))}
               </section>
               <div className="action-container">

@@ -5,6 +5,7 @@ import './style.scss';
 
 class Transaction extends Component {
   render() {
+    console.log(this.props);
     const {
       totalAmount,
       dateTransaction,

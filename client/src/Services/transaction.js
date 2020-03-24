@@ -73,7 +73,7 @@ const allTransactions = async (data) => {
 const allTransactionsAccount = async (idAccount) => {
   try {
     const result = await instance.get(`/${idAccount}/allTransactionsAccount`);
-    const transactions = result.data.allTransactions;
+    const transactions = result.data.information;
     return transactions;
   } catch (error) {
     throw error;

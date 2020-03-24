@@ -39,7 +39,7 @@ class Account extends Component {
                   {this.state.primary === true ? <span>- Primary</span> : ''}
                 </h4>
                 <h5 className="pb-2 pt-2">IBAN Number: {this.state.account.accountNumber}</h5>
-                <h5>
+                <h5 className="pb-0 mb-0">
                   {this.state.account.type === 'Credit' ? 'Credit Allowance' : 'Available Balance'}{' '}
                   : {this.state.account.balance.toFixed(2)}
                   {getSymbolFromCurrency(this.state.account.currency)}

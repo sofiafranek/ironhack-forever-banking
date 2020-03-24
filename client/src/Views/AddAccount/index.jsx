@@ -19,6 +19,7 @@ import {
   userActiveAccounts
 } from '../../Services/account';
 import { createNotification } from '../../Services/notification';
+import { creditAccounts } from '../../Services/credit';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import CurrencyTextField from '@unicef/material-ui-currency-textfield';
 import getSymbolFromCurrency from 'currency-symbol-map';
@@ -139,23 +140,24 @@ class AddAccount extends Component {
     });
   }
 
-  getInfo() {
+  async getInfo() {
     const userID = this.props.user._id;
 
-    const account = Object.assign({}, this.state);
-    account.userID = userID;
+    try {
+      const account = await userActiveAccounts(userID);
+      const accounts = account.map(value => value.accountID);
+      const credits = await creditAccounts(userID);
+      const allAccounts = accounts.concat(credits);
 
-    userActiveAccounts(userID)
-      .then(account => {
-        console.log(account);
-        const accounts = account.map(value => value.accountID);
-        this.setState({
-          accounts,
-          type: accounts[0].type,
-          accountIDFrom: accounts[0]._id
-        });
-      })
-      .catch(error => console.log(error));
+      this.setState({
+        accounts: allAccounts,
+        typeExistingAcc: allAccounts[0].type,
+        accountIDFrom: allAccounts[0]._id,
+        accountCurrency: getSymbolFromCurrency(allAccounts[0].currency)
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   componentDidMount() {

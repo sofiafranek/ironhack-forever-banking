@@ -17,13 +17,9 @@ const Notification = props => {
     type = 'Received';
   }
 
-  function replaceAll(str, find, replace) {
-    return str.replace(new RegExp(find, 'g'), replace);
-  }
-
   const currentDate = new Date();
-  const created = replaceAll(createdAt.split('T')[0], '-', '/');
-  const createdDate = new Date(created);
+  const createdDate = new Date(createdAt);
+
   const diffTime = Math.abs(createdDate - currentDate);
   const diffSeconds = Math.ceil(diffTime / 1000);
   const diffMinutes = Math.ceil(diffTime / (1000 * 60));

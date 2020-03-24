@@ -16,8 +16,7 @@ const schema = new mongoose.Schema({
         required: true
     },
     messageTo: {
-        type: String,
-        required: true
+        type: String
     },
     createdAt: {
         type: Date,

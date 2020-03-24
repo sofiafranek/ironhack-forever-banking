@@ -215,11 +215,12 @@ class AddTransaction extends Component {
       const accounts = account.map(value => value.accountID);
       const credits = await creditAccounts(userID);
       const allAccounts = accounts.concat(credits);
+
       this.setState({
         accounts: allAccounts,
-        type: accounts[0].type,
-        accountIDFrom: accounts[0]._id,
-        accountCurrency: getSymbolFromCurrency(accounts[0].currency)
+        type: allAccounts[0].type,
+        accountIDFrom: allAccounts[0]._id,
+        accountCurrency: getSymbolFromCurrency(allAccounts[0].currency)
       });
     } catch (error) {
       console.log(error);

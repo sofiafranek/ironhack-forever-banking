@@ -6,6 +6,10 @@ h1 {
   min-height: 90px;
 }
 
+.special-heading {
+  padding-top: 70px;
+}
+
 .heading-one-mobile {
   min-height: 90px;
 }
@@ -13,6 +17,9 @@ h1 {
 @media (min-width: 980px) {
   .heading-one-mobile {
     min-height: auto;
+  }
+  .special-heading {
+    padding-top: 0 !important;
   }
 }
 

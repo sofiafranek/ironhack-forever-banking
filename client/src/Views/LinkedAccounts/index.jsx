@@ -43,7 +43,7 @@ class LinkedAccounts extends Component {
     return (
       <Layout>
         <div className="relative">
-          <h1 className="pb-3 heading-one">Shared Accounts</h1>
+          <h1 className="pb-3 heading-one special-heading">Shared Accounts</h1>
           <hr className="mb-4"></hr>
           <div className="action-container">
             <div className="shared-accounts-actions">

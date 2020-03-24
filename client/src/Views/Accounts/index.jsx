@@ -92,16 +92,20 @@ class Accounts extends Component {
     return (
       <Layout>
         <div className="relative accounts-page">
-          <h1 className="pb-3">Accounts</h1>
-          <div className="action-container">
+          <h1 className="pb-3 heading-one">Accounts</h1>
+          <div className="action-container positioning">
             <Link to={`/accounts/add-account`}>
               <Button variant="contained" className="primary">
                 <i className="fas fa-plus"></i>
               </Button>
+              <div>Add</div>
             </Link>
-            <Button variant="contained" className="secondary" onClick={this.refresh}>
-              <i className="fas fa-sync-alt"></i>
-            </Button>
+            <div>
+              <Button variant="contained" className="secondary" onClick={this.refresh}>
+                <i className="fas fa-sync-alt"></i>
+              </Button>
+              <div>Refresh</div>
+            </div>
             <Link
               to={{
                 pathname: '/accounts/edit-primary',
@@ -111,6 +115,7 @@ class Accounts extends Component {
               <Button variant="contained" className="third">
                 <i className="fas fa-pencil-alt"></i>
               </Button>
+              <div>Set Primary</div>
             </Link>
           </div>
           <div className="search-filter mobile-filter">

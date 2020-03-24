@@ -1,6 +1,19 @@
 h1 {
   font-weight: bold;
-  // color: #3264a8;
+}
+
+.heading-one {
+  min-height: 90px;
+}
+
+.heading-one-mobile {
+  min-height: 90px;
+}
+
+@media (min-width: 980px) {
+  .heading-one-mobile {
+    min-height: auto;
+  }
 }
 
 .light-dark-mode-button {

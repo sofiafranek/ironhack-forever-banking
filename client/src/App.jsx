@@ -8,6 +8,7 @@ import ProtectedRoute from './Components/ProtectedRoute';
 import Home from './Views/Home';
 
 import Activity from './Views/Activity';
+import SubAccounts from './Views/SubAccounts';
 import Features from './Views/Features';
 import Accounts from './Views/Accounts';
 import LinkedAccounts from './Views/LinkedAccounts';
@@ -118,13 +119,6 @@ class App extends Component {
           <a href="/">
             <div className="nav--logo-image"></div>
           </a>
-          {/* <button onClick={this.handleClick} className="light-dark-mode-button">
-            {this.state.isToggleOn ? (
-              <i className="far fa-moon"></i>
-            ) : (
-              <i className="fas fa-moon"></i>
-            )}
-          </button> */}
         </div>
         {this.state.loaded && (
           <BrowserRouter>
@@ -189,6 +183,20 @@ class App extends Component {
                   path="/activity"
                   render={props => (
                     <Activity {...props} changeActiveNav={this.activeNav} user={this.state.user} />
+                  )}
+                  exact
+                />
+
+                <ProtectedRoute
+                  authorized={this.state.user}
+                  redirect={'/signin'}
+                  path="/sub-accounts"
+                  render={props => (
+                    <SubAccounts
+                      {...props}
+                      changeActiveNav={this.activeNav}
+                      user={this.state.user}
+                    />
                   )}
                   exact
                 />

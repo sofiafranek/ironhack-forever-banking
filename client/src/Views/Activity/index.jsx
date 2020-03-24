@@ -88,20 +88,22 @@ class Dashboard extends Component {
                 <MenuItem className="primary">
                   <i className="fas fa-user"></i>
                 </MenuItem>
+                <div>Profile</div>
               </Link>
 
               <Link to="/">
                 <MenuItem className="secondary">
                   <i className="fas fa-sign-out-alt"></i>
                 </MenuItem>
+                <div>Log Out</div>
               </Link>
             </div>
           ) : (
             ''
           )}
-          <h1 className="pb-3">Your Activity - {user.name}</h1>
-          <hr className="pb-1 pt-1"></hr>
-          <h4 className="pb-2">All Accounts</h4>
+          <h1 className="pb-3 heading-one-mobile">Your Activity - {user.name}</h1>
+          <hr className="pt-1"></hr>
+          <h4 className="pb-3 pt-4">All Accounts</h4>
           {this.state.accountsUser.length > 0 ? (
             this.state.accountsUser.map(single => {
               return <ActivityAccount key={this.randomKey(50)} {...single} />;

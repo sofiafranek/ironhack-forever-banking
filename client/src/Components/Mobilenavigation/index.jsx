@@ -18,40 +18,45 @@ const Mobilenavigation = () => {
   const [value, setValue] = React.useState(0);
 
   return (
-    <BottomNavigation
-      value={value}
-      onChange={(event, newValue) => {
-        setValue(newValue);
-      }}
-      showLabels
-      className={`${classes.root} bottomNavigation`}
-    >
-      <Link to="/activity">
-        <BottomNavigationAction label="Activity" icon={<i className="fas fa-chart-line"></i>} />
-      </Link>
-      <Link to="/accounts">
-        <BottomNavigationAction label="Accounts" icon={<i className="fas fa-wallet"></i>} />
-      </Link>
-      <Link to="/transactions">
-        <BottomNavigationAction
-          label="Transactions"
-          icon={<i className="fas fa-exchange-alt"></i>}
-        />
-      </Link>
-      <Link to="/cards">
-        <BottomNavigationAction label="Cards" icon={<i className="far fa-credit-card"></i>} />
-      </Link>
-      <Link to="/notifications">
-        <BottomNavigationAction
-          label="Notifications"
-          icon={
-            <i className="far fa-bell">
-              <div className="notification-alert-mobile"></div>
-            </i>
-          }
-        />
-      </Link>
-    </BottomNavigation>
+    <>
+      <section className="top-slide-nav">
+        <a href="/" className="left">
+          <div className="nav--logo-image"></div>
+        </a>
+        <a href="/notifications" className="right">
+          <i className="far fa-bell">
+            <div className="notification-alert-mobile-top"></div>
+          </i>
+        </a>
+      </section>
+      <BottomNavigation
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+        showLabels
+        className={`${classes.root} bottomNavigation`}
+      >
+        <Link to="/activity">
+          <BottomNavigationAction label="Activity" icon={<i className="fas fa-chart-line"></i>} />
+        </Link>
+        <Link to="/sub-accounts">
+          <BottomNavigationAction label="Accounts" icon={<i className="fas fa-wallet"></i>} />
+        </Link>
+        <Link to="/transactions">
+          <BottomNavigationAction
+            label="Transactions"
+            icon={<i className="fas fa-exchange-alt"></i>}
+          />
+        </Link>
+        <Link to="/cards">
+          <BottomNavigationAction label="Cards" icon={<i className="far fa-credit-card"></i>} />
+        </Link>
+        <Link to="/analytics">
+          <BottomNavigationAction label="Analytics" icon={<i className="fas fa-chart-pie"></i>} />
+        </Link>
+      </BottomNavigation>
+    </>
   );
 };
 

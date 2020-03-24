@@ -297,12 +297,10 @@ router.post('/:id/delete-account', RouteGuard, async (req, res, next) => {
   try {
     await Account.removeAccount(idAccount);
     await UserAccount.removeAccount(idAccount);
-    const cards = await Card.removeCardAccount(idAccount);
-    console.log(cards);
+    await Card.removeCardAccount(idAccount);
     res.json({ result: 'sucess' });
   } catch (error) {
-    console.log(error);
-    //res.json({ result: 'error' });
+    res.json({ result: 'error' });
     next(error);
   }
 });

@@ -24,7 +24,7 @@ class AddMoney extends Component {
 
   handleInputChange(event) {
     const inputName = event.target.name;
-    const value = event.target.value;
+    let value = event.target.value;
     if (inputName === 'balance') value = replaceAll(value, ',', '');
 
     this.setState({
@@ -155,6 +155,7 @@ class AddMoney extends Component {
                     digitGroupSeparator=","
                     currencySymbol={this.state.currencySymbol}
                     outputFormat="string"
+                    onChange={this.handleInputChange}
                   />
               </Grid>
               </>

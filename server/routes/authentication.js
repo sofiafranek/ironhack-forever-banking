@@ -93,9 +93,17 @@ router.post('/signin', (req, res, next) => {
     });
 });
 
+router.post('/:userID/updateToPremium', async (req, res, next) => {
+  const userID = req.params.userID;
+
+  await User.updateToPremium(userID);
+  res.json({ result: true });
+});
+
 router.post('/signout', (req, res, next) => {
   req.session.destroy();
   res.json({});
 });
+
 
 module.exports = router;

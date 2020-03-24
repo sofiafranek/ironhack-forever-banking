@@ -1,7 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
-
+//TODO : USE AGREGGATE AND SEND TO FRONT END TRANSACTIONS WITH BOOLEAN SENT OR RECEIVED
 const schema = new mongoose.Schema({
   accountIDTo: {
     type: mongoose.Schema.Types.ObjectId,

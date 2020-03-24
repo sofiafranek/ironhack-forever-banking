@@ -6,8 +6,9 @@ const Account = require('./../database/models/account');
 const UserAccount = require('./../database/models/userAccount');
 const Card = require('./../database/models/card');
 const User = require('./../database/models/user');
+const Credit = require('./../database/models/credit');
 const Notification = require('./../database/models/notification');
-
+const getSymbolFromCurrency = require('currency-symbol-map');
 const router = new Router();
 
 const RouteGuard = require('./../middleware/route-guard');
@@ -109,17 +110,24 @@ router.post('/create-account-internal', async (req, res, next) => {
 
   const balanceNumber = Number(balance);
   const balanceDecimal = balanceNumber;
-
   try {
     // GO TO ACCOUNT THAT YOU WANT TO TRANSFER
-    const accountFrom = await Account.getAccountById(accountIDFrom);
-    const balanceFrom = accountFrom.balance;
+    let accountFrom = await Account.getAccountById(accountIDFrom);
+    let balanceFrom = 0, accounttype = true;
+
+    if (!accountFrom) {
+      accountFrom = await Credit.getAccountById(accountIDFrom);
+      balanceFrom = accountFrom.current;
+      accounttype = false;
+    } else {
+      balanceFrom = accountFrom.balance;
+    }
 
     const minusBalance = Number(balanceFrom) - balanceDecimal;
     const addBalance = balanceDecimal;
-
     if (minusBalance >= 0) {
-      await Account.updateBalance(accountIDFrom, minusBalance);
+      (accounttype) ? await Account.updateBalance(accountIDFrom, minusBalance) : Credit.updateCurrent(accountIDFrom, minusBalance);
+      
       const account = await Account.createAccount(
         accountNumber,
         type,
@@ -128,6 +136,9 @@ router.post('/create-account-internal', async (req, res, next) => {
         currency
       );
       const accountID = account._id;
+      const userIDFrom = req.user._id;
+      const userNameFrom = req.user.name;
+
       await UserAccount.createUserAccount(userID, accountID, primary);
 
       if (sharedAccount) {
@@ -137,11 +148,22 @@ router.post('/create-account-internal', async (req, res, next) => {
 
         if (sharedAccountUser) {
           await UserAccount.createUserAccount(sharedAccountUser, accountID, primary);
+          const messageTo = `${userNameFrom} created a ${type} shared account with you with ${balance}${getSymbolFromCurrency(currency)}`;
+          const messageFrom = `You just created a ${type} shared account with ${userName} with ${balance}${getSymbolFromCurrency(currency)}`;
+
+          await Notification.createNotification(
+            userIDFrom, sharedUserID, messageFrom, messageTo
+          );
           res.json({ result: true, sharedUserID, userName });
         } else {
           res.json({ result: false, message: 2 });
         }
       } else {
+        const messageFrom = `You just created a ${type} account with ${balance}${getSymbolFromCurrency(currency)}`;
+        const message = '';
+        await Notification.createNotification(
+          userIDFrom, null, messageFrom, message
+        );
         res.json({ result: true });
       }
     } else {

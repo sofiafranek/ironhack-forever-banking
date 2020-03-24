@@ -31,6 +31,14 @@ const signOut = async () => {
   }
 };
 
+const updateToPremium = async userID => {
+  try {
+    await instance.post(`/${userID}/updateToPremium`);
+  } catch (error) {
+    throw error;
+  }
+};
+
 const loadUserInformation = async () => {
   try {
     const result = await instance.get('/userinformation');
@@ -41,4 +49,4 @@ const loadUserInformation = async () => {
   }
 };
 
-export { signIn, signUp, signOut, loadUserInformation };
+export { signIn, signUp, signOut, loadUserInformation, updateToPremium };

@@ -63,4 +63,12 @@ schema.statics.getPremiumUsers = async function() {
   return user;
 };
 
+schema.statics.updateToPremium = async function(userID) {
+  const Model = this;
+  const usertype = 'Premium';
+  const user = await Model.findByIdAndUpdate(userID, { usertype });
+  console.log(user);
+  return user;
+};
+
 module.exports = mongoose.model('User', schema);

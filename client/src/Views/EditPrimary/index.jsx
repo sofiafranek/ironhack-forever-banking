@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import Layout from '../../Components/Layout';
 
-import { RadioGroup, FormControl, FormControlLabel, Radio, Button } from '@material-ui/core';
-import { useStyles } from '../../Utilities/useStyles';
-import clsx from 'clsx';
+import { RadioGroup, FormControl, FormControlLabel, Button } from '@material-ui/core';
 import { updatePrimaryAccount } from '../../Services/account';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { StyledRadio } from '../../Utilities/styledRadio';

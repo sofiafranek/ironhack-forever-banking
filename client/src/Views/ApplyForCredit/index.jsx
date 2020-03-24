@@ -3,13 +3,7 @@ import Layout from '../../Components/Layout';
 
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import {
-  RadioGroup,
-  FormControl,
-  InputLabel,
-  Select,
-  FormControlLabel,
-} from '@material-ui/core';
+import { RadioGroup, FormControl, InputLabel, Select, FormControlLabel } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { StyledRadio } from '../../Utilities/styledRadio';
@@ -120,37 +114,37 @@ class ApplyForCredit extends Component {
 
   dataCalc() {
     let outstanding = 0;
-    this.state.outstandingLoans === true ? (outstanding = 0) : (outstanding = 5000);
+    this.state.outstandingLoans === true ? (outstanding = 0) : (outstanding = 500);
 
     let otherCredit = 0;
-    this.state.otherCredit === true ? (otherCredit = 0) : (otherCredit = 7500);
+    this.state.otherCredit === true ? (otherCredit = 0) : (otherCredit = 750);
 
     let finanacialSupport = 0;
-    this.state.finanacialSupport === true ? (finanacialSupport = 0) : (finanacialSupport = 3000);
+    this.state.finanacialSupport === true ? (finanacialSupport = 0) : (finanacialSupport = 300);
 
     let children = 0;
-    this.state.children === true ? (children = 0) : (children = 500);
+    this.state.children === true ? (children = 0) : (children = 50);
 
     let status = 0;
     this.state.maritalStatus === 'Single'
-      ? (status = 200)
+      ? (status = 20)
       : this.state.maritalStatus === 'Married'
-      ? (status = 400)
+      ? (status = 40)
       : this.state.maritalStatus === 'Widowed'
-      ? (status = 600)
-      : (status = 300);
+      ? (status = 60)
+      : (status = 30);
 
     let income = 0;
     this.state.income <= 7500
-      ? (income = 500)
+      ? (income = 50)
       : this.state.income <= 10000
-      ? (income = 700)
+      ? (income = 70)
       : this.state.income <= 15000
-      ? (income = 1000)
+      ? (income = 100)
       : this.state.income <= 20000
-      ? (income = 1200)
+      ? (income = 120)
       : this.state.income <= 30000
-      ? (income = 30000)
+      ? (income = 250)
       : (income = 0);
 
     const limit = outstanding + otherCredit + finanacialSupport + children + status + income;

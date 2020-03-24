@@ -31,7 +31,10 @@ class Account extends Component {
             <Link
               to={{
                 pathname: `/accounts/${this.state.account._id}`,
-                state: this.state.account
+                state: {
+                  account: this.state.account,
+                  primary: this.state.primary
+                }
               }}
             >
               <Card.Header>

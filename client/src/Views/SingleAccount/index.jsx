@@ -51,7 +51,6 @@ class SingleAccount extends Component {
     const accountID = this.props.match.params.id;
     const { account, primary } = this.props.location.state;
 
-    console.log(account, "HERERERRE");
     try {
       const information = await allTransactionsAccount(accountID);
       const transactionsRec = information.transactionsFrom;

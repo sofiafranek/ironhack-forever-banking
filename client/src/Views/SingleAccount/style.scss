@@ -14,3 +14,12 @@
     margin-bottom: 10px;
   }
 }
+
+@media (max-width: 500px) {
+  .single-account .action-container {
+    top: -85px;
+  }
+  .single-account h1 {
+    margin-top: 80px;
+  }
+}

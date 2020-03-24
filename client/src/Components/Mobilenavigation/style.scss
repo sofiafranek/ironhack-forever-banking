@@ -3,13 +3,13 @@
   min-height: 45px;
   .right {
     position: absolute;
-    top: 20px;
-    right: 45px;
+    top: 25px;
+    right: 30px;
   }
   .left {
     position: absolute;
     top: 17.5px;
-    left: 15px;
+    left: 8px;
   }
   .notification-alert-mobile-top {
     width: 11px;
@@ -78,6 +78,17 @@
 
 .MuiBottomNavigationAction-label {
   opacity: 1 !important;
+}
+
+@media (min-width: 500px) {
+  .top-slide-nav .left {
+    left: 15px;
+  }
+  .right {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+  }
 }
 
 @media (min-width: 600px) {

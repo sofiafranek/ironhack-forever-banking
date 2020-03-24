@@ -59,8 +59,11 @@ h6 {
 
 .transaction-toggle {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: baseline;
+  .badge {
+    margin-top: 20px;
+  }
   div {
     display: flex;
     flex-direction: column;
@@ -180,5 +183,12 @@ h6 {
     .card-body {
       padding: 20px 30px;
     }
+  }
+}
+
+@media (min-width: 500px) {
+  .transaction-toggle {
+    flex-direction: row;
+    justify-content: space-between;
   }
 }

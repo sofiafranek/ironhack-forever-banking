@@ -37,7 +37,7 @@ class Credit extends Component {
                 Credit Allowance : {this.props.limit.toFixed(2)}
                 {getSymbolFromCurrency(this.props.currency)}
               </h5>
-              <h5 className="pb-2 pt-2">
+              <h5 className="mb-0">
                 Credit Current : {this.props.current.toFixed(2)}
                 {getSymbolFromCurrency(this.props.currency)}
               </h5>

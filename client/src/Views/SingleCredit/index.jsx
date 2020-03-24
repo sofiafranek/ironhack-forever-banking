@@ -55,13 +55,16 @@ class SingleCredit extends Component {
         </Breadcrumb>
         <section className="single-account relative">
           <div className="action-container">
-            <Button
-              variant="contained"
-              className="third"
-              onClick={event => this.deleteAnAccount(event)}
-            >
-              <i className="fas fa-times"></i>
-            </Button>
+            <div>
+              <Button
+                variant="contained"
+                className="third"
+                onClick={event => this.deleteAnAccount(event)}
+              >
+                <i className="fas fa-times"></i>
+              </Button>
+              <div>Delete</div>
+            </div>
           </div>
           <h1>
             {account.current.toFixed(2)}

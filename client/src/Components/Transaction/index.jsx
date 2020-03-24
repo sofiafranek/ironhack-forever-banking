@@ -20,7 +20,8 @@ class Transaction extends Component {
 
     let accFrom = null,
       accTo = null,
-      symbol = '', currency = '';
+      symbol = '',
+      currency = '';
     creditFrom ? (accFrom = creditFrom) : (accFrom = accountIDFrom);
     creditTo ? (accTo = creditTo) : (accTo = accountIDTo);
     type === 'minus' ? (symbol = '-') : (symbol = '+');
@@ -28,10 +29,10 @@ class Transaction extends Component {
 
     const toggle = this.props.toggle;
     let toggleKey = '';
-    toggle === true ? (toggleKey = '0') : (toggleKey = '1');
+    toggle === true ? (toggleKey = '1') : (toggleKey = '0');
 
     return (
-      <Accordion className="hvr-grow transaction pb-3" defaultActiveKey={'0'}>
+      <Accordion className="hvr-grow transaction pb-3" defaultActiveKey={'1'}>
         <Card>
           <Card.Header>
             <Accordion.Toggle
@@ -43,9 +44,7 @@ class Transaction extends Component {
               {reference && <h6>{reference}</h6>}
               <div>
                 {totalAmount > 0 && (
-                  <h6>
-                    {symbol + ' ' + totalAmount + ' ' + getSymbolFromCurrency(currency)}
-                  </h6>
+                  <h6>{symbol + ' ' + totalAmount + ' ' + getSymbolFromCurrency(currency)}</h6>
                 )}
               </div>
             </Accordion.Toggle>

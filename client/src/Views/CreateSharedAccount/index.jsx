@@ -2,13 +2,10 @@ import React from 'react';
 import Layout from '../../Components/Layout';
 import { Component } from 'react';
 import { addUserToAccount } from '../../Services/account';
-import {
-  TextField,
-  Grid,
-  Button
-} from '@material-ui/core';
+import { TextField, Grid, Button } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import { Alert } from '../../Utilities/alert';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 class CreateSharedAccount extends Component {
   constructor() {
@@ -35,11 +32,11 @@ class CreateSharedAccount extends Component {
     const account = this.props.history.location.state;
     this.setState({
       account
-    })
+    });
     this.props.changeActiveNav();
   }
 
-  async setData(event){
+  async setData(event) {
     event.preventDefault();
     const data = Object.assign({}, this.state);
     console.log(data);
@@ -50,7 +47,7 @@ class CreateSharedAccount extends Component {
       const success = await addUserToAccount(data);
       console.log(success);
       if (success) {
-        this.props.history.push('/linked-accounts')
+        this.props.history.push('/linked-accounts');
       } else {
         this.setState({
           success
@@ -62,27 +59,36 @@ class CreateSharedAccount extends Component {
   }
 
   render() {
+    console.log(this.state.account, 'STATE');
     return (
       <Layout>
+        {this.state.account && (
+          <Breadcrumb>
+            <Breadcrumb.Item href={`/accounts/${this.state.account._id}`}>
+              {this.state.account.accountNumber}
+            </Breadcrumb.Item>
+            <Breadcrumb.Item className="disable-breadcrumb">Create Shared Account</Breadcrumb.Item>
+          </Breadcrumb>
+        )}
         <h1>Create Shared Account</h1>
-        <form onSubmit={(event) => this.setData(event)}>
-        <Grid item xs={12} sm={12}>
-          <h4 className="pt-3 pb-2">Phone Number that you would like to share</h4>
-          <TextField
-            type="number"
-            variant="outlined"
-            required
-            fullWidth
-            id="phoneNumber"
-            label="Phone Number"
-            name="phoneNumber"
-            onChange={event => this.handleInputChange(event)}
-          />
-        </Grid>
-        {!this.state.success && <Alert severity="error">{this.state.message}</Alert>}
-        <Button type="submit" fullWidth variant="contained" color="primary" className="mt-4">
-          Create Shared Account
-        </Button>
+        <form onSubmit={event => this.setData(event)}>
+          <Grid item xs={12} sm={12}>
+            <h5 className="pt-3 pb-4">Phone Number that you would like to share</h5>
+            <TextField
+              type="number"
+              variant="outlined"
+              required
+              fullWidth
+              id="phoneNumber"
+              label="Phone Number"
+              name="phoneNumber"
+              onChange={event => this.handleInputChange(event)}
+            />
+          </Grid>
+          {!this.state.success && <Alert severity="error">{this.state.message}</Alert>}
+          <Button type="submit" fullWidth variant="contained" color="primary" className="mt-5">
+            Create Shared Account
+          </Button>
         </form>
       </Layout>
     );

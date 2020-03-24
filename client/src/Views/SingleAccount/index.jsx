@@ -98,7 +98,8 @@ class SingleAccount extends Component {
             </Breadcrumb>
             <section className="single-account">
               <h1>
-                {this.state.account.balance.toFixed(2)} {getSymbolFromCurrency(this.state.account.currency)}
+                {this.state.account.balance.toFixed(2)}{' '}
+                {getSymbolFromCurrency(this.state.account.currency)}
               </h1>
               <h5>
                 {this.state.account.type === 'Current'
@@ -110,11 +111,8 @@ class SingleAccount extends Component {
               <hr className="mb-4"></hr>
               <h5>IBAN Number : {this.state.account.accountNumber}</h5>
               <h5>Account Type : {this.state.account.type}</h5>
-              {/* <h5>Card Number : 1234 1234 1234 1234</h5> */}
-              {/* <h5>Card Expirty : 12 / 04</h5> */}
               <hr className="mt-4"></hr>
               <section className="pt-2">
-                {/* <h4 className="pb-3">Transactions for this Account</h4> */}
                 {this.state.transactions.map(transaction => (
                   <Transaction key={this.randomKey(50)} {...transaction.transaction} type={transaction.type} />
                 ))}
@@ -132,6 +130,7 @@ class SingleAccount extends Component {
                   <Button variant="contained" className="primary">
                     <i className="fas fa-plus"></i>
                   </Button>
+                  <div>Add Money</div>
                 </Link>
                 {usertype === 'Premium' && (
                   <Link
@@ -143,15 +142,19 @@ class SingleAccount extends Component {
                     <Button variant="contained" className="secondary">
                       <i className="fas fa-link"></i>
                     </Button>
+                    <div>Share</div>
                   </Link>
                 )}
-                <Button
-                  variant="contained"
-                  className="third"
-                  onClick={event => this.deleteAnAccount(event)}
-                >
-                  <i className="fas fa-times"></i>
-                </Button>
+                <div>
+                  <Button
+                    variant="contained"
+                    className="third"
+                    onClick={event => this.deleteAnAccount(event)}
+                  >
+                    <i className="fas fa-times"></i>
+                  </Button>
+                  <div>Delete</div>
+                </div>
               </div>
             </section>
           </>

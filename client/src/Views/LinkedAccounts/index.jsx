@@ -43,11 +43,15 @@ class LinkedAccounts extends Component {
     return (
       <Layout>
         <div className="relative">
-          <h1 className="pb-3">Shared Accounts</h1>
+          <h1 className="pb-3 heading-one">Shared Accounts</h1>
+          <hr className="mb-4"></hr>
           <div className="action-container">
-            <Button variant="contained" className="secondary">
-              <i className="fas fa-sync-alt"></i>
-            </Button>
+            <div className="shared-accounts-actions">
+              <Button variant="contained" className="secondary">
+                <i className="fas fa-sync-alt"></i>
+              </Button>
+              <div>Refresh</div>
+            </div>
           </div>
           {this.state.linkedAccounts.length > 0 ? (
             this.state.linkedAccounts.map(single => (

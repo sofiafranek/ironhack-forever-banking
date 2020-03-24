@@ -20,7 +20,7 @@ import {
 } from '../../Services/account';
 import { createNotification } from '../../Services/notification';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-import CurrencyTextField from '@unicef/material-ui-currency-textfield'
+import CurrencyTextField from '@unicef/material-ui-currency-textfield';
 import getSymbolFromCurrency from 'currency-symbol-map';
 import { StyledRadio } from '../../Utilities/styledRadio';
 import { Alert } from '../../Utilities/alert';
@@ -137,7 +137,6 @@ class AddAccount extends Component {
       accountIDFrom,
       currencySymbol
     });
-
   }
 
   getInfo() {
@@ -256,7 +255,11 @@ class AddAccount extends Component {
             <Grid item xs={12} sm={12}>
               <FormControl>
                 <InputLabel htmlFor="age-native-simple">Currency</InputLabel>
-                <Select name="currency" native onChange={event => this.handleInputCurrencyChange(event)}>
+                <Select
+                  name="currency"
+                  native
+                  onChange={event => this.handleInputCurrencyChange(event)}
+                >
                   {this.currencies.map(currency => (
                     <option value={currency} key={currency}>
                       {currency}

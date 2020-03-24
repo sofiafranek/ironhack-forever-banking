@@ -49,23 +49,30 @@ class Cards extends Component {
     return (
       <Layout>
         <div className="relative cards-page">
-          <h1 className="pb-5">Cards</h1>
+          <h1 className="pb-5 heading-one">Cards</h1>
           <div className="action-container">
             <Link to={`/cards/add-card`}>
               <Button variant="contained" className="primary">
                 <i className="fas fa-plus"></i>
               </Button>
+              <div>Add</div>
             </Link>
-            <Button variant="contained" className="secondary" onClick={this.refresh}>
-              <i className="fas fa-sync-alt"></i>
-            </Button>
-            <Button variant="contained" className="third" onClick={this.handleClick}>
-              {this.state.isToggleOn ? (
-                <i className="fas fa-pencil-alt"></i>
-              ) : (
-                <i className="fas fa-times"></i>
-              )}
-            </Button>
+            <div>
+              <Button variant="contained" className="secondary" onClick={this.refresh}>
+                <i className="fas fa-sync-alt"></i>
+              </Button>
+              <div>Refresh</div>
+            </div>
+            <div>
+              <Button variant="contained" className="third" onClick={this.handleClick}>
+                {this.state.isToggleOn ? (
+                  <i className="fas fa-pencil-alt"></i>
+                ) : (
+                  <i className="fas fa-times"></i>
+                )}
+              </Button>
+              <div>Edit</div>
+            </div>
           </div>
           <div className="card-container">
             {this.state.cards.map(card => (

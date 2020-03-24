@@ -87,7 +87,7 @@ class Transactions extends Component {
         accountsID,
         creditsID
       };
-      
+
       const transactionsRec = await transactionService.receivedTransactions(info);
       const transactionsReceived = transactionsRec.map(transaction => {
         return {
@@ -125,26 +125,33 @@ class Transactions extends Component {
     return (
       <Layout>
         <div className="relative transactions-page">
-          <h1 className="pb-4">Transactions</h1>
+          <h1 className="pb-4 heading-one">Transactions</h1>
           <div className="action-container">
             <Link to={`/transactions/addTransaction`} onClick={this.addingAccount}>
               <Button variant="contained" className="primary">
                 <i className="fas fa-plus"></i>
               </Button>
+              <div>Create</div>
             </Link>
-            <Button variant="contained" className="secondary" onClick={this.refresh}>
-              <i className="fas fa-sync-alt"></i>
-            </Button>
-            <Button
-              onClick={event => this.handleClick(event)}
-              className="toggle-transactions third"
-            >
-              {this.state.isToggleOn ? (
-                <i className="fas fa-toggle-off"></i>
-              ) : (
-                <i className="fas fa-toggle-on"></i>
-              )}
-            </Button>
+            <div>
+              <Button variant="contained" className="secondary" onClick={this.refresh}>
+                <i className="fas fa-sync-alt"></i>
+              </Button>
+              <div>Refresh</div>
+            </div>
+            <div>
+              <Button
+                onClick={event => this.handleClick(event)}
+                className="toggle-transactions third"
+              >
+                {this.state.isToggleOn ? (
+                  <i className="fas fa-toggle-off"></i>
+                ) : (
+                  <i className="fas fa-toggle-on"></i>
+                )}
+              </Button>
+              <div>Toggle</div>
+            </div>
           </div>
           <div className="search-filter pb-3">
             <Search search={this.searchData} />

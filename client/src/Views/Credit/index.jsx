@@ -39,16 +39,21 @@ class Credit extends Component {
     return (
       <Layout>
         <section className="relative">
-          <h1 className="pb-4">Credit</h1>
+          <h1 className="pb-4 heading-one">Credit</h1>
+          <hr className="mb-4"></hr>
           <div className="action-container">
             <Link to={'/credit/apply-for-credit'}>
               <Button variant="contained" className="primary">
                 <i className="fas fa-plus"></i>
               </Button>
+              <div>Add</div>
             </Link>
-            <Button variant="contained" className="secondary" onClick={this.refresh}>
-              <i className="fas fa-sync-alt"></i>
-            </Button>
+            <div>
+              <Button variant="contained" className="secondary" onClick={this.refresh}>
+                <i className="fas fa-sync-alt"></i>
+              </Button>
+              <div>Refresh</div>
+            </div>
           </div>
         </section>
         {this.state.account.length > 0 ? (

@@ -7,11 +7,7 @@ import { userActiveAccounts } from './../../Services/account';
 import { creditAccounts } from './../../Services/credit';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import getSymbolFromCurrency from 'currency-symbol-map';
-import {
-  FormControl,
-  Select,
-  Grid
-} from '@material-ui/core';
+import { FormControl, Select, Grid } from '@material-ui/core';
 
 class Analytics extends Component {
   constructor(props) {
@@ -65,12 +61,11 @@ class Analytics extends Component {
     this.getData();
   }
 
-
   calculatePercentageCategory() {
     const transactionsPerAccount = this.state.transactionsPerAccount;
     const index = this.state.index;
 
-    if(transactionsPerAccount[index]){
+    if (transactionsPerAccount[index]) {
       const transactions = transactionsPerAccount[index].map(value => {
         const transaction = new Object();
         transaction.amount = value.totalAmount;
@@ -79,7 +74,6 @@ class Analytics extends Component {
 
         return transaction;
       });
-
 
       const categories = [];
       let totalAmount = 0;
@@ -121,7 +115,6 @@ class Analytics extends Component {
         eachCategories: []
       });
     }
-    
   }
 
   /*splitDates() {
@@ -200,14 +193,16 @@ class Analytics extends Component {
     const index = value;
     const allAccounts = this.state.allAccounts;
 
-    this.setState({
-      index,
-      accountNumber: allAccounts[index].accountNumber,
-      accountCurrency: allAccounts[index].currency,
-    }, () => {
-      this.calculatePercentageCategory();
-    })
-
+    this.setState(
+      {
+        index,
+        accountNumber: allAccounts[index].accountNumber,
+        accountCurrency: allAccounts[index].currency
+      },
+      () => {
+        this.calculatePercentageCategory();
+      }
+    );
   }
 
   render() {
@@ -215,26 +210,26 @@ class Analytics extends Component {
       <div>
         <Layout>
           <h1 className="pb-3">Analytics</h1>
-            <Grid item xs={12} sm={12}>
-              <h4 className="pt-3 pb-2">Choose the account</h4>
-              <FormControl>
-                <Select
-                  name="index"
-                  native
-                  onChange={event => this.handleAccountChange(event)}
-                >
-                  {this.state.allAccounts.map((acc, index) => (
-                    <option
-                      value={index}
-                      key={acc.accountNumber}
-                    >
-                      {acc.accountNumber + ' ' + acc.type}
-                    </option>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <br></br>
+          <hr></hr>
+          <Grid item xs={12} sm={12}>
+            <h6 className="pt-3 pb-2">
+              <strong>Choose an account:</strong>
+            </h6>
+            <FormControl>
+              <Select
+                name="index"
+                native
+                onChange={event => this.handleAccountChange(event)}
+                className="mb-5"
+              >
+                {this.state.allAccounts.map((acc, index) => (
+                  <option value={index} key={acc.accountNumber}>
+                    {acc.accountNumber + ' ' + acc.type}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
           {/* title below only shows if there are categories */}
           {this.state.eachCategories.length === 0 && (
             <h5 className="pt-3">
@@ -242,7 +237,10 @@ class Analytics extends Component {
             </h5>
           )}
           {this.state.eachCategories.length >= 1 && (
-            <h5 className="mb-4">Total amount spent this account this month is {this.state.totalAmount} {getSymbolFromCurrency(this.state.accountCurrency)}</h5>
+            <h5 className="mb-4">
+              Total Spending = {this.state.totalAmount}{' '}
+              {getSymbolFromCurrency(this.state.accountCurrency)}
+            </h5>
           )}
           <div>
             {this.state.eachCategories.map(category => (

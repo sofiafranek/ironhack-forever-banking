@@ -39,7 +39,7 @@ class Credit extends Component {
     return (
       <Layout>
         <section className="relative">
-          <h1 className="pb-4 heading-one">Credit</h1>
+          <h1 className="pb-4 heading-one special-heading">Credit</h1>
           <hr className="mb-4"></hr>
           <div className="action-container">
             <Link to={'/credit/apply-for-credit'}>

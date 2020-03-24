@@ -36,24 +36,16 @@ class Card extends Component {
 
     return (
       <section className="card-container">
-        {/* <button
-          className={
-            this.props.toggle === true ? 'delete-card-button--hide' : 'delete-card-button--show'
-          }
-          onClick={event => this.deleteACard(event)}
-        >
-          <i className="fas fa-times"></i>
-        </button> */}
-        <section className="credit-card__section" onClick={event => this.flip(event)}>
-          <section className="relative">
-            <button
-              className={
-                this.props.toggle === true ? 'delete-card-button--hide' : 'delete-card-button--show'
-              }
-              onClick={event => this.deleteACard(event)}
-            >
-              <i className="fas fa-times"></i>
-            </button>
+        <section className="relative">
+          <button
+            className={
+              this.props.toggle === true ? 'delete-card-button--hide' : 'delete-card-button--show'
+            }
+            onClick={event => this.deleteACard(event)}
+          >
+            <i className="fas fa-times"></i>
+          </button>
+          <section className="credit-card__section" onClick={event => this.flip(event)}>
             <div className="credit-card credit-card__front">
               <div className="credit-card__top">
                 <div className="logo-card"></div>

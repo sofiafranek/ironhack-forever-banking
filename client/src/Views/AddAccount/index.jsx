@@ -189,33 +189,8 @@ class AddAccount extends Component {
     let insuccessMessage = '';
 
     if (result) {
-      if (this.state.sharedAccount) {
-        const { userID, userName } = response;
-        const userIDFrom = this.props.user._id;
-        const userIDTo = userID;
-        const userNameFrom = this.props.user.name;
-        const userNameShared = userName;
-        const messageTo = `${userNameFrom} created an shared account with you`;
-        const messageFrom = `You just created an account with ${userNameShared}`;
-
-        const notification = {
-          userIDFrom,
-          userIDTo,
-          messageTo,
-          messageFrom
-        };
-
-        try {
-          await createNotification(notification);
-        } catch (error) {
-          console.log(error);
-        }
-      }
       this.props.history.push({
         pathname: '/transactions'
-      });
-      this.props.history.push({
-        pathname: '/accounts'
       });
     } else {
       const { message } = response;

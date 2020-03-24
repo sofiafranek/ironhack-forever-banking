@@ -13,7 +13,8 @@ class Dashboard extends Component {
     this.state = {
       mobile: false,
       accountsUser: [],
-      transactions: []
+      transactions: [],
+      allPrimary: []
     };
   }
 
@@ -24,7 +25,10 @@ class Dashboard extends Component {
       const information = await activity(userID);
       const userAccs = information.accountsUser;
       const accs = userAccs.map(value => value.accountID);
+      const primaryAccs = userAccs.map(value => value.primary);
+      const primaryCredits = information.credits.map(val => true);
       const accountsUser = accs.concat(information.credits);
+      const allPrimary = primaryAccs.concat(primaryCredits);
       const transactionsRec = information.transactionsTo;
       const transactionsS = information.transactionsFrom;
     
@@ -49,7 +53,8 @@ class Dashboard extends Component {
 
       this.setState({
         accountsUser,
-        transactions: sortedTransactions
+        transactions: sortedTransactions,
+        allPrimary
       });
     } catch (error) {
       console.log(error);
@@ -126,8 +131,8 @@ class Dashboard extends Component {
           <hr className="pt-1"></hr>
           <h4 className="pb-3 pt-4">All Accounts</h4>
           {this.state.accountsUser.length > 0 ? (
-            this.state.accountsUser.map(single => {
-              return <ActivityAccount key={this.randomKey(50)} {...single} />;
+            this.state.accountsUser.map((single, index) => {
+              return <ActivityAccount key={this.randomKey(50)} {...single} primary={this.state.allPrimary[index]}/>;
             })
           ) : (
             <p className="pt-3">No Accounts Listed</p>

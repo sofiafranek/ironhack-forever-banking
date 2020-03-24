@@ -280,10 +280,6 @@ router.get('/:userID/linked-accounts', RouteGuard, async (req, res, next) => {
         sharedAccounts.push(information);
       }
     }
-
-    for (const acc of sharedAccounts) {
-      console.log(acc);
-    }
     res.json({ sharedAccounts });
   } catch (error) {
     console.log(error);

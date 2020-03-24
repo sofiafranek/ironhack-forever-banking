@@ -93,13 +93,23 @@ schema.statics.getUserCard = async function(userID) {
   return card;
 };
 
-schema.statics.removeCard = async function(cardNumber) {
+schema.statics.removeCardAccount = async function(accountID) {
   const Model = this;
-  const removedCard = await Model.findOneAndRemove({
-    cardNumber
+  const removedCard = await Model.deleteMany({
+    accountID
   });
 
   return removedCard;
 };
+
+schema.statics.removeCardCredit = async function(creditID) {
+  const Model = this;
+  const removedCard = await Model.deleteMany({
+    creditID
+  });
+
+  return removedCard;
+};
+
 
 module.exports = mongoose.model('Card', schema);

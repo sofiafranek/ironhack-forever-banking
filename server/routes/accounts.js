@@ -74,19 +74,34 @@ router.post('/create-account-external', async (req, res, next) => {
       currency
     );
     const accountID = account._id;
+    const userIDFrom = req.user._id;
+    const userNameFrom = req.user.name;
+
     await UserAccount.createUserAccount(userID, accountID, primary);
 
     if (sharedAccount) {
       const existUser = await User.getUserByPhoneNumber(sharedUser);
       if (existUser) {
+
         const sharedUserID = existUser._id;
         const userName = existUser.name;
         await UserAccount.createUserAccount(sharedUserID, accountID, false);
+        const messageTo = `${userNameFrom} created a ${type} shared account with you with ${balance}${getSymbolFromCurrency(currency)}`;
+        const messageFrom = `You just created a ${type} shared account with ${userName} with ${balance}${getSymbolFromCurrency(currency)}`;
+
+        await Notification.createNotification(
+          userIDFrom, sharedUserID, messageFrom, messageTo
+        );
         res.json({ result: true, type, accountID });
       } else {
         res.json({ result: false, message: 2 });
       }
     } else {
+      const messageFrom = `You just created a ${type} account with ${balance}${getSymbolFromCurrency(currency)}`;
+        const message = '';
+        await Notification.createNotification(
+          userIDFrom, null, messageFrom, message
+        );
       res.json({ result: true, type, accountID });
     }
   } catch (error) {
@@ -280,10 +295,6 @@ router.get('/:userID/linked-accounts', RouteGuard, async (req, res, next) => {
         sharedAccounts.push(information);
       }
     }
-
-    for (const acc of sharedAccounts) {
-      console.log(acc);
-    }
     res.json({ sharedAccounts });
   } catch (error) {
     console.log(error);
@@ -297,11 +308,11 @@ router.post('/:id/delete-account', RouteGuard, async (req, res, next) => {
   try {
     await Account.removeAccount(idAccount);
     await UserAccount.removeAccount(idAccount);
-    await Card.removeCard(idAccount);
+    await Card.removeCardAccount(idAccount);
     res.json({ result: 'sucess' });
   } catch (error) {
-    next(error);
     res.json({ result: 'error' });
+    next(error);
   }
 });
 

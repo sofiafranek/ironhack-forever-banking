@@ -7,16 +7,19 @@ class ActivityAccount extends Component {
     super(props);
     this.state = {
       account: null,
-      type: 'Current'
+      type: 'Current',
+      primary: false
     };
   }
 
   componentDidMount() {
     const single = this.props;
+    const primary = this.props.primary;
 
     this.setState({
       account: single,
-      type: single.type
+      type: single.type,
+      primary
     });
   }
 
@@ -43,7 +46,10 @@ class ActivityAccount extends Component {
               <Link
                 to={{
                   pathname: `/accounts/${this.props._id}`,
-                  state: this.state.account
+                  state: {
+                    account: this.state.account,
+                    primary: this.state.primary
+                  }
                 }}
               >
                 <Card.Header>

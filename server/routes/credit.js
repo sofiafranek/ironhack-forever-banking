@@ -3,6 +3,7 @@
 const { Router } = require('express');
 
 const Credit = require('./../database/models/credit');
+const Card = require('./../database/models/card');
 // const UserAccount = require('./../database/models/userAccount');
 
 const router = new Router();
@@ -90,6 +91,7 @@ router.post('/:id/delete-account', RouteGuard, async (req, res, next) => {
   const idAccount = req.params.id;
   try {
     await Credit.removeCreditAccount(idAccount);
+    await Card.removeCardCredit(idAccount);
     res.json({ result: 'sucess' });
   } catch (error) {
     next(error);

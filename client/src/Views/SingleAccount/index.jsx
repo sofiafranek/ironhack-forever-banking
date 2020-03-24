@@ -15,7 +15,8 @@ class SingleAccount extends Component {
     super(props);
     this.state = {
       account: null,
-      transactions: []
+      transactions: [],
+      primary: false
     };
     this.deleteAnAccount = this.deleteAnAccount.bind(this);
   }
@@ -48,7 +49,8 @@ class SingleAccount extends Component {
   
   async getData(){
     const accountID = this.props.match.params.id;
-    const account = this.props.location.state;
+    const { account, primary } = this.props.location.state;
+
     try {
       const information = await allTransactionsAccount(accountID);
       const transactionsRec = information.transactionsFrom;
@@ -76,7 +78,8 @@ class SingleAccount extends Component {
 
       this.setState({
         transactions: sortedTransactions,
-        account
+        account,
+        primary
       });
     } catch(error) {
 
@@ -145,7 +148,8 @@ class SingleAccount extends Component {
                     <div>Share</div>
                   </Link>
                 )}
-                <div>
+                {!this.state.primary &&
+                  <div>
                   <Button
                     variant="contained"
                     className="third"
@@ -155,7 +159,8 @@ class SingleAccount extends Component {
                   </Button>
                   <div>Delete</div>
                 </div>
-              </div>
+              }
+            </div>
             </section>
           </>
         )}

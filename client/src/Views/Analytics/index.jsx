@@ -212,9 +212,16 @@ class Analytics extends Component {
           <h1 className="pb-3">Analytics</h1>
           <hr></hr>
           <Grid item xs={12} sm={12}>
-            <h4 className="pt-3 pb-2">Choose the account</h4>
+            <h6 className="pt-3 pb-2">
+              <strong>Choose an account:</strong>
+            </h6>
             <FormControl>
-              <Select name="index" native onChange={event => this.handleAccountChange(event)}>
+              <Select
+                name="index"
+                native
+                onChange={event => this.handleAccountChange(event)}
+                className="mb-5"
+              >
                 {this.state.allAccounts.map((acc, index) => (
                   <option value={index} key={acc.accountNumber}>
                     {acc.accountNumber + ' ' + acc.type}
@@ -223,7 +230,6 @@ class Analytics extends Component {
               </Select>
             </FormControl>
           </Grid>
-          <br></br>
           {/* title below only shows if there are categories */}
           {this.state.eachCategories.length === 0 && (
             <h5 className="pt-3">
@@ -232,7 +238,7 @@ class Analytics extends Component {
           )}
           {this.state.eachCategories.length >= 1 && (
             <h5 className="mb-4">
-              Total amount spent this account this month is {this.state.totalAmount}{' '}
+              Total Spending = {this.state.totalAmount}{' '}
               {getSymbolFromCurrency(this.state.accountCurrency)}
             </h5>
           )}

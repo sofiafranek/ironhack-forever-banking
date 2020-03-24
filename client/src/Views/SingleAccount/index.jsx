@@ -106,6 +106,7 @@ class SingleAccount extends Component {
                   <Button variant="contained" className="primary">
                     <i className="fas fa-plus"></i>
                   </Button>
+                  <div>Add Money</div>
                 </Link>
                 {usertype === 'Premium' && (
                   <Link
@@ -117,15 +118,19 @@ class SingleAccount extends Component {
                     <Button variant="contained" className="secondary">
                       <i className="fas fa-link"></i>
                     </Button>
+                    <div>Share</div>
                   </Link>
                 )}
-                <Button
-                  variant="contained"
-                  className="third"
-                  onClick={event => this.deleteAnAccount(event)}
-                >
-                  <i className="fas fa-times"></i>
-                </Button>
+                <div>
+                  <Button
+                    variant="contained"
+                    className="third"
+                    onClick={event => this.deleteAnAccount(event)}
+                  >
+                    <i className="fas fa-times"></i>
+                  </Button>
+                  <div>Delete</div>
+                </div>
               </div>
             </section>
           </>

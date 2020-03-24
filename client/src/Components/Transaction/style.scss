@@ -18,7 +18,7 @@
 
 .transaction {
   .card-body {
-    padding: 20px 30px;
+    padding: 20px 15px;
   }
 }
 
@@ -28,7 +28,7 @@ h6 {
 
 .card-header {
   background-color: white;
-  padding: 20px 30px;
+  padding: 20px 15px;
 }
 
 .card-transaction {
@@ -172,5 +172,13 @@ h6 {
   .card-transaction {
     display: flex;
     justify-content: space-between;
+  }
+  .card-header {
+    padding: 20px 30px;
+  }
+  .transaction {
+    .card-body {
+      padding: 20px 30px;
+    }
   }
 }

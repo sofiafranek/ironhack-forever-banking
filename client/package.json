@@ -10,7 +10,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "@unicef/material-ui-currency-textfield": "^0.8.6",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "axois": "0.0.1-security",
     "bootstrap": "^4.4.1",
     "currencies-exchange-rates": "^1.0.2",

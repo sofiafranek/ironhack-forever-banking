@@ -9,7 +9,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "axois": "0.0.1-security",
     "bcryptjs": "^2.4.3",
     "connect-mongo": "^3.1.2",
